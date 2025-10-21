@@ -50,6 +50,11 @@ a {
   height: 20px;
 }
 
+.svg-icon-xsmall {
+  width: 18px;
+  height: 18px;
+}
+
 .svg-icon-link:hover .svg-icon {
   background-color: var(--icon-hover-color);
 }

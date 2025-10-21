@@ -1,6 +1,6 @@
 import React from 'react';
 
-type SvgIconSize = 'small' | 'medium' | 'large';
+type SvgIconSize = 'xsmall' | 'small' | 'medium' | 'large';
 
 interface SvgIconProps extends React.HTMLAttributes<HTMLSpanElement> {
   href?: string;

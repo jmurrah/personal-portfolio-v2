@@ -107,11 +107,51 @@ export default function Home() {
           </Card> */}
 
           <Card className="flex flex-col gap-2 w-full">
-            <h2>About</h2>
-            <h2>Experience</h2>
-            <h2>Education</h2>
-            <h2>Projects</h2>
-            <h2>Resume</h2>
+            <h2 className="flex items-center gap-2">
+              <SvgIcon
+                src="/icons/ProfileIcon.svg"
+                alt="About"
+                hoverColor="var(--primary)"
+                size="small"
+              />
+              About
+            </h2>
+            <h2 className="flex items-center gap-2">
+              <SvgIcon
+                src="/icons/BriefcaseIcon.svg"
+                alt="Experience"
+                hoverColor="var(--primary)"
+                size="small"
+              />
+              Experience
+            </h2>
+            <h2 className="flex items-center gap-2">
+              <SvgIcon
+                src="/icons/EducationIcon.svg"
+                alt="Education"
+                hoverColor="var(--primary)"
+                size="small"
+              />
+              Education
+            </h2>
+            <h2 className="flex items-center gap-2">
+              <SvgIcon
+                src="/icons/ProjectIcon.svg"
+                alt="Projects"
+                hoverColor="var(--primary)"
+                size="small"
+              />
+              Projects
+            </h2>
+            <h2 className="flex items-center gap-2">
+              <SvgIcon
+                src="/icons/FileDownloadIcon.svg"
+                alt="Resume"
+                hoverColor="var(--primary)"
+                size="small"
+              />
+              Resume
+            </h2>
           </Card>
         </div>
         <Card className="w-full flex flex-col gap-4">
