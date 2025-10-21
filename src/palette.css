@@ -1,0 +1,22 @@
+:root {
+  --bg-light: hsl(0, 0%, 100%);
+  --bg: hsl(40, 10%, 97%);
+  --bg-dark: hsl(40, 8%, 94%);
+  --text: hsl(0, 0%, 5%);
+  --text-muted: hsl(0, 0%, 35%);
+  --primary: hsl(270, 100%, 55%);
+  --secondary: hsl(270, 100%, 65%);
+}
+
+body.dark {
+  --bg-light: hsl(240, 4%, 16%);
+  --bg: hsl(240, 4%, 12%);
+  --bg-dark: hsl(240, 4%, 8%);
+  --text: hsl(0, 0%, 95%);
+  --text-muted: hsl(0, 0%, 80%);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-muted);
+}
