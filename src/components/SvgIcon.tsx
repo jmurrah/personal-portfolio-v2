@@ -16,18 +16,29 @@ export default function SvgIcon({
   hoverColor = 'var(--primary)',
 }: SvgIconProps) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="svg-icon-link">
-      <div
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="svg-icon-link"
+      aria-label={alt}
+      style={
+        {
+          '--icon-color': color,
+          '--icon-hover-color': hoverColor,
+        } as React.CSSProperties
+      }
+    >
+      <span
         className="svg-icon"
+        aria-hidden="true"
         style={
           {
-            '--icon-color': color,
-            '--icon-hover-color': hoverColor,
+            WebkitMaskImage: `url(${src})`,
+            maskImage: `url(${src})`,
           } as React.CSSProperties
         }
-      >
-        <img src={src} alt={alt} width="24" height="24" />
-      </div>
+      />
     </a>
   );
 }

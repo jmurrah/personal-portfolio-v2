@@ -35,31 +35,19 @@ export default function Home() {
             </a>
           </Card>
           <Card className="flex justify-between items-center">
-            <SvgIcon
-              href="https://github.com/jmurrah"
-              src="/GitHubIcon.svg"
-              alt="GitHub"
-            />
+            <SvgIcon href="https://github.com/jmurrah" src="/GitHubIcon.svg" alt="GitHub" />
             <SvgIcon
               href="https://linkedin.com/in/jacobhmurrah"
               src="/LinkedInIcon.svg"
               alt="LinkedIn"
             />
-            <SvgIcon
-              href="https://leetcode.com/jmurrah"
-              src="/LeetCodeIcon.svg"
-              alt="LeetCode"
-            />
+            <SvgIcon href="https://leetcode.com/jmurrah" src="/LeetCodeIcon.svg" alt="LeetCode" />
             <SvgIcon
               href="https://www.buymeacoffee.com/jmurrah"
               src="/CoffeeIcon.svg"
               alt="Buy Me a Coffee"
             />
-            <SvgIcon
-              href="mailto:jacob@murrah.dev"
-              src="/MailIcon.svg"
-              alt="Email"
-            />
+            <SvgIcon href="mailto:jacob@murrah.dev" src="/MailIcon.svg" alt="Email" />
           </Card>
         </div>
         <Card className="w-auto max-w-24">

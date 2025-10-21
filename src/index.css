@@ -11,20 +11,26 @@ a {
   text-decoration: none;
 }
 
+.svg-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-color, var(--text));
+}
+
+.svg-icon-link:hover {
+  color: var(--icon-hover-color, var(--primary));
+}
+
 .svg-icon {
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease-in-out;
-}
-
-.svg-icon img {
-  filter: brightness(0) saturate(100%) invert(var(--icon-invert, 1));
-}
-
-.svg-icon:hover img {
-  filter: brightness(0) saturate(100%) invert(var(--icon-hover-invert, 0.5)) sepia(1) saturate(3)
-    hue-rotate(var(--icon-hover-hue-rotate, 170deg));
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 24px 24px;
+  mask-size: 24px 24px;
 }
