@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Card from '@/components/Card';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
@@ -24,10 +25,22 @@ const technologies = [
   // { name: 'FastAPI', logoSrc: '/logos/FastAPILogo.svg', accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
+const sections = [
+  { key: 'about', label: 'About', icon: '/icons/ProfileIcon.svg' },
+  { key: 'experience', label: 'Experience', icon: '/icons/BriefcaseIcon.svg' },
+  { key: 'education', label: 'Education', icon: '/icons/EducationIcon.svg' },
+  { key: 'projects', label: 'Projects', icon: '/icons/ProjectIcon.svg' },
+  { key: 'resume', label: 'Resume', icon: '/icons/FileDownloadIcon.svg' },
+];
+
 export default function Home() {
+  const [activeSection, setActiveSection] = useState<null | string>(null);
+  const activeSectionMeta = sections.find((section) => section.key === activeSection);
+  const activeHeadingId = activeSectionMeta ? `section-${activeSectionMeta.key}-title` : undefined;
+
   return (
     <div>
-      <div className="flex flex-wrap gap-4">
+      <div className="relative flex flex-wrap gap-4">
         <div className="flex gap-4 w-full">
           <div className="flex flex-col gap-4">
             <Card className="h-56 flex flex-col justify-between w-80 shrink-0">
@@ -106,52 +119,45 @@ export default function Home() {
             <img src="/JacobMurrahWaterfall.jpg" alt="Jacob Murrah" />
           </Card> */}
 
-          <Card className="flex flex-col gap-2 w-full">
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/ProfileIcon.svg"
-                alt="About"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              About
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/BriefcaseIcon.svg"
-                alt="Experience"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Experience
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/EducationIcon.svg"
-                alt="Education"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Education
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/ProjectIcon.svg"
-                alt="Projects"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Projects
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/FileDownloadIcon.svg"
-                alt="Resume"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Resume
-            </h2>
+          <Card
+            className={
+              activeSection
+                ? 'section-card flex flex-col gap-2 w-full section-card--active-source'
+                : 'section-card flex flex-col gap-2 w-full'
+            }
+          >
+            <div
+              className={
+                activeSection
+                  ? 'section-card__list flex flex-col gap-2 section-card__list--animating'
+                  : 'section-card__list flex flex-col gap-2'
+              }
+              aria-hidden={Boolean(activeSection)}
+            >
+              {sections.map((section) => {
+                const isActive = activeSection === section.key;
+                return (
+                  <button
+                    key={section.key}
+                    type="button"
+                    data-active={isActive}
+                    onClick={() =>
+                      setActiveSection((prev) => (prev === section.key ? null : section.key))
+                    }
+                    aria-expanded={isActive}
+                    className="section-card__button flex items-center gap-2 text-left transition-colors duration-200 hover:text-[color:var(--primary)] focus-visible:outline-none focus-visible:text-[color:var(--primary)]"
+                  >
+                    <SvgIcon
+                      src={section.icon}
+                      alt={section.label}
+                      hoverColor="var(--primary)"
+                      size="small"
+                    />
+                    <span>{section.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </Card>
         </div>
         <Card className="w-full flex flex-col gap-4">
@@ -162,6 +168,31 @@ export default function Home() {
             ))}
           </div>
         </Card>
+        {activeSectionMeta && (
+          <Card
+            className="section-expander flex flex-col gap-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={activeHeadingId}
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold" id={activeHeadingId}>
+                {activeSectionMeta.label}
+              </h2>
+              <button
+                type="button"
+                onClick={() => setActiveSection(null)}
+                className="text-sm text-[color:var(--primary)] hover:opacity-80 focus-visible:outline-none focus-visible:opacity-80"
+              >
+                Close
+              </button>
+            </div>
+            <p className="opacity-75">
+              Placeholder content for the {activeSectionMeta.label.toLowerCase()} section. Add your
+              real copy here later.
+            </p>
+          </Card>
+        )}
       </div>
     </div>
   );
