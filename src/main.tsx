@@ -6,7 +6,7 @@ import App from './App.tsx';
 
 const theme = createTheme({
   typography: {
-    fontFamily: '"Instrument Sans", sans-serif',
+    fontFamily: '"Inter", sans-serif',
   },
 });
 
