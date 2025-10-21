@@ -6,7 +6,7 @@ import App from './App.tsx';
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'GothamPro, Gotham, sans-serif',
+    fontFamily: '"Instrument Sans", sans-serif',
   },
 });
 

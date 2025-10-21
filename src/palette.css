@@ -6,6 +6,8 @@
   --text-muted: hsl(0, 0%, 35%);
   --primary: hsl(270, 100%, 55%);
   --secondary: hsl(270, 100%, 65%);
+  --card-bg: var(--bg-light);
+  --card-border: var(--bg-dark);
 }
 
 body.dark {
@@ -14,9 +16,15 @@ body.dark {
   --bg-dark: hsl(240, 4%, 8%);
   --text: hsl(0, 0%, 95%);
   --text-muted: hsl(0, 0%, 80%);
+  --card-bg: var(--bg-light);
+  --card-border: hsl(240, 4%, 24%);
 }
 
 body {
   background: var(--bg);
   color: var(--text-muted);
+}
+
+a:hover {
+  color: var(--primary);
 }
