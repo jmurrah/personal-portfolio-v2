@@ -10,3 +10,21 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.svg-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.svg-icon img {
+  filter: brightness(0) saturate(100%) invert(var(--icon-invert, 1));
+}
+
+.svg-icon:hover img {
+  filter: brightness(0) saturate(100%) invert(var(--icon-hover-invert, 0.5)) sepia(1) saturate(3)
+    hue-rotate(var(--icon-hover-hue-rotate, 170deg));
+}
