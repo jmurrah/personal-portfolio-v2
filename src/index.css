@@ -24,14 +24,32 @@ a {
 }
 
 .svg-icon {
-  width: 40px;
-  height: 40px;
   display: inline-block;
+  color: var(--icon-color, var(--text));
   background-color: currentColor;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
-  -webkit-mask-size: 24px 24px;
-  mask-size: 24px 24px;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.svg-icon-large {
+  width: 28px;
+  height: 28px;
+}
+
+.svg-icon-medium {
+  width: 23px;
+  height: 23px;
+}
+
+.svg-icon-small {
+  width: 20px;
+  height: 20px;
+}
+
+.svg-icon-link:hover .svg-icon {
+  background-color: var(--icon-hover-color);
 }

@@ -7,7 +7,7 @@ interface TechnologyBadgeProps {
 export default function TechnologyBadge({ name, logoSrc, accent }: TechnologyBadgeProps) {
   return (
     <div
-      className="inline-flex items-center gap-1.5 rounded-sm border p-1.5 transition-colors duration-150"
+      className="inline-flex items-center gap-1.5 rounded-sm border p-1.5"
       style={{ backgroundColor: 'var(--bg-light)', borderColor: 'var(--card-border)' }}
       onMouseEnter={(event) => {
         const target = event.currentTarget;

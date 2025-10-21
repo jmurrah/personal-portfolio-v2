@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Blog() {
   return (
     <>
       <p>Writing</p>
