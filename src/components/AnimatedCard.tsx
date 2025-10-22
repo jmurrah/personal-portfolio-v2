@@ -6,6 +6,7 @@ interface AnimatedCardProps {
   direction?: 'left' | 'right' | 'top' | 'bottom';
   delay?: number;
   duration?: number;
+  exitDuration?: number; // New prop for exit animation duration
   className?: string;
   children: React.ReactNode;
   triggerExit?: boolean;
@@ -16,6 +17,7 @@ export default function AnimatedCard({
   direction = 'left',
   delay = 0,
   duration = 1000,
+  exitDuration = 2000, // Default exit duration longer than entry
   className = '',
   children,
   triggerExit = false,
@@ -28,7 +30,8 @@ export default function AnimatedCard({
   const { style, isVisible } = useSlideAnimation({
     direction,
     delay: triggerExit ? 0 : delay,
-    duration,
+    // Use exitDuration when exiting, otherwise use regular duration
+    duration: triggerExit ? exitDuration : duration,
     isExiting: triggerExit,
   });
 
@@ -38,7 +41,7 @@ export default function AnimatedCard({
     setTimeout(() => {
       setHasExited(true);
       onExitComplete?.();
-    }, duration);
+    }, exitDuration); // Use exit duration for completion timing
   }
 
   return (
