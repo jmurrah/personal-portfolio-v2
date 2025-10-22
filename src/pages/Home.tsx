@@ -1,7 +1,8 @@
-import Card from '@/components/Card';
+import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/Tabs/Tabs';
+import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -10,7 +11,11 @@ const technologies = [
   { name: 'TypeScript', logoSrc: '/logos/TypeScriptLogo.svg', accent: 'rgba(49, 120, 198, 0.2)' },
   { name: 'React', logoSrc: '/logos/ReactLogo.svg', accent: 'rgba(97, 218, 251, 0.2)' },
   { name: 'AWS', logoSrc: '/logos/AWSLogo.svg', accent: 'rgba(255, 153, 0, 0.2)' },
-  { name: 'Google Cloud', logoSrc: '/logos/GoogleCloudLogo.svg', accent: 'rgba(66, 133, 244, 0.2)' },
+  {
+    name: 'Google Cloud',
+    logoSrc: '/logos/GoogleCloudLogo.svg',
+    accent: 'rgba(66, 133, 244, 0.2)',
+  },
   { name: 'Postman', logoSrc: '/logos/PostmanLogo.svg', accent: 'rgba(255, 108, 55, 0.2)' },
   { name: 'Supabase', logoSrc: '/logos/SupabaseLogo.svg', accent: 'rgba(63, 207, 142, 0.2)' },
   { name: 'MongoDB', logoSrc: '/logos/MongoDbLogo.svg', accent: 'rgba(89, 150, 54, 0.2)' },
@@ -22,12 +27,19 @@ const technologies = [
 ];
 
 export default function Home() {
+  // For Tabs component animation
+  const tabsAnimation = useSlideAnimation({ direction: 'top', delay: 1100 });
+
   return (
     <div>
       <div className="flex flex-wrap gap-4">
         <div className="flex gap-4 w-full">
           <div className="flex flex-col gap-4">
-            <Card className="h-56 flex flex-col justify-between w-80 shrink-0">
+            <AnimatedCard
+              direction="left"
+              delay={100}
+              className="h-56 flex flex-col justify-between w-80 shrink-0"
+            >
               <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
               <p className="flex items-center gap-2">
                 <SvgIcon
@@ -65,9 +77,13 @@ export default function Home() {
                 />
                 jacob@murrah.dev
               </a>
-            </Card>
-            
-            <Card className="flex justify-between items-center">
+            </AnimatedCard>
+
+            <AnimatedCard
+              direction="left"
+              delay={350}
+              className="flex justify-between items-center"
+            >
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
               <SvgIcon
                 href="https://linkedin.com/in/jacobmurrah"
@@ -93,30 +109,28 @@ export default function Home() {
                 alt="Email"
                 hoverColor="var(--primary)"
               />
-            </Card>
-            
-            <Card>
+            </AnimatedCard>
+
+            <AnimatedCard direction="right" delay={600}>
               <p className="text-[color:var(--primary)]">Currently ↓</p>
               <p>Software Engineer I @ AT&T</p>
               <p>OMSCS @ Georgia Tech</p>
-            </Card>
+            </AnimatedCard>
           </div>
-          
-          {/* <Card className="w-auto max-w-24">
-            <img src="/JacobMurrahWaterfall.jpg" alt="Jacob Murrah" />
-          </Card> */}
-          
-          <Tabs />
+
+          <div style={tabsAnimation.style} className="w-full">
+            <Tabs />
+          </div>
         </div>
-        
-        <Card className="w-full flex flex-col gap-4">
+
+        <AnimatedCard direction="bottom" delay={850} className="w-full flex flex-col gap-4">
           <h2>Technologies</h2>
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (
               <TechnologyBadge key={tech.name} {...tech} />
             ))}
           </div>
-        </Card>
+        </AnimatedCard>
       </div>
     </div>
   );

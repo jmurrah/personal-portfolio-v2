@@ -67,7 +67,7 @@ export default function Tabs() {
   };
 
   return (
-    <ExpandableCard expanded={isExpanded} className={isClosing ? 'closing' : ''}>
+    <ExpandableCard expanded={isExpanded} className={`${isClosing ? 'closing' : ''} h-full`}>
       <SlidingTabs
         tabs={tabs}
         selectedTab={selectedTab}
