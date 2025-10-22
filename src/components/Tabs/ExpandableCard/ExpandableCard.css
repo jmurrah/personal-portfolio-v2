@@ -1,0 +1,44 @@
+.expandable-card {
+  --container-expand-duration: 520ms;
+  --card-offset-left: 0px;
+  --card-parent-width: 100%;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  align-self: stretch;
+  position: relative;
+  /* Add position for z-index to work */
+  z-index: 1;
+  /* Default z-index */
+  transition:
+    width var(--container-expand-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    max-width var(--container-expand-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    flex-basis var(--container-expand-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    margin-left var(--container-expand-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 240ms ease;
+}
+
+.expandable-card.expandable-card--expanded {
+  flex-basis: 100%;
+  max-width: min(48rem, var(--card-parent-width, 100%));
+  width: min(48rem, var(--card-parent-width, 100%));
+  margin-left: calc(var(--card-offset-left, 0px) * -1);
+  z-index: 50;
+  /* Higher z-index when expanded */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Adding transition for closing - slower than opening */
+.expandable-card.closing {
+  /* Slower closing transition */
+  --closing-duration: 720ms;
+  z-index: 50;
+  /* Keep high z-index during closing */
+  transition:
+    width var(--closing-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    max-width var(--closing-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    flex-basis var(--closing-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    margin-left var(--closing-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 240ms ease;
+}
