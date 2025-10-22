@@ -1,6 +1,7 @@
 import Card from '@/components/Card';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
+import Tabs from '@/components/Tabs/Tabs';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -105,54 +106,7 @@ export default function Home() {
           {/* <Card className="w-auto max-w-24">
             <img src="/JacobMurrahWaterfall.jpg" alt="Jacob Murrah" />
           </Card> */}
-
-          <Card className="flex flex-col gap-2 w-full">
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/ProfileIcon.svg"
-                alt="About"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              About
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/BriefcaseIcon.svg"
-                alt="Experience"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Experience
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/EducationIcon.svg"
-                alt="Education"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Education
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/ProjectIcon.svg"
-                alt="Projects"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Projects
-            </h2>
-            <h2 className="flex items-center gap-2">
-              <SvgIcon
-                src="/icons/FileDownloadIcon.svg"
-                alt="Resume"
-                hoverColor="var(--primary)"
-                size="small"
-              />
-              Resume
-            </h2>
-          </Card>
+          <Tabs />
         </div>
         <Card className="w-full flex flex-col gap-4">
           <h2>Technologies</h2>
