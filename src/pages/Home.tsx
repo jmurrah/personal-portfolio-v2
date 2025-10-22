@@ -10,11 +10,7 @@ const technologies = [
   { name: 'TypeScript', logoSrc: '/logos/TypeScriptLogo.svg', accent: 'rgba(49, 120, 198, 0.2)' },
   { name: 'React', logoSrc: '/logos/ReactLogo.svg', accent: 'rgba(97, 218, 251, 0.2)' },
   { name: 'AWS', logoSrc: '/logos/AWSLogo.svg', accent: 'rgba(255, 153, 0, 0.2)' },
-  {
-    name: 'Google Cloud',
-    logoSrc: '/logos/GoogleCloudLogo.svg',
-    accent: 'rgba(66, 133, 244, 0.2)',
-  },
+  { name: 'Google Cloud', logoSrc: '/logos/GoogleCloudLogo.svg', accent: 'rgba(66, 133, 244, 0.2)' },
   { name: 'Postman', logoSrc: '/logos/PostmanLogo.svg', accent: 'rgba(255, 108, 55, 0.2)' },
   { name: 'Supabase', logoSrc: '/logos/SupabaseLogo.svg', accent: 'rgba(63, 207, 142, 0.2)' },
   { name: 'MongoDB', logoSrc: '/logos/MongoDbLogo.svg', accent: 'rgba(89, 150, 54, 0.2)' },
@@ -70,6 +66,7 @@ export default function Home() {
                 jacob@murrah.dev
               </a>
             </Card>
+            
             <Card className="flex justify-between items-center">
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
               <SvgIcon
@@ -97,17 +94,21 @@ export default function Home() {
                 hoverColor="var(--primary)"
               />
             </Card>
+            
             <Card>
               <p className="text-[color:var(--primary)]">Currently ↓</p>
               <p>Software Engineer I @ AT&T</p>
               <p>OMSCS @ Georgia Tech</p>
             </Card>
           </div>
+          
           {/* <Card className="w-auto max-w-24">
             <img src="/JacobMurrahWaterfall.jpg" alt="Jacob Murrah" />
           </Card> */}
+          
           <Tabs />
         </div>
+        
         <Card className="w-full flex flex-col gap-4">
           <h2>Technologies</h2>
           <div className="flex flex-wrap gap-2">
