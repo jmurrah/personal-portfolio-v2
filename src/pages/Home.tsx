@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
@@ -27,8 +28,25 @@ const technologies = [
 ];
 
 export default function Home() {
+  // State to track if cards should exit
+  const [cardsExiting, setCardsExiting] = useState(false);
+
   // For Tabs component animation
-  const tabsAnimation = useSlideAnimation({ direction: 'top', delay: 1100 });
+  // const tabsAnimation = useSlideAnimation({ direction: 'top', delay: 1100 });
+
+  // Handle tab click - make cards exit
+  const handleTabClick = (tabId: string) => {
+    // If tabId is empty string, tab is being closed
+    if (tabId === '') {
+      // Small delay to sync with tab closing animation
+      setTimeout(() => {
+        setCardsExiting(false);
+      }, 100);
+    } else {
+      // Otherwise, make cards exit
+      setCardsExiting(true);
+    }
+  };
 
   return (
     <div>
@@ -38,6 +56,7 @@ export default function Home() {
             <AnimatedCard
               direction="left"
               delay={100}
+              triggerExit={cardsExiting}
               className="h-56 flex flex-col justify-between w-80 shrink-0"
             >
               <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
@@ -82,6 +101,7 @@ export default function Home() {
             <AnimatedCard
               direction="left"
               delay={350}
+              triggerExit={cardsExiting}
               className="flex justify-between items-center"
             >
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
@@ -111,19 +131,22 @@ export default function Home() {
               />
             </AnimatedCard>
 
-            <AnimatedCard direction="right" delay={600}>
+            <AnimatedCard direction="left" delay={600} triggerExit={cardsExiting}>
               <p className="text-[color:var(--primary)]">Currently ↓</p>
               <p>Software Engineer I @ AT&T</p>
               <p>OMSCS @ Georgia Tech</p>
             </AnimatedCard>
           </div>
 
-          <div style={tabsAnimation.style} className="w-full">
-            <Tabs />
-          </div>
+          <Tabs onTabClick={handleTabClick} />
         </div>
 
-        <AnimatedCard direction="bottom" delay={850} className="w-full flex flex-col gap-4">
+        <AnimatedCard
+          direction="left" // Changed from "bottom" to "left" so it completely exits the screen
+          delay={850}
+          triggerExit={cardsExiting}
+          className="w-full flex flex-col gap-4"
+        >
           <h2>Technologies</h2>
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (

@@ -5,7 +5,11 @@ import './Tabs.css';
 
 const CARD_CLOSING_DURATION_MS = 720; // Slightly longer closing animation
 
-export default function Tabs() {
+interface TabsProps {
+  onTabClick?: (tabId: string) => void;
+}
+
+export default function Tabs({ onTabClick }: TabsProps) {
   const [selectedTab, setSelectedTab] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -46,6 +50,11 @@ export default function Tabs() {
       setIsClosing(true);
       setIsExpanded(false);
 
+      // Notify parent about tab closing with null id
+      if (onTabClick) {
+        onTabClick(''); // empty string indicates closing
+      }
+
       // Use the longer closing duration
       closeTimeoutRef.current = window.setTimeout(() => {
         setSelectedTab(null);
@@ -53,6 +62,11 @@ export default function Tabs() {
       }, CARD_CLOSING_DURATION_MS);
 
       return;
+    }
+
+    // Notify parent about tab click
+    if (onTabClick) {
+      onTabClick(tabId);
     }
 
     // Otherwise, select the new tab

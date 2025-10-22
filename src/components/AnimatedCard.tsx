@@ -27,7 +27,7 @@ export default function AnimatedCard({
   // Use the animation hook
   const { style, isVisible } = useSlideAnimation({
     direction,
-    delay,
+    delay: triggerExit ? 0 : delay,
     duration,
     isExiting: triggerExit,
   });
