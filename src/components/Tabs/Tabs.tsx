@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import Card from '@/components/Card';
 import SvgIcon from '@/components/SvgIcon';
 import './Tabs.css';
@@ -9,6 +9,8 @@ type Tab = {
   label: string;
 };
 
+const TAB_SLIDE_DURATION_MS = 650;
+
 export default function Tabs() {
   const [selectedTab, setSelectedTab] = useState<string | null>(null);
   const [tabOffsets, setTabOffsets] = useState<Record<string, number>>({});
@@ -16,8 +18,14 @@ export default function Tabs() {
     listHeight: 0,
     tabHeight: 0,
   });
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [cardMetrics, setCardMetrics] = useState<{
+    offsetLeft: number;
+    parentWidth: number;
+  } | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   // Define our tabs
   const tabs: Tab[] = useMemo(
@@ -28,13 +36,31 @@ export default function Tabs() {
       { id: 'projects', icon: '/icons/ProjectIcon.svg', label: 'Projects' },
       { id: 'resume', icon: '/icons/FileDownloadIcon.svg', label: 'Resume' },
     ],
-    []
+    [],
   );
 
   // Handle tab selection
   const handleSelectTab = (tabId: string) => {
-    setSelectedTab((current) => current === tabId ? null : tabId);
+    setSelectedTab((current) => (current === tabId ? null : tabId));
   };
+
+  useEffect(() => {
+    let expandTimeoutId: number | undefined;
+
+    if (selectedTab) {
+      expandTimeoutId = window.setTimeout(() => {
+        setIsExpanded(true);
+      }, TAB_SLIDE_DURATION_MS);
+    } else {
+      setIsExpanded(false);
+    }
+
+    return () => {
+      if (expandTimeoutId) {
+        window.clearTimeout(expandTimeoutId);
+      }
+    };
+  }, [selectedTab]);
 
   useLayoutEffect(() => {
     const measureLayout = () => {
@@ -55,10 +81,7 @@ export default function Tabs() {
 
       if (!Object.keys(offsets).length) {
         setListMetrics((previous) => {
-          if (
-            previous.listHeight === nextListHeight &&
-            previous.tabHeight === measuredTabHeight
-          ) {
+          if (previous.listHeight === nextListHeight && previous.tabHeight === measuredTabHeight) {
             return previous;
           }
 
@@ -71,18 +94,13 @@ export default function Tabs() {
       }
 
       setTabOffsets((previous) => {
-        const hasChanges = tabs.some(
-          (tab) => previous[tab.id] !== offsets[tab.id]
-        );
+        const hasChanges = tabs.some((tab) => previous[tab.id] !== offsets[tab.id]);
 
         return hasChanges ? offsets : previous;
       });
 
       setListMetrics((previous) => {
-        if (
-          previous.listHeight === nextListHeight &&
-          previous.tabHeight === measuredTabHeight
-        ) {
+        if (previous.listHeight === nextListHeight && previous.tabHeight === measuredTabHeight) {
           return previous;
         }
 
@@ -91,6 +109,30 @@ export default function Tabs() {
           tabHeight: measuredTabHeight,
         };
       });
+
+      const cardNode = cardRef.current;
+      if (cardNode) {
+        const parentElement = cardNode.parentElement;
+        const cardRect = cardNode.getBoundingClientRect();
+        const parentRect = parentElement?.getBoundingClientRect();
+        const nextOffsetLeft = parentRect ? cardRect.left - parentRect.left : cardNode.offsetLeft;
+        const nextParentWidth = parentRect?.width ?? cardRect.width;
+
+        setCardMetrics((previous) => {
+          if (
+            previous &&
+            previous.offsetLeft === nextOffsetLeft &&
+            previous.parentWidth === nextParentWidth
+          ) {
+            return previous;
+          }
+
+          return {
+            offsetLeft: nextOffsetLeft,
+            parentWidth: nextParentWidth,
+          };
+        });
+      }
     };
 
     measureLayout();
@@ -99,18 +141,29 @@ export default function Tabs() {
     return () => {
       window.removeEventListener('resize', measureLayout);
     };
-  }, [tabs]);
-  
+  }, [tabs, selectedTab, isExpanded]);
+
+  const slideDurationValue = `${TAB_SLIDE_DURATION_MS}ms`;
+  const containerClassName = ['tabs-container', isExpanded ? 'tabs-container--expanded' : '']
+    .filter(Boolean)
+    .join(' ');
+  const cardStyle = {
+    '--tabs-offset-left': cardMetrics ? `${cardMetrics.offsetLeft}px` : undefined,
+    '--tabs-parent-width': cardMetrics ? `${cardMetrics.parentWidth}px` : undefined,
+  } as CSSProperties;
+
   return (
-    <Card className="tabs-container">
-      <div 
+    <Card ref={cardRef} className={`${containerClassName} w-full`} style={cardStyle}>
+      <div
         ref={listRef}
         className={`tabs-list ${selectedTab ? 'tab-selected' : ''}`}
-        style={{ 
-          '--animation-duration': '650ms',
-          '--list-height': listMetrics.listHeight ? `${listMetrics.listHeight}px` : undefined,
-          '--tab-height': listMetrics.tabHeight ? `${listMetrics.tabHeight}px` : undefined,
-        } as CSSProperties}
+        style={
+          {
+            '--animation-duration': slideDurationValue,
+            '--list-height': listMetrics.listHeight ? `${listMetrics.listHeight}px` : undefined,
+            '--tab-height': listMetrics.tabHeight ? `${listMetrics.tabHeight}px` : undefined,
+          } as CSSProperties
+        }
       >
         {tabs.map((tab) => {
           const isSelected = selectedTab === tab.id;
@@ -127,7 +180,7 @@ export default function Tabs() {
           if (selectedTab && !isSelected) {
             inlineStyle.opacity = 0;
           }
-          
+
           return (
             <button
               key={tab.id}

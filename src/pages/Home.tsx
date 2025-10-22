@@ -73,7 +73,7 @@ export default function Home() {
             <Card className="flex justify-between items-center">
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
               <SvgIcon
-                href="https://linkedin.com/in/jacobhmurrah"
+                href="https://linkedin.com/in/jacobmurrah"
                 src="/icons/LinkedInIcon.svg"
                 alt="LinkedIn"
                 hoverColor="var(--primary)"
