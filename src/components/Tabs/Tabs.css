@@ -33,13 +33,13 @@
     text-align: left;
     font-size: 1rem;
     color: var(--text);
-    transition: transform var(--animation-duration) cubic-bezier(0.33, 1, 0.68, 1), opacity 240ms ease, color 160ms ease;
+    transition: transform var(--animation-duration) cubic-bezier(0.33, 1, 0.68, 1), opacity 200ms ease-out, color 160ms ease;
     transform: translateY(0);
     transform-origin: left center;
     width: 100%;
     position: relative;
     will-change: transform, opacity;
-    animation: none;
+    opacity: 1;
 }
 
 .tab-item:hover {
@@ -47,21 +47,12 @@
 }
 
 .tab-selected .tab-item:not(.selected) {
-    animation: fadeOutAtTop var(--animation-duration) linear forwards;
     pointer-events: none;
+    opacity: 0;
 }
 
 .tab-item.selected {
     color: var(--primary);
     font-weight: 500;
-}
-
-@keyframes fadeOutAtTop {
-    0%,
-    90% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+    opacity: 1;
 }

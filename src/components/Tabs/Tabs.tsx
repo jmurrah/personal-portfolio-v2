@@ -116,18 +116,24 @@ export default function Tabs() {
           const isSelected = selectedTab === tab.id;
           const offset = tabOffsets[tab.id] ?? 0;
           const translateY = selectedTab ? -offset : 0;
+          const inlineStyle: CSSProperties = {
+            zIndex: isSelected ? 10 : 1,
+          };
+
+          if (isSelected && selectedTab) {
+            inlineStyle.transform = `translateY(${translateY}px)`;
+          }
+
+          if (selectedTab && !isSelected) {
+            inlineStyle.opacity = 0;
+          }
           
           return (
             <button
               key={tab.id}
               className={`tab-item ${isSelected ? 'selected' : ''}`}
               onClick={() => handleSelectTab(tab.id)}
-              style={
-                {
-                  transform: `translateY(${translateY}px)`,
-                  zIndex: isSelected ? 10 : 1,
-                } as CSSProperties
-              }
+              style={inlineStyle}
               ref={(node) => {
                 tabRefs.current[tab.id] = node;
               }}
