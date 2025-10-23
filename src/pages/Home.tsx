@@ -159,7 +159,7 @@ export default function Home() {
             </AnimatedCard>
 
             <AnimatedCard
-              direction="left"
+              direction="right"
               delay={600}
               triggerExit={cardsExiting}
               displayType="block"
@@ -176,7 +176,7 @@ export default function Home() {
         </div>
 
         <AnimatedCard
-          direction="left"
+          direction="bottom"
           delay={850}
           triggerExit={cardsExiting}
           className="w-full flex flex-col gap-4"
