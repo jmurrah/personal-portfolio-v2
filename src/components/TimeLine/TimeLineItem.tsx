@@ -41,7 +41,7 @@ export default function TimelineItem({
         rel="noopener noreferrer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="flex items-center justify-center bg-white border"
+        className="flex items-center justify-center bg-white border relative z-10 "
         style={{ borderColor: active ? 'var(--primary)' : 'var(--text-muted)' }}
       >
         <span className="relative flex shrink-0 overflow-hidden size-14">
@@ -49,6 +49,7 @@ export default function TimelineItem({
             className="aspect-square h-full w-full bg-background object-contain"
             alt={imgAlt}
             src={imgSrc}
+            loading="eager"
           />
         </span>
       </a>

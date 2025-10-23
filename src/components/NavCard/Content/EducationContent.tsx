@@ -6,7 +6,7 @@ export default function EducationContent() {
     <TimeLine>
       <TimeLineItem
         href="https://www.gatech.edu/"
-        imgSrc="/logos/GTechLogo.jpg"
+        imgSrc="/logos/GTechLogo.webp"
         imgAlt="Georgia Institute of Technology"
         timeStart="January 2026"
         timeEnd="December 2028"
@@ -16,7 +16,7 @@ export default function EducationContent() {
       />
       <TimeLineItem
         href="https://www.auburn.edu/"
-        imgSrc="/logos/AuburnLogo.jpg"
+        imgSrc="/logos/AuburnLogo.webp"
         imgAlt="Auburn University"
         timeStart="April 2021"
         timeEnd="December 2025"

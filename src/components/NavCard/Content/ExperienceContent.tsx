@@ -6,7 +6,7 @@ export default function ExperienceContent() {
     <TimeLine>
       <TimeLineItem
         href="https://www.att.com/"
-        imgSrc="/logos/AT&TLogo.jpg"
+        imgSrc="/logos/AT&TLogo.webp"
         imgAlt="AT&T"
         timeStart="January 2026"
         timeEnd="Present"
@@ -16,7 +16,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.eng.auburn.edu/"
-        imgSrc="/logos/AuburnEngineeringLogo.jpg"
+        imgSrc="/logos/AuburnEngineeringLogo.webp"
         imgAlt="Auburn University - Samuel Ginn College of Engineering"
         timeStart="August 2025"
         timeEnd="December 2025"
@@ -26,7 +26,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.att.com/"
-        imgSrc="/logos/AT&TLogo.jpg"
+        imgSrc="/logos/AT&TLogo.webp"
         imgAlt="AT&T"
         timeStart="June 2025"
         timeEnd="August 2025"
@@ -36,7 +36,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.adtran.com/en"
-        imgSrc="/logos/AdtranLogo.jpg"
+        imgSrc="/logos/AdtranLogo.webp"
         imgAlt="Adtran"
         timeStart="May 2023"
         timeEnd="December 2024"
@@ -46,7 +46,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.is4s.com/"
-        imgSrc="/logos/IS4SLogo.jpg"
+        imgSrc="/logos/IS4SLogo.webp"
         imgAlt="IS4S"
         timeStart="January 2021"
         timeEnd="August 2022"

@@ -1,15 +1,14 @@
 .expandable-card {
-  --animation-duration: 600ms;
+  --animation-duration: 2000ms;
   --content-height: 0;
   --initial-width: 280px;
-  --initial-height: 320px; /* Add this */
+  --initial-height: 320px;
 
   width: var(--initial-width);
-  min-height: var(--initial-height); /* Add this to prevent shrinking below initial height */
+  min-height: var(--initial-height);
   transition:
-    width var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
-  overflow: visible;
+    width var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
+  /* overflow: visible; */
   display: flex;
   flex-direction: column;
 }
@@ -20,17 +19,13 @@
 }
 
 .card-content {
-  height: min-content;
+  height: auto;
   opacity: 0;
   overflow: hidden;
-  transition:
-    height var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1),
-    opacity var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .expandable-card.expanded {
   width: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .expandable-card.expanded .card-content {
@@ -40,38 +35,14 @@
 .expandable-card.closing {
   --closing-duration: 720ms;
   transition:
-    width var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1);
+    width var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.expandable-card.closing .card-content {
-  transition:
-    height var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1),
-    opacity var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1);
-}
 
 .expandable-card.animating {
-  will-change: width, box-shadow;
+  will-change: width;
 }
 
 .expandable-card.animating .card-content {
   will-change: height, opacity;
-}
-
-.tab-content-inner {
-  padding: 12px;
-  animation: fadeIn 300ms ease-out forwards;
-  animation-delay: calc(var(--animation-duration) * 0.5);
-  opacity: 0;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

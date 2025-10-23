@@ -4,6 +4,7 @@ import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/NavCard/NavCard';
 import { useSlideAnimation } from '@/hooks/useSlideAnimation';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -166,8 +167,19 @@ export default function Home() {
               <p>OMSCS @ Georgia Tech</p>
             </AnimatedCard>
           </div>
-          <div style={tabsAnimation.style} className="w-full min-h-fit">
-            <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
+          <div className="flex flex-col gap-4 w-full">
+            <div style={tabsAnimation.style} className="w-full">
+              <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
+            </div>
+            <AnimatedCard
+              direction="right"
+              delay={1350}
+              triggerExit={cardsExiting}
+              className={`h-full ${hideCards ? 'hidden' : ''}`}
+              onExitComplete={handleCardExited}
+            >
+              <ThemeToggle />
+            </AnimatedCard>
           </div>
         </div>
 
