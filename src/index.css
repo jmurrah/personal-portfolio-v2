@@ -125,3 +125,7 @@ a {
 .svg-icon-link:hover .svg-icon {
   background-color: var(--icon-hover-color);
 }
+
+.card.hidden {
+  display: none;
+}

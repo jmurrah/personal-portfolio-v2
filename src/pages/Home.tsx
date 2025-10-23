@@ -36,11 +36,12 @@ const sections = [
 ];
 
 export default function Home() {
-  const [cardsExiting, setCardsExiting] = useState(false);
-  const [exitedCardCount, setExitedCardCount] = useState(0);
   const [selectedTabId, setSelectedTabId] = useState('');
   const [readyToShowTab, setReadyToShowTab] = useState(false);
-  const totalCards = 4; // Total number of AnimatedCard components
+  const [cardsExiting, setCardsExiting] = useState(false);
+  const [exitedCardCount, setExitedCardCount] = useState(0);
+  const [hideCards, setHideCards] = useState(false);
+  const totalCards = 4;
 
   const tabsAnimation = useSlideAnimation({
     direction: 'top',
@@ -48,19 +49,15 @@ export default function Home() {
     duration: 1000,
     isExiting: false,
   });
-  // Function to handle when all cards have exited
+
   const handleAllCardsExited = () => {
-    console.log('All cards have exited! Now loading content for tab:', selectedTabId);
+    setHideCards(true);
     setReadyToShowTab(true);
-    // Load content for the selected tab or perform other actions
   };
 
   const handleCardExited = () => {
-    console.log('A card has exited');
-    setExitedCardCount((prevCount) => {
-      const newCount = prevCount + 1;
-      console.log('Current exited count:', newCount);
-
+    setExitedCardCount((prev) => {
+      const newCount = prev + 1;
       if (newCount === totalCards) {
         handleAllCardsExited();
       }
@@ -72,14 +69,10 @@ export default function Home() {
     setSelectedTabId(tabId);
     setExitedCardCount(0);
     setReadyToShowTab(false);
-
+    setHideCards(false);
     if (tabId === '') {
-      console.log('Re-entering cards');
-      setTimeout(() => {
-        setCardsExiting(false);
-      }, 100);
+      setCardsExiting(false);
     } else {
-      console.log('Exiting cards for tab:', tabId);
       setCardsExiting(true);
     }
   };
@@ -93,8 +86,7 @@ export default function Home() {
               direction="left"
               delay={100}
               triggerExit={cardsExiting}
-              className="h-56 flex flex-col justify-between w-80 shrink-0"
-              displayType="flex"
+              className={`h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
               <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
@@ -140,8 +132,7 @@ export default function Home() {
               direction="left"
               delay={350}
               triggerExit={cardsExiting}
-              className="flex justify-between items-center"
-              displayType="flex"
+              className={`flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
@@ -175,7 +166,7 @@ export default function Home() {
               direction="right"
               delay={600}
               triggerExit={cardsExiting}
-              displayType="block"
+              className={hideCards ? 'hidden' : ''}
               onExitComplete={handleCardExited}
             >
               <p className="text-[color:var(--primary)]">Currently ↓</p>
@@ -192,8 +183,7 @@ export default function Home() {
           direction="bottom"
           delay={850}
           triggerExit={cardsExiting}
-          className="w-full flex flex-col gap-4"
-          displayType="flex"
+          className={`w-full flex flex-col gap-4 ${hideCards ? 'hidden' : ''}`}
           onExitComplete={handleCardExited}
         >
           <h2>Technologies</h2>

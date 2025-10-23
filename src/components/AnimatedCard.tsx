@@ -10,7 +10,6 @@ interface AnimatedCardProps {
   exitDuration?: number;
   triggerExit?: boolean;
   className?: string;
-  displayType: string;
   onExitComplete?: () => void;
   children: React.ReactNode;
 }
@@ -22,12 +21,10 @@ export default function AnimatedCard({
   exitDuration = 2000,
   triggerExit = false,
   className = '',
-  displayType,
   onExitComplete,
   children,
 }: AnimatedCardProps) {
   const [hasExited, setHasExited] = useState(false);
-  const [display, setDisplay] = useState(displayType);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const { style, isVisible } = useSlideAnimation({
@@ -40,10 +37,9 @@ export default function AnimatedCard({
   // Reset when coming back in
   useEffect(() => {
     if (!triggerExit) {
-      setDisplay(displayType);
       setHasExited(false);
     }
-  }, [triggerExit, displayType]);
+  }, [triggerExit]);
 
   // Use IntersectionObserver to detect when card is out of viewport
   useEffect(() => {
@@ -54,7 +50,6 @@ export default function AnimatedCard({
         const entry = entries[0];
         if (!entry.isIntersecting && triggerExit) {
           setHasExited(true);
-          setDisplay('none');
           console.log('Card out of viewport, setting display: none');
           if (onExitComplete) onExitComplete();
           observer.disconnect();
@@ -76,7 +71,6 @@ export default function AnimatedCard({
         ...style,
         opacity: isVisible || triggerExit ? 1 : 0,
         pointerEvents: triggerExit ? 'none' : 'auto',
-        display: display,
       }}
     >
       {children}
