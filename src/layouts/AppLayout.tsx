@@ -17,7 +17,7 @@ export default function AppLayout() {
           borderColor: 'var(--card-border)',
         }}
       >
-        <div className="w-full max-w-3xl p-4 flex items-center justify-between gap-4 py-6">
+        <div className="w-full max-w-2xl p-4 flex items-center justify-between gap-4 py-6">
           <nav>
             <ul className="flex gap-6 list-none p-0 m-0">
               {navItems.map((item) => (
@@ -41,7 +41,7 @@ export default function AppLayout() {
         </div>
       </header>
       <main className="flex justify-center">
-        <div className="w-full max-w-3xl p-4 min-h-fit">
+        <div className="w-full max-w-2xl p-4 min-h-fit">
           <Outlet />
         </div>
       </main>

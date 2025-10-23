@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
-import Tabs from '@/components/Tabs/Tabs';
+import Tabs from '@/components/NavCard/NavCard';
 import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 
 const technologies = [

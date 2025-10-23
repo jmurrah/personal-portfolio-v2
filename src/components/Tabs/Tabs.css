@@ -1,9 +1,0 @@
-@import '@/components/Tabs/SlidingTabs/SlidingTabs.css';
-@import '@/components/Tabs/ExpandableCard/ExpandableCard.css';
-
-:root {
-  --collapse-duration: 320ms;
-  --animation-duration: 520ms;
-  --closing-duration: 720ms;
-  --container-expand-duration: 520ms;
-}

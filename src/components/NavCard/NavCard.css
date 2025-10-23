@@ -1,0 +1,9 @@
+@import '@/components/NavCard/Animations/SlidingTabs/SlidingTabs.css';
+@import '@/components/NavCard/Animations/ExpandableCard/ExpandableCard.css';
+
+:root {
+  --collapse-duration: 320ms;
+  --animation-duration: 520ms;
+  --closing-duration: 720ms;
+  --container-expand-duration: 520ms;
+}

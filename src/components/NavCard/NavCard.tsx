@@ -1,14 +1,13 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import SlidingTabs, { type Tab } from './SlidingTabs/SlidingTabs';
-import ExpandableCard from './ExpandableCard/ExpandableCard';
-import './Tabs.css';
+import SlidingTabs, { type Tab } from '@/components/NavCard/Animations/SlidingTabs/SlidingTabs';
+import ExpandableCard from '@/components/NavCard/Animations/ExpandableCard/ExpandableCard';
+import '@/components/NavCard/NavCard.css';
 import {
   AboutContent,
   ExperienceContent,
   EducationContent,
   ProjectsContent,
-  ResumeContent,
-} from './test';
+} from '@/components/NavCard/Content';
 
 const ANIMATION_DURATION_MS = 1000;
 
@@ -29,7 +28,7 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       { id: 'experience', icon: '/icons/BriefcaseIcon.svg', label: 'Experience' },
       { id: 'education', icon: '/icons/EducationIcon.svg', label: 'Education' },
       { id: 'projects', icon: '/icons/ProjectIcon.svg', label: 'Projects' },
-      { id: 'resume', icon: '/icons/FileDownloadIcon.svg', label: 'Resume' },
+      // { id: 'resume', icon: '/icons/FileDownloadIcon.svg', label: 'Resume' },
     ],
     [],
   );
@@ -83,7 +82,7 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
             {selectedTab === 'experience' && <ExperienceContent />}
             {selectedTab === 'education' && <EducationContent />}
             {selectedTab === 'projects' && <ProjectsContent />}
-            {selectedTab === 'resume' && <ResumeContent />}
+            {/* {selectedTab === 'resume' && <ResumeContent />} */}
           </>
         )
       }

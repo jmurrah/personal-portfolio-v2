@@ -20,7 +20,7 @@
 }
 
 .card-content {
-  height: var(--content-height);
+  height: min-content;
   opacity: 0;
   overflow: hidden;
   transition:
@@ -59,7 +59,7 @@
 }
 
 .tab-content-inner {
-  padding: 1.5rem;
+  padding: 12px;
   animation: fadeIn 300ms ease-out forwards;
   animation-delay: calc(var(--animation-duration) * 0.5);
   opacity: 0;

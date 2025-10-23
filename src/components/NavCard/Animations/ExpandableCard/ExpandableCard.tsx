@@ -6,7 +6,7 @@ interface ExpandableCardProps {
   children: React.ReactNode;
   expanded: boolean;
   className?: string;
-  tabContent?: React.ReactNode;
+  tabContent: React.ReactNode;
   onAnimationComplete?: () => void;
   initialWidth?: string;
   initialHeight?: string;
@@ -90,16 +90,7 @@ export default function ExpandableCard({
     >
       <div className="tabs-container">{children}</div>
       <div ref={contentRef} className="card-content" aria-hidden={!expanded}>
-        {expanded && (
-          <div className="tab-content-inner">
-            {tabContent || (
-              <div>
-                <h2>Tab Content</h2>
-                <p>This is the expandable content area.</p>
-              </div>
-            )}
-          </div>
-        )}
+        {expanded && <div className="tab-content-inner">{tabContent}</div>}
       </div>
     </Card>
   );
