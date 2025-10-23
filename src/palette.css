@@ -18,12 +18,14 @@ body.dark {
   --text-muted: hsl(0, 0%, 80%);
   --card-bg: var(--bg-light);
   --card-border: hsl(240, 4%, 24%);
+  /* background-image: url('/backgrounds/dark.png'); */
 }
 
 body {
   font-family: var(--font-sans);
   background: var(--bg);
   color: var(--text-muted);
+  /* background-image: url('/backgrounds/light.png'); */
 }
 
 a:hover {
