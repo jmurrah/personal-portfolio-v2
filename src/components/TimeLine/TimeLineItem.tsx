@@ -34,7 +34,7 @@ export default function TimelineItem({
   };
 
   return (
-    <li className="group flex flex-row items-start gap-6">
+    <li className="group flex flex-row items-start">
       <a
         href={href}
         target="_blank"
@@ -52,16 +52,21 @@ export default function TimelineItem({
           />
         </span>
       </a>
-
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="w-6 h-14"
+      ></a>
       <div className="flex flex-1 flex-col justify-start gap-1">
-        {/* Date - non-interactive */}
         <time className="text-xs text-muted-foreground block">
           <span>{timeStart}</span>
           <span> - </span>
           <span>{timeEnd}</span>
         </time>
 
-        {/* Title link */}
         <a
           href={href}
           target="_blank"
@@ -74,10 +79,7 @@ export default function TimelineItem({
           {title}
         </a>
 
-        {/* Subtitle - non-interactive */}
         <p className="text-sm text-muted-foreground">{subtitle}</p>
-
-        {/* Bullet points - non-interactive */}
         {bulletPoints && (
           <ul className="ml-4 list-outside list-disc">
             {bulletPoints.map((point, index) => (
