@@ -2,13 +2,14 @@
   --animation-duration: 600ms;
   --content-height: 0;
   --initial-width: 280px;
+  --initial-height: 320px; /* Add this */
 
   width: var(--initial-width);
-  /* Remove height and min-height! */
+  min-height: var(--initial-height); /* Add this to prevent shrinking below initial height */
   transition:
     width var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
-  overflow: visible; /* Let content overflow if needed */
+  overflow: visible;
   display: flex;
   flex-direction: column;
 }

@@ -41,7 +41,7 @@ export default function ExpandableCard({
         if (expanded) {
           const tabsHeight = cardRef.current.querySelector('.tabs-container')?.clientHeight || 0;
           setContentHeight(contentRef.current.scrollHeight);
-  
+
           const newCardHeight = tabsHeight + contentRef.current.scrollHeight;
           setCardHeight(Math.max(newCardHeight, parseFloat(initialHeight)));
         } else {
@@ -84,6 +84,7 @@ export default function ExpandableCard({
           '--animation-duration': `${ANIMATION_DURATION}ms`,
           '--content-height': `${contentHeight}px`,
           '--initial-width': initialWidth,
+          '--initial-height': initialHeight,
         } as React.CSSProperties
       }
     >
