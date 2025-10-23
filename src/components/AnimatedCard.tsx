@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Card from '@/components/Card';
 import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 import { SlideDirection } from '@/hooks/types';
@@ -16,8 +16,8 @@ interface AnimatedCardProps {
 }
 
 export default function AnimatedCard({
-  direction = 'left',
-  delay = 0,
+  direction,
+  delay,
   enterDuration = 1000,
   exitDuration = 2000,
   triggerExit = false,
@@ -28,6 +28,7 @@ export default function AnimatedCard({
 }: AnimatedCardProps) {
   const [hasExited, setHasExited] = useState(false);
   const [display, setDisplay] = useState(displayType);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { style, isVisible } = useSlideAnimation({
     direction,
@@ -36,6 +37,7 @@ export default function AnimatedCard({
     isExiting: triggerExit,
   });
 
+  // Reset when coming back in
   useEffect(() => {
     if (!triggerExit) {
       setDisplay(displayType);
@@ -43,30 +45,32 @@ export default function AnimatedCard({
     }
   }, [triggerExit, displayType]);
 
+  // Use IntersectionObserver to detect when card is out of viewport
   useEffect(() => {
-    if (triggerExit && !hasExited) {
-      const animationDelay = Math.floor(exitDuration * 0.25);
-
-      const exitTimer = setTimeout(() => {
-        setHasExited(true);
-        console.log('Card has exited');
-
-        setTimeout(() => {
+    if (!cardRef.current || !triggerExit || hasExited) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting && triggerExit) {
+          setHasExited(true);
           setDisplay('none');
-          console.log('Card removed from layout');
-        }, 100); // Short delay after exit
-
-        if (onExitComplete) onExitComplete();
-      }, animationDelay);
-
-      return () => {
-        clearTimeout(exitTimer);
-      };
-    }
-  }, [triggerExit, hasExited, exitDuration, onExitComplete]);
+          console.log('Card out of viewport, setting display: none');
+          if (onExitComplete) onExitComplete();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0 }
+    );
+    
+    observer.observe(cardRef.current);
+    
+    return () => observer.disconnect();
+  }, [triggerExit, hasExited, onExitComplete]);
 
   return (
     <Card
+      ref={cardRef}
       className={className}
       style={{
         ...style,
