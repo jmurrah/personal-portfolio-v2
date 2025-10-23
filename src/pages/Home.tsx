@@ -3,7 +3,7 @@ import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/Tabs/Tabs';
-// import { useSlideAnimation } from '@/hooks/useSlideAnimation';
+import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -34,6 +34,7 @@ export default function Home() {
   const [readyToShowTab, setReadyToShowTab] = useState(false);
   const totalCards = 4; // Total number of AnimatedCard components
 
+  const tabsAnimation = useSlideAnimation({ direction: 'top', delay: 1100, duration: 1000, isExiting: false });
   // Function to handle when all cards have exited
   const handleAllCardsExited = () => {
     console.log('All cards have exited! Now loading content for tab:', selectedTabId);
@@ -169,8 +170,9 @@ export default function Home() {
               <p>OMSCS @ Georgia Tech</p>
             </AnimatedCard>
           </div>
-
-          <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
+          <div style={tabsAnimation.style} className="w-full min-h-fit">
+            <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
+          </div>
         </div>
 
         <AnimatedCard
