@@ -42,7 +42,12 @@ export default function Home() {
   const [readyToShowTab, setReadyToShowTab] = useState(false);
   const totalCards = 4; // Total number of AnimatedCard components
 
-  const tabsAnimation = useSlideAnimation({ direction: 'top', delay: 1100, duration: 1000, isExiting: false });
+  const tabsAnimation = useSlideAnimation({
+    direction: 'top',
+    delay: 1100,
+    duration: 1000,
+    isExiting: false,
+  });
   // Function to handle when all cards have exited
   const handleAllCardsExited = () => {
     console.log('All cards have exited! Now loading content for tab:', selectedTabId);
