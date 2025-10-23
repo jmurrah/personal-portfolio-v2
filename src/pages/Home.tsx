@@ -3,7 +3,7 @@ import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/Tabs/Tabs';
-import { useSlideAnimation } from '@/hooks/useSlideAnimation';
+// import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -28,22 +28,44 @@ const technologies = [
 ];
 
 export default function Home() {
-  // State to track if cards should exit
   const [cardsExiting, setCardsExiting] = useState(false);
+  const [exitedCardCount, setExitedCardCount] = useState(0);
+  const [selectedTabId, setSelectedTabId] = useState('');
+  const [readyToShowTab, setReadyToShowTab] = useState(false);
+  const totalCards = 4; // Total number of AnimatedCard components
 
-  // For Tabs component animation
-  // const tabsAnimation = useSlideAnimation({ direction: 'top', delay: 1100 });
+  // Function to handle when all cards have exited
+  const handleAllCardsExited = () => {
+    console.log('All cards have exited! Now loading content for tab:', selectedTabId);
+    setReadyToShowTab(true);
+    // Load content for the selected tab or perform other actions
+  };
 
-  // Handle tab click - make cards exit
+  const handleCardExited = () => {
+    console.log('A card has exited');
+    setExitedCardCount((prevCount) => {
+      const newCount = prevCount + 1;
+      console.log('Current exited count:', newCount);
+
+      if (newCount === totalCards) {
+        handleAllCardsExited();
+      }
+      return newCount;
+    });
+  };
+
   const handleTabClick = (tabId: string) => {
-    // If tabId is empty string, tab is being closed
+    setSelectedTabId(tabId);
+    setExitedCardCount(0);
+    setReadyToShowTab(false);
+
     if (tabId === '') {
-      // Small delay to sync with tab closing animation
+      console.log('Re-entering cards');
       setTimeout(() => {
         setCardsExiting(false);
       }, 100);
     } else {
-      // Otherwise, make cards exit
+      console.log('Exiting cards for tab:', tabId);
       setCardsExiting(true);
     }
   };
@@ -58,6 +80,8 @@ export default function Home() {
               delay={100}
               triggerExit={cardsExiting}
               className="h-56 flex flex-col justify-between w-80 shrink-0"
+              displayType="flex"
+              onExitComplete={handleCardExited}
             >
               <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
               <p className="flex items-center gap-2">
@@ -103,6 +127,8 @@ export default function Home() {
               delay={350}
               triggerExit={cardsExiting}
               className="flex justify-between items-center"
+              displayType="flex"
+              onExitComplete={handleCardExited}
             >
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
               <SvgIcon
@@ -131,21 +157,29 @@ export default function Home() {
               />
             </AnimatedCard>
 
-            <AnimatedCard direction="left" delay={600} triggerExit={cardsExiting}>
+            <AnimatedCard
+              direction="left"
+              delay={600}
+              triggerExit={cardsExiting}
+              displayType="block"
+              onExitComplete={handleCardExited}
+            >
               <p className="text-[color:var(--primary)]">Currently ↓</p>
               <p>Software Engineer I @ AT&T</p>
               <p>OMSCS @ Georgia Tech</p>
             </AnimatedCard>
           </div>
 
-          <Tabs onTabClick={handleTabClick} />
+          <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
         </div>
 
         <AnimatedCard
-          direction="left" // Changed from "bottom" to "left" so it completely exits the screen
+          direction="left"
           delay={850}
           triggerExit={cardsExiting}
           className="w-full flex flex-col gap-4"
+          displayType="flex"
+          onExitComplete={handleCardExited}
         >
           <h2>Technologies</h2>
           <div className="flex flex-wrap gap-2">

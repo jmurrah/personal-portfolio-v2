@@ -1,37 +1,31 @@
 import { useEffect, useState, CSSProperties } from 'react';
-
-type SlideDirection = 'left' | 'right' | 'top' | 'bottom';
+import { SlideDirection } from '@/hooks/types';
 
 interface UseSlideAnimationProps {
   direction: SlideDirection;
-  isVisible?: boolean; // Control visibility externally
-  delay?: number;
-  duration?: number;
-  isExiting?: boolean; // For exit animations
+  delay: number;
+  duration: number;
+  isExiting: boolean;
 }
 
 export function useSlideAnimation({
   direction,
-  isVisible: controlledVisibility,
-  delay = 0,
-  duration = 700,
-  isExiting = false,
+  delay,
+  duration,
+  isExiting,
 }: UseSlideAnimationProps) {
-  // Allow external control or internal state
-  const [internalVisible, setInternalVisible] = useState(false);
-
-  // Use externally controlled visibility if provided, otherwise use internal
-  const isVisible = controlledVisibility !== undefined ? controlledVisibility : internalVisible;
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (controlledVisibility === undefined) {
+    if (!isExiting) {
       const timer = setTimeout(() => {
-        setInternalVisible(true);
+        setIsVisible(true);
       }, delay);
-
       return () => clearTimeout(timer);
+    } else {
+      setIsVisible(false);
     }
-  }, [delay, controlledVisibility]);
+  }, [delay, isExiting]);
 
   const getTransform = (): string => {
     if (isVisible && !isExiting) return 'translate(0, 0)';

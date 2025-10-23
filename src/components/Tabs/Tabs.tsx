@@ -3,13 +3,14 @@ import SlidingTabs, { type Tab } from './SlidingTabs/SlidingTabs';
 import ExpandableCard from './ExpandableCard/ExpandableCard';
 import './Tabs.css';
 
-const CARD_CLOSING_DURATION_MS = 720; // Slightly longer closing animation
+const ANIMATION_DURATION_MS = 1000;
 
 interface TabsProps {
-  onTabClick?: (tabId: string) => void;
+  onTabClick: (tabId: string) => void;
+  readyToExpand?: boolean;
 }
 
-export default function Tabs({ onTabClick }: TabsProps) {
+export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
   const [selectedTab, setSelectedTab] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -27,22 +28,19 @@ export default function Tabs({ onTabClick }: TabsProps) {
     [],
   );
 
-  // Clean up timeouts on unmount
+  // Watch for the readyToExpand signal
   useEffect(() => {
-    return () => {
-      if (closeTimeoutRef.current) {
-        window.clearTimeout(closeTimeoutRef.current);
-      }
-    };
-  }, []);
+    if (readyToExpand && selectedTab && !isExpanded && !isClosing) {
+      console.log('Ready to expand tab:', selectedTab);
+      setIsExpanded(true);
+    }
+  }, [readyToExpand, selectedTab, isExpanded, isClosing]);
 
-  // Handle tab selection
   const handleSelectTab = (tabId: string) => {
-    // If we're closing, don't respond to clicks
     if (isClosing) return;
 
-    // If clicking the same tab, close it
     if (selectedTab === tabId) {
+      // User clicked the currently selected tab - close it
       if (closeTimeoutRef.current) {
         window.clearTimeout(closeTimeoutRef.current);
       }
@@ -50,44 +48,35 @@ export default function Tabs({ onTabClick }: TabsProps) {
       setIsClosing(true);
       setIsExpanded(false);
 
-      // Notify parent about tab closing with null id
+      // Tell parent we're closing
       if (onTabClick) {
-        onTabClick(''); // empty string indicates closing
+        onTabClick(''); // empty tabId indicates closing
       }
 
-      // Use the longer closing duration
       closeTimeoutRef.current = window.setTimeout(() => {
         setSelectedTab(null);
         setIsClosing(false);
-      }, CARD_CLOSING_DURATION_MS);
+      }, ANIMATION_DURATION_MS);
 
       return;
     }
 
-    // Notify parent about tab click
+    // User clicked a new tab
     if (onTabClick) {
       onTabClick(tabId);
     }
 
-    // Otherwise, select the new tab
     setSelectedTab(tabId);
-  };
-
-  // Handle tab animation completion
-  const handleTabAnimationComplete = () => {
-    if (selectedTab && !isClosing) {
-      setIsExpanded(true);
-    }
+    // Don't auto-expand - wait for readyToExpand signal
   };
 
   return (
-    <ExpandableCard expanded={isExpanded} className={`${isClosing ? 'closing' : ''} h-full`}>
-      <SlidingTabs
-        tabs={tabs}
-        selectedTab={selectedTab}
-        onSelectTab={handleSelectTab}
-        onAnimationComplete={handleTabAnimationComplete}
-      />
+    <ExpandableCard
+      expanded={isExpanded}
+      className={`${isClosing ? 'closing' : ''} h-full`}
+      contentId={`tab-content-${selectedTab}`}
+    >
+      <SlidingTabs tabs={tabs} selectedTab={selectedTab} onSelectTab={handleSelectTab} />
     </ExpandableCard>
   );
 }
