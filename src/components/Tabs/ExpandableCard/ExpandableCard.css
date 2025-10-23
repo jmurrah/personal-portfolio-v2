@@ -1,0 +1,76 @@
+.expandable-card {
+  --animation-duration: 600ms;
+  --content-height: 0;
+  --initial-width: 280px;
+
+  width: var(--initial-width);
+  /* Remove height and min-height! */
+  transition:
+    width var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: visible; /* Let content overflow if needed */
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs-container {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.card-content {
+  height: var(--content-height);
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    height var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    opacity var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.expandable-card.expanded {
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.expandable-card.expanded .card-content {
+  opacity: 1;
+}
+
+.expandable-card.closing {
+  --closing-duration: 720ms;
+  transition:
+    width var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.expandable-card.closing .card-content {
+  transition:
+    height var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    opacity var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.expandable-card.animating {
+  will-change: width, box-shadow;
+}
+
+.expandable-card.animating .card-content {
+  will-change: height, opacity;
+}
+
+.tab-content-inner {
+  padding: 1.5rem;
+  animation: fadeIn 300ms ease-out forwards;
+  animation-delay: calc(var(--animation-duration) * 0.5);
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

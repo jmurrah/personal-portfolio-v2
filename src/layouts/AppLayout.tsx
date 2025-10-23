@@ -41,7 +41,7 @@ export default function AppLayout() {
         </div>
       </header>
       <main className="flex justify-center">
-        <div className="w-full max-w-3xl p-4">
+        <div className="w-full max-w-3xl p-4 min-h-fit">
           <Outlet />
         </div>
       </main>

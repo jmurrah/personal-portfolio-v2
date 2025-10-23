@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import Card from '@/components/Card';
+import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
+import Tabs from '@/components/Tabs/Tabs';
+import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -34,16 +36,67 @@ const sections = [
 ];
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState<null | string>(null);
-  const activeSectionMeta = sections.find((section) => section.key === activeSection);
-  const activeHeadingId = activeSectionMeta ? `section-${activeSectionMeta.key}-title` : undefined;
+  const [cardsExiting, setCardsExiting] = useState(false);
+  const [exitedCardCount, setExitedCardCount] = useState(0);
+  const [selectedTabId, setSelectedTabId] = useState('');
+  const [readyToShowTab, setReadyToShowTab] = useState(false);
+  const totalCards = 4; // Total number of AnimatedCard components
+
+  const tabsAnimation = useSlideAnimation({
+    direction: 'top',
+    delay: 1100,
+    duration: 1000,
+    isExiting: false,
+  });
+  // Function to handle when all cards have exited
+  const handleAllCardsExited = () => {
+    console.log('All cards have exited! Now loading content for tab:', selectedTabId);
+    setReadyToShowTab(true);
+    // Load content for the selected tab or perform other actions
+  };
+
+  const handleCardExited = () => {
+    console.log('A card has exited');
+    setExitedCardCount((prevCount) => {
+      const newCount = prevCount + 1;
+      console.log('Current exited count:', newCount);
+
+      if (newCount === totalCards) {
+        handleAllCardsExited();
+      }
+      return newCount;
+    });
+  };
+
+  const handleTabClick = (tabId: string) => {
+    setSelectedTabId(tabId);
+    setExitedCardCount(0);
+    setReadyToShowTab(false);
+
+    if (tabId === '') {
+      console.log('Re-entering cards');
+      setTimeout(() => {
+        setCardsExiting(false);
+      }, 100);
+    } else {
+      console.log('Exiting cards for tab:', tabId);
+      setCardsExiting(true);
+    }
+  };
 
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
         <div className="flex gap-4 w-full">
           <div className="flex flex-col gap-4">
-            <Card className="h-56 flex flex-col justify-between w-80 shrink-0">
+            <AnimatedCard
+              direction="left"
+              delay={100}
+              triggerExit={cardsExiting}
+              className="h-56 flex flex-col justify-between w-80 shrink-0"
+              displayType="flex"
+              onExitComplete={handleCardExited}
+            >
               <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
               <p className="flex items-center gap-2">
                 <SvgIcon
@@ -81,11 +134,19 @@ export default function Home() {
                 />
                 jacob@murrah.dev
               </a>
-            </Card>
-            <Card className="flex justify-between items-center">
+            </AnimatedCard>
+
+            <AnimatedCard
+              direction="left"
+              delay={350}
+              triggerExit={cardsExiting}
+              className="flex justify-between items-center"
+              displayType="flex"
+              onExitComplete={handleCardExited}
+            >
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
               <SvgIcon
-                href="https://linkedin.com/in/jacobhmurrah"
+                href="https://linkedin.com/in/jacobmurrah"
                 src="/icons/LinkedInIcon.svg"
                 alt="LinkedIn"
                 hoverColor="var(--primary)"
@@ -108,91 +169,40 @@ export default function Home() {
                 alt="Email"
                 hoverColor="var(--primary)"
               />
-            </Card>
-            <Card>
+            </AnimatedCard>
+
+            <AnimatedCard
+              direction="right"
+              delay={600}
+              triggerExit={cardsExiting}
+              displayType="block"
+              onExitComplete={handleCardExited}
+            >
               <p className="text-[color:var(--primary)]">Currently ↓</p>
               <p>Software Engineer I @ AT&T</p>
               <p>OMSCS @ Georgia Tech</p>
-            </Card>
+            </AnimatedCard>
           </div>
-          {/* <Card className="w-auto max-w-24">
-            <img src="/JacobMurrahWaterfall.jpg" alt="Jacob Murrah" />
-          </Card> */}
-
-          <Card
-            className={
-              activeSection
-                ? 'section-card flex flex-col gap-2 w-full section-card--active-source'
-                : 'section-card flex flex-col gap-2 w-full'
-            }
-          >
-            <div
-              className={
-                activeSection
-                  ? 'section-card__list flex flex-col gap-2 section-card__list--animating'
-                  : 'section-card__list flex flex-col gap-2'
-              }
-              aria-hidden={Boolean(activeSection)}
-            >
-              {sections.map((section) => {
-                const isActive = activeSection === section.key;
-                return (
-                  <button
-                    key={section.key}
-                    type="button"
-                    data-active={isActive}
-                    onClick={() =>
-                      setActiveSection((prev) => (prev === section.key ? null : section.key))
-                    }
-                    aria-expanded={isActive}
-                    className="section-card__button flex items-center gap-2 text-left transition-colors duration-200 hover:text-[color:var(--primary)] focus-visible:outline-none focus-visible:text-[color:var(--primary)]"
-                  >
-                    <SvgIcon
-                      src={section.icon}
-                      alt={section.label}
-                      hoverColor="var(--primary)"
-                      size="small"
-                    />
-                    <span>{section.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </Card>
+          <div style={tabsAnimation.style} className="w-full min-h-fit">
+            <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
+          </div>
         </div>
-        <Card className="w-full flex flex-col gap-4">
+
+        <AnimatedCard
+          direction="bottom"
+          delay={850}
+          triggerExit={cardsExiting}
+          className="w-full flex flex-col gap-4"
+          displayType="flex"
+          onExitComplete={handleCardExited}
+        >
           <h2>Technologies</h2>
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (
               <TechnologyBadge key={tech.name} {...tech} />
             ))}
           </div>
-        </Card>
-        {activeSectionMeta && (
-          <Card
-            className="section-expander flex flex-col gap-4"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={activeHeadingId}
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold" id={activeHeadingId}>
-                {activeSectionMeta.label}
-              </h2>
-              <button
-                type="button"
-                onClick={() => setActiveSection(null)}
-                className="text-sm text-[color:var(--primary)] hover:opacity-80 focus-visible:outline-none focus-visible:opacity-80"
-              >
-                Close
-              </button>
-            </div>
-            <p className="opacity-75">
-              Placeholder content for the {activeSectionMeta.label.toLowerCase()} section. Add your
-              real copy here later.
-            </p>
-          </Card>
-        )}
+        </AnimatedCard>
       </div>
     </div>
   );
