@@ -27,14 +27,6 @@ const technologies = [
   // { name: 'FastAPI', logoSrc: '/logos/FastAPILogo.svg', accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
-const sections = [
-  { key: 'about', label: 'About', icon: '/icons/ProfileIcon.svg' },
-  { key: 'experience', label: 'Experience', icon: '/icons/BriefcaseIcon.svg' },
-  { key: 'education', label: 'Education', icon: '/icons/EducationIcon.svg' },
-  { key: 'projects', label: 'Projects', icon: '/icons/ProjectIcon.svg' },
-  { key: 'resume', label: 'Resume', icon: '/icons/FileDownloadIcon.svg' },
-];
-
 export default function Home() {
   const [selectedTabId, setSelectedTabId] = useState('');
   const [readyToShowTab, setReadyToShowTab] = useState(false);

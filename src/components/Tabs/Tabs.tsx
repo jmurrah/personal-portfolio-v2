@@ -23,7 +23,6 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
   const [isClosing, setIsClosing] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
 
-  // Define our tabs
   const tabs: Tab[] = useMemo(
     () => [
       { id: 'about', icon: '/icons/ProfileIcon.svg', label: 'About' },
@@ -35,7 +34,6 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
     [],
   );
 
-  // Watch for the readyToExpand signal
   useEffect(() => {
     if (readyToExpand && selectedTab && !isExpanded && !isClosing) {
       console.log('Ready to expand tab:', selectedTab);
@@ -45,9 +43,7 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
 
   const handleSelectTab = (tabId: string) => {
     if (isClosing) return;
-
     if (selectedTab === tabId) {
-      // User clicked the currently selected tab - close it
       if (closeTimeoutRef.current) {
         window.clearTimeout(closeTimeoutRef.current);
       }
@@ -55,7 +51,6 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       setIsClosing(true);
       setIsExpanded(false);
 
-      // Tell parent we're closing
       if (onTabClick) {
         onTabClick(''); // empty tabId indicates closing
       }
@@ -68,21 +63,19 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       return;
     }
 
-    // User clicked a new tab
     if (onTabClick) {
       onTabClick(tabId);
     }
 
     setSelectedTab(tabId);
-    // Don't auto-expand - wait for readyToExpand signal
   };
 
   return (
     <ExpandableCard
       expanded={isExpanded}
-      className={`${isClosing ? 'closing' : ''} ml-auto`} // Remove h-full class
+      className={`${isClosing ? 'closing' : ''} ml-auto`}
       initialWidth="192px"
-      initialHeight="320px" // Set a specific initial height
+      initialHeight="320px"
       tabContent={
         selectedTab && (
           <>
