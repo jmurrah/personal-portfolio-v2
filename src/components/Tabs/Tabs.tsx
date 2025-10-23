@@ -2,6 +2,13 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import SlidingTabs, { type Tab } from './SlidingTabs/SlidingTabs';
 import ExpandableCard from './ExpandableCard/ExpandableCard';
 import './Tabs.css';
+import {
+  AboutContent,
+  ExperienceContent,
+  EducationContent,
+  ProjectsContent,
+  ResumeContent
+} from './test';
 
 const ANIMATION_DURATION_MS = 1000;
 
@@ -72,11 +79,23 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
 
   return (
     <ExpandableCard
-      expanded={isExpanded}
-      className={`${isClosing ? 'closing' : ''} h-full`}
-      contentId={`tab-content-${selectedTab}`}
-    >
-      <SlidingTabs tabs={tabs} selectedTab={selectedTab} onSelectTab={handleSelectTab} />
-    </ExpandableCard>
+        expanded={isExpanded}
+        className={`${isClosing ? 'closing' : ''} min-h-80 h-full ml-auto`}
+        initialWidth='192px'
+        tabContent={
+          selectedTab && (
+            <>
+              {selectedTab === 'about' && <AboutContent />}
+              {selectedTab === 'experience' && <ExperienceContent />}
+              {selectedTab === 'education' && <EducationContent />}
+              {selectedTab === 'projects' && <ProjectsContent />}
+              {selectedTab === 'resume' && <ResumeContent />}
+            </>
+          )
+        }
+        onAnimationComplete={() => console.log('Animation complete')}
+      >
+        <SlidingTabs tabs={tabs} selectedTab={selectedTab} onSelectTab={handleSelectTab} />
+      </ExpandableCard>
   );
 }

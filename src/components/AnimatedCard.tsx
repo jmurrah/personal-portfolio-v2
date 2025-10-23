@@ -48,7 +48,7 @@ export default function AnimatedCard({
   // Use IntersectionObserver to detect when card is out of viewport
   useEffect(() => {
     if (!cardRef.current || !triggerExit || hasExited) return;
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -60,11 +60,11 @@ export default function AnimatedCard({
           observer.disconnect();
         }
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
-    
+
     observer.observe(cardRef.current);
-    
+
     return () => observer.disconnect();
   }, [triggerExit, hasExited, onExitComplete]);
 

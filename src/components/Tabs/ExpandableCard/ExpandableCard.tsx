@@ -1,116 +1,97 @@
-import {
-  useLayoutEffect,
-  useRef,
-  useState,
-  useEffect,
-  type CSSProperties,
-  type ReactNode,
-} from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import './ExpandableCard.css';
 
-export interface ExpandableCardProps {
-  children: ReactNode;
+interface ExpandableCardProps {
+  children: React.ReactNode;
   expanded: boolean;
   className?: string;
-  contentId?: string; // Optional ID for the content section
+  tabContent?: React.ReactNode; // Add support for tab content
+  onAnimationComplete?: () => void;
+  initialWidth?: string; // Add support for initial width
 }
 
-const CONTAINER_EXPAND_DURATION_MS = 520;
+const ANIMATION_DURATION = 600;
 
 export default function ExpandableCard({
   children,
   expanded,
   className = '',
-  contentId = 'tab-content',
+  tabContent,
+  onAnimationComplete,
+  initialWidth = '256px', // Default width for tabs
 }: ExpandableCardProps) {
-  const [cardMetrics, setCardMetrics] = useState<{
-    offsetLeft: number;
-    parentWidth: number;
-  } | null>(null);
-  const [contentHeight, setContentHeight] = useState<number | null>(null);
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  // Measure the layout for positioning
-  useLayoutEffect(() => {
-    const measureLayout = () => {
-      const cardNode = cardRef.current;
-      if (cardNode) {
-        const parentElement = cardNode.parentElement;
-        const cardRect = cardNode.getBoundingClientRect();
-        const parentRect = parentElement?.getBoundingClientRect();
-        const nextOffsetLeft = parentRect ? cardRect.left - parentRect.left : cardNode.offsetLeft;
-        const nextParentWidth = parentRect?.width ?? cardRect.width;
-
-        setCardMetrics((previous) => {
-          if (
-            previous &&
-            previous.offsetLeft === nextOffsetLeft &&
-            previous.parentWidth === nextParentWidth
-          ) {
-            return previous;
-          }
-
-          return {
-            offsetLeft: nextOffsetLeft,
-            parentWidth: nextParentWidth,
-          };
-        });
+  // Measure content height for smooth transitions
+  useEffect(() => {
+    const updateContentHeight = () => {
+      if (contentRef.current) {
+        if (expanded) {
+          // Get actual content height
+          setContentHeight(contentRef.current.scrollHeight);
+        } else {
+          // Close content area
+          setContentHeight(0);
+        }
       }
     };
 
-    measureLayout();
-    window.addEventListener('resize', measureLayout);
+    // Update on expansion changes
+    updateContentHeight();
 
-    return () => {
-      window.removeEventListener('resize', measureLayout);
-    };
-  }, [expanded]);
+    // Also update on window resize for responsive layouts
+    window.addEventListener('resize', updateContentHeight);
+    return () => window.removeEventListener('resize', updateContentHeight);
+  }, [expanded, tabContent]);
 
-  // Measure content height for smooth height transition
-  useEffect(() => {
-    const content = document.getElementById(contentId);
-    if (content && expanded) {
-      // Small delay to ensure content is rendered
-      setTimeout(() => {
-        setContentHeight(content.scrollHeight);
-      }, 10);
-    } else {
-      setContentHeight(0);
-    }
-  }, [expanded, contentId]);
+  // Handle animation states
+// Update this useEffect to have consistent dependency array
+useEffect(() => {
+  setIsAnimating(true);
+  const timer = setTimeout(() => {
+    setIsAnimating(false);
+    if (expanded && onAnimationComplete) onAnimationComplete();
+  }, ANIMATION_DURATION);
+  return () => clearTimeout(timer);
+}, [expanded, onAnimationComplete]); // This is the problematic array
 
-  const expandDurationValue = `${CONTAINER_EXPAND_DURATION_MS}ms`;
-  const containerClassName = [
+  // Combine classes
+  const cardClasses = [
     'expandable-card',
-    expanded ? 'expandable-card--expanded' : '',
+    expanded ? 'expanded' : '',
+    isAnimating ? 'animating' : '',
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
-  const cardStyle = {
-    '--container-expand-duration': expandDurationValue,
-    '--card-offset-left': cardMetrics ? `${cardMetrics.offsetLeft}px` : undefined,
-    '--card-parent-width': cardMetrics ? `${cardMetrics.parentWidth}px` : undefined,
-    '--content-height': contentHeight ? `${contentHeight}px` : '0px',
-  } as CSSProperties;
-
   return (
-    <Card ref={cardRef} className={containerClassName} style={cardStyle}>
-      {children}
-      <div
-        id={contentId}
-        ref={contentRef}
-        className={`content-wrapper ${expanded ? 'expanded' : ''}`}
-      >
-        {/* Tab content goes here */}
+    <Card
+      className={cardClasses}
+      style={
+        {
+          '--animation-duration': `${ANIMATION_DURATION}ms`,
+          '--content-height': `${contentHeight}px`,
+          '--initial-width': initialWidth,
+        } as React.CSSProperties
+      }
+    >
+      <div className="tabs-container">
+        {children}
+      </div>
+
+      <div ref={contentRef} className="card-content" aria-hidden={!expanded}>
         {expanded && (
-          <div className="tab-content">
-            <h2>Tab Content for Selected Tab</h2>
-            <p>This area will show content for the selected tab.</p>
-            <p>You can put any content here and it will automatically expand.</p>
+          <div className="tab-content-inner">
+            {tabContent || (
+              <div>
+                <h2>Tab Content</h2>
+                <p>This is the expandable content area.</p>
+              </div>
+            )}
           </div>
         )}
       </div>
