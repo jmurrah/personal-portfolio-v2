@@ -7,7 +7,7 @@ import {
   ExperienceContent,
   EducationContent,
   ProjectsContent,
-  ResumeContent
+  ResumeContent,
 } from './test';
 
 const ANIMATION_DURATION_MS = 1000;
@@ -79,23 +79,24 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
 
   return (
     <ExpandableCard
-        expanded={isExpanded}
-        className={`${isClosing ? 'closing' : ''} min-h-80 h-full ml-auto`}
-        initialWidth='192px'
-        tabContent={
-          selectedTab && (
-            <>
-              {selectedTab === 'about' && <AboutContent />}
-              {selectedTab === 'experience' && <ExperienceContent />}
-              {selectedTab === 'education' && <EducationContent />}
-              {selectedTab === 'projects' && <ProjectsContent />}
-              {selectedTab === 'resume' && <ResumeContent />}
-            </>
-          )
-        }
-        onAnimationComplete={() => console.log('Animation complete')}
-      >
-        <SlidingTabs tabs={tabs} selectedTab={selectedTab} onSelectTab={handleSelectTab} />
-      </ExpandableCard>
+      expanded={isExpanded}
+      className={`${isClosing ? 'closing' : ''} ml-auto`} // Remove h-full class
+      initialWidth="192px"
+      initialHeight="320px" // Set a specific initial height
+      tabContent={
+        selectedTab && (
+          <>
+            {selectedTab === 'about' && <AboutContent />}
+            {selectedTab === 'experience' && <ExperienceContent />}
+            {selectedTab === 'education' && <EducationContent />}
+            {selectedTab === 'projects' && <ProjectsContent />}
+            {selectedTab === 'resume' && <ResumeContent />}
+          </>
+        )
+      }
+      onAnimationComplete={() => console.log('Animation complete')}
+    >
+      <SlidingTabs tabs={tabs} selectedTab={selectedTab} onSelectTab={handleSelectTab} />
+    </ExpandableCard>
   );
 }

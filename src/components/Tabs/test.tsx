@@ -5,9 +5,9 @@ export const AboutContent = () => (
   <div className="p-4">
     <h2 className="text-xl font-semibold mb-4">About Me</h2>
     <p>
-      I'm a Full Stack Software Developer with a passion for creating clean, efficient, and user-friendly
-      applications. With a background in both frontend and backend development, I enjoy solving complex
-      problems and building systems that make a difference.
+      I'm a Full Stack Software Developer with a passion for creating clean, efficient, and
+      user-friendly applications. With a background in both frontend and backend development, I
+      enjoy solving complex problems and building systems that make a difference.
     </p>
     <p className="mt-3">
       When I'm not coding, you can find me exploring new technologies, contributing to open-source
@@ -62,7 +62,9 @@ export const ProjectsContent = () => (
     <h2 className="text-xl font-semibold mb-4">Projects</h2>
     <div className="mb-6">
       <h3 className="text-lg font-medium">Personal Portfolio</h3>
-      <p className="mt-1">A responsive portfolio website built with React, TypeScript and CSS animations.</p>
+      <p className="mt-1">
+        A responsive portfolio website built with React, TypeScript and CSS animations.
+      </p>
       <div className="flex gap-2 mt-2">
         <span className="px-2 py-1 bg-blue-100 rounded text-xs">React</span>
         <span className="px-2 py-1 bg-blue-100 rounded text-xs">TypeScript</span>
@@ -80,9 +82,9 @@ export const ResumeContent = () => (
   <div className="p-4">
     <h2 className="text-xl font-semibold mb-4">Resume</h2>
     <p className="mb-4">Download my full resume to learn more about my experience and skills.</p>
-    <a 
-      href="/resume.pdf" 
-      target="_blank" 
+    <a
+      href="/resume.pdf"
+      target="_blank"
       rel="noopener noreferrer"
       className="inline-block px-4 py-2 bg-[color:var(--primary)] text-white rounded hover:opacity-90"
     >
