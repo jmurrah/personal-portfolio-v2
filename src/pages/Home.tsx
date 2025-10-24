@@ -79,7 +79,7 @@ export default function Home() {
               direction="left"
               delay={100}
               triggerExit={cardsExiting}
-              className={`h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
+              className={`z-100 h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
               <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
@@ -110,7 +110,7 @@ export default function Home() {
                 />
                 Atlanta, GA
               </p>
-              <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2">
+              <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
                 <SvgIcon
                   src="/icons/MailIcon.svg"
                   alt="Email Icon"
@@ -125,7 +125,7 @@ export default function Home() {
               direction="left"
               delay={350}
               triggerExit={cardsExiting}
-              className={`flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
+              className={`z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
               <SvgIcon href="https://github.com/jmurrah" src="/icons/GitHubIcon.svg" alt="GitHub" />
@@ -159,7 +159,7 @@ export default function Home() {
               direction="right"
               delay={600}
               triggerExit={cardsExiting}
-              className={hideCards ? 'hidden' : ''}
+              className={`z-100 ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
               <p className="text-[color:var(--primary)]">Currently ↓</p>
@@ -168,14 +168,14 @@ export default function Home() {
             </AnimatedCard>
           </div>
           <div className="flex flex-col gap-4 w-full">
-            <div style={tabsAnimation.style} className="w-full">
+            <div style={tabsAnimation.style} className="z-100 w-full">
               <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
             </div>
             <AnimatedCard
               direction="right"
               delay={1350}
               triggerExit={cardsExiting}
-              className={`h-full ${hideCards ? 'hidden' : ''}`}
+              className={`z-100 h-full ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
               <ThemeToggle />
@@ -187,7 +187,7 @@ export default function Home() {
           direction="bottom"
           delay={850}
           triggerExit={cardsExiting}
-          className={`w-full flex flex-col gap-4 ${hideCards ? 'hidden' : ''}`}
+          className={`z-100 w-full flex flex-col gap-4 ${hideCards ? 'hidden' : ''}`}
           onExitComplete={handleCardExited}
         >
           <h2>Technologies</h2>
