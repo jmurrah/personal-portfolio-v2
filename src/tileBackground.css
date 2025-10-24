@@ -11,15 +11,12 @@
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--tile-size), var(--tile-size)));
-  grid-auto-rows: var(--tile-size);
-  gap: var(--tile-gap);
   z-index: 10;
 }
 
 .tile-bg-container .tile {
-  border-width: 1px;
-  border-color: var(--bg-light);
+  /* border-width: 1px; */
+  /* border-color: var(--bg-light); */
   width: var(--tile-size);
   height: var(--tile-size);
   background: var(--bg-dark);

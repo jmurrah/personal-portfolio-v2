@@ -1,13 +1,9 @@
-// src/components/TileBackground.tsx
-
-import React, { useEffect, useRef } from 'react';
-import '../tileBackground.css'; // adjust path if needed
+import React, { useEffect, useRef, useState } from 'react';
+import '../tileBackground.css';
 
 interface TileBackgroundProps {
   tileSize?: number;
   tileGap?: number;
-  tileBg?: string;
-  hoverColor?: string;
   fadeDuration?: string;
 }
 
@@ -17,52 +13,42 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
   fadeDuration = '1s',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [grid, setGrid] = useState({ cols: 0, rows: 0 });
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const setStyles = () => {
-      document.documentElement.style.setProperty('--tile-size', `${tileSize}px`);
-      document.documentElement.style.setProperty('--tile-gap', `${tileGap}px`);
-      document.documentElement.style.setProperty('--fade-duration', fadeDuration);
+    const updateGrid = () => {
+      const cols = Math.ceil(window.innerWidth / (tileSize + tileGap)) + 2;
+      const rows = Math.ceil(window.innerHeight / (tileSize + tileGap)) + 2;
+      setGrid({ cols, rows });
     };
-    setStyles();
+    updateGrid();
+    window.addEventListener('resize', updateGrid);
+    return () => window.removeEventListener('resize', updateGrid);
+  }, [tileSize, tileGap]);
 
-    const cols = Math.ceil(window.innerWidth / (tileSize + tileGap));
-    const rows = Math.ceil(window.innerHeight / (tileSize + tileGap));
-    const total = cols * rows;
-
-    // Clear existing if any
-    container.innerHTML = '';
-
-    for (let i = 0; i < total; i++) {
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-      container.append(tile);
-    }
-
-    const handleResize = () => {
-      const newCols = Math.ceil(window.innerWidth / (tileSize + tileGap));
-      const newRows = Math.ceil(window.innerHeight / (tileSize + tileGap));
-      const newTotal = newCols * newRows;
-      if (newTotal === container.children.length) return;
-      // repopulate quickly
-      container.innerHTML = '';
-      for (let i = 0; i < newTotal; i++) {
-        const tile = document.createElement('div');
-        tile.className = 'tile';
-        container.append(tile);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+  useEffect(() => {
+    document.documentElement.style.setProperty('--tile-size', `${tileSize}px`);
+    document.documentElement.style.setProperty('--tile-gap', `${tileGap}px`);
+    document.documentElement.style.setProperty('--fade-duration', fadeDuration);
   }, [tileSize, tileGap, fadeDuration]);
 
-  return <div ref={containerRef} className="tile-bg-container" />;
+  const total = grid.cols * grid.rows;
+
+  return (
+    <div
+      ref={containerRef}
+      className="tile-bg-container"
+      style={{
+        gridTemplateColumns: `repeat(${grid.cols}, var(--tile-size))`,
+        gridAutoRows: `var(--tile-size)`,
+        gap: `var(--tile-gap)`,
+      }}
+    >
+      {Array.from({ length: total }).map((_, i) => (
+        <div key={i} className="tile" />
+      ))}
+    </div>
+  );
 };
 
 export default TileBackground;
