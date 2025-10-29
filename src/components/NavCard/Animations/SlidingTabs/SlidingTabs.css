@@ -38,6 +38,13 @@
   opacity: 1;
 }
 
+.tab-item.no-transform-transition {
+  transition:
+    transform 0ms linear,
+    opacity 300ms ease-out,
+    color 160ms ease;
+}
+
 .tab-item .svg-icon {
   transform: scale(1);
   transform-origin: center;
@@ -52,15 +59,12 @@
   font-size: 1.3rem;
 }
 
-/* Specific closing animation styles */
 .expandable-card.closing .tab-item {
-  /* Use the same duration as the expanding animation but slower */
   transition:
     transform var(--closing-duration, 720ms) cubic-bezier(0.33, 1, 0.68, 1),
     opacity var(--closing-duration, 720ms) cubic-bezier(0.33, 1, 0.68, 1) !important;
 }
 
-/* Hide tabs during the closing animation */
 .expandable-card.closing .tab-item:not(.selected) {
   opacity: 0 !important;
 }

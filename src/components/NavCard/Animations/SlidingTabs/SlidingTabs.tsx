@@ -32,8 +32,11 @@ export default function SlidingTabs({
     tabHeight: 0,
   });
   const [scaledTabId, setScaledTabId] = useState<string | null>(null);
+  const [hiddenTabIds, setHiddenTabIds] = useState<Record<string, boolean>>({});
+  const [collapseComplete, setCollapseComplete] = useState(false);
   const listRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const hideTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!selectedTab || !onAnimationComplete) return;
@@ -97,6 +100,43 @@ export default function SlidingTabs({
     });
   }, [selectedTab, isExpanded]);
 
+  useEffect(() => {
+    if (hideTimeoutRef.current) {
+      window.clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
+
+    if (!selectedTab || !isExpanded) {
+      setHiddenTabIds((previous) => (Object.keys(previous).length ? {} : previous));
+      setCollapseComplete(false);
+      return;
+    }
+
+    setCollapseComplete(false);
+
+    setHiddenTabIds((previous) => (Object.keys(previous).length ? {} : previous));
+
+    hideTimeoutRef.current = window.setTimeout(() => {
+      setHiddenTabIds(
+        tabs.reduce<Record<string, boolean>>((accumulator, tab) => {
+          if (tab.id !== selectedTab) {
+            accumulator[tab.id] = true;
+          }
+          return accumulator;
+        }, {}),
+      );
+      setCollapseComplete(true);
+      hideTimeoutRef.current = null;
+    }, TAB_SLIDE_DURATION_MS);
+
+    return () => {
+      if (hideTimeoutRef.current) {
+        window.clearTimeout(hideTimeoutRef.current);
+        hideTimeoutRef.current = null;
+      }
+    };
+  }, [selectedTab, isExpanded, tabs]);
+
   const slideDurationValue = `${TAB_SLIDE_DURATION_MS}ms`;
 
   return (
@@ -121,8 +161,11 @@ export default function SlidingTabs({
         };
         const transforms: string[] = [];
 
-        if (selectedTab && isSelected) {
-          transforms.push(`translateY(${translateY}px)`);
+        const shouldTranslate = selectedTab && isSelected;
+
+        if (shouldTranslate) {
+          const translateValue = collapseComplete ? 0 : translateY;
+          transforms.push(`translateY(${translateValue}px)`);
         }
 
         if (shouldScale) {
@@ -135,12 +178,26 @@ export default function SlidingTabs({
 
         if (selectedTab && !isSelected) {
           inlineStyle.opacity = 0;
+          inlineStyle.pointerEvents = 'none';
         }
+
+        if (hiddenTabIds[tab.id]) {
+          inlineStyle.display = 'none';
+        }
+
+        const buttonClasses = [
+          'tab-item',
+          isSelected ? 'selected' : '',
+          shouldScale ? 'scaled' : '',
+          collapseComplete && isSelected ? 'no-transform-transition' : '',
+        ]
+          .filter(Boolean)
+          .join(' ');
 
         return (
           <button
             key={tab.id}
-            className={`tab-item ${isSelected ? 'selected' : ''} ${shouldScale ? 'scaled' : ''}`}
+            className={buttonClasses}
             onClick={() => onSelectTab(tab.id)}
             style={inlineStyle}
             ref={(node) => {
