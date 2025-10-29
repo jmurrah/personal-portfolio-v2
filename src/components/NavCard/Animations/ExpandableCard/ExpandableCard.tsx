@@ -42,13 +42,7 @@ export default function ExpandableCard({
             transition={NAV_CARD_ANIMATION.layout}
             initial={false}
           >
-            <motion.div
-              layoutId="expandable-card-tabs"
-              className="tabs-container"
-              initial={false}
-            >
-              {renderTabs('compact')}
-            </motion.div>
+            <div className="tabs-container">{renderTabs('compact')}</div>
             <motion.div
               layoutId="expandable-card-body"
               className="card-content card-content-placeholder"
@@ -82,13 +76,7 @@ export default function ExpandableCard({
                 transition={NAV_CARD_ANIMATION.layout}
                 initial={false}
               >
-                <motion.div
-                  layoutId="expandable-card-tabs"
-                  className="tabs-container expanded"
-                  initial={false}
-                >
-                  {renderTabs('expanded')}
-                </motion.div>
+                <div className="tabs-container expanded">{renderTabs('expanded')}</div>
                 <motion.div
                   layoutId="expandable-card-body"
                   className="card-content"
@@ -96,17 +84,7 @@ export default function ExpandableCard({
                 >
                   <div className="card-content-viewport">
                     {tabContent ? (
-                      <motion.div
-                        layout
-                        className="card-content-body tab-content-inner p-3 mt-1"
-                        initial={false}
-                        transition={{
-                          layout: NAV_CARD_ANIMATION.layout,
-                        }}
-                        style={{ transformOrigin: 'top center' }}
-                      >
-                        {tabContent}
-                      </motion.div>
+                      <div className="card-content-body tab-content-inner p-3 mt-1">{tabContent}</div>
                     ) : null}
                   </div>
                 </motion.div>
