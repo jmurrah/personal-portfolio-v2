@@ -5,6 +5,7 @@ import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/NavCard/NavCard';
 import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 import ThemeToggle from '@/components/ThemeToggle';
+import { BASE_ANIMATION_MS as DELAY } from '@/components/NavCard/animationConfig';
 
 const technologies = [
   { name: 'Python', logoSrc: '/logos/PythonLogo.svg', accent: 'rgba(53, 114, 165, 0.2)' },
@@ -28,7 +29,6 @@ const technologies = [
   // { name: 'FastAPI', logoSrc: '/logos/FastAPILogo.svg', accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
-const DELAY = 800;
 export default function Home() {
   const [readyToShowTab, setReadyToShowTab] = useState(false);
   const [cardsExiting, setCardsExiting] = useState(false);

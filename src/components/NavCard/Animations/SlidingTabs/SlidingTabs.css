@@ -59,6 +59,15 @@
   color: var(--primary);
 }
 
+.tab-item:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.tab-item:disabled .svg-icon {
+  opacity: 0.6;
+}
+
 .tab-item-expanded {
   padding: 0.8rem 1rem;
   border-radius: 1rem;

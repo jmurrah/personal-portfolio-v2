@@ -1,11 +1,10 @@
 import Card from '@/components/Card';
+import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import './ExpandableCard.css';
 
 const MotionCard = motion(Card);
-
-const OPEN_TRANSITION = { type: 'spring', stiffness: 220, damping: 30 } as const;
 
 type ExpandableVariant = 'compact' | 'expanded';
 
@@ -67,7 +66,7 @@ export default function ExpandableCard({
         <MotionCard
           layoutId="expandable-card-container"
           className={`expandable-card-base ${expanded ? 'is-hidden' : ''}`}
-          transition={OPEN_TRANSITION}
+          transition={NAV_CARD_ANIMATION.layout}
           aria-hidden={expanded}
           style={
             expanded
@@ -90,7 +89,7 @@ export default function ExpandableCard({
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.65 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={NAV_CARD_ANIMATION.overlay}
               aria-hidden
             />
             <motion.div
@@ -98,27 +97,42 @@ export default function ExpandableCard({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={NAV_CARD_ANIMATION.portal}
             >
               <MotionCard
                 layoutId="expandable-card-container"
                 className="expandable-card-expanded"
-                transition={OPEN_TRANSITION}
+                transition={NAV_CARD_ANIMATION.layout}
                 ref={expandedCardRef}
               >
-                <div className="tabs-container expanded">{renderTabs('expanded')}</div>
+                <motion.div
+                  layout
+                  className="tabs-container expanded"
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 16 }}
+                  transition={{
+                    layout: NAV_CARD_ANIMATION.layout,
+                    opacity: NAV_CARD_ANIMATION.content,
+                    y: NAV_CARD_ANIMATION.content,
+                  }}
+                >
+                  {renderTabs('expanded')}
+                </motion.div>
                 <motion.div
                   layout
                   className="card-content"
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 16 }}
-                  transition={{ duration: 0.3, delay: 0.05 }}
+                  transition={{
+                    layout: NAV_CARD_ANIMATION.layout,
+                    opacity: NAV_CARD_ANIMATION.content,
+                    y: NAV_CARD_ANIMATION.content,
+                  }}
                 >
                   <div className="card-content-viewport">
-                    <div className="card-content-body tab-content-inner p-3 mt-1">
-                      {tabContent}
-                    </div>
+                    <div className="card-content-body tab-content-inner p-3 mt-1">{tabContent}</div>
                   </div>
                 </motion.div>
               </MotionCard>

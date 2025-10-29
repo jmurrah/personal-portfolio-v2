@@ -1,3 +1,4 @@
+import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import SvgIcon from '@/components/SvgIcon';
 import { motion } from 'framer-motion';
 import './SlidingTabs.css';
@@ -16,9 +17,8 @@ export interface SlidingTabsProps {
   onSelectTab: (tabId: string) => void;
   variant?: SlidingTabsVariant;
   showSelection?: boolean;
+  isInteractionLocked?: boolean;
 }
-
-const highlightTransition = { type: 'spring', stiffness: 500, damping: 45 } as const;
 
 export default function SlidingTabs({
   tabs,
@@ -26,6 +26,7 @@ export default function SlidingTabs({
   onSelectTab,
   variant = 'compact',
   showSelection = true,
+  isInteractionLocked = false,
 }: SlidingTabsProps) {
   const visibleTabs =
     variant === 'expanded' && selectedTab ? tabs.filter((tab) => tab.id === selectedTab) : tabs;
@@ -41,14 +42,19 @@ export default function SlidingTabs({
             type="button"
             layout="position"
             className={`tab-item tab-item-${variant} ${isSelected ? 'selected' : ''}`}
-            onClick={() => onSelectTab(tab.id)}
-            whileTap={{ scale: 0.97 }}
+            onClick={() => {
+              if (isInteractionLocked) return;
+              onSelectTab(tab.id);
+            }}
+            whileTap={isInteractionLocked ? undefined : { scale: 0.97 }}
+            disabled={isInteractionLocked}
+            aria-disabled={isInteractionLocked}
           >
             {showSelection && isSelected ? (
               <motion.span
                 className="tab-highlight"
                 layoutId="tab-highlight"
-                transition={highlightTransition}
+                transition={NAV_CARD_ANIMATION.highlight}
               />
             ) : null}
             <span className="tab-content">
