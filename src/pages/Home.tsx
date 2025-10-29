@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS, LOGOS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
@@ -53,14 +53,17 @@ export default function Home() {
   const routeTab = useMemo(() => getTabFromPath(location.pathname), [location.pathname]);
   const [activeTab, setActiveTab] = useState<string | null>(() => routeTab);
   const [readyToShowTab, setReadyToShowTab] = useState(() => Boolean(routeTab));
+  const [introDuration, setIntroDuration] = useState(() => (routeTab ? 650 : 1100));
   const [cardsExiting, setCardsExiting] = useState(false);
   const [, setExitedCardCount] = useState(() => (routeTab ? totalCards : 0));
   const [hideCards, setHideCards] = useState(() => Boolean(routeTab));
   const internalNavRef = useRef(false);
+  const pendingTabRef = useRef<string | null>(routeTab);
+  const initializedRef = useRef(false);
 
   const tabsAnimation = useSlideAnimation({
     direction: 'top',
-    delay: 1100,
+    delay: introDuration,
     duration: 1000,
     isExiting: false,
   });
@@ -68,33 +71,46 @@ export default function Home() {
   const isNavTabId = (value: string): value is NavTabId => value in tabRoutes;
 
   useEffect(() => {
+    pendingTabRef.current = routeTab ?? null;
+
     if (internalNavRef.current) {
       internalNavRef.current = false;
       return;
     }
 
-    setActiveTab(routeTab);
-
     if (routeTab) {
+      setActiveTab(routeTab);
       setHideCards(true);
       setReadyToShowTab(true);
       setCardsExiting(false);
       setExitedCardCount(totalCards);
+      setIntroDuration(650);
     } else {
+      if (!initializedRef.current) {
+        initializedRef.current = true;
+        return;
+      }
+
+      setActiveTab(null);
       setHideCards(false);
       setReadyToShowTab(false);
       setCardsExiting(false);
       setExitedCardCount(0);
+      setIntroDuration(1100);
     }
+
+    initializedRef.current = true;
   }, [routeTab]);
 
-  const handleAllCardsExited = () => {
-    setHideCards(true);
-    setReadyToShowTab(true);
-    setCardsExiting(false);
-  };
+  const handleAllCardsExited = useCallback(() => {
+    if (pendingTabRef.current) {
+      setHideCards(true);
+      setReadyToShowTab(true);
+      setCardsExiting(false);
+    }
+  }, []);
 
-  const handleCardExited = () => {
+  const handleCardExited = useCallback(() => {
     setExitedCardCount((prev) => {
       const newCount = prev + 1;
       if (newCount === totalCards) {
@@ -102,12 +118,14 @@ export default function Home() {
       }
       return newCount;
     });
-  };
+  }, [handleAllCardsExited]);
 
   const handleTabClick = (tabId: string) => {
     const isClosing = tabId === '' || tabId === activeTab;
     const nextTab = isClosing ? null : tabId;
     const targetRoute = nextTab && isNavTabId(nextTab) ? tabRoutes[nextTab] : '/';
+
+    pendingTabRef.current = nextTab;
 
     if (nextTab) {
       setActiveTab(nextTab);

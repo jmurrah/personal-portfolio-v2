@@ -1,3 +1,4 @@
+import { type CSSProperties } from 'react';
 import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import SvgIcon from '@/components/SvgIcon';
 import { motion } from 'framer-motion';
@@ -35,6 +36,9 @@ export default function SlidingTabs({
     <div className={`tabs-list tabs-list-${variant}`}>
       {visibleTabs.map((tab) => {
         const isSelected = tab.id === selectedTab;
+        const baseColor =
+          variant === 'expanded' || isSelected ? 'var(--text)' : 'var(--text-muted)';
+        const iconStyle = isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
 
         return (
           <motion.button
@@ -49,6 +53,7 @@ export default function SlidingTabs({
             whileTap={isInteractionLocked ? undefined : { scale: 0.97 }}
             disabled={isInteractionLocked}
             aria-disabled={isInteractionLocked}
+            style={{ '--tab-color': baseColor } as CSSProperties}
           >
             {showSelection && isSelected ? (
               <motion.span
@@ -61,8 +66,10 @@ export default function SlidingTabs({
               <SvgIcon
                 src={tab.icon}
                 alt={tab.label}
-                hoverColor="var(--primary)"
+                color="currentColor"
+                hoverColor="currentColor"
                 size={variant === 'compact' ? 'small' : 'medium'}
+                style={iconStyle}
               />
               <span className="tab-label">{tab.label}</span>
             </span>
