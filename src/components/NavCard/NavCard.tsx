@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS } from '@/assets';
 import ExpandableCard from '@/components/NavCard/Animations/ExpandableCard/ExpandableCard';
-import SlidingTabs, {
-  type SlidingTabsVariant,
-  type Tab,
-} from '@/components/NavCard/Animations/SlidingTabs/SlidingTabs';
+import TabsList, { type TabsVariant, type Tab } from '@/components/NavCard/Animations/Tabs/Tabs';
 import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import '@/components/NavCard/NavCard.css';
 import {
@@ -90,8 +87,8 @@ export default function Tabs({
     }
   };
 
-  const renderTabs = (variant: SlidingTabsVariant) => (
-    <SlidingTabs
+  const renderTabs = (variant: TabsVariant) => (
+    <TabsList
       tabs={tabs}
       selectedTab={selectedTab}
       onSelectTab={handleSelectTab}

@@ -54,12 +54,12 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<string | null>(() => routeTab);
   const [readyToShowTab, setReadyToShowTab] = useState(() => Boolean(routeTab));
   const [introDuration, setIntroDuration] = useState(() => (routeTab ? 650 : 1100));
-  const [cardsExiting, setCardsExiting] = useState(false);
-  const [, setExitedCardCount] = useState(() => (routeTab ? totalCards : 0));
-  const [hideCards, setHideCards] = useState(() => Boolean(routeTab));
+  const [cardsExiting, setCardsExiting] = useState(() => Boolean(routeTab));
+  const [, setExitedCardCount] = useState(0);
+  const [hideCards, setHideCards] = useState(() => false);
   const internalNavRef = useRef(false);
   const pendingTabRef = useRef<string | null>(routeTab);
-  const initializedRef = useRef(false);
+  const hasShownDefaultRef = useRef(routeTab === null);
 
   const tabsAnimation = useSlideAnimation({
     direction: 'top',
@@ -80,35 +80,35 @@ export default function Home() {
 
     if (routeTab) {
       setActiveTab(routeTab);
-      setHideCards(true);
-      setReadyToShowTab(true);
-      setCardsExiting(false);
-      setExitedCardCount(totalCards);
       setIntroDuration(650);
-    } else {
-      if (!initializedRef.current) {
-        initializedRef.current = true;
-        return;
-      }
-
-      setActiveTab(null);
       setHideCards(false);
+      setCardsExiting(true);
       setReadyToShowTab(false);
-      setCardsExiting(false);
       setExitedCardCount(0);
+    } else {
       setIntroDuration(1100);
+      setPendingTabAndReset();
     }
-
-    initializedRef.current = true;
   }, [routeTab]);
+
+  const setPendingTabAndReset = useCallback(() => {
+    hasShownDefaultRef.current = true;
+    setActiveTab(null);
+    setHideCards(false);
+    setReadyToShowTab(false);
+    setCardsExiting(false);
+    setExitedCardCount(0);
+  }, []);
 
   const handleAllCardsExited = useCallback(() => {
     if (pendingTabRef.current) {
       setHideCards(true);
       setReadyToShowTab(true);
       setCardsExiting(false);
+    } else {
+      setPendingTabAndReset();
     }
-  }, []);
+  }, [setPendingTabAndReset]);
 
   const handleCardExited = useCallback(() => {
     setExitedCardCount((prev) => {
@@ -138,16 +138,24 @@ export default function Home() {
     }
 
     setExitedCardCount(0);
-    setReadyToShowTab(false);
 
     if (isClosing) {
-      setCardsExiting(true);
-      setTimeout(() => {
-        setHideCards(false);
-        setCardsExiting(false);
-      }, DELAY);
+      if (!hasShownDefaultRef.current) {
+        setPendingTabAndReset();
+      } else {
+        setIntroDuration(1100);
+        setCardsExiting(true);
+        setReadyToShowTab(false);
+        setTimeout(() => {
+          setHideCards(false);
+          setCardsExiting(false);
+        }, DELAY);
+      }
     } else {
+      setIntroDuration(650);
       setHideCards(false);
+      setExitedCardCount(0);
+      setReadyToShowTab(false);
       setCardsExiting(true);
     }
 
