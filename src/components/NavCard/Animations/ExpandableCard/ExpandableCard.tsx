@@ -36,7 +36,7 @@ export default function ExpandableCard({
       <div className="tabs-container">{children}</div>
       {expanded && (
         <div className="card-content">
-          <div className="tab-content-inner p-3">{tabContent}</div>
+          <div className="tab-content-inner p-3 mt-1">{tabContent}</div>
         </div>
       )}
     </Card>
