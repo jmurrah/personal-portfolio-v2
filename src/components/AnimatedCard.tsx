@@ -18,7 +18,7 @@ export default function AnimatedCard({
   direction,
   delay,
   enterDuration = 1000,
-  exitDuration = 2000,
+  exitDuration = 1000,
   triggerExit = false,
   className = '',
   onExitComplete,

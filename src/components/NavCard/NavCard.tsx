@@ -86,7 +86,6 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
           </>
         )
       }
-      onAnimationComplete={() => console.log('Animation complete')}
     >
       <SlidingTabs
         tabs={tabs}

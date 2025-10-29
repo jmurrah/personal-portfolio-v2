@@ -81,7 +81,7 @@ a .underline {
 }
 
 a .underline::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: 0;

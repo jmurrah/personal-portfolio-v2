@@ -17,7 +17,7 @@ export interface SlidingTabsProps {
   isClosing?: boolean;
 }
 
-const CARD_ANIMATION_DURATION_MS = 5000;
+const CARD_ANIMATION_DURATION_MS = 1000;
 
 export default function SlidingTabs({
   tabs,

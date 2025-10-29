@@ -11,7 +11,7 @@ interface ExpandableCardProps {
   initialHeight?: string;
 }
 
-const ANIMATION_DURATION = 5000;
+const ANIMATION_DURATION = 1000;
 
 export default function ExpandableCard({
   children,
