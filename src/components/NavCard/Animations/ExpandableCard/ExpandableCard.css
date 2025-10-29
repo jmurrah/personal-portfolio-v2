@@ -57,6 +57,7 @@
   flex-direction: column;
   gap: 1rem;
   background: inherit;
+  overflow: hidden;
 }
 
 .expandable-card-expanded .tabs-container {
@@ -68,6 +69,8 @@
 .expandable-card-expanded .card-content {
   border-top: 1px solid var(--card-border);
   padding-top: 1rem;
+  width: 100%;
+  overflow: hidden;
 }
 
 @media (max-width: 720px) {
