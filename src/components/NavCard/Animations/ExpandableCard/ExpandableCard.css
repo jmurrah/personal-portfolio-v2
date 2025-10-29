@@ -1,15 +1,17 @@
 .expandable-card {
-  --animation-duration: 2000ms;
-  --content-height: 0;
-  --initial-width: 280px;
+  --animation-duration: 600ms;
+  --initial-width: 256px;
   --initial-height: 320px;
 
+  display: flex;
+  flex-direction: column;
   width: var(--initial-width);
   min-height: var(--initial-height);
   transition: width var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
-  /* overflow: visible; */
-  display: flex;
-  flex-direction: column;
+}
+
+.expandable-card.expanded {
+  width: 100%;
 }
 
 .tabs-container {
@@ -18,28 +20,5 @@
 }
 
 .card-content {
-  height: auto;
-  opacity: 0;
-  overflow: hidden;
-}
-
-.expandable-card.expanded {
   width: 100%;
-}
-
-.expandable-card.expanded .card-content {
-  opacity: 1;
-}
-
-.expandable-card.closing {
-  --closing-duration: 720ms;
-  transition: width var(--closing-duration) cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.expandable-card.animating {
-  will-change: width;
-}
-
-.expandable-card.animating .card-content {
-  will-change: height, opacity;
 }

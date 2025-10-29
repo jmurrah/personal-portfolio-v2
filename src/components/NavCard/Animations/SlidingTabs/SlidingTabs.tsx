@@ -29,26 +29,10 @@ export default function SlidingTabs({
   isClosing = false,
 }: SlidingTabsProps) {
   const [tabOffsets, setTabOffsets] = useState<Record<string, number>>({});
-  const [listMetrics, setListMetrics] = useState<{ listHeight: number; tabHeight: number }>({
-    listHeight: 0,
-    tabHeight: 0,
-  });
   const [scaledTabId, setScaledTabId] = useState<string | null>(null);
-  const [hideOthers, setHideOthers] = useState(false);
-  const [disableSelectedTransition, setDisableSelectedTransition] = useState(false);
   const listRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const hideTimeoutRef = useRef<number | null>(null);
-  const rafRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-    };
-  }, []);
   useEffect(() => {
     if (!selectedTab || !onAnimationComplete) return;
 
@@ -62,36 +46,17 @@ export default function SlidingTabs({
   useLayoutEffect(() => {
     const measureLayout = () => {
       const offsets: Record<string, number> = {};
-      let measuredTabHeight = 0;
 
       tabs.forEach((tab) => {
         const tabNode = tabRefs.current[tab.id];
         if (tabNode) {
           offsets[tab.id] = tabNode.offsetTop;
-          if (!measuredTabHeight) {
-            measuredTabHeight = tabNode.offsetHeight;
-          }
         }
       });
 
-      const nextListHeight = listRef.current?.scrollHeight ?? 0;
-
-      if (!hideOthers) {
-        setTabOffsets((previous) => {
-          const hasChanges = tabs.some((tab) => previous[tab.id] !== offsets[tab.id]);
-          return hasChanges ? offsets : previous;
-        });
-      }
-
-      setListMetrics((previous) => {
-        if (previous.listHeight === nextListHeight && previous.tabHeight === measuredTabHeight) {
-          return previous;
-        }
-
-        return {
-          listHeight: nextListHeight,
-          tabHeight: measuredTabHeight,
-        };
+      setTabOffsets((previous) => {
+        const hasChanges = tabs.some((tab) => previous[tab.id] !== offsets[tab.id]);
+        return hasChanges ? offsets : previous;
       });
     };
 
@@ -101,92 +66,25 @@ export default function SlidingTabs({
     return () => {
       window.removeEventListener('resize', measureLayout);
     };
-  }, [tabs, selectedTab, hideOthers]);
+  }, [tabs]);
 
   useEffect(() => {
     setScaledTabId((current) => {
-      if (!selectedTab || !isExpanded) {
+      if (!selectedTab || !isExpanded || isClosing) {
         return current !== null ? null : current;
       }
 
       return current === selectedTab ? current : selectedTab;
     });
-  }, [selectedTab, isExpanded]);
-
-  useEffect(() => {
-    if (hideTimeoutRef.current) {
-      window.clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
-    }
-
-    const restoreTransitionsNextFrame = () => {
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current);
-      }
-      rafRef.current = window.requestAnimationFrame(() => {
-        setDisableSelectedTransition(false);
-        rafRef.current = null;
-      });
-    };
-
-    const temporarilyDisableSelectedTransition = () => {
-      setDisableSelectedTransition(true);
-      restoreTransitionsNextFrame();
-    };
-
-    if (!selectedTab) {
-      if (hideOthers) {
-        temporarilyDisableSelectedTransition();
-        setHideOthers(false);
-      }
-      return;
-    }
-
-    if (isClosing) {
-      return;
-    }
-
-    if (!isExpanded) {
-      if (hideOthers) {
-        temporarilyDisableSelectedTransition();
-        setHideOthers(false);
-      }
-      return;
-    }
-
-    hideTimeoutRef.current = window.setTimeout(() => {
-      if (!hideOthers) {
-        temporarilyDisableSelectedTransition();
-        setHideOthers(true);
-      }
-      hideTimeoutRef.current = null;
-    }, TAB_SLIDE_DURATION_MS);
-
-    return () => {
-      if (hideTimeoutRef.current) {
-        window.clearTimeout(hideTimeoutRef.current);
-        hideTimeoutRef.current = null;
-      }
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-    };
-  }, [selectedTab, isExpanded, isClosing, hideOthers]);
+  }, [selectedTab, isExpanded, isClosing]);
 
   const slideDurationValue = `${TAB_SLIDE_DURATION_MS}ms`;
 
   return (
     <div
       ref={listRef}
-      className={`tabs-list ${selectedTab ? 'tab-selected' : ''}`}
-      style={
-        {
-          '--animation-duration': slideDurationValue,
-          '--list-height': listMetrics.listHeight ? `${listMetrics.listHeight}px` : undefined,
-          '--tab-height': listMetrics.tabHeight ? `${listMetrics.tabHeight}px` : undefined,
-        } as CSSProperties
-      }
+      className="tabs-list"
+      style={{ '--animation-duration': slideDurationValue } as CSSProperties}
     >
       {tabs.map((tab) => {
         const isSelected = selectedTab === tab.id;
@@ -198,7 +96,7 @@ export default function SlidingTabs({
         };
         const transforms: string[] = [];
 
-        const shouldTranslate = Boolean(selectedTab && isSelected && !hideOthers && !isClosing);
+        const shouldTranslate = Boolean(selectedTab && isSelected && isExpanded && !isClosing);
 
         if (shouldTranslate) {
           transforms.push(`translateY(${translateY}px)`);
@@ -212,17 +110,9 @@ export default function SlidingTabs({
           inlineStyle.transform = transforms.join(' ');
         }
 
-        if (disableSelectedTransition && isSelected) {
-          inlineStyle.transition = 'none';
-        }
-
-        if (selectedTab && !isSelected) {
+        if (selectedTab && !isSelected && isExpanded && !isClosing) {
           inlineStyle.opacity = 0;
           inlineStyle.pointerEvents = 'none';
-        }
-
-        if (hideOthers && selectedTab && tab.id !== selectedTab) {
-          inlineStyle.display = 'none';
         }
 
         const buttonClasses = ['tab-item', isSelected ? 'selected' : '', shouldScale ? 'scaled' : '']
