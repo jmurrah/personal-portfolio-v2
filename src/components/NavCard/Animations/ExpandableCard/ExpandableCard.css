@@ -30,23 +30,29 @@
 
 .expandable-card-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   border: none;
-  background: rgba(7, 8, 13, 0.72);
-  cursor: pointer;
+  background: linear-gradient(180deg, rgba(7, 8, 13, 0.72) 0%, rgba(7, 8, 13, 0) 100%);
+  cursor: default;
   z-index: 40;
+  pointer-events: none;
+  height: 0;
 }
 
 .expandable-card-portal {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 2.5rem 1.5rem;
-  pointer-events: auto;
+  align-items: flex-start;
+  padding: 0;
+  pointer-events: none;
   z-index: 50;
-  overflow-y: auto;
+  overflow: visible;
 }
 
 .expandable-card-expanded {
