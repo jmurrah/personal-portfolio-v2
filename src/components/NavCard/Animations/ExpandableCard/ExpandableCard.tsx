@@ -72,7 +72,7 @@ export default function ExpandableCard({
             >
               <MotionCard
                 layoutId="expandable-card-container"
-                className="expandable-card-expanded"
+                className="expandable-card-expanded mb-10"
                 transition={NAV_CARD_ANIMATION.layout}
                 initial={false}
               >
@@ -84,7 +84,9 @@ export default function ExpandableCard({
                 >
                   <div className="card-content-viewport">
                     {tabContent ? (
-                      <div className="card-content-body tab-content-inner p-3 mt-1">{tabContent}</div>
+                      <div className="card-content-body tab-content-inner p-3 mt-1">
+                        {tabContent}
+                      </div>
                     ) : null}
                   </div>
                 </motion.div>

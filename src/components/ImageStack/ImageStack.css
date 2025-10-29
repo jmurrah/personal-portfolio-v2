@@ -5,6 +5,7 @@
   width: clamp(280px, 32vw, 420px);
   min-width: 280px;
   aspect-ratio: 3 / 4;
+  height: 500px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -19,10 +20,11 @@
   justify-content: center;
   border-radius: 16px;
   overflow: hidden;
-  transform-origin: bottom center;
+  transform-origin: center;
   pointer-events: none;
   cursor: default;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.3s ease;
 }
 

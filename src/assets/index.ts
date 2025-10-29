@@ -40,7 +40,7 @@ import BlogIcon from '@/assets/icons/BlogIcon.svg';
 import CatsPhoto from '@/assets/photos/Cats.jpg';
 import GymPhoto from '@/assets/photos/Gym.png';
 import InternDayPhoto from '@/assets/photos/InternDay.jpg';
-import MarriagePhoto from '@/assets/photos/Marriage.jpg';
+import WeddingPhoto from '@/assets/photos/Wedding.jpg';
 import VolleyballPhoto from '@/assets/photos/Volleyball.jpg';
 import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
 
@@ -92,7 +92,7 @@ export const PHOTOS = {
   cats: CatsPhoto,
   gym: GymPhoto,
   internDay: InternDayPhoto,
-  marriage: MarriagePhoto,
+  wedding: WeddingPhoto,
   volleyball: VolleyballPhoto,
   waterfall: WaterfallPhoto,
 } as const;

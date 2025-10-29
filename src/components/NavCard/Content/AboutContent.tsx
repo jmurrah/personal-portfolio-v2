@@ -3,28 +3,28 @@ import { ImageStack, type ImageStackItem } from '@/components/ImageStack';
 
 const aboutImages: ImageStackItem[] = [
   {
+    src: PHOTOS.waterfall,
+    alt: 'Standing at the base of a waterfall during a hike',
+  },
+  {
+    src: PHOTOS.wedding,
+    alt: 'Sharing a moment after the wedding ceremony',
+  },
+  {
     src: PHOTOS.cats,
     alt: 'Jacob with a cat lounging on the couch',
   },
   {
-    src: PHOTOS.gym,
-    alt: 'Celebrating a new personal record at the gym',
+    src: PHOTOS.internDay,
+    alt: 'Posing with the AT&T internship cohort',
   },
   {
     src: PHOTOS.volleyball,
     alt: 'After a sand volleyball match with friends',
   },
   {
-    src: PHOTOS.waterfall,
-    alt: 'Standing at the base of a waterfall during a hike',
-  },
-  {
-    src: PHOTOS.marriage,
-    alt: 'Sharing a moment after the wedding ceremony',
-  },
-  {
-    src: PHOTOS.internDay,
-    alt: 'Posing with the AT&T internship cohort',
+    src: PHOTOS.gym,
+    alt: 'Celebrating a new personal record at the gym',
   },
 ];
 
