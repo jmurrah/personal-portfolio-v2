@@ -93,6 +93,7 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
         selectedTab={selectedTab}
         onSelectTab={handleSelectTab}
         isExpanded={isExpanded}
+        isClosing={isClosing}
       />
     </ExpandableCard>
   );

@@ -38,13 +38,6 @@
   opacity: 1;
 }
 
-.tab-item.no-transform-transition {
-  transition:
-    transform 0ms linear,
-    opacity 300ms ease-out,
-    color 160ms ease;
-}
-
 .tab-item .svg-icon {
   transform: scale(1);
   transform-origin: center;
@@ -57,6 +50,14 @@
 
 .tab-item.scaled {
   font-size: 1.3rem;
+}
+
+.tab-item .svg-icon {
+  background-color: var(--text);
+}
+
+.tab-item span {
+  color: var(--text);
 }
 
 .expandable-card.closing .tab-item {

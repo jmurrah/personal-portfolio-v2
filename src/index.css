@@ -17,7 +17,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--icon-color, var(--text));
+  color: var(--icon-color, var(--text-muted));
 }
 
 .svg-icon-link:hover {
@@ -30,7 +30,7 @@ a {
 
 .svg-icon {
   display: inline-block;
-  color: var(--icon-color, var(--text));
+  color: var(--icon-color, var(--text-muted));
   background-color: currentColor;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
@@ -99,4 +99,8 @@ a:focus .underline::after {
 .underline:hover,
 .underline:focus {
   color: var(--text);
+}
+
+span {
+  color: var(--text-muted);
 }

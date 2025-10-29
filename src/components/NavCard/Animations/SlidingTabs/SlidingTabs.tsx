@@ -14,6 +14,7 @@ export interface SlidingTabsProps {
   onSelectTab: (tabId: string) => void;
   onAnimationComplete?: () => void;
   isExpanded?: boolean;
+  isClosing?: boolean;
 }
 
 const TAB_SLIDE_DURATION_MS = 520;
@@ -25,6 +26,7 @@ export default function SlidingTabs({
   onSelectTab,
   onAnimationComplete,
   isExpanded = false,
+  isClosing = false,
 }: SlidingTabsProps) {
   const [tabOffsets, setTabOffsets] = useState<Record<string, number>>({});
   const [listMetrics, setListMetrics] = useState<{ listHeight: number; tabHeight: number }>({
@@ -32,12 +34,21 @@ export default function SlidingTabs({
     tabHeight: 0,
   });
   const [scaledTabId, setScaledTabId] = useState<string | null>(null);
-  const [hiddenTabIds, setHiddenTabIds] = useState<Record<string, boolean>>({});
-  const [collapseComplete, setCollapseComplete] = useState(false);
+  const [hideOthers, setHideOthers] = useState(false);
+  const [disableSelectedTransition, setDisableSelectedTransition] = useState(false);
   const listRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const hideTimeoutRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
 
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+  }, []);
   useEffect(() => {
     if (!selectedTab || !onAnimationComplete) return;
 
@@ -65,10 +76,12 @@ export default function SlidingTabs({
 
       const nextListHeight = listRef.current?.scrollHeight ?? 0;
 
-      setTabOffsets((previous) => {
-        const hasChanges = tabs.some((tab) => previous[tab.id] !== offsets[tab.id]);
-        return hasChanges ? offsets : previous;
-      });
+      if (!hideOthers) {
+        setTabOffsets((previous) => {
+          const hasChanges = tabs.some((tab) => previous[tab.id] !== offsets[tab.id]);
+          return hasChanges ? offsets : previous;
+        });
+      }
 
       setListMetrics((previous) => {
         if (previous.listHeight === nextListHeight && previous.tabHeight === measuredTabHeight) {
@@ -88,7 +101,7 @@ export default function SlidingTabs({
     return () => {
       window.removeEventListener('resize', measureLayout);
     };
-  }, [tabs, selectedTab]);
+  }, [tabs, selectedTab, hideOthers]);
 
   useEffect(() => {
     setScaledTabId((current) => {
@@ -106,26 +119,46 @@ export default function SlidingTabs({
       hideTimeoutRef.current = null;
     }
 
-    if (!selectedTab || !isExpanded) {
-      setHiddenTabIds((previous) => (Object.keys(previous).length ? {} : previous));
-      setCollapseComplete(false);
+    const restoreTransitionsNextFrame = () => {
+      if (rafRef.current) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
+      rafRef.current = window.requestAnimationFrame(() => {
+        setDisableSelectedTransition(false);
+        rafRef.current = null;
+      });
+    };
+
+    const temporarilyDisableSelectedTransition = () => {
+      setDisableSelectedTransition(true);
+      restoreTransitionsNextFrame();
+    };
+
+    if (!selectedTab) {
+      if (hideOthers) {
+        temporarilyDisableSelectedTransition();
+        setHideOthers(false);
+      }
       return;
     }
 
-    setCollapseComplete(false);
+    if (isClosing) {
+      return;
+    }
 
-    setHiddenTabIds((previous) => (Object.keys(previous).length ? {} : previous));
+    if (!isExpanded) {
+      if (hideOthers) {
+        temporarilyDisableSelectedTransition();
+        setHideOthers(false);
+      }
+      return;
+    }
 
     hideTimeoutRef.current = window.setTimeout(() => {
-      setHiddenTabIds(
-        tabs.reduce<Record<string, boolean>>((accumulator, tab) => {
-          if (tab.id !== selectedTab) {
-            accumulator[tab.id] = true;
-          }
-          return accumulator;
-        }, {}),
-      );
-      setCollapseComplete(true);
+      if (!hideOthers) {
+        temporarilyDisableSelectedTransition();
+        setHideOthers(true);
+      }
       hideTimeoutRef.current = null;
     }, TAB_SLIDE_DURATION_MS);
 
@@ -134,8 +167,12 @@ export default function SlidingTabs({
         window.clearTimeout(hideTimeoutRef.current);
         hideTimeoutRef.current = null;
       }
+      if (rafRef.current) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
     };
-  }, [selectedTab, isExpanded, tabs]);
+  }, [selectedTab, isExpanded, isClosing, hideOthers]);
 
   const slideDurationValue = `${TAB_SLIDE_DURATION_MS}ms`;
 
@@ -161,11 +198,10 @@ export default function SlidingTabs({
         };
         const transforms: string[] = [];
 
-        const shouldTranslate = selectedTab && isSelected;
+        const shouldTranslate = Boolean(selectedTab && isSelected && !hideOthers && !isClosing);
 
         if (shouldTranslate) {
-          const translateValue = collapseComplete ? 0 : translateY;
-          transforms.push(`translateY(${translateValue}px)`);
+          transforms.push(`translateY(${translateY}px)`);
         }
 
         if (shouldScale) {
@@ -176,21 +212,20 @@ export default function SlidingTabs({
           inlineStyle.transform = transforms.join(' ');
         }
 
+        if (disableSelectedTransition && isSelected) {
+          inlineStyle.transition = 'none';
+        }
+
         if (selectedTab && !isSelected) {
           inlineStyle.opacity = 0;
           inlineStyle.pointerEvents = 'none';
         }
 
-        if (hiddenTabIds[tab.id]) {
+        if (hideOthers && selectedTab && tab.id !== selectedTab) {
           inlineStyle.display = 'none';
         }
 
-        const buttonClasses = [
-          'tab-item',
-          isSelected ? 'selected' : '',
-          shouldScale ? 'scaled' : '',
-          collapseComplete && isSelected ? 'no-transform-transition' : '',
-        ]
+        const buttonClasses = ['tab-item', isSelected ? 'selected' : '', shouldScale ? 'scaled' : '']
           .filter(Boolean)
           .join(' ');
 
