@@ -5,38 +5,32 @@ const aboutImages: ImageStackItem[] = [
   {
     src: PHOTOS.cats,
     alt: 'Jacob with a cat lounging on the couch',
-    style: { transform: 'scale(0.6) rotate(-6deg)' },
   },
   {
     src: PHOTOS.gym,
     alt: 'Celebrating a new personal record at the gym',
-    style: { transform: 'scale(0.68) rotate(3deg)' },
   },
   {
     src: PHOTOS.volleyball,
     alt: 'After a sand volleyball match with friends',
-    style: { transform: 'scale(0.74) rotate(6deg)' },
   },
   {
     src: PHOTOS.waterfall,
     alt: 'Standing at the base of a waterfall during a hike',
-    style: { transform: 'scale(0.82) rotate(-3deg)' },
   },
   {
     src: PHOTOS.marriage,
     alt: 'Sharing a moment after the wedding ceremony',
-    style: { transform: 'scale(0.9) rotate(1deg)' },
   },
   {
     src: PHOTOS.internDay,
     alt: 'Posing with the AT&T internship cohort',
-    style: { transform: 'scale(0.98) rotate(-2deg)' },
   },
 ];
 
 export default function AboutContent() {
   return (
-    <section className="flex flex-col items-center gap-8 md:flex-row md:items-start md:gap-12">
+    <section className="flex flex-col items-center gap-4">
       <div className="w-full max-w-sm md:max-w-md">
         <ImageStack images={aboutImages} />
       </div>

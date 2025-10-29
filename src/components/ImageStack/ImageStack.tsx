@@ -24,18 +24,18 @@ export interface ImageStackProps {
 
 const LAYER_FALLBACKS: CSSProperties[] = [
   {
-    transform: 'translateY(-4px) scale(0.94) rotate(-2.5deg)',
+    transform: 'scale(0.6) rotate(0deg)',
   },
   {
-    transform: 'translateY(-18px) scale(0.88) rotate(3deg)',
+    transform: 'scale(0.58) rotate(-8deg)',
   },
   {
-    transform: 'translateY(-32px) scale(0.82) rotate(-4deg)',
+    transform: 'scale(0.58) rotate(8deg)',
   },
 ];
 
 const HIDDEN_LAYER_STYLE: CSSProperties = {
-  transform: 'translateY(-46px) scale(0.76) rotate(2deg)',
+  transform: 'scale(0.56) rotate(0deg)',
   opacity: 0,
 };
 
