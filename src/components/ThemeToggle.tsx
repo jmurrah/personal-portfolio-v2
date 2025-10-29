@@ -1,3 +1,4 @@
+import { ICONS } from '@/assets';
 import { useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -35,7 +36,7 @@ export default function ThemeToggle() {
     : 'transparent';
 
   const iconColor = theme === 'dark' ? '#FDBA74' : '#6366F1';
-  const iconSrc = theme === 'dark' ? '/icons/SunIcon.svg' : '/icons/MoonIcon.svg';
+  const iconSrc = theme === 'dark' ? ICONS.sun : ICONS.moon;
 
   return (
     <button

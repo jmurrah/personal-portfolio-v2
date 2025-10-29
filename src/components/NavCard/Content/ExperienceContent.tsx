@@ -1,3 +1,4 @@
+import { LOGOS } from '@/assets';
 import TimeLine from '@/components/TimeLine/TimeLine';
 import TimeLineItem from '@/components/TimeLine/TimeLineItem';
 
@@ -6,7 +7,7 @@ export default function ExperienceContent() {
     <TimeLine>
       <TimeLineItem
         href="https://www.att.com/"
-        imgSrc="/logos/AT&TLogo.webp"
+        imgSrc={LOGOS.att}
         imgAlt="AT&T"
         timeStart="January 2026"
         timeEnd="Present"
@@ -16,7 +17,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.eng.auburn.edu/"
-        imgSrc="/logos/AuburnEngineeringLogo.webp"
+        imgSrc={LOGOS.auburnEngineering}
         imgAlt="Auburn University - Samuel Ginn College of Engineering"
         timeStart="August 2025"
         timeEnd="December 2025"
@@ -26,7 +27,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.att.com/"
-        imgSrc="/logos/AT&TLogo.webp"
+        imgSrc={LOGOS.att}
         imgAlt="AT&T"
         timeStart="June 2025"
         timeEnd="August 2025"
@@ -36,7 +37,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.adtran.com/en"
-        imgSrc="/logos/AdtranLogo.webp"
+        imgSrc={LOGOS.adtran}
         imgAlt="Adtran"
         timeStart="May 2023"
         timeEnd="December 2024"
@@ -46,7 +47,7 @@ export default function ExperienceContent() {
       />
       <TimeLineItem
         href="https://www.is4s.com/"
-        imgSrc="/logos/IS4SLogo.webp"
+        imgSrc={LOGOS.is4s}
         imgAlt="IS4S"
         timeStart="January 2021"
         timeEnd="August 2022"

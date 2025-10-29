@@ -32,6 +32,8 @@ a {
   display: inline-block;
   color: var(--icon-color, var(--text-muted));
   background-color: currentColor;
+  -webkit-mask-image: var(--icon-mask-image, none);
+  mask-image: var(--icon-mask-image, none);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;

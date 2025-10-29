@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { ICONS } from '@/assets';
 import ExpandableCard from '@/components/NavCard/Animations/ExpandableCard/ExpandableCard';
 import SlidingTabs, {
   type SlidingTabsVariant,
@@ -25,11 +26,11 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
 
   const tabs: Tab[] = useMemo(
     () => [
-      { id: 'about', icon: '/icons/ProfileIcon.svg', label: 'About' },
-      { id: 'experience', icon: '/icons/BriefcaseIcon.svg', label: 'Experience' },
-      { id: 'education', icon: '/icons/EducationIcon.svg', label: 'Education' },
-      { id: 'projects', icon: '/icons/ProjectIcon.svg', label: 'Projects' },
-      // { id: 'resume', icon: '/icons/FileDownloadIcon.svg', label: 'Resume' },
+      { id: 'about', icon: ICONS.profile, label: 'About' },
+      { id: 'experience', icon: ICONS.briefcase, label: 'Experience' },
+      { id: 'education', icon: ICONS.education, label: 'Education' },
+      { id: 'projects', icon: ICONS.project, label: 'Projects' },
+      // { id: 'resume', icon: ICONS.fileDownload, label: 'Resume' },
     ],
     [],
   );

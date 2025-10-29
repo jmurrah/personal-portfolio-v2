@@ -27,10 +27,9 @@ export default function SvgIcon({
       aria-hidden="true"
       style={
         {
-          WebkitMaskImage: `url(${src})`,
-          maskImage: `url(${src})`,
           color,
           '--icon-hover-color': hoverColor,
+          '--icon-mask-image': `url("${src}")`,
         } as React.CSSProperties
       }
     />
