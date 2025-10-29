@@ -149,18 +149,18 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
         const isDraggingThis = dragState.activeId === id;
         const fallbackStyle: CSSProperties =
           index === 0
-            ? { transform: 'scale(0.9) rotate(0deg)' }
+            ? { transform: 'scale(0.8) rotate(0deg)' }
             : index === 1 || index === 2
               ? (() => {
                   const tilt = tiltMap[id];
                   const sign = tilt?.sign ?? (index === 1 ? -1 : 1);
                   const angle = tilt?.angle ?? 8;
-                  return { transform: `scale(0.85) rotate(${sign * angle}deg)` };
+                  return { transform: `scale(0.75) rotate(${sign * angle}deg)` };
                 })()
               : HIDDEN_LAYER_STYLE;
         const { transform: customTransform, opacity: customOpacity, ...restStyle } = style ?? {};
 
-        const transformParts: string[] = [];
+        const transformParts: string[] = ['translate(-50%, -50%)'];
         if (fallbackStyle.transform) transformParts.push(fallbackStyle.transform);
         if (customTransform) transformParts.push(customTransform);
 
@@ -172,17 +172,9 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
         }
 
         const baseStyle: CSSProperties = {
-          width: '100%',
-          height: '100%',
           zIndex: stack.length - index,
           pointerEvents: isTop && !exitingId ? 'auto' : 'none',
           touchAction: isTop && !exitingId ? 'pan-y' : 'none',
-          boxShadow:
-            index === 0
-              ? '0 18px 40px -18px rgba(17, 24, 39, 0.45)'
-              : index === 1
-                ? '0 12px 28px -20px rgba(17, 24, 39, 0.35)'
-                : 'none',
           ...restStyle,
         };
 
@@ -218,6 +210,12 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
           decoding: 'async',
           draggable: false,
           sizes: '100vw',
+          onMouseDown: (event) => {
+            event.preventDefault();
+          },
+          onDragStart: (event) => {
+            event.preventDefault();
+          },
           ...imageProps,
         };
 
