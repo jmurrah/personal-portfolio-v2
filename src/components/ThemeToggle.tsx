@@ -1,4 +1,5 @@
 import { ICONS } from '@/assets';
+import SvgIcon from '@/components/SvgIcon';
 import { useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -61,22 +62,12 @@ export default function ThemeToggle() {
         transition: 'background-color 150ms ease, border-color 150ms ease',
       }}
     >
-      <span
-        aria-hidden
-        style={{
-          width: iconSize,
-          height: iconSize,
-          backgroundColor: iconColor,
-          display: 'inline-block',
-          maskImage: `url(${iconSrc})`,
-          WebkitMaskImage: `url(${iconSrc})`,
-          maskRepeat: 'no-repeat',
-          WebkitMaskRepeat: 'no-repeat',
-          maskPosition: 'center',
-          WebkitMaskPosition: 'center',
-          maskSize: 'contain',
-          WebkitMaskSize: 'contain',
-        }}
+      <SvgIcon
+        src={iconSrc}
+        alt={theme === 'dark' ? 'Sun icon' : 'Moon icon'}
+        size="small"
+        color={iconColor}
+        style={{ width: iconSize, height: iconSize }}
       />
     </button>
   );
