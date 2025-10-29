@@ -127,7 +127,7 @@ export default function Home() {
     const targetRoute = nextTab && isNavTabId(nextTab) ? tabRoutes[nextTab] : '/';
 
     pendingTabRef.current = nextTab;
-    
+
     if (nextTab) {
       setActiveTab(nextTab);
     } else {

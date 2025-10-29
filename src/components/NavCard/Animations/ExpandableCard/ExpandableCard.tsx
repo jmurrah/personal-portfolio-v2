@@ -1,7 +1,7 @@
 import Card from '@/components/Card';
 import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 import './ExpandableCard.css';
 
 const MotionCard = motion.create(Card);
@@ -26,60 +26,37 @@ export default function ExpandableCard({
   initialHeight = '320px',
 }: ExpandableCardProps) {
   const wrapperClass = ['expandable-card-wrapper', className].filter(Boolean).join(' ');
-  const expandedCardRef = useRef<HTMLDivElement | null>(null);
-  const [expandedHeight, setExpandedHeight] = useState<number | null>(null);
 
   const baseStyle = {
     '--initial-width': initialWidth,
     '--initial-height': initialHeight,
   } as CSSProperties;
 
-  useLayoutEffect(() => {
-    if (!expanded) {
-      setExpandedHeight(null);
-      return;
-    }
-
-    const element = expandedCardRef.current;
-    if (!element) return;
-
-    const updateHeight = () => {
-      const nextHeight = element.getBoundingClientRect().height;
-      setExpandedHeight((current) => (current === nextHeight ? current : nextHeight));
-    };
-
-    updateHeight();
-
-    if (typeof ResizeObserver !== 'undefined') {
-      const observer = new ResizeObserver(updateHeight);
-      observer.observe(element);
-      return () => observer.disconnect();
-    }
-
-    window.addEventListener('resize', updateHeight);
-    return () => window.removeEventListener('resize', updateHeight);
-  }, [expanded, tabContent]);
-
   return (
     <LayoutGroup id="expandable-card">
       <div className={wrapperClass} style={baseStyle}>
-        <MotionCard
-          layoutId="expandable-card-container"
-          className={`expandable-card-base ${expanded ? 'is-hidden' : ''}`}
-          transition={NAV_CARD_ANIMATION.layout}
-          aria-hidden={expanded}
-          style={
-            expanded
-              ? {
-                  height: expandedHeight ? `${expandedHeight}px` : 'auto',
-                  opacity: 0,
-                  pointerEvents: 'none',
-                }
-              : undefined
-          }
-        >
-          <div className="tabs-container">{renderTabs('compact')}</div>
-        </MotionCard>
+        {!expanded ? (
+          <MotionCard
+            layoutId="expandable-card-container"
+            className="expandable-card-base"
+            transition={NAV_CARD_ANIMATION.layout}
+            initial={false}
+          >
+            <motion.div
+              layoutId="expandable-card-tabs"
+              className="tabs-container"
+              initial={false}
+            >
+              {renderTabs('compact')}
+            </motion.div>
+            <motion.div
+              layoutId="expandable-card-body"
+              className="card-content card-content-placeholder"
+              initial={false}
+              aria-hidden
+            />
+          </MotionCard>
+        ) : null}
       </div>
       <AnimatePresence>
         {expanded && (
@@ -103,36 +80,34 @@ export default function ExpandableCard({
                 layoutId="expandable-card-container"
                 className="expandable-card-expanded"
                 transition={NAV_CARD_ANIMATION.layout}
-                ref={expandedCardRef}
+                initial={false}
               >
                 <motion.div
-                  layout
+                  layoutId="expandable-card-tabs"
                   className="tabs-container expanded"
                   initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 16 }}
-                  transition={{
-                    layout: NAV_CARD_ANIMATION.layout,
-                    opacity: NAV_CARD_ANIMATION.content,
-                    y: NAV_CARD_ANIMATION.content,
-                  }}
                 >
                   {renderTabs('expanded')}
                 </motion.div>
                 <motion.div
-                  layout
+                  layoutId="expandable-card-body"
                   className="card-content"
                   initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 16 }}
-                  transition={{
-                    layout: NAV_CARD_ANIMATION.layout,
-                    opacity: NAV_CARD_ANIMATION.content,
-                    y: NAV_CARD_ANIMATION.content,
-                  }}
                 >
                   <div className="card-content-viewport">
-                    <div className="card-content-body tab-content-inner p-3 mt-1">{tabContent}</div>
+                    {tabContent ? (
+                      <motion.div
+                        layout
+                        className="card-content-body tab-content-inner p-3 mt-1"
+                        initial={false}
+                        transition={{
+                          layout: NAV_CARD_ANIMATION.layout,
+                        }}
+                        style={{ transformOrigin: 'top center' }}
+                      >
+                        {tabContent}
+                      </motion.div>
+                    ) : null}
                   </div>
                 </motion.div>
               </MotionCard>
