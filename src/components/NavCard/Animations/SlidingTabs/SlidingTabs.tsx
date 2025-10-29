@@ -27,9 +27,12 @@ export default function SlidingTabs({
   variant = 'compact',
   showSelection = true,
 }: SlidingTabsProps) {
+  const visibleTabs =
+    variant === 'expanded' && selectedTab ? tabs.filter((tab) => tab.id === selectedTab) : tabs;
+
   return (
     <div className={`tabs-list tabs-list-${variant}`}>
-      {tabs.map((tab) => {
+      {visibleTabs.map((tab) => {
         const isSelected = tab.id === selectedTab;
 
         return (

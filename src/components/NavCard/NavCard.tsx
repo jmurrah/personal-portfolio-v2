@@ -44,12 +44,6 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
     onTabClick?.(tabId);
   };
 
-  const handleCollapse = () => {
-    if (!selectedTab) return;
-    setSelectedTab(null);
-    onTabClick?.('');
-  };
-
   const renderTabContent = () => {
     if (!selectedTab) return null;
 
@@ -84,7 +78,6 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       initialWidth="192px"
       initialHeight="320px"
       tabContent={renderTabContent()}
-      onClose={handleCollapse}
       className="ml-auto"
     />
   );

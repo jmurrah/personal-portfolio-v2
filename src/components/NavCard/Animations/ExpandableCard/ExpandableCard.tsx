@@ -16,7 +16,6 @@ interface ExpandableCardProps {
   tabContent: React.ReactNode;
   initialWidth?: string;
   initialHeight?: string;
-  onClose?: () => void;
 }
 
 export default function ExpandableCard({
@@ -26,7 +25,6 @@ export default function ExpandableCard({
   tabContent,
   initialWidth = '256px',
   initialHeight = '320px',
-  onClose,
 }: ExpandableCardProps) {
   const wrapperClass = ['expandable-card-wrapper', className].filter(Boolean).join(' ');
 
@@ -37,27 +35,27 @@ export default function ExpandableCard({
 
   return (
     <LayoutGroup id="expandable-card">
-      <div className={wrapperClass} style={baseStyle}>
-        <MotionCard
-          layoutId="expandable-card-container"
-          className="expandable-card-base"
-          transition={OPEN_TRANSITION}
-        >
-          <div className="tabs-container">{renderTabs('compact')}</div>
-        </MotionCard>
-      </div>
+      {!expanded && (
+        <div className={wrapperClass} style={baseStyle}>
+          <MotionCard
+            layoutId="expandable-card-container"
+            className="expandable-card-base"
+            transition={OPEN_TRANSITION}
+          >
+            <div className="tabs-container">{renderTabs('compact')}</div>
+          </MotionCard>
+        </div>
+      )}
       <AnimatePresence>
         {expanded && (
           <>
-            <motion.button
-              type="button"
+            <motion.div
               className="expandable-card-overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.65 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              onClick={onClose}
-              aria-label="Collapse expanded tab"
+              aria-hidden
             />
             <motion.div
               className="expandable-card-portal"

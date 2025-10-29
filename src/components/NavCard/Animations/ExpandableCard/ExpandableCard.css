@@ -34,18 +34,18 @@
   justify-content: center;
   align-items: center;
   padding: 2.5rem 1.5rem;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 50;
+  overflow-y: auto;
 }
 
 .expandable-card-expanded {
   pointer-events: auto;
   width: min(620px, 100%);
-  max-height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  overflow: hidden;
+  background: inherit;
 }
 
 .expandable-card-expanded .tabs-container {
@@ -57,17 +57,6 @@
 .expandable-card-expanded .card-content {
   border-top: 1px solid var(--card-border);
   padding-top: 1rem;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.expandable-card-expanded .card-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.expandable-card-expanded .card-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
 }
 
 @media (max-width: 720px) {
@@ -77,7 +66,6 @@
   }
 
   .expandable-card-expanded {
-    max-height: calc(100vh - 3rem);
     width: 100%;
   }
 }
