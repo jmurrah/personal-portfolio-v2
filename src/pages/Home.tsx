@@ -187,7 +187,31 @@ export default function Home() {
             <div style={tabsAnimation.style} className="z-100 w-full">
               <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
             </div>
+
             <AnimatedCard
+              direction="right"
+              delay={1550}
+              triggerExit={cardsExiting}
+              className={`z-100 w-48 h-full ml-auto flex items-center ${hideCards ? 'hidden' : ''}`}
+              onExitComplete={handleCardExited}
+            >
+              <a
+                href="/resume"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center gap-2 justify-center"
+              >
+                <SvgIcon
+                  href="/resume"
+                  src="/icons/FileDownloadIcon.svg"
+                  alt="Resume"
+                  hoverColor="var(--primary)"
+                />
+                Resume
+              </a>
+            </AnimatedCard>
+
+            {/* <AnimatedCard
               direction="right"
               delay={1350}
               triggerExit={cardsExiting}
@@ -195,10 +219,12 @@ export default function Home() {
               onExitComplete={handleCardExited}
             >
               <ThemeToggle />
-            </AnimatedCard>
+            </AnimatedCard> */}
           </div>
         </div>
-
+        <div className="z-100">
+          <ThemeToggle />
+        </div>
         <AnimatedCard
           direction="bottom"
           delay={850}
