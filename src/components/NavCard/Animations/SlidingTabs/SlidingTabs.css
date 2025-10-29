@@ -22,6 +22,7 @@
   transform-origin: left center;
   width: 100%;
   position: relative;
+  opacity: 1;
 }
 
 .tab-item .svg-icon {
