@@ -36,6 +36,7 @@ import ProfileIcon from '@/assets/icons/ProfileIcon.svg';
 import ProjectIcon from '@/assets/icons/ProjectIcon.svg';
 import SchoolIcon from '@/assets/icons/SchoolIcon.svg';
 import SunIcon from '@/assets/icons/SunIcon.svg';
+import BlogIcon from '@/assets/icons/BlogIcon.svg';
 
 export const LOGOS = {
   adtran: AdtranLogo,
@@ -78,6 +79,7 @@ export const ICONS = {
   project: ProjectIcon,
   school: SchoolIcon,
   sun: SunIcon,
+  blog: BlogIcon,
 } as const;
 
 export const ALL_ASSET_PATHS = [

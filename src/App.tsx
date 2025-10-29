@@ -16,6 +16,7 @@ export default function App() {
           <Route path="experience" element={<Home />} />
           <Route path="education" element={<Home />} />
           <Route path="projects" element={<Home />} />
+          <Route path="blog" element={<Home />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
         <Route path="resume" element={<Resume />} />

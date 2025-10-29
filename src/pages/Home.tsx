@@ -31,13 +31,14 @@ const technologies = [
   // { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
-type NavTabId = 'about' | 'experience' | 'education' | 'projects';
+type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
 
 const tabRoutes: Record<NavTabId, `/${NavTabId}`> = {
   about: '/about',
   experience: '/experience',
   education: '/education',
   projects: '/projects',
+  blog: '/blog',
 };
 
 const totalCards = 4;
@@ -168,100 +169,111 @@ export default function Home() {
     <div>
       <div className="relative flex flex-wrap gap-4">
         <div className="flex gap-4 w-full">
-          <div className="flex flex-col gap-4">
-            <AnimatedCard
-              direction="left"
-              delay={100}
-              triggerExit={cardsExiting}
-              className={`z-100 h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
-              <p className="flex items-center gap-2">
-                <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
-                Full Stack Software Developer
-              </p>
-              <p className="flex items-center gap-2">
-                <SvgIcon
-                  src={ICONS.calendar}
-                  alt="Calendar Icon"
-                  color="var(--primary)"
-                  size="small"
-                />
-                2+ Years of Experience
-              </p>
-              <p className="flex items-center gap-2">
-                <SvgIcon
-                  src={ICONS.mapPin}
-                  alt="Map Pin Icon"
-                  color="var(--primary)"
-                  size="small"
-                />
-                Atlanta, GA
-              </p>
-              <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
-                <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
-                <span className="underline">jacob@murrah.dev</span>
-              </a>
-            </AnimatedCard>
+          <div className="flex gap-4 w-full">
+            <div className="flex flex-col gap-4">
+              <AnimatedCard
+                direction="left"
+                delay={100}
+                triggerExit={cardsExiting}
+                className={`z-100 h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+              >
+                <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
+                <p className="flex items-center gap-2">
+                  <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
+                  Full Stack Software Developer
+                </p>
+                <p className="flex items-center gap-2">
+                  <SvgIcon
+                    src={ICONS.calendar}
+                    alt="Calendar Icon"
+                    color="var(--primary)"
+                    size="small"
+                  />
+                  2+ Years of Experience
+                </p>
+                <p className="flex items-center gap-2">
+                  <SvgIcon
+                    src={ICONS.mapPin}
+                    alt="Map Pin Icon"
+                    color="var(--primary)"
+                    size="small"
+                  />
+                  Atlanta, GA
+                </p>
+                <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
+                  <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
+                  <span className="underline">jacob@murrah.dev</span>
+                </a>
+              </AnimatedCard>
 
-            <AnimatedCard
-              direction="left"
-              delay={350}
-              triggerExit={cardsExiting}
-              className={`z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
-              <SvgIcon
-                href="https://linkedin.com/in/jacobmurrah"
-                src={ICONS.linkedIn}
-                alt="LinkedIn"
-                hoverColor="var(--primary)"
-              />
-              <SvgIcon
-                href="https://leetcode.com/jmurrah"
-                src={ICONS.leetCode}
-                alt="LeetCode"
-                hoverColor="var(--primary)"
-              />
-              <SvgIcon
-                href="https://www.buymeacoffee.com/jmurrah"
-                src={ICONS.coffee}
-                alt="Buy Me a Coffee"
-                hoverColor="var(--primary)"
-              />
-              <SvgIcon
-                href="mailto:jacob@murrah.dev"
-                src={ICONS.mail}
-                alt="Email"
-                hoverColor="var(--primary)"
-              />
-            </AnimatedCard>
+              <AnimatedCard
+                direction="left"
+                delay={350}
+                triggerExit={cardsExiting}
+                className={`z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+              >
+                <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
+                <SvgIcon
+                  href="https://linkedin.com/in/jacobmurrah"
+                  src={ICONS.linkedIn}
+                  alt="LinkedIn"
+                  hoverColor="var(--primary)"
+                />
+                <SvgIcon
+                  href="https://leetcode.com/jmurrah"
+                  src={ICONS.leetCode}
+                  alt="LeetCode"
+                  hoverColor="var(--primary)"
+                />
+                <SvgIcon
+                  href="https://www.buymeacoffee.com/jmurrah"
+                  src={ICONS.coffee}
+                  alt="Buy Me a Coffee"
+                  hoverColor="var(--primary)"
+                />
+                <SvgIcon
+                  href="mailto:jacob@murrah.dev"
+                  src={ICONS.mail}
+                  alt="Email"
+                  hoverColor="var(--primary)"
+                />
+              </AnimatedCard>
 
+              <AnimatedCard
+                direction="right"
+                delay={600}
+                triggerExit={cardsExiting}
+                className={`z-100 ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+              >
+                <p className="text-[color:var(--primary)]">Currently ↓</p>
+                <p>
+                  Software Engineer I @{' '}
+                  <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+                    <span className="underline">AT&T</span>
+                  </a>
+                </p>
+                <p>
+                  OMSCS @{' '}
+                  <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+                    <span className="underline">Georgia Tech</span>
+                  </a>
+                </p>
+              </AnimatedCard>
+            </div>
             <AnimatedCard
               direction="right"
-              delay={600}
+              delay={1350}
               triggerExit={cardsExiting}
-              className={`z-100 ${hideCards ? 'hidden' : ''}`}
+              className={`z-100 h-full w-full flex-1 ${hideCards ? 'hidden' : ''}`}
               onExitComplete={handleCardExited}
             >
-              <p className="text-[color:var(--primary)]">Currently ↓</p>
-              <p>
-                Software Engineer I @{' '}
-                <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-                  <span className="underline">AT&T</span>
-                </a>
-              </p>
-              <p>
-                OMSCS @{' '}
-                <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-                  <span className="underline">Georgia Tech</span>
-                </a>
-              </p>
+              <ThemeToggle />
             </AnimatedCard>
           </div>
-          <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col gap-4 w-full min-w-[192px]">
             <div style={tabsAnimation.style} className="z-100 w-full">
               <Tabs
                 onTabClick={handleTabClick}
@@ -292,20 +304,7 @@ export default function Home() {
                 Resume
               </a>
             </AnimatedCard>
-
-            {/* <AnimatedCard
-              direction="right"
-              delay={1350}
-              triggerExit={cardsExiting}
-              className={`z-100 h-full ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <ThemeToggle />
-            </AnimatedCard> */}
           </div>
-        </div>
-        <div className="z-100">
-          <ThemeToggle />
         </div>
         <AnimatedCard
           direction="bottom"

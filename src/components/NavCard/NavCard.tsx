@@ -9,6 +9,7 @@ import {
   EducationContent,
   ExperienceContent,
   ProjectsContent,
+  BlogContent,
 } from '@/components/NavCard/Content';
 
 interface TabsProps {
@@ -31,6 +32,7 @@ export default function Tabs({
       { id: 'experience', icon: ICONS.briefcase, label: 'Experience' },
       { id: 'education', icon: ICONS.education, label: 'Education' },
       { id: 'projects', icon: ICONS.project, label: 'Projects' },
+      { id: 'blog', icon: ICONS.blog, label: 'Blog' },
       // { id: 'resume', icon: ICONS.fileDownload, label: 'Resume' },
     ],
     [],
@@ -82,6 +84,8 @@ export default function Tabs({
         return <EducationContent />;
       case 'projects':
         return <ProjectsContent />;
+      case 'blog':
+        return <BlogContent />;
       default:
         return null;
     }
@@ -103,7 +107,7 @@ export default function Tabs({
       renderTabs={renderTabs}
       expanded={isExpanded}
       initialWidth="192px"
-      initialHeight="320px"
+      initialHeight="256px"
       tabContent={renderTabContent()}
       className="ml-auto"
     />
