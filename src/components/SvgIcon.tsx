@@ -16,7 +16,7 @@ export default function SvgIcon({
   src,
   alt,
   size = 'medium',
-  color = 'var(--text)',
+  color = 'var(--text-muted)',
   hoverColor = 'var(--primary)',
 }: SvgIconProps) {
   const classes = ['svg-icon', `svg-icon-${size}`].filter(Boolean).join(' ');

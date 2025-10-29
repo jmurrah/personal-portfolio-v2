@@ -38,6 +38,20 @@
   opacity: 1;
 }
 
+.tab-item .svg-icon {
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.tab-item.scaled .svg-icon {
+  transform: scale(1.25);
+}
+
+.tab-item.scaled {
+  font-size: 1.3rem;
+}
+
 /* Specific closing animation styles */
 .expandable-card.closing .tab-item {
   /* Use the same duration as the expanding animation but slower */

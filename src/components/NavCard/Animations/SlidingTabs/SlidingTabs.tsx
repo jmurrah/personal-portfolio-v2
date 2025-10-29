@@ -13,21 +13,25 @@ export interface SlidingTabsProps {
   selectedTab: string | null;
   onSelectTab: (tabId: string) => void;
   onAnimationComplete?: () => void;
+  isExpanded?: boolean;
 }
 
 const TAB_SLIDE_DURATION_MS = 520;
+const SELECTED_TAB_SCALE = 1.12;
 
 export default function SlidingTabs({
   tabs,
   selectedTab,
   onSelectTab,
   onAnimationComplete,
+  isExpanded = false,
 }: SlidingTabsProps) {
   const [tabOffsets, setTabOffsets] = useState<Record<string, number>>({});
   const [listMetrics, setListMetrics] = useState<{ listHeight: number; tabHeight: number }>({
     listHeight: 0,
     tabHeight: 0,
   });
+  const [scaledTabId, setScaledTabId] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
@@ -83,6 +87,16 @@ export default function SlidingTabs({
     };
   }, [tabs, selectedTab]);
 
+  useEffect(() => {
+    setScaledTabId((current) => {
+      if (!selectedTab || !isExpanded) {
+        return current !== null ? null : current;
+      }
+
+      return current === selectedTab ? current : selectedTab;
+    });
+  }, [selectedTab, isExpanded]);
+
   const slideDurationValue = `${TAB_SLIDE_DURATION_MS}ms`;
 
   return (
@@ -101,12 +115,22 @@ export default function SlidingTabs({
         const isSelected = selectedTab === tab.id;
         const offset = tabOffsets[tab.id] ?? 0;
         const translateY = selectedTab ? -offset : 0;
+        const shouldScale = scaledTabId === tab.id;
         const inlineStyle: CSSProperties = {
           zIndex: isSelected ? 10 : 1,
         };
+        const transforms: string[] = [];
 
-        if (isSelected && selectedTab) {
-          inlineStyle.transform = `translateY(${translateY}px)`;
+        if (selectedTab && isSelected) {
+          transforms.push(`translateY(${translateY}px)`);
+        }
+
+        if (shouldScale) {
+          transforms.push(`scale(${SELECTED_TAB_SCALE})`);
+        }
+
+        if (transforms.length) {
+          inlineStyle.transform = transforms.join(' ');
         }
 
         if (selectedTab && !isSelected) {
@@ -116,7 +140,7 @@ export default function SlidingTabs({
         return (
           <button
             key={tab.id}
-            className={`tab-item ${isSelected ? 'selected' : ''}`}
+            className={`tab-item ${isSelected ? 'selected' : ''} ${shouldScale ? 'scaled' : ''}`}
             onClick={() => onSelectTab(tab.id)}
             style={inlineStyle}
             ref={(node) => {

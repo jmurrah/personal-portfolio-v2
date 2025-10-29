@@ -73,3 +73,30 @@ a {
     margin-top: 10px;
   }
 }
+
+a .underline {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+a .underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.2s ease-in-out;
+}
+
+a:hover .underline::after,
+a:focus .underline::after {
+  width: 100%;
+}
+
+.underline:hover,
+.underline:focus {
+  color: var(--text);
+}

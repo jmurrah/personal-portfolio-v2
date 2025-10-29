@@ -117,7 +117,7 @@ export default function Home() {
                   color="var(--primary)"
                   size="small"
                 />
-                jacob@murrah.dev
+                <span className="underline">jacob@murrah.dev</span>
               </a>
             </AnimatedCard>
 
@@ -163,8 +163,18 @@ export default function Home() {
               onExitComplete={handleCardExited}
             >
               <p className="text-[color:var(--primary)]">Currently ↓</p>
-              <p>Software Engineer I @ AT&T</p>
-              <p>OMSCS @ Georgia Tech</p>
+              <p>
+                Software Engineer I @{' '}
+                <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+                  <span className="underline">AT&T</span>
+                </a>
+              </p>
+              <p>
+                OMSCS @{' '}
+                <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+                  <span className="underline">Georgia Tech</span>
+                </a>
+              </p>
             </AnimatedCard>
           </div>
           <div className="flex flex-col gap-4 w-full">

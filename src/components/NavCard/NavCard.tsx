@@ -88,7 +88,12 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       }
       onAnimationComplete={() => console.log('Animation complete')}
     >
-      <SlidingTabs tabs={tabs} selectedTab={selectedTab} onSelectTab={handleSelectTab} />
+      <SlidingTabs
+        tabs={tabs}
+        selectedTab={selectedTab}
+        onSelectTab={handleSelectTab}
+        isExpanded={isExpanded}
+      />
     </ExpandableCard>
   );
 }
