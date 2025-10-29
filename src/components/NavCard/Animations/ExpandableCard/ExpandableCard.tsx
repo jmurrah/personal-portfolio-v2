@@ -115,7 +115,11 @@ export default function ExpandableCard({
                   exit={{ opacity: 0, y: 16 }}
                   transition={{ duration: 0.3, delay: 0.05 }}
                 >
-                  <div className="tab-content-inner p-3 mt-1">{tabContent}</div>
+                  <div className="card-content-viewport">
+                    <div className="card-content-body tab-content-inner p-3 mt-1">
+                      {tabContent}
+                    </div>
+                  </div>
                 </motion.div>
               </MotionCard>
             </motion.div>
