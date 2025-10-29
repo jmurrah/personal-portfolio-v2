@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import SvgIcon from '@/components/SvgIcon';
 import './SlidingTabs.css';
 
@@ -17,7 +17,7 @@ export interface SlidingTabsProps {
   isClosing?: boolean;
 }
 
-const TAB_ANIMATION_DURATION_MS = 520;
+const CARD_ANIMATION_DURATION_MS = 5000;
 
 export default function SlidingTabs({
   tabs,
@@ -34,7 +34,7 @@ export default function SlidingTabs({
 
     const timeoutId = window.setTimeout(() => {
       onAnimationComplete();
-    }, TAB_ANIMATION_DURATION_MS);
+    }, CARD_ANIMATION_DURATION_MS);
 
     return () => window.clearTimeout(timeoutId);
   }, [selectedTab, onAnimationComplete]);
@@ -49,29 +49,28 @@ export default function SlidingTabs({
     });
   }, [selectedTab, isExpanded, isClosing]);
 
-  const animationDurationValue = `${TAB_ANIMATION_DURATION_MS}ms`;
+  const listStyle = useMemo(
+    () =>
+      ({
+        '--animation-duration': `${CARD_ANIMATION_DURATION_MS}ms`,
+      }) as CSSProperties,
+    [],
+  );
+
   const showFullList = !isExpanded || !selectedTab || isClosing;
 
   return (
-    <div
-      className="tabs-list"
-      style={{ '--animation-duration': animationDurationValue } as CSSProperties}
-    >
+    <div className="tabs-list" style={listStyle}>
       {tabs.map((tab) => {
         const isSelected = selectedTab === tab.id;
         const shouldScale = scaledTabId === tab.id;
-        const inlineStyle: CSSProperties = {
-          zIndex: isSelected ? 10 : 1,
-        };
-
-        if (!showFullList && !isSelected) {
-          inlineStyle.display = 'none';
-        }
+        const shouldCollapse = !showFullList && !isSelected;
 
         const buttonClasses = [
           'tab-item',
           isSelected ? 'selected' : '',
           shouldScale ? 'scaled' : '',
+          shouldCollapse ? 'collapsed' : '',
         ]
           .filter(Boolean)
           .join(' ');
@@ -81,7 +80,8 @@ export default function SlidingTabs({
             key={tab.id}
             className={buttonClasses}
             onClick={() => onSelectTab(tab.id)}
-            style={inlineStyle}
+            aria-hidden={shouldCollapse}
+            tabIndex={shouldCollapse ? -1 : 0}
           >
             <SvgIcon src={tab.icon} alt={tab.label} hoverColor="var(--primary)" size="small" />
             <span>{tab.label}</span>

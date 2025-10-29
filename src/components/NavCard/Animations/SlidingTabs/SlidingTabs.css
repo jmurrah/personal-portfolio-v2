@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow: hidden;
 }
 
 .tab-item {
@@ -17,12 +18,18 @@
   font-size: 1rem;
   color: var(--text);
   transition:
+    max-height var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    padding var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    margin var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    opacity var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
     transform var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    font-size var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
     color 160ms ease;
   transform-origin: left center;
   width: 100%;
   position: relative;
   opacity: 1;
+  max-height: 3.5rem;
 }
 
 .tab-item .svg-icon {
@@ -42,4 +49,12 @@
 
 .tab-item.scaled .svg-icon {
   transform: scale(1.25);
+}
+
+.tab-item.collapsed {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
 }
