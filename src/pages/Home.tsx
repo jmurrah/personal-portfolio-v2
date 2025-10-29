@@ -30,10 +30,9 @@ const technologies = [
 
 const DELAY = 800;
 export default function Home() {
-  const [selectedTabId, setSelectedTabId] = useState('');
   const [readyToShowTab, setReadyToShowTab] = useState(false);
   const [cardsExiting, setCardsExiting] = useState(false);
-  const [exitedCardCount, setExitedCardCount] = useState(0);
+  const [, setExitedCardCount] = useState(0);
   const [hideCards, setHideCards] = useState(false);
   const totalCards = 4;
 
@@ -60,7 +59,6 @@ export default function Home() {
   };
 
   const handleTabClick = (tabId: string) => {
-    setSelectedTabId(tabId);
     setExitedCardCount(0);
     setReadyToShowTab(false);
 

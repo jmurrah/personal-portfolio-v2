@@ -1,8 +1,6 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import SvgIcon from '@/components/SvgIcon';
+import { motion } from 'framer-motion';
 import './SlidingTabs.css';
-
-import { ANIMATION_DURATION_MS } from '../ExpandableCard/ExpandableCard';
 
 export type Tab = {
   id: string;
@@ -10,82 +8,56 @@ export type Tab = {
   label: string;
 };
 
+export type SlidingTabsVariant = 'compact' | 'expanded';
+
 export interface SlidingTabsProps {
   tabs: Tab[];
   selectedTab: string | null;
   onSelectTab: (tabId: string) => void;
-  onAnimationComplete?: () => void;
-  isExpanded?: boolean;
-  isClosing?: boolean;
+  variant?: SlidingTabsVariant;
+  showSelection?: boolean;
 }
+
+const highlightTransition = { type: 'spring', stiffness: 500, damping: 45 } as const;
 
 export default function SlidingTabs({
   tabs,
   selectedTab,
   onSelectTab,
-  onAnimationComplete,
-  isExpanded = false,
-  isClosing = false,
+  variant = 'compact',
+  showSelection = true,
 }: SlidingTabsProps) {
-  const [scaledTabId, setScaledTabId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!selectedTab || !onAnimationComplete) return;
-
-    const timeoutId = window.setTimeout(() => {
-      onAnimationComplete();
-    }, ANIMATION_DURATION_MS);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [selectedTab, onAnimationComplete]);
-
-  useEffect(() => {
-    setScaledTabId((current) => {
-      if (!selectedTab || !isExpanded || isClosing) {
-        return current !== null ? null : current;
-      }
-
-      return current === selectedTab ? current : selectedTab;
-    });
-  }, [selectedTab, isExpanded, isClosing]);
-
-  const listStyle = useMemo(
-    () =>
-      ({
-        '--animation-duration': `${ANIMATION_DURATION_MS}ms`,
-      }) as CSSProperties,
-    [],
-  );
-
-  const showFullList = !isExpanded || !selectedTab || isClosing;
-
   return (
-    <div className="tabs-list" style={listStyle}>
+    <div className={`tabs-list tabs-list-${variant}`}>
       {tabs.map((tab) => {
-        const isSelected = selectedTab === tab.id;
-        const shouldScale = scaledTabId === tab.id;
-        const shouldCollapse = !showFullList && !isSelected;
-
-        const buttonClasses = [
-          'tab-item',
-          isSelected ? 'selected' : '',
-          shouldScale ? 'scaled' : '',
-          shouldCollapse ? 'collapsed' : '',
-        ]
-          .filter(Boolean)
-          .join(' ');
+        const isSelected = tab.id === selectedTab;
 
         return (
-          <button
+          <motion.button
             key={tab.id}
-            className={buttonClasses}
+            type="button"
+            layout="position"
+            className={`tab-item tab-item-${variant} ${isSelected ? 'selected' : ''}`}
             onClick={() => onSelectTab(tab.id)}
-            aria-hidden={shouldCollapse}
-            tabIndex={shouldCollapse ? -1 : 0}
+            whileTap={{ scale: 0.97 }}
           >
-            <SvgIcon src={tab.icon} alt={tab.label} hoverColor="var(--primary)" size="small" />
-            <span>{tab.label}</span>
-          </button>
+            {showSelection && isSelected ? (
+              <motion.span
+                className="tab-highlight"
+                layoutId="tab-highlight"
+                transition={highlightTransition}
+              />
+            ) : null}
+            <span className="tab-content">
+              <SvgIcon
+                src={tab.icon}
+                alt={tab.label}
+                hoverColor="var(--primary)"
+                size={variant === 'compact' ? 'small' : 'medium'}
+              />
+              <span className="tab-label">{tab.label}</span>
+            </span>
+          </motion.button>
         );
       })}
     </div>

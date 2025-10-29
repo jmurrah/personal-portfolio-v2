@@ -1,24 +1,83 @@
-.expandable-card {
-  --animation-duration: 1000ms;
+.expandable-card-wrapper {
   --initial-width: 256px;
   --initial-height: 320px;
 
+  position: relative;
+  width: var(--initial-width);
+}
+
+.expandable-card-base {
   display: flex;
   flex-direction: column;
-  width: var(--initial-width);
+  gap: 0.5rem;
   min-height: var(--initial-height);
-  transition: width var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.expandable-card.expanded {
   width: 100%;
 }
 
-.tabs-container {
-  width: 100%;
+.expandable-card-base .tabs-container {
   flex-shrink: 0;
 }
 
-.card-content {
-  width: 100%;
+.expandable-card-overlay {
+  position: fixed;
+  inset: 0;
+  border: none;
+  background: rgba(7, 8, 13, 0.72);
+  cursor: pointer;
+  z-index: 40;
+}
+
+.expandable-card-portal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 1.5rem;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.expandable-card-expanded {
+  pointer-events: auto;
+  width: min(620px, 100%);
+  max-height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.expandable-card-expanded .tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.expandable-card-expanded .card-content {
+  border-top: 1px solid var(--card-border);
+  padding-top: 1rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.expandable-card-expanded .card-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.expandable-card-expanded .card-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+@media (max-width: 720px) {
+  .expandable-card-portal {
+    align-items: flex-end;
+    padding: 1.5rem 1rem;
+  }
+
+  .expandable-card-expanded {
+    max-height: calc(100vh - 3rem);
+    width: 100%;
+  }
 }

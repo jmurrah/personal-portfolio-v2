@@ -1,15 +1,16 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
-import SlidingTabs, { type Tab } from '@/components/NavCard/Animations/SlidingTabs/SlidingTabs';
+import { useMemo, useState } from 'react';
 import ExpandableCard from '@/components/NavCard/Animations/ExpandableCard/ExpandableCard';
+import SlidingTabs, {
+  type SlidingTabsVariant,
+  type Tab,
+} from '@/components/NavCard/Animations/SlidingTabs/SlidingTabs';
 import '@/components/NavCard/NavCard.css';
 import {
   AboutContent,
-  ExperienceContent,
   EducationContent,
+  ExperienceContent,
   ProjectsContent,
 } from '@/components/NavCard/Content';
-
-const ANIMATION_DURATION_MS = 1000;
 
 interface TabsProps {
   onTabClick: (tabId: string) => void;
@@ -18,9 +19,6 @@ interface TabsProps {
 
 export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
   const [selectedTab, setSelectedTab] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-  const closeTimeoutRef = useRef<number | null>(null);
 
   const tabs: Tab[] = useMemo(
     () => [
@@ -33,67 +31,61 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
     [],
   );
 
-  useEffect(() => {
-    if (readyToExpand && selectedTab && !isExpanded && !isClosing) {
-      console.log('Ready to expand tab:', selectedTab);
-      setIsExpanded(true);
-    }
-  }, [readyToExpand, selectedTab, isExpanded, isClosing]);
+  const isExpanded = Boolean(selectedTab) && readyToExpand;
 
   const handleSelectTab = (tabId: string) => {
-    if (isClosing) return;
     if (selectedTab === tabId) {
-      if (closeTimeoutRef.current) {
-        window.clearTimeout(closeTimeoutRef.current);
-      }
-
-      setIsClosing(true);
-      setIsExpanded(false);
-
-      if (onTabClick) {
-        onTabClick(''); // empty tabId indicates closing
-      }
-
-      closeTimeoutRef.current = window.setTimeout(() => {
-        setSelectedTab(null);
-        setIsClosing(false);
-      }, ANIMATION_DURATION_MS);
-
+      setSelectedTab(null);
+      onTabClick?.('');
       return;
     }
 
-    if (onTabClick) {
-      onTabClick(tabId);
-    }
-
     setSelectedTab(tabId);
+    onTabClick?.(tabId);
   };
+
+  const handleCollapse = () => {
+    if (!selectedTab) return;
+    setSelectedTab(null);
+    onTabClick?.('');
+  };
+
+  const renderTabContent = () => {
+    if (!selectedTab) return null;
+
+    switch (selectedTab) {
+      case 'about':
+        return <AboutContent />;
+      case 'experience':
+        return <ExperienceContent />;
+      case 'education':
+        return <EducationContent />;
+      case 'projects':
+        return <ProjectsContent />;
+      default:
+        return null;
+    }
+  };
+
+  const renderTabs = (variant: SlidingTabsVariant) => (
+    <SlidingTabs
+      tabs={tabs}
+      selectedTab={selectedTab}
+      onSelectTab={handleSelectTab}
+      variant={variant}
+      showSelection={variant === 'expanded' || !isExpanded}
+    />
+  );
 
   return (
     <ExpandableCard
+      renderTabs={renderTabs}
       expanded={isExpanded}
-      className={`${isClosing ? 'closing' : ''} ml-auto`}
       initialWidth="192px"
       initialHeight="320px"
-      tabContent={
-        selectedTab && (
-          <>
-            {selectedTab === 'about' && <AboutContent />}
-            {selectedTab === 'experience' && <ExperienceContent />}
-            {selectedTab === 'education' && <EducationContent />}
-            {selectedTab === 'projects' && <ProjectsContent />}
-            {/* {selectedTab === 'resume' && <ResumeContent />} */}
-          </>
-        )
-      }
-    >
-      <SlidingTabs
-        tabs={tabs}
-        selectedTab={selectedTab}
-        onSelectTab={handleSelectTab}
-        isExpanded={isExpanded}
-        isClosing={isClosing}
-      />
-    </ExpandableCard>
+      tabContent={renderTabContent()}
+      onClose={handleCollapse}
+      className="ml-auto"
+    />
   );
 }
