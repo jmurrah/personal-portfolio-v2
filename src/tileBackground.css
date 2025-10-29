@@ -1,5 +1,5 @@
 :root {
-  --fade-duration: 0.1s;
+  --fade-duration: 1s;
   --tile-size: 48px;
   --tile-gap: 0px;
 }

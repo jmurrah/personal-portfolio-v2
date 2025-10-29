@@ -10,7 +10,7 @@ interface TileBackgroundProps {
 const TileBackground: React.FC<TileBackgroundProps> = ({
   tileSize = 16,
   tileGap = 0,
-  fadeDuration = '1s',
+  fadeDuration = '10s',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [grid, setGrid] = useState({ cols: 0, rows: 0 });

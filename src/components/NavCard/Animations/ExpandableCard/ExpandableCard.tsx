@@ -90,7 +90,7 @@ export default function ExpandableCard({
     >
       <div className="tabs-container">{children}</div>
       <div ref={contentRef} className="card-content" aria-hidden={!expanded}>
-        {expanded && <div className="tab-content-inner">{tabContent}</div>}
+        {expanded && <div className="tab-content-inner px-3">{tabContent}</div>}
       </div>
     </Card>
   );

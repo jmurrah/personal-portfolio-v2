@@ -38,21 +38,6 @@
   opacity: 1;
 }
 
-.tab-item:hover {
-  color: var(--primary);
-}
-
-.tab-selected .tab-item:not(.selected) {
-  pointer-events: none;
-  opacity: 0;
-}
-
-.tab-item.selected {
-  color: var(--primary);
-  font-weight: 500;
-  opacity: 1;
-}
-
 /* Specific closing animation styles */
 .expandable-card.closing .tab-item {
   /* Use the same duration as the expanding animation but slower */
