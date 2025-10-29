@@ -18,11 +18,7 @@ interface TabsProps {
   selectedTab?: string | null;
 }
 
-export default function Tabs({
-  onTabClick,
-  readyToExpand = false,
-  selectedTab = null,
-}: TabsProps) {
+export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = null }: TabsProps) {
   const [isInteractionLocked, setIsInteractionLocked] = useState(false);
   const lockTimeoutRef = useRef<number | null>(null);
 
@@ -109,7 +105,7 @@ export default function Tabs({
       initialWidth="192px"
       initialHeight="256px"
       tabContent={renderTabContent()}
-      className="ml-auto"
+      // className="ml-auto"
     />
   );
 }

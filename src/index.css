@@ -107,3 +107,7 @@ a:focus .underline::after {
 span {
   color: var(--text-muted);
 }
+
+/* #tabs {
+  max-width: 192px;
+} */

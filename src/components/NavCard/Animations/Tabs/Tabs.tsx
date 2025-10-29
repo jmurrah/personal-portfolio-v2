@@ -38,7 +38,8 @@ export default function Tabs({
         const isSelected = tab.id === selectedTab;
         const baseColor =
           variant === 'expanded' || isSelected ? 'var(--text)' : 'var(--text-muted)';
-        const iconStyle = isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
+        const iconStyle =
+          isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
 
         return (
           <button

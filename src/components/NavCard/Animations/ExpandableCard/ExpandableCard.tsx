@@ -4,7 +4,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import './ExpandableCard.css';
 
-const MotionCard = motion(Card);
+const MotionCard = motion.create(Card);
 
 type ExpandableVariant = 'compact' | 'expanded';
 
