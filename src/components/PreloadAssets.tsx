@@ -7,6 +7,8 @@ const IMAGE_PATHS = [
   '/logos/AT&TLogo.webp',
   '/logos/AdtranLogo.webp',
   '/logos/IS4SLogo.webp',
+  '/icons/SunIcon.svg',
+  '/icons/MoonIcon.svg',
 ];
 
 export default function PreloadAssets() {

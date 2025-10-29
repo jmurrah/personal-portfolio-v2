@@ -1,17 +1,8 @@
 .tabs-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  position: relative;
-  height: var(--list-height, auto);
-  min-height: var(--tab-height, 3.5rem);
-  transition: height var(--collapse-duration, 320ms) ease;
-  transition-delay: 0s;
-}
-
-.tabs-list.tab-selected {
-  height: var(--tab-height, 3.5rem);
-  transition-delay: var(--animation-duration);
+  gap: 0;
+  overflow: hidden;
 }
 
 .tab-item {
@@ -19,7 +10,7 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  padding: 0.5rem 0.75rem;
+  padding: 12px;
   border-radius: 0.25rem;
   background: transparent;
   border: none;
@@ -27,52 +18,58 @@
   font-size: 1rem;
   color: var(--text);
   transition:
+    max-height var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    padding var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    margin var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
+    opacity var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
     transform var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
-    opacity 300ms ease-out,
+    font-size var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1),
     color 160ms ease;
-  transform: translateY(0);
   transform-origin: left center;
   width: 100%;
   position: relative;
-  will-change: transform, opacity;
   opacity: 1;
+  max-height: 3.5rem;
 }
 
 .tab-item .svg-icon {
   transform: scale(1);
   transform-origin: center;
   transition: transform var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1);
+  background-color: var(--text);
 }
 
-.tab-item.scaled .svg-icon {
-  transform: scale(1.25);
+.tab-item::after {
+  content: '';
+  display: block;
+  height: 1rem;
+  transition: height var(--animation-duration, 520ms) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.tabs-list > .tab-item:last-child::after {
+  height: 0;
+}
+
+.tab-item span {
+  color: var(--text);
 }
 
 .tab-item.scaled {
   font-size: 1.3rem;
 }
 
-/* Specific closing animation styles */
-.expandable-card.closing .tab-item {
-  /* Use the same duration as the expanding animation but slower */
-  transition:
-    transform var(--closing-duration, 720ms) cubic-bezier(0.33, 1, 0.68, 1),
-    opacity var(--closing-duration, 720ms) cubic-bezier(0.33, 1, 0.68, 1) !important;
+.tab-item.scaled .svg-icon {
+  transform: scale(1.25);
 }
 
-/* Hide tabs during the closing animation */
-.expandable-card.closing .tab-item:not(.selected) {
-  opacity: 0 !important;
+.tab-item.collapsed {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Special handling for closing animation */
-.expandable-card.closing .tab-selected .tab-item.selected {
-  /* Keep the selected tab visible during closing */
-  opacity: 1 !important;
-}
-
-/* When going from closing state to normal state, animate tab appearances */
-.tabs-list:not(.tab-selected) .tab-item {
-  transition-delay: 0ms;
-  transition-duration: 200ms;
+.tab-item.collapsed::after {
+  height: 0;
 }

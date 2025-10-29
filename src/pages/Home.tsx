@@ -28,6 +28,7 @@ const technologies = [
   // { name: 'FastAPI', logoSrc: '/logos/FastAPILogo.svg', accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
+const DELAY = 800;
 export default function Home() {
   const [selectedTabId, setSelectedTabId] = useState('');
   const [readyToShowTab, setReadyToShowTab] = useState(false);
@@ -62,10 +63,15 @@ export default function Home() {
     setSelectedTabId(tabId);
     setExitedCardCount(0);
     setReadyToShowTab(false);
-    setHideCards(false);
+
     if (tabId === '') {
-      setCardsExiting(false);
+      setCardsExiting(true);
+      setTimeout(() => {
+        setHideCards(false);
+        setCardsExiting(false);
+      }, DELAY);
     } else {
+      setHideCards(false);
       setCardsExiting(true);
     }
   };
