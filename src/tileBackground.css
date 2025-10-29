@@ -15,15 +15,13 @@
 }
 
 .tile-bg-container .tile {
-  /* border-width: 1px; */
-  /* border-color: var(--bg-light); */
   width: var(--tile-size);
   height: var(--tile-size);
-  background: var(--bg-dark);
+  background-color: var(--tile-base-color, var(--bg-dark));
   transition: background-color var(--fade-duration) ease;
 }
 
 .tile-bg-container .tile:hover {
-  background: var(--primary);
+  background-color: var(--primary);
   transition: none;
 }

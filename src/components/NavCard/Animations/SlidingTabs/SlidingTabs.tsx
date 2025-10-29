@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import SvgIcon from '@/components/SvgIcon';
+import { motion } from 'framer-motion';
 import './SlidingTabs.css';
 
 export type Tab = {
@@ -8,84 +9,64 @@ export type Tab = {
   label: string;
 };
 
+export type SlidingTabsVariant = 'compact' | 'expanded';
+
 export interface SlidingTabsProps {
   tabs: Tab[];
   selectedTab: string | null;
   onSelectTab: (tabId: string) => void;
-  onAnimationComplete?: () => void;
-  isExpanded?: boolean;
-  isClosing?: boolean;
+  variant?: SlidingTabsVariant;
+  showSelection?: boolean;
+  isInteractionLocked?: boolean;
 }
-
-const CARD_ANIMATION_DURATION_MS = 1000;
 
 export default function SlidingTabs({
   tabs,
   selectedTab,
   onSelectTab,
-  onAnimationComplete,
-  isExpanded = false,
-  isClosing = false,
+  variant = 'compact',
+  showSelection = true,
+  isInteractionLocked = false,
 }: SlidingTabsProps) {
-  const [scaledTabId, setScaledTabId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!selectedTab || !onAnimationComplete) return;
-
-    const timeoutId = window.setTimeout(() => {
-      onAnimationComplete();
-    }, CARD_ANIMATION_DURATION_MS);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [selectedTab, onAnimationComplete]);
-
-  useEffect(() => {
-    setScaledTabId((current) => {
-      if (!selectedTab || !isExpanded || isClosing) {
-        return current !== null ? null : current;
-      }
-
-      return current === selectedTab ? current : selectedTab;
-    });
-  }, [selectedTab, isExpanded, isClosing]);
-
-  const listStyle = useMemo(
-    () =>
-      ({
-        '--animation-duration': `${CARD_ANIMATION_DURATION_MS}ms`,
-      }) as CSSProperties,
-    [],
-  );
-
-  const showFullList = !isExpanded || !selectedTab || isClosing;
+  const visibleTabs =
+    variant === 'expanded' && selectedTab ? tabs.filter((tab) => tab.id === selectedTab) : tabs;
 
   return (
-    <div className="tabs-list" style={listStyle}>
-      {tabs.map((tab) => {
-        const isSelected = selectedTab === tab.id;
-        const shouldScale = scaledTabId === tab.id;
-        const shouldCollapse = !showFullList && !isSelected;
-
-        const buttonClasses = [
-          'tab-item',
-          isSelected ? 'selected' : '',
-          shouldScale ? 'scaled' : '',
-          shouldCollapse ? 'collapsed' : '',
-        ]
-          .filter(Boolean)
-          .join(' ');
+    <div className={`tabs-list tabs-list-${variant}`}>
+      {visibleTabs.map((tab) => {
+        const isSelected = tab.id === selectedTab;
 
         return (
-          <button
+          <motion.button
             key={tab.id}
-            className={buttonClasses}
-            onClick={() => onSelectTab(tab.id)}
-            aria-hidden={shouldCollapse}
-            tabIndex={shouldCollapse ? -1 : 0}
+            type="button"
+            layout="position"
+            className={`tab-item tab-item-${variant} ${isSelected ? 'selected' : ''}`}
+            onClick={() => {
+              if (isInteractionLocked) return;
+              onSelectTab(tab.id);
+            }}
+            whileTap={isInteractionLocked ? undefined : { scale: 0.97 }}
+            disabled={isInteractionLocked}
+            aria-disabled={isInteractionLocked}
           >
-            <SvgIcon src={tab.icon} alt={tab.label} hoverColor="var(--primary)" size="small" />
-            <span>{tab.label}</span>
-          </button>
+            {showSelection && isSelected ? (
+              <motion.span
+                className="tab-highlight"
+                layoutId="tab-highlight"
+                transition={NAV_CARD_ANIMATION.highlight}
+              />
+            ) : null}
+            <span className="tab-content">
+              <SvgIcon
+                src={tab.icon}
+                alt={tab.label}
+                hoverColor="var(--primary)"
+                size={variant === 'compact' ? 'small' : 'medium'}
+              />
+              <span className="tab-label">{tab.label}</span>
+            </span>
+          </motion.button>
         );
       })}
     </div>

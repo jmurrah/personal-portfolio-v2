@@ -1,6 +1,13 @@
-import { useEffect, useState } from 'react';
+import { ICONS } from '@/assets';
+import {
+  APP_THEME_CHANGE_EVENT,
+  type AppThemeChangeDetail,
+  type ThemeName,
+} from '@/constants/events';
+import SvgIcon from '@/components/SvgIcon';
+import { useEffect, useRef, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+type Theme = ThemeName;
 
 const getInitialTheme = (): Theme => {
   if (typeof window === 'undefined') {
@@ -15,10 +22,29 @@ const iconSize = 16;
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
   const [isHovered, setIsHovered] = useState(false);
+  const previousThemeRef = useRef<Theme>(theme);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
-      document.body.classList.toggle('dark', theme === 'dark');
+      const body = document.body;
+      const previousColor = getComputedStyle(body).getPropertyValue('--bg-dark').trim();
+
+      body.classList.toggle('dark', theme === 'dark');
+
+      const nextColor = getComputedStyle(body).getPropertyValue('--bg-dark').trim();
+
+      const detail: AppThemeChangeDetail = {
+        theme,
+        prevTheme: previousThemeRef.current,
+        colors: {
+          from: previousColor,
+          to: nextColor,
+        },
+        initial: previousThemeRef.current === theme,
+      };
+
+      window.dispatchEvent(new CustomEvent(APP_THEME_CHANGE_EVENT, { detail }));
+      previousThemeRef.current = theme;
     }
   }, [theme]);
 
@@ -35,7 +61,7 @@ export default function ThemeToggle() {
     : 'transparent';
 
   const iconColor = theme === 'dark' ? '#FDBA74' : '#6366F1';
-  const iconSrc = theme === 'dark' ? '/icons/SunIcon.svg' : '/icons/MoonIcon.svg';
+  const iconSrc = theme === 'dark' ? ICONS.sun : ICONS.moon;
 
   return (
     <button
@@ -60,22 +86,12 @@ export default function ThemeToggle() {
         transition: 'background-color 150ms ease, border-color 150ms ease',
       }}
     >
-      <span
-        aria-hidden
-        style={{
-          width: iconSize,
-          height: iconSize,
-          backgroundColor: iconColor,
-          display: 'inline-block',
-          maskImage: `url(${iconSrc})`,
-          WebkitMaskImage: `url(${iconSrc})`,
-          maskRepeat: 'no-repeat',
-          WebkitMaskRepeat: 'no-repeat',
-          maskPosition: 'center',
-          WebkitMaskPosition: 'center',
-          maskSize: 'contain',
-          WebkitMaskSize: 'contain',
-        }}
+      <SvgIcon
+        src={iconSrc}
+        alt={theme === 'dark' ? 'Sun icon' : 'Moon icon'}
+        size="small"
+        color={iconColor}
+        style={{ width: iconSize, height: iconSize }}
       />
     </button>
   );

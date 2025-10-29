@@ -32,6 +32,8 @@ a {
   display: inline-block;
   color: var(--icon-color, var(--text-muted));
   background-color: currentColor;
+  -webkit-mask-image: var(--icon-mask-image, none);
+  mask-image: var(--icon-mask-image, none);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
@@ -68,7 +70,7 @@ a {
   margin-top: 8vh;
 }
 
-@media (max-height: 800px) {
+@media (max-height: 840px) {
   .custom-margin {
     margin-top: 10px;
   }
@@ -89,6 +91,7 @@ a .underline::after {
   height: 2px;
   background-color: var(--primary);
   transition: width 0.2s ease-in-out;
+  z-index: -1;
 }
 
 a:hover .underline::after,

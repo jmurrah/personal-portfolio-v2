@@ -1,23 +1,8 @@
-import { useEffect } from 'react';
-
-const IMAGE_PATHS = [
-  '/logos/AuburnLogo.webp',
-  '/logos/GTechLogo.webp',
-  '/logos/AuburnEngineeringLogo.webp',
-  '/logos/AT&TLogo.webp',
-  '/logos/AdtranLogo.webp',
-  '/logos/IS4SLogo.webp',
-  '/icons/SunIcon.svg',
-  '/icons/MoonIcon.svg',
-];
+import { ALL_ASSET_PATHS } from '@/assets';
+import { usePreloadImages } from '@/hooks/usePreloadImages';
 
 export default function PreloadAssets() {
-  useEffect(() => {
-    IMAGE_PATHS.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
+  usePreloadImages(ALL_ASSET_PATHS);
 
   return null;
 }

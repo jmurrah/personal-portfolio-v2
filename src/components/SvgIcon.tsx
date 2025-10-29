@@ -18,8 +18,11 @@ export default function SvgIcon({
   size = 'medium',
   color = 'var(--text-muted)',
   hoverColor = 'var(--primary)',
+  className,
+  style,
+  ...rest
 }: SvgIconProps) {
-  const classes = ['svg-icon', `svg-icon-${size}`].filter(Boolean).join(' ');
+  const classes = ['svg-icon', `svg-icon-${size}`, className].filter(Boolean).join(' ');
 
   const iconSpan = (
     <span
@@ -27,12 +30,13 @@ export default function SvgIcon({
       aria-hidden="true"
       style={
         {
-          WebkitMaskImage: `url(${src})`,
-          maskImage: `url(${src})`,
-          color,
           '--icon-hover-color': hoverColor,
+          '--icon-mask-image': `url("${src}")`,
+          color,
+          ...style,
         } as React.CSSProperties
       }
+      {...rest}
     />
   );
 

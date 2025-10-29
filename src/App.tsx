@@ -18,9 +18,9 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="blog" element={<Blog />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="resume" element={<Resume />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
+        <Route path="resume" element={<Resume />} />
       </Routes>
     </BrowserRouter>
   );
