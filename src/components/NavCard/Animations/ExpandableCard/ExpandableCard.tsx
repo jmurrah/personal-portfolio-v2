@@ -1,6 +1,6 @@
 import Card from '@/components/Card';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import type { CSSProperties } from 'react';
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import './ExpandableCard.css';
 
 const MotionCard = motion(Card);
@@ -27,11 +27,39 @@ export default function ExpandableCard({
   initialHeight = '320px',
 }: ExpandableCardProps) {
   const wrapperClass = ['expandable-card-wrapper', className].filter(Boolean).join(' ');
+  const expandedCardRef = useRef<HTMLDivElement | null>(null);
+  const [expandedHeight, setExpandedHeight] = useState<number | null>(null);
 
   const baseStyle = {
     '--initial-width': initialWidth,
     '--initial-height': initialHeight,
   } as CSSProperties;
+
+  useLayoutEffect(() => {
+    if (!expanded) {
+      setExpandedHeight(null);
+      return;
+    }
+
+    const element = expandedCardRef.current;
+    if (!element) return;
+
+    const updateHeight = () => {
+      const nextHeight = element.getBoundingClientRect().height;
+      setExpandedHeight((current) => (current === nextHeight ? current : nextHeight));
+    };
+
+    updateHeight();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver(updateHeight);
+      observer.observe(element);
+      return () => observer.disconnect();
+    }
+
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, [expanded, tabContent]);
 
   return (
     <LayoutGroup id="expandable-card">
@@ -41,16 +69,17 @@ export default function ExpandableCard({
           className={`expandable-card-base ${expanded ? 'is-hidden' : ''}`}
           transition={OPEN_TRANSITION}
           aria-hidden={expanded}
+          style={
+            expanded
+              ? {
+                  height: expandedHeight ? `${expandedHeight}px` : 'auto',
+                  opacity: 0,
+                  pointerEvents: 'none',
+                }
+              : undefined
+          }
         >
           <div className="tabs-container">{renderTabs('compact')}</div>
-          {expanded && tabContent ? (
-            <div className="expandable-card-ghost" aria-hidden>
-              <div className="tabs-container expanded">{renderTabs('expanded')}</div>
-              <div className="card-content">
-                <div className="tab-content-inner p-3 mt-1">{tabContent}</div>
-              </div>
-            </div>
-          ) : null}
         </MotionCard>
       </div>
       <AnimatePresence>
@@ -75,6 +104,7 @@ export default function ExpandableCard({
                 layoutId="expandable-card-container"
                 className="expandable-card-expanded"
                 transition={OPEN_TRANSITION}
+                ref={expandedCardRef}
               >
                 <div className="tabs-container expanded">{renderTabs('expanded')}</div>
                 <motion.div

@@ -23,11 +23,6 @@
   pointer-events: none;
 }
 
-.expandable-card-ghost {
-  visibility: hidden;
-  pointer-events: none;
-}
-
 .expandable-card-overlay {
   position: fixed;
   top: 0;
