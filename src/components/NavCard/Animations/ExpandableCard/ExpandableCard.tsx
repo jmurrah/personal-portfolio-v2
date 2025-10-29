@@ -35,17 +35,24 @@ export default function ExpandableCard({
 
   return (
     <LayoutGroup id="expandable-card">
-      {!expanded && (
-        <div className={wrapperClass} style={baseStyle}>
-          <MotionCard
-            layoutId="expandable-card-container"
-            className="expandable-card-base"
-            transition={OPEN_TRANSITION}
-          >
-            <div className="tabs-container">{renderTabs('compact')}</div>
-          </MotionCard>
-        </div>
-      )}
+      <div className={wrapperClass} style={baseStyle}>
+        <MotionCard
+          layoutId="expandable-card-container"
+          className={`expandable-card-base ${expanded ? 'is-hidden' : ''}`}
+          transition={OPEN_TRANSITION}
+          aria-hidden={expanded}
+        >
+          <div className="tabs-container">{renderTabs('compact')}</div>
+          {expanded && tabContent ? (
+            <div className="expandable-card-ghost" aria-hidden>
+              <div className="tabs-container expanded">{renderTabs('expanded')}</div>
+              <div className="card-content">
+                <div className="tab-content-inner p-3 mt-1">{tabContent}</div>
+              </div>
+            </div>
+          ) : null}
+        </MotionCard>
+      </div>
       <AnimatePresence>
         {expanded && (
           <>
