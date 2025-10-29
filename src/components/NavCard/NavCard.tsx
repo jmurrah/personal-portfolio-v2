@@ -17,10 +17,14 @@ import {
 interface TabsProps {
   onTabClick: (tabId: string) => void;
   readyToExpand?: boolean;
+  selectedTab?: string | null;
 }
 
-export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
-  const [selectedTab, setSelectedTab] = useState<string | null>(null);
+export default function Tabs({
+  onTabClick,
+  readyToExpand = false,
+  selectedTab = null,
+}: TabsProps) {
   const [isInteractionLocked, setIsInteractionLocked] = useState(false);
   const lockTimeoutRef = useRef<number | null>(null);
 
@@ -59,16 +63,13 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
 
   const handleSelectTab = (tabId: string) => {
     if (isInteractionLocked) return;
+    beginInteractionLock();
 
     if (selectedTab === tabId) {
-      beginInteractionLock();
-      setSelectedTab(null);
       onTabClick?.('');
       return;
     }
 
-    beginInteractionLock();
-    setSelectedTab(tabId);
     onTabClick?.(tabId);
   };
 

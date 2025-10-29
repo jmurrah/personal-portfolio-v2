@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS, LOGOS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
@@ -7,6 +7,7 @@ import Tabs from '@/components/NavCard/NavCard';
 import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 import ThemeToggle from '@/components/ThemeToggle';
 import { BASE_ANIMATION_MS as DELAY } from '@/components/NavCard/animationConfig';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const technologies = [
   { name: 'Python', logoSrc: LOGOS.python, accent: 'rgba(53, 114, 165, 0.2)' },
@@ -30,12 +31,32 @@ const technologies = [
   // { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
+type NavTabId = 'about' | 'experience' | 'education' | 'projects';
+
+const tabRoutes: Record<NavTabId, `/${NavTabId}`> = {
+  about: '/about',
+  experience: '/experience',
+  education: '/education',
+  projects: '/projects',
+};
+
+const totalCards = 4;
+
+const getTabFromPath = (pathname: string): NavTabId | null => {
+  const [, firstSegment = ''] = pathname.split('/');
+  return (firstSegment in tabRoutes ? firstSegment : null) as NavTabId | null;
+};
+
 export default function Home() {
-  const [readyToShowTab, setReadyToShowTab] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const routeTab = useMemo(() => getTabFromPath(location.pathname), [location.pathname]);
+  const [activeTab, setActiveTab] = useState<string | null>(() => routeTab);
+  const [readyToShowTab, setReadyToShowTab] = useState(() => Boolean(routeTab));
   const [cardsExiting, setCardsExiting] = useState(false);
-  const [, setExitedCardCount] = useState(0);
-  const [hideCards, setHideCards] = useState(false);
-  const totalCards = 4;
+  const [, setExitedCardCount] = useState(() => (routeTab ? totalCards : 0));
+  const [hideCards, setHideCards] = useState(() => Boolean(routeTab));
+  const internalNavRef = useRef(false);
 
   const tabsAnimation = useSlideAnimation({
     direction: 'top',
@@ -44,9 +65,33 @@ export default function Home() {
     isExiting: false,
   });
 
+  const isNavTabId = (value: string): value is NavTabId => value in tabRoutes;
+
+  useEffect(() => {
+    if (internalNavRef.current) {
+      internalNavRef.current = false;
+      return;
+    }
+
+    setActiveTab(routeTab);
+
+    if (routeTab) {
+      setHideCards(true);
+      setReadyToShowTab(true);
+      setCardsExiting(false);
+      setExitedCardCount(totalCards);
+    } else {
+      setHideCards(false);
+      setReadyToShowTab(false);
+      setCardsExiting(false);
+      setExitedCardCount(0);
+    }
+  }, [routeTab]);
+
   const handleAllCardsExited = () => {
     setHideCards(true);
     setReadyToShowTab(true);
+    setCardsExiting(false);
   };
 
   const handleCardExited = () => {
@@ -60,10 +105,24 @@ export default function Home() {
   };
 
   const handleTabClick = (tabId: string) => {
+    const isClosing = tabId === '' || tabId === activeTab;
+    const nextTab = isClosing ? null : tabId;
+    const targetRoute = nextTab && isNavTabId(nextTab) ? tabRoutes[nextTab] : '/';
+
+    if (nextTab) {
+      setActiveTab(nextTab);
+    } else {
+      setActiveTab(null);
+    }
+
+    if (location.pathname !== targetRoute) {
+      internalNavRef.current = true;
+    }
+
     setExitedCardCount(0);
     setReadyToShowTab(false);
 
-    if (tabId === '') {
+    if (isClosing) {
       setCardsExiting(true);
       setTimeout(() => {
         setHideCards(false);
@@ -72,6 +131,10 @@ export default function Home() {
     } else {
       setHideCards(false);
       setCardsExiting(true);
+    }
+
+    if (location.pathname !== targetRoute) {
+      navigate(targetRoute);
     }
   };
 
@@ -174,7 +237,11 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-4 w-full">
             <div style={tabsAnimation.style} className="z-100 w-full">
-              <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
+              <Tabs
+                onTabClick={handleTabClick}
+                readyToExpand={readyToShowTab}
+                selectedTab={activeTab}
+              />
             </div>
 
             <AnimatedCard
