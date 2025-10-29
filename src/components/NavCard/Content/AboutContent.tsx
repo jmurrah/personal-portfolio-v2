@@ -30,9 +30,9 @@ const aboutImages: ImageStackItem[] = [
 
 export default function AboutContent() {
   return (
-    <section className="flex flex-col items-center gap-4">
-      <div className="w-full max-w-sm md:max-w-md">
-        <ImageStack images={aboutImages} />
+    <section className="flex flex-col items-center justify-center gap-4">
+      <div className="w-full flex justify-center">
+        <ImageStack images={aboutImages} className="" />
       </div>
       <div id="abt-inner" className="flex w-full justify-center md:justify-start">
         <div id="abt-desc" className="flex max-w-2xl flex-col gap-4 text-base leading-relaxed">

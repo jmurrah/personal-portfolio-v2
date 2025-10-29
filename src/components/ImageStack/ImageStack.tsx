@@ -27,15 +27,15 @@ const LAYER_FALLBACKS: CSSProperties[] = [
     transform: 'scale(0.6) rotate(0deg)',
   },
   {
-    transform: 'scale(0.58) rotate(-8deg)',
+    transform: 'scale(0.6) rotate(-7deg)',
   },
   {
-    transform: 'scale(0.58) rotate(8deg)',
+    transform: 'scale(0.6) rotate(7deg)',
   },
 ];
 
 const HIDDEN_LAYER_STYLE: CSSProperties = {
-  transform: 'scale(0.56) rotate(0deg)',
+  transform: 'scale(0.6) rotate(0deg)',
   opacity: 0,
 };
 
