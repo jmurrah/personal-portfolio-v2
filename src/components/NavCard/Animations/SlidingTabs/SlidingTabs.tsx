@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import SvgIcon from '@/components/SvgIcon';
 import './SlidingTabs.css';
 
+import { ANIMATION_DURATION_MS } from '../ExpandableCard/ExpandableCard';
+
 export type Tab = {
   id: string;
   icon: string;
@@ -16,8 +18,6 @@ export interface SlidingTabsProps {
   isExpanded?: boolean;
   isClosing?: boolean;
 }
-
-const CARD_ANIMATION_DURATION_MS = 1000;
 
 export default function SlidingTabs({
   tabs,
@@ -34,7 +34,7 @@ export default function SlidingTabs({
 
     const timeoutId = window.setTimeout(() => {
       onAnimationComplete();
-    }, CARD_ANIMATION_DURATION_MS);
+    }, ANIMATION_DURATION_MS);
 
     return () => window.clearTimeout(timeoutId);
   }, [selectedTab, onAnimationComplete]);
@@ -52,7 +52,7 @@ export default function SlidingTabs({
   const listStyle = useMemo(
     () =>
       ({
-        '--animation-duration': `${CARD_ANIMATION_DURATION_MS}ms`,
+        '--animation-duration': `${ANIMATION_DURATION_MS}ms`,
       }) as CSSProperties,
     [],
   );

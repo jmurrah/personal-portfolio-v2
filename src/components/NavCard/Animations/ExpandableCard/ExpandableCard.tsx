@@ -2,6 +2,8 @@ import type { CSSProperties } from 'react';
 import Card from '@/components/Card';
 import './ExpandableCard.css';
 
+export const ANIMATION_DURATION_MS = 1000;
+
 interface ExpandableCardProps {
   children: React.ReactNode;
   expanded: boolean;
@@ -10,8 +12,6 @@ interface ExpandableCardProps {
   initialWidth?: string;
   initialHeight?: string;
 }
-
-const ANIMATION_DURATION = 1000;
 
 export default function ExpandableCard({
   children,
@@ -26,7 +26,7 @@ export default function ExpandableCard({
     .join(' ');
 
   const cardStyle = {
-    '--animation-duration': `${ANIMATION_DURATION}ms`,
+    '--animation-duration': `${ANIMATION_DURATION_MS}ms`,
     '--initial-width': initialWidth,
     '--initial-height': initialHeight,
   } as CSSProperties;
