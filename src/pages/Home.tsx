@@ -167,7 +167,7 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className="flex gap-4 flex-auto">
+        <div className={`flex gap-4 flex-auto ${hideCards ? 'hidden' : ''}`}>
           <div className="flex flex-col gap-4">
             <AnimatedCard
               direction="left"
@@ -273,7 +273,7 @@ export default function Home() {
           </AnimatedCard>
         </div>
 
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 flex-1">
           <div style={tabsAnimation.style} className="z-100 w-full">
             <Tabs
               onTabClick={handleTabClick}
