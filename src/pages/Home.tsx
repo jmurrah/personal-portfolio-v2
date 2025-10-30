@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS, LOGOS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
@@ -7,6 +7,7 @@ import Tabs from '@/components/NavCard/NavCard';
 import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 import ThemeToggle from '@/components/ThemeToggle';
 import { BASE_ANIMATION_MS as DELAY } from '@/components/NavCard/animationConfig';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const technologies = [
   { name: 'Python', logoSrc: LOGOS.python, accent: 'rgba(53, 114, 165, 0.2)' },
@@ -25,31 +26,92 @@ const technologies = [
   { name: 'MongoDB', logoSrc: LOGOS.mongoDb, accent: 'rgba(89, 150, 54, 0.2)' },
   { name: 'Docker', logoSrc: LOGOS.docker, accent: 'rgba(0, 130, 202, 0.2)' },
   { name: 'Git', logoSrc: LOGOS.git, accent: 'rgba(241, 80, 47, 0.2)' },
-  // { name: 'Tailwind CSS', logoSrc: LOGOS.tailwind, accent: 'rgba(56, 189, 248, 0.2)' },
-  // { name: 'Spring Boot', logoSrc: LOGOS.spring, accent: 'rgba(109, 179, 63, 0.2)' },
-  // { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
+  { name: 'Tailwind CSS', logoSrc: LOGOS.tailwind, accent: 'rgba(56, 189, 248, 0.2)' },
+  { name: 'Spring Boot', logoSrc: LOGOS.spring, accent: 'rgba(109, 179, 63, 0.2)' },
+  { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
 ];
 
+type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
+
+const tabRoutes: Record<NavTabId, `/${NavTabId}`> = {
+  about: '/about',
+  experience: '/experience',
+  education: '/education',
+  projects: '/projects',
+  blog: '/blog',
+};
+
+const totalCards = 4;
+
+const getTabFromPath = (pathname: string): NavTabId | null => {
+  const [, firstSegment = ''] = pathname.split('/');
+  return (firstSegment in tabRoutes ? firstSegment : null) as NavTabId | null;
+};
+
 export default function Home() {
-  const [readyToShowTab, setReadyToShowTab] = useState(false);
-  const [cardsExiting, setCardsExiting] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const routeTab = useMemo(() => getTabFromPath(location.pathname), [location.pathname]);
+  const [activeTab, setActiveTab] = useState<string | null>(() => routeTab);
+  const [readyToShowTab, setReadyToShowTab] = useState(() => Boolean(routeTab));
+  const [introDuration, setIntroDuration] = useState(() => (routeTab ? 650 : 1100));
+  const [cardsExiting, setCardsExiting] = useState(() => Boolean(routeTab));
   const [, setExitedCardCount] = useState(0);
   const [hideCards, setHideCards] = useState(false);
-  const totalCards = 4;
+  const internalNavRef = useRef(false);
+  const pendingTabRef = useRef<string | null>(routeTab);
+  const hasShownDefaultRef = useRef(routeTab === null);
 
   const tabsAnimation = useSlideAnimation({
     direction: 'top',
-    delay: 1100,
+    delay: introDuration,
     duration: 1000,
     isExiting: false,
   });
 
-  const handleAllCardsExited = () => {
-    setHideCards(true);
-    setReadyToShowTab(true);
-  };
+  const isNavTabId = (value: string): value is NavTabId => value in tabRoutes;
 
-  const handleCardExited = () => {
+  useEffect(() => {
+    pendingTabRef.current = routeTab ?? null;
+
+    if (internalNavRef.current) {
+      internalNavRef.current = false;
+      return;
+    }
+
+    if (routeTab) {
+      setActiveTab(routeTab);
+      setIntroDuration(650);
+      setHideCards(false);
+      setCardsExiting(true);
+      setReadyToShowTab(false);
+      setExitedCardCount(0);
+    } else {
+      setIntroDuration(1100);
+      setPendingTabAndReset();
+    }
+  }, [routeTab]);
+
+  const setPendingTabAndReset = useCallback(() => {
+    hasShownDefaultRef.current = true;
+    setActiveTab(null);
+    setHideCards(false);
+    setReadyToShowTab(false);
+    setCardsExiting(false);
+    setExitedCardCount(0);
+  }, []);
+
+  const handleAllCardsExited = useCallback(() => {
+    if (pendingTabRef.current) {
+      setHideCards(true);
+      setReadyToShowTab(true);
+      setCardsExiting(false);
+    } else {
+      setPendingTabAndReset();
+    }
+  }, [setPendingTabAndReset]);
+
+  const handleCardExited = useCallback(() => {
     setExitedCardCount((prev) => {
       const newCount = prev + 1;
       if (newCount === totalCards) {
@@ -57,28 +119,55 @@ export default function Home() {
       }
       return newCount;
     });
-  };
+  }, [handleAllCardsExited]);
 
   const handleTabClick = (tabId: string) => {
-    setExitedCardCount(0);
-    setReadyToShowTab(false);
+    const isClosing = tabId === '' || tabId === activeTab;
+    const nextTab = isClosing ? null : tabId;
+    const targetRoute = nextTab && isNavTabId(nextTab) ? tabRoutes[nextTab] : '/';
 
-    if (tabId === '') {
-      setCardsExiting(true);
-      setTimeout(() => {
-        setHideCards(false);
-        setCardsExiting(false);
-      }, DELAY);
+    pendingTabRef.current = nextTab;
+
+    if (nextTab) {
+      setActiveTab(nextTab);
     } else {
+      setActiveTab(null);
+    }
+
+    if (location.pathname !== targetRoute) {
+      internalNavRef.current = true;
+    }
+
+    setExitedCardCount(0);
+
+    if (isClosing) {
+      if (!hasShownDefaultRef.current) {
+        setPendingTabAndReset();
+      } else {
+        setIntroDuration(1100);
+        setCardsExiting(true);
+        setReadyToShowTab(false);
+        setTimeout(() => {
+          setHideCards(false);
+          setCardsExiting(false);
+        }, DELAY);
+      }
+    } else {
+      setIntroDuration(650);
       setHideCards(false);
+      setReadyToShowTab(false);
       setCardsExiting(true);
+    }
+
+    if (location.pathname !== targetRoute) {
+      navigate(targetRoute);
     }
   };
 
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className="flex gap-4 w-full">
+        <div className="flex gap-4 flex-auto">
           <div className="flex flex-col gap-4">
             <AnimatedCard
               direction="left"
@@ -172,48 +261,51 @@ export default function Home() {
               </p>
             </AnimatedCard>
           </div>
-          <div className="flex flex-col gap-4 w-full">
-            <div style={tabsAnimation.style} className="z-100 w-full">
-              <Tabs onTabClick={handleTabClick} readyToExpand={readyToShowTab} />
-            </div>
 
-            <AnimatedCard
-              direction="right"
-              delay={1550}
-              triggerExit={cardsExiting}
-              className={`z-100 w-48 h-full ml-auto flex items-center ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <a
-                href="/resume"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center gap-2 justify-center"
-              >
-                <SvgIcon
-                  href="/resume"
-                  src={ICONS.fileDownload}
-                  alt="Resume"
-                  hoverColor="var(--primary)"
-                />
-                Resume
-              </a>
-            </AnimatedCard>
+          <AnimatedCard
+            direction="right"
+            delay={1350}
+            triggerExit={cardsExiting}
+            className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
+            onExitComplete={handleCardExited}
+          >
+            <ThemeToggle />
+          </AnimatedCard>
+        </div>
 
-            {/* <AnimatedCard
-              direction="right"
-              delay={1350}
-              triggerExit={cardsExiting}
-              className={`z-100 h-full ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <ThemeToggle />
-            </AnimatedCard> */}
+        <div className="flex flex-col gap-4 w-full">
+          <div style={tabsAnimation.style} className="z-100 w-full">
+            <Tabs
+              onTabClick={handleTabClick}
+              readyToExpand={readyToShowTab}
+              selectedTab={activeTab}
+            />
           </div>
+
+          <AnimatedCard
+            direction="right"
+            delay={1550}
+            triggerExit={cardsExiting}
+            className={`z-100 w-48 h-full flex items-center ${hideCards ? 'hidden' : ''}`}
+            onExitComplete={handleCardExited}
+          >
+            <a
+              href="/resume"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center gap-2 justify-center"
+            >
+              <SvgIcon
+                href="/resume"
+                src={ICONS.fileDownload}
+                alt="Resume"
+                hoverColor="var(--primary)"
+              />
+              Resume
+            </a>
+          </AnimatedCard>
         </div>
-        <div className="z-100">
-          <ThemeToggle />
-        </div>
+
         <AnimatedCard
           direction="bottom"
           delay={850}

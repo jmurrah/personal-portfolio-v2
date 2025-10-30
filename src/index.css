@@ -76,32 +76,25 @@ a {
   }
 }
 
-a .underline {
+.underline {
   position: relative;
-  display: inline-block;
-  text-decoration: none;
+  display: inline;
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--text-muted);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.15em;
+  transition:
+    color 0.2s ease-in-out,
+    text-decoration-color 0.2s ease-in-out;
 }
 
-a .underline::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: width 0.2s ease-in-out;
-  z-index: -1;
-}
-
-a:hover .underline::after,
-a:focus .underline::after {
-  width: 100%;
-}
-
-.underline:hover,
-.underline:focus {
+a:hover .underline,
+a:focus-visible .underline {
   color: var(--text);
+  text-decoration-color: var(--primary);
 }
 
 span {

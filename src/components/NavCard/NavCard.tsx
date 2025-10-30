@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS } from '@/assets';
 import ExpandableCard from '@/components/NavCard/Animations/ExpandableCard/ExpandableCard';
-import SlidingTabs, {
-  type SlidingTabsVariant,
-  type Tab,
-} from '@/components/NavCard/Animations/SlidingTabs/SlidingTabs';
+import TabsList, { type TabsVariant, type Tab } from '@/components/NavCard/Animations/Tabs/Tabs';
 import { NAV_CARD_ANIMATION } from '@/components/NavCard/animationConfig';
 import '@/components/NavCard/NavCard.css';
 import {
@@ -12,15 +9,16 @@ import {
   EducationContent,
   ExperienceContent,
   ProjectsContent,
+  BlogContent,
 } from '@/components/NavCard/Content';
 
 interface TabsProps {
   onTabClick: (tabId: string) => void;
   readyToExpand?: boolean;
+  selectedTab?: string | null;
 }
 
-export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
-  const [selectedTab, setSelectedTab] = useState<string | null>(null);
+export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = null }: TabsProps) {
   const [isInteractionLocked, setIsInteractionLocked] = useState(false);
   const lockTimeoutRef = useRef<number | null>(null);
 
@@ -30,6 +28,7 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       { id: 'experience', icon: ICONS.briefcase, label: 'Experience' },
       { id: 'education', icon: ICONS.education, label: 'Education' },
       { id: 'projects', icon: ICONS.project, label: 'Projects' },
+      { id: 'blog', icon: ICONS.blog, label: 'Blog' },
       // { id: 'resume', icon: ICONS.fileDownload, label: 'Resume' },
     ],
     [],
@@ -59,16 +58,13 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
 
   const handleSelectTab = (tabId: string) => {
     if (isInteractionLocked) return;
+    beginInteractionLock();
 
     if (selectedTab === tabId) {
-      beginInteractionLock();
-      setSelectedTab(null);
       onTabClick?.('');
       return;
     }
 
-    beginInteractionLock();
-    setSelectedTab(tabId);
     onTabClick?.(tabId);
   };
 
@@ -84,13 +80,15 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
         return <EducationContent />;
       case 'projects':
         return <ProjectsContent />;
+      case 'blog':
+        return <BlogContent />;
       default:
         return null;
     }
   };
 
-  const renderTabs = (variant: SlidingTabsVariant) => (
-    <SlidingTabs
+  const renderTabs = (variant: TabsVariant) => (
+    <TabsList
       tabs={tabs}
       selectedTab={selectedTab}
       onSelectTab={handleSelectTab}
@@ -105,9 +103,9 @@ export default function Tabs({ onTabClick, readyToExpand = false }: TabsProps) {
       renderTabs={renderTabs}
       expanded={isExpanded}
       initialWidth="192px"
-      initialHeight="320px"
+      initialHeight="256px"
       tabContent={renderTabContent()}
-      className="ml-auto"
+      // className="ml-auto"
     />
   );
 }

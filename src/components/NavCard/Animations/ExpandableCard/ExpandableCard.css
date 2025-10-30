@@ -18,6 +18,13 @@
   flex-shrink: 0;
 }
 
+.expandable-card-base .card-content-placeholder {
+  border: none;
+  padding: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .expandable-card-base.is-hidden {
   opacity: 0;
   pointer-events: none;

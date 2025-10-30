@@ -36,6 +36,13 @@ import ProfileIcon from '@/assets/icons/ProfileIcon.svg';
 import ProjectIcon from '@/assets/icons/ProjectIcon.svg';
 import SchoolIcon from '@/assets/icons/SchoolIcon.svg';
 import SunIcon from '@/assets/icons/SunIcon.svg';
+import BlogIcon from '@/assets/icons/BlogIcon.svg';
+import CatsPhoto from '@/assets/photos/Cats.jpg';
+import GymPhoto from '@/assets/photos/Gym.png';
+import InternDayPhoto from '@/assets/photos/InternDay.jpg';
+import WeddingPhoto from '@/assets/photos/Wedding.jpg';
+import VolleyballPhoto from '@/assets/photos/Volleyball.jpg';
+import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
 
 export const LOGOS = {
   adtran: AdtranLogo,
@@ -78,9 +85,20 @@ export const ICONS = {
   project: ProjectIcon,
   school: SchoolIcon,
   sun: SunIcon,
+  blog: BlogIcon,
+} as const;
+
+export const PHOTOS = {
+  cats: CatsPhoto,
+  gym: GymPhoto,
+  internDay: InternDayPhoto,
+  wedding: WeddingPhoto,
+  volleyball: VolleyballPhoto,
+  waterfall: WaterfallPhoto,
 } as const;
 
 export const ALL_ASSET_PATHS = [
   ...Object.values(LOGOS),
   ...Object.values(ICONS),
+  ...Object.values(PHOTOS),
 ] as readonly string[];
