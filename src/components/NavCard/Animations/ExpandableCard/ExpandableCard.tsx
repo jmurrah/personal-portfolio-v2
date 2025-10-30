@@ -22,7 +22,7 @@ export default function ExpandableCard({
   expanded,
   className = '',
   tabContent,
-  initialWidth = '192px',
+  initialWidth = '176px',
   initialHeight = '256px',
 }: ExpandableCardProps) {
   const wrapperClass = ['expandable-card-wrapper', className].filter(Boolean).join(' ');

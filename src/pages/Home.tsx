@@ -167,12 +167,12 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className={`flex flex-col gap-4 max-w-80 ${hideCards ? 'hidden' : ''}`}>
+        <div className={`flex flex-col gap-4 w-full max-w-[300px] ${hideCards ? 'hidden' : ''}`}>
           <AnimatedCard
             direction="left"
             delay={100}
             triggerExit={cardsExiting}
-            className={`z-100 h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
+            className={`z-100 h-56 flex flex-col justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
             <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
@@ -276,7 +276,11 @@ export default function Home() {
                 className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
               >
-                <p>abc</p>
+                <div>
+                  <p>Activity:</p>
+                  <p>Morning:</p>
+                  <p>46.7% Commits</p>
+                </div>
               </AnimatedCard>
             </div>
             <div className="flex flex-col gap-4 flex-1">
@@ -292,7 +296,7 @@ export default function Home() {
                 direction="right"
                 delay={1550}
                 triggerExit={cardsExiting}
-                className={`z-100 w-48 h-full flex items-center ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 w-44 h-full flex items-center ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
               >
                 <a

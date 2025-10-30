@@ -102,7 +102,7 @@ export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = 
     <ExpandableCard
       renderTabs={renderTabs}
       expanded={isExpanded}
-      initialWidth="192px"
+      initialWidth="176px"
       initialHeight="256px"
       tabContent={renderTabContent()}
       className="ml-auto"
