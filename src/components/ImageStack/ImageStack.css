@@ -10,7 +10,7 @@
 .image-stack::before {
   content: '';
   display: block;
-  padding-top: 110%;
+  padding-top: 100%;
 }
 
 .image-stack__item {

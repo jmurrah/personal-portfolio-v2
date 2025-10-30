@@ -75,6 +75,18 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
   const [tiltMap, setTiltMap] = useState<Record<string, TiltInfo>>({});
   const [nextTiltSign, setNextTiltSign] = useState<-1 | 1>(-1);
 
+  const disableSelection = useCallback(() => {
+    if (typeof document === 'undefined') return;
+    document.body.style.userSelect = 'none';
+    document.documentElement.style.userSelect = 'none';
+  }, []);
+
+  const enableSelection = useCallback(() => {
+    if (typeof document === 'undefined') return;
+    document.body.style.userSelect = '';
+    document.documentElement.style.userSelect = '';
+  }, []);
+
   useEffect(() => {
     setStack(normalizedImages);
     setExitingId(null);
@@ -94,6 +106,8 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
     setTiltMap(map);
     setNextTiltSign(sign);
   }, [normalizedImages]);
+
+  useEffect(() => () => enableSelection(), [enableSelection]);
 
   const triggerExit = useCallback(
     (direction: 'left' | 'right') => {
@@ -239,6 +253,8 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
         const handlePointerDown =
           isTop && !exitingId
             ? (event: PointerEvent<HTMLLIElement>) => {
+                event.preventDefault();
+                disableSelection();
                 event.currentTarget.setPointerCapture(event.pointerId);
                 setDragState({
                   activeId: id,
@@ -251,6 +267,9 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
 
         const handlePointerMove = isTop
           ? (event: PointerEvent<HTMLLIElement>) => {
+              if (dragState.activeId === id) {
+                event.preventDefault();
+              }
               setDragState((prev) => {
                 if (!prev.isDragging || prev.activeId !== id) return prev;
                 const delta = event.clientX - prev.startX;
@@ -267,6 +286,7 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
         const handlePointerEnd = isTop
           ? (event: PointerEvent<HTMLLIElement>) => {
               if (dragState.activeId !== id) return;
+              enableSelection();
               try {
                 event.currentTarget.releasePointerCapture(event.pointerId);
               } catch {
@@ -285,6 +305,7 @@ export default function ImageStack({ images, className = '' }: ImageStackProps) 
         const handlePointerCancel = isTop
           ? (event: PointerEvent<HTMLLIElement>) => {
               if (dragState.activeId !== id) return;
+              enableSelection();
               try {
                 event.currentTarget.releasePointerCapture(event.pointerId);
               } catch {

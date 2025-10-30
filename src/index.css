@@ -91,7 +91,7 @@ a .underline::after {
   height: 2px;
   background-color: var(--primary);
   transition: width 0.2s ease-in-out;
-  z-index: -1;
+  z-index: 149;
 }
 
 a:hover .underline::after,
@@ -101,13 +101,10 @@ a:focus .underline::after {
 
 .underline:hover,
 .underline:focus {
+  z-index: 150;
   color: var(--text);
 }
 
 span {
   color: var(--text-muted);
 }
-
-/* #tabs {
-  max-width: 192px;
-} */
