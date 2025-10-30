@@ -12,6 +12,7 @@ interface AnimatedCardProps {
   className?: string;
   onExitComplete?: () => void;
   children: React.ReactNode;
+  isCustomCard?: boolean;
 }
 
 export default function AnimatedCard({
@@ -23,6 +24,7 @@ export default function AnimatedCard({
   className = '',
   onExitComplete,
   children,
+  isCustomCard = false,
 }: AnimatedCardProps) {
   const [hasExited, setHasExited] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -63,16 +65,18 @@ export default function AnimatedCard({
     return () => observer.disconnect();
   }, [triggerExit, hasExited, onExitComplete]);
 
-  return (
-    <Card
-      ref={cardRef}
-      className={className}
-      style={{
-        ...style,
-        opacity: isVisible || triggerExit ? 1 : 0,
-        pointerEvents: triggerExit ? 'none' : 'auto',
-      }}
-    >
+  const combinedStyle: React.CSSProperties = {
+    ...style,
+    opacity: isVisible || triggerExit ? 1 : 0,
+    pointerEvents: triggerExit ? 'none' : 'auto',
+  };
+
+  return isCustomCard ? (
+    <div ref={cardRef} className={className} style={combinedStyle}>
+      {children}
+    </div>
+  ) : (
+    <Card ref={cardRef} className={className} style={combinedStyle}>
       {children}
     </Card>
   );

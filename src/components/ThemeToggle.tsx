@@ -76,7 +76,7 @@ export default function ThemeToggle() {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '2.25rem',
+        width: '100%',
         height: '2.25rem',
         borderRadius: '0.5rem',
         border: `1px solid ${borderColor}`,

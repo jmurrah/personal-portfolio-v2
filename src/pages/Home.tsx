@@ -167,142 +167,159 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className={`flex gap-4 flex-auto ${hideCards ? 'hidden' : ''}`}>
-          <div className="flex flex-col gap-4">
-            <AnimatedCard
-              direction="left"
-              delay={100}
-              triggerExit={cardsExiting}
-              className={`z-100 h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
-              <p className="flex items-center gap-2">
-                <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
-                Full Stack Software Developer
-              </p>
-              <p className="flex items-center gap-2">
-                <SvgIcon
-                  src={ICONS.calendar}
-                  alt="Calendar Icon"
-                  color="var(--primary)"
-                  size="small"
-                />
-                2+ Years of Experience
-              </p>
-              <p className="flex items-center gap-2">
-                <SvgIcon
-                  src={ICONS.mapPin}
-                  alt="Map Pin Icon"
-                  color="var(--primary)"
-                  size="small"
-                />
-                Atlanta, GA
-              </p>
-              <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
-                <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
-                <span className="underline">jacob@murrah.dev</span>
+        <div className={`flex flex-col gap-4 max-w-80 ${hideCards ? 'hidden' : ''}`}>
+          <AnimatedCard
+            direction="left"
+            delay={100}
+            triggerExit={cardsExiting}
+            className={`z-100 h-56 flex flex-col justify-between w-80 shrink-0 ${hideCards ? 'hidden' : ''}`}
+            onExitComplete={handleCardExited}
+          >
+            <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
+            <p className="flex items-center gap-2">
+              <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
+              Full Stack Software Developer
+            </p>
+            <p className="flex items-center gap-2">
+              <SvgIcon
+                src={ICONS.calendar}
+                alt="Calendar Icon"
+                color="var(--primary)"
+                size="small"
+              />
+              2+ Years of Experience
+            </p>
+            <p className="flex items-center gap-2">
+              <SvgIcon src={ICONS.mapPin} alt="Map Pin Icon" color="var(--primary)" size="small" />
+              Atlanta, GA
+            </p>
+            <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
+              <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
+              <span className="underline">jacob@murrah.dev</span>
+            </a>
+          </AnimatedCard>
+
+          <AnimatedCard
+            direction="left"
+            delay={350}
+            triggerExit={cardsExiting}
+            className={`z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
+            onExitComplete={handleCardExited}
+          >
+            <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
+            <SvgIcon
+              href="https://linkedin.com/in/jacobmurrah"
+              src={ICONS.linkedIn}
+              alt="LinkedIn"
+              hoverColor="var(--primary)"
+            />
+            <SvgIcon
+              href="https://leetcode.com/jmurrah"
+              src={ICONS.leetCode}
+              alt="LeetCode"
+              hoverColor="var(--primary)"
+            />
+            <SvgIcon
+              href="https://www.buymeacoffee.com/jmurrah"
+              src={ICONS.coffee}
+              alt="Buy Me a Coffee"
+              hoverColor="var(--primary)"
+            />
+            <SvgIcon
+              href="mailto:jacob@murrah.dev"
+              src={ICONS.mail}
+              alt="Email"
+              hoverColor="var(--primary)"
+            />
+          </AnimatedCard>
+
+          <AnimatedCard
+            direction="right"
+            delay={600}
+            triggerExit={cardsExiting}
+            className={`z-100 h-full flex flex-col justify-between items-start ${hideCards ? 'hidden' : ''}`}
+            onExitComplete={handleCardExited}
+          >
+            <p className="text-[color:var(--primary)]">Currently ↓</p>
+            <p>
+              Software Engineer I @{' '}
+              <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+                <span className="underline">AT&T</span>
               </a>
-            </AnimatedCard>
+            </p>
+            <p>
+              OMSCS @{' '}
+              <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+                <span className="underline">Georgia Tech</span>
+              </a>
+            </p>
+          </AnimatedCard>
+        </div>
 
-            <AnimatedCard
-              direction="left"
-              delay={350}
-              triggerExit={cardsExiting}
-              className={`z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
-              <SvgIcon
-                href="https://linkedin.com/in/jacobmurrah"
-                src={ICONS.linkedIn}
-                alt="LinkedIn"
-                hoverColor="var(--primary)"
-              />
-              <SvgIcon
-                href="https://leetcode.com/jmurrah"
-                src={ICONS.leetCode}
-                alt="LeetCode"
-                hoverColor="var(--primary)"
-              />
-              <SvgIcon
-                href="https://www.buymeacoffee.com/jmurrah"
-                src={ICONS.coffee}
-                alt="Buy Me a Coffee"
-                hoverColor="var(--primary)"
-              />
-              <SvgIcon
-                href="mailto:jacob@murrah.dev"
-                src={ICONS.mail}
-                alt="Email"
-                hoverColor="var(--primary)"
-              />
-            </AnimatedCard>
+        <div className="flex flex-col gap-4 flex-1 w-full">
+          <div className="flex gap-4">
+            <div className={`flex flex-col h-full w-full gap-4 ${hideCards ? 'hidden' : ''}`}>
+              <AnimatedCard
+                direction="right"
+                delay={1350}
+                triggerExit={cardsExiting}
+                className={`z-100 w-full ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+                isCustomCard={true}
+              >
+                <ThemeToggle />
+              </AnimatedCard>
+              <AnimatedCard
+                direction="right"
+                delay={1350}
+                triggerExit={cardsExiting}
+                className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+              >
+                <p>abc</p>
+              </AnimatedCard>
+            </div>
+            <div className="flex flex-col gap-4 flex-1">
+              <div style={tabsAnimation.style} className="z-100 w-full">
+                <Tabs
+                  onTabClick={handleTabClick}
+                  readyToExpand={readyToShowTab}
+                  selectedTab={activeTab}
+                />
+              </div>
 
-            <AnimatedCard
-              direction="right"
-              delay={600}
-              triggerExit={cardsExiting}
-              className={`z-100 ${hideCards ? 'hidden' : ''}`}
-              onExitComplete={handleCardExited}
-            >
-              <p className="text-[color:var(--primary)]">Currently ↓</p>
-              <p>
-                Software Engineer I @{' '}
-                <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-                  <span className="underline">AT&T</span>
+              <AnimatedCard
+                direction="right"
+                delay={1550}
+                triggerExit={cardsExiting}
+                className={`z-100 w-48 h-full flex items-center ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+              >
+                <a
+                  href="/resume"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center gap-2 justify-center"
+                >
+                  <SvgIcon
+                    href="/resume"
+                    src={ICONS.fileDownload}
+                    alt="Resume"
+                    hoverColor="var(--primary)"
+                  />
+                  Resume
                 </a>
-              </p>
-              <p>
-                OMSCS @{' '}
-                <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-                  <span className="underline">Georgia Tech</span>
-                </a>
-              </p>
-            </AnimatedCard>
+              </AnimatedCard>
+            </div>
           </div>
-
           <AnimatedCard
             direction="right"
             delay={1350}
             triggerExit={cardsExiting}
-            className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
+            className={`z-100 ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
-            <ThemeToggle />
-          </AnimatedCard>
-        </div>
-
-        <div className="flex flex-col gap-4 flex-1">
-          <div style={tabsAnimation.style} className="z-100 w-full">
-            <Tabs
-              onTabClick={handleTabClick}
-              readyToExpand={readyToShowTab}
-              selectedTab={activeTab}
-            />
-          </div>
-
-          <AnimatedCard
-            direction="right"
-            delay={1550}
-            triggerExit={cardsExiting}
-            className={`z-100 w-48 h-full flex items-center ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
-          >
-            <a
-              href="/resume"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center gap-2 justify-center"
-            >
-              <SvgIcon
-                href="/resume"
-                src={ICONS.fileDownload}
-                alt="Resume"
-                hoverColor="var(--primary)"
-              />
-              Resume
-            </a>
+            <p>something cool. maybe moving text</p>
           </AnimatedCard>
         </div>
 

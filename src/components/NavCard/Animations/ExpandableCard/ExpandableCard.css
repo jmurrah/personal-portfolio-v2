@@ -1,6 +1,6 @@
 .expandable-card-wrapper {
-  --initial-width: 256px;
-  --initial-height: 320px;
+  --initial-width: 192px;
+  --initial-height: 256px;
 
   position: relative;
   width: var(--initial-width);

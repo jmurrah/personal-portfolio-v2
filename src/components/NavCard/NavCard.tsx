@@ -105,7 +105,7 @@ export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = 
       initialWidth="192px"
       initialHeight="256px"
       tabContent={renderTabContent()}
-      className='ml-auto'
+      className="ml-auto"
     />
   );
 }
