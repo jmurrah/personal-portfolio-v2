@@ -306,22 +306,18 @@ export default function Home() {
                 direction="right"
                 delay={1550}
                 triggerExit={cardsExiting}
-                className={`z-100 w-44 h-full flex items-center ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 w-44 ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
+                isCustomCard={true}
               >
                 <a
                   href="/resume"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center gap-2 justify-center"
+                  className="resume w-full inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 bg-[var(--primary)] border-2"
                 >
-                  <SvgIcon
-                    href="/resume"
-                    src={ICONS.fileDownload}
-                    alt="Resume"
-                    hoverColor="var(--primary)"
-                  />
-                  Resume
+                  <SvgIcon src={ICONS.fileDownload} alt="Resume" color="var(--text)" />
+                  <p className="text-[var(--text)]">Resume</p>
                 </a>
               </AnimatedCard>
             </div>
