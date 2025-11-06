@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ICONS, LOGOS } from '@/assets';
+import { ICONS, LOGOS, FLAGS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
@@ -203,7 +203,7 @@ export default function Home() {
             direction="left"
             delay={350}
             triggerExit={cardsExiting}
-            className={`z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
+            className={`social-links z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
             <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
@@ -278,8 +278,18 @@ export default function Home() {
               >
                 <div>
                   <p>Activity:</p>
-                  <p>Morning:</p>
-                  <p>46.7% Commits</p>
+                </div>
+              </AnimatedCard>
+              <AnimatedCard
+                direction="right"
+                delay={1350}
+                triggerExit={cardsExiting}
+                className={`z-100 h-fit w-full ${hideCards ? 'hidden' : ''}`}
+                onExitComplete={handleCardExited}
+              >
+                <div className="flex overflow-hidden max-w-full gap-2">
+                  <img src={FLAGS.gtech} className="w-1/2 h-auto object-contain" />
+                  <img src={FLAGS.auburn} className="w-1/2 h-auto object-contain" />
                 </div>
               </AnimatedCard>
             </div>

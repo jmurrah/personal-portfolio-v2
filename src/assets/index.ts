@@ -44,6 +44,9 @@ import WeddingPhoto from '@/assets/photos/Wedding.jpg';
 import VolleyballPhoto from '@/assets/photos/Volleyball.jpg';
 import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
 
+import GTechFlag from '@/assets/flags/flag2.png';
+import AuburnFlag from '@/assets/flags/AuburnFlag.png';
+
 export const LOGOS = {
   adtran: AdtranLogo,
   att: AttLogo,
@@ -97,8 +100,14 @@ export const PHOTOS = {
   waterfall: WaterfallPhoto,
 } as const;
 
+export const FLAGS = {
+  gtech: GTechFlag,
+  auburn: AuburnFlag,
+} as const;
+
 export const ALL_ASSET_PATHS = [
   ...Object.values(LOGOS),
   ...Object.values(ICONS),
   ...Object.values(PHOTOS),
+  ...Object.values(FLAGS),
 ] as readonly string[];

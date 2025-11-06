@@ -76,24 +76,45 @@ a {
   }
 }
 
-.underline {
-  position: relative;
-  display: inline;
-  color: inherit;
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--text-muted);
-  text-decoration-skip-ink: none;
-  text-underline-offset: 0.15em;
-  transition:
-    color 0.2s ease-in-out,
-    text-decoration-color 0.2s ease-in-out;
+.svg-icon-link:hover {
+  transform: scale(1.2);
 }
 
-a:hover .underline,
-a:focus-visible .underline {
-  color: var(--text);
+.social-links .svg-icon-link {
+  transition: transform 200ms ease-in-out;
+}
+
+.social-links .svg-icon-link:hover {
+  transform: translateY(-2px);
+}
+
+.header-animation,
+.hover-active.timeline-title,
+.underline {
+  display: inline-block;
+  transition:
+    font-weight 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-active.timeline-title,
+a:hover .underline {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.hover-active {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.simple-underline {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+
+.simple-underline:hover {
   text-decoration-color: var(--primary);
 }
 
