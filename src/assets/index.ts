@@ -44,6 +44,9 @@ import WeddingPhoto from '@/assets/photos/Wedding.jpg';
 import VolleyballPhoto from '@/assets/photos/Volleyball.jpg';
 import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
 
+import BuzzIcon from '@/assets/icons/BuzzIcon.png';
+import AubieIcon from '@/assets/icons/AubieIcon.png';
+
 export const LOGOS = {
   adtran: AdtranLogo,
   att: AttLogo,
@@ -86,6 +89,8 @@ export const ICONS = {
   school: SchoolIcon,
   sun: SunIcon,
   blog: BlogIcon,
+  aubie: AubieIcon,
+  buzz: BuzzIcon,
 } as const;
 
 export const PHOTOS = {

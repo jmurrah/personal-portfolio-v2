@@ -41,8 +41,7 @@ export default function TimelineItem({
         rel="noopener noreferrer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="flex items-center justify-center bg-white border relative z-10 "
-        style={{ borderColor: active ? 'var(--primary)' : 'var(--text-muted)' }}
+        className={`flex items-center justify-center bg-white border relative z-10 ${active ? 'hover-active' : ''}`}
       >
         <span className="relative flex shrink-0 overflow-hidden size-14">
           <img
@@ -74,8 +73,7 @@ export default function TimelineItem({
           rel="noopener noreferrer"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="font-semibold leading-none w-fit"
-          style={{ color: active ? 'var(--primary)' : 'var(--text-muted)' }}
+          className={`timeline-title font-semibold leading-none w-fit ${active ? 'hover-active' : ''}`}
         >
           {title}
         </a>

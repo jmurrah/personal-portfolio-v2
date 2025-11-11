@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import TileBackground from '@/components/TileBackground';
 import PreloadAssets from '@/components/PreloadAssets';
+import LastUpdated from '@/components/LastUpdated/LastUpdated';
 
 export default function AppLayout() {
   return (
@@ -9,6 +10,7 @@ export default function AppLayout() {
       <PreloadAssets />
       <main className="flex justify-center items-center custom-margin w-full">
         <div className="w-full max-w-2xl p-4 min-h-fit relative">
+          <LastUpdated />
           <Outlet />
         </div>
       </main>

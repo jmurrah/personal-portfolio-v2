@@ -22,8 +22,8 @@ export default function ExpandableCard({
   expanded,
   className = '',
   tabContent,
-  initialWidth = '256px',
-  initialHeight = '320px',
+  initialWidth = '176px',
+  initialHeight = '256px',
 }: ExpandableCardProps) {
   const wrapperClass = ['expandable-card-wrapper', className].filter(Boolean).join(' ');
 
@@ -58,7 +58,7 @@ export default function ExpandableCard({
             <motion.div
               className="expandable-card-overlay"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.65 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={NAV_CARD_ANIMATION.overlay}
               aria-hidden
@@ -72,7 +72,7 @@ export default function ExpandableCard({
             >
               <MotionCard
                 layoutId="expandable-card-container"
-                className="expandable-card-expanded mb-10"
+                className="expandable-card-expanded w-full mb-10"
                 transition={NAV_CARD_ANIMATION.layout}
                 initial={false}
               >

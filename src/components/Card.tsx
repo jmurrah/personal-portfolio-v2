@@ -8,7 +8,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(({ style, ...rest }, ref) => 
     ref={ref}
     style={{
       border: '1px solid var(--card-border)',
-      borderRadius: 12,
+      borderRadius: 8,
       padding: '1rem',
       backgroundColor: 'var(--card-bg)',
       ...style,

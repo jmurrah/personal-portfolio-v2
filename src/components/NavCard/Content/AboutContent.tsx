@@ -37,63 +37,62 @@ export default function AboutContent() {
       <div className="flex w-full justify-center">
         <div className="flex max-w-2xl flex-col gap-4 text-base leading-relaxed">
           <p>
-            Hello! I am <strong>Jacob Murrah</strong>, a <strong>software engineer</strong> who
-            desires <strong>simplicity</strong> and <strong>speed</strong> in my daily life and in
-            the way I write code. I am currently a student at{' '}
+            Hello! I am Jacob Murrah, a software engineer who desires simplicity and speed in my
+            daily life and in the way I write code. I am currently a student at{' '}
             <a
-              className="underline decoration-primary decoration-2 underline-offset-4 transition hover:text-primary"
+              className="simple-underline"
               href="https://www.auburn.edu/"
               title="Auburn"
               target="_blank"
               rel="noreferrer"
             >
-              <span className="underline">Auburn University</span>
+              Auburn University
             </a>{' '}
-            pursuing a <strong>Bachelor&apos;s degree</strong> in{' '}
+            pursuing a Bachelor&apos;s degree in{' '}
             <a
-              className="underline decoration-primary decoration-2 underline-offset-4 transition hover:text-primary"
+              className="simple-underline"
               href="https://bulletin.auburn.edu/undergraduate/samuelginncollegeofengineering/departmentofcomputerscienceandsoftwareengineering/softwareengineering_major/"
               title="Software engineer"
               target="_blank"
               rel="noreferrer"
             >
-              <span className="underline">Software Engineering</span>
+              Software Engineering
             </a>
-            . I have a passion for <strong>full stack</strong> development and writing{' '}
-            <strong>clean code</strong>. My goal is to have a <strong>deep understanding</strong> of
-            how modern applications are built, interacted with, and maintained.
+            . I have a passion for full stack development and writing clean code. My goal is to have
+            a deep understanding of how modern applications are built, interacted with, and
+            maintained.
           </p>
           <p>
             To date, I have had the privilege of collaborating with various teams and engineers
             during my time at{' '}
             <a
-              className="underline decoration-primary decoration-2 underline-offset-4 transition hover:text-primary"
+              className="simple-underline"
               href="https://is4s.com/"
               title="IS4S"
               target="_blank"
               rel="noreferrer"
             >
-              <span className="underline">IS4S</span>
+              IS4S
             </a>
-            , throughout my <strong>3 co-op terms</strong> at{' '}
+            , throughout my 3 co-op terms at{' '}
             <a
-              className="underline decoration-primary decoration-2 underline-offset-4 transition hover:text-primary"
+              className="simple-underline"
               href="https://www.adtran.com/"
               title="Adtran"
               target="_blank"
               rel="noreferrer"
             >
-              <span className="underline">Adtran</span>
+              Adtran
             </a>
-            , and during my summer <strong>internship</strong> at{' '}
+            , and during my summer internship at{' '}
             <a
-              className="underline decoration-primary decoration-2 underline-offset-4 transition hover:text-primary"
+              className="simple-underline"
               href="https://www.att.com/"
               title="AT&T"
               target="_blank"
               rel="noreferrer"
             >
-              <span className="underline">AT&amp;T</span>
+              AT&amp;T
             </a>
             .
           </p>
