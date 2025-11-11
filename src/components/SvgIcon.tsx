@@ -16,7 +16,7 @@ export default function SvgIcon({
   src,
   alt,
   size = 'medium',
-  color = 'var(--text-muted)',
+  color = 'var(--text)',
   hoverColor = 'var(--primary)',
   className,
   style,

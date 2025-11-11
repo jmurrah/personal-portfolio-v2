@@ -187,7 +187,7 @@ export default function Home() {
             <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
             <p className="flex items-center gap-2">
               <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
-              Full Stack Software Developer
+              Full Stack Developer
             </p>
             <p className="flex items-center gap-2">
               <SvgIcon
@@ -300,11 +300,11 @@ export default function Home() {
                 <div className="flex flex-col justify-center items-center">
                   <div className="flex gap-1 justify-start items-center">
                     <img src={ICONS.aubie} className="w-9 h-auto" />
-                    <p className="font-semibold">War Eagle!</p>
+                    <p>War Eagle!</p>
                   </div>
                   <div className="flex gap-1 justify-start items-center">
                     <img src={ICONS.buzz} className="w-8.5 h-auto" />
-                    <p className="font-semibold">Sting 'Em!</p>
+                    <p>Sting 'Em!</p>
                   </div>
                 </div>
               </AnimatedCard>
@@ -354,7 +354,7 @@ export default function Home() {
             <SlidingMessage
               className="max-w-[324px] h-full min-h-10"
               messages={marqueeMessages}
-              duration={24}
+              duration={18}
             />
             {/* <p>hello</p> */}
           </AnimatedCard>

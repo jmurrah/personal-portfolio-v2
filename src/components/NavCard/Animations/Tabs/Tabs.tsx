@@ -37,7 +37,7 @@ export default function Tabs({
       {visibleTabs.map((tab) => {
         const isSelected = tab.id === selectedTab;
         const baseColor =
-          variant === 'expanded' || isSelected ? 'var(--text)' : 'var(--text-muted)';
+          variant === 'expanded';
         const iconStyle =
           isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
 

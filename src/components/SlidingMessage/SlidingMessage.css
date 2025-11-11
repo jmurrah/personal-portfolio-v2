@@ -50,7 +50,6 @@
   align-items: center;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 3px;
 }
 
 .sliding-message__separator {

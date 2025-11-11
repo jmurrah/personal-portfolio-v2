@@ -78,11 +78,11 @@ export default function TimelineItem({
           {title}
         </a>
 
-        <p className="text-sm text-muted-foreground">{subtitle}</p>
+        <p className="text-muted-foreground">{subtitle}</p>
         {bulletPoints && (
           <ul className="ml-4 list-outside list-disc">
             {bulletPoints.map((point, index) => (
-              <li key={index} className="prose pr-8 text-sm dark:prose-invert">
+              <li key={index} className="prose pr-8 dark:prose-invert">
                 {point}
               </li>
             ))}

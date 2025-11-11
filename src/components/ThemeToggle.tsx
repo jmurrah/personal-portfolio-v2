@@ -27,11 +27,11 @@ export default function ThemeToggle() {
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const body = document.body;
-      const previousColor = getComputedStyle(body).getPropertyValue('--bg-dark').trim();
+      const previousColor = getComputedStyle(body).getPropertyValue('--bg').trim();
 
       body.classList.toggle('dark', theme === 'dark');
 
-      const nextColor = getComputedStyle(body).getPropertyValue('--bg-dark').trim();
+      const nextColor = getComputedStyle(body).getPropertyValue('--bg').trim();
 
       const detail: AppThemeChangeDetail = {
         theme,
@@ -53,7 +53,7 @@ export default function ThemeToggle() {
   };
 
   const backgroundColor = isHovered
-    ? 'color-mix(in srgb, var(--bg-light) 90%, var(--primary) 10%)'
+    ? 'color-mix(in srgb, var(--bg) 90%, var(--primary) 10%)'
     : 'transparent';
 
   const borderColor = isHovered

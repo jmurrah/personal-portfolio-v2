@@ -51,7 +51,7 @@ const totalProjects = projectList.length;
 export default function ProjectsContent() {
   return (
     <div className="flex flex-col">
-      <section className="text-sm text-[var(--text)]">
+      <section className="text-[var(--text)]">
         <p className="mb-2">
           A running list of things I&apos;ve built, shipped, or safely retired.
         </p>

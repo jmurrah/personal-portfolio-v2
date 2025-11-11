@@ -42,7 +42,7 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
   const [tileColor, setTileColor] = useState<string>(() =>
     typeof window === 'undefined'
       ? 'hsl(40, 8%, 94%)'
-      : getComputedStyleSafe(document.body, '--bg-dark', 'hsl(40, 8%, 94%)'),
+      : getComputedStyleSafe(document.body, '--bg', 'hsl(40, 8%, 94%)'),
   );
   const [waveState, setWaveState] = useState<WaveState | null>(null);
   const waveIdRef = useRef(0);
@@ -67,7 +67,7 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    setTileColor(getComputedStyleSafe(document.body, '--bg-dark', tileColor));
+    setTileColor(getComputedStyleSafe(document.body, '--bg', tileColor));
   }, []);
 
   useEffect(() => {

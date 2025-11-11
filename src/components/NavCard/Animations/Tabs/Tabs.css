@@ -33,7 +33,7 @@
   width: 100%;
   border: none;
   cursor: pointer;
-  color: var(--tab-color, var(--text-muted));
+  color: var(--tab-color);
   background: transparent;
   transition:
     color 0.2s ease,
@@ -62,7 +62,7 @@
 
 .tab-item .tab-label {
   font-weight: 500;
-  color: inherit;
+  color: var(--text);
 }
 
 .tab-item:hover {

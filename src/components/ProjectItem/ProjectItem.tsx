@@ -43,7 +43,6 @@ export default function ProjectItem({
           <span
             aria-label={`${statusMeta.label} project`}
             title={statusMeta.label}
-            className="text-sm"
           >
             {statusMeta.icon}
           </span>
@@ -72,9 +71,9 @@ export default function ProjectItem({
         <span className="ml-auto font-bold">{year}</span>
       </div>
       <div className="flex flex-col">
-        <p className="text-sm">{description}</p>
+        <p className="">{description}</p>
         {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 text-sm main">
+          <div className="flex flex-wrap gap-2 main">
             {tags.map((tag) => (
               <span key={tag}>#{tag}</span>
             ))}
