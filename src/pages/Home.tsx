@@ -8,6 +8,7 @@ import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 import ThemeToggle from '@/components/ThemeToggle';
 import { BASE_ANIMATION_MS as DELAY } from '@/components/NavCard/animationConfig';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SlidingMessage from '@/components/SlidingMessage/SlidingMessage';
 
 const technologies = [
   { name: 'Python', logoSrc: LOGOS.python, accent: 'rgba(53, 114, 165, 0.2)' },
@@ -29,6 +30,13 @@ const technologies = [
   { name: 'Tailwind CSS', logoSrc: LOGOS.tailwind, accent: 'rgba(56, 189, 248, 0.2)' },
   { name: 'Spring Boot', logoSrc: LOGOS.spring, accent: 'rgba(109, 179, 63, 0.2)' },
   { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
+];
+
+const marqueeMessages = [
+  'Currently hacking on developer experience tools',
+  'Mentoring junior engineers and interns',
+  'Leading front-end infra initiatives at AT&T',
+  'Sharing lessons learned from OMSCS',
 ];
 
 type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
@@ -326,10 +334,12 @@ export default function Home() {
             direction="right"
             delay={1350}
             triggerExit={cardsExiting}
-            className={`z-100 ${hideCards ? 'hidden' : ''}`}
+            className={`z-100 h-full ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
+            isCustomCard={true}
           >
-            <p>something cool. maybe moving text</p>
+            <SlidingMessage className="max-w-[324px] h-full" messages={marqueeMessages} duration={24} />
+            {/* <p>hello</p> */}
           </AnimatedCard>
         </div>
 
