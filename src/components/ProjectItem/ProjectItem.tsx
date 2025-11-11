@@ -43,6 +43,7 @@ export default function ProjectItem({
           <span
             aria-label={`${statusMeta.label} project`}
             title={statusMeta.label}
+            className="text-sm"
           >
             {statusMeta.icon}
           </span>

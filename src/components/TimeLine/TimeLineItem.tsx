@@ -61,7 +61,7 @@ export default function TimelineItem({
         className="w-6 h-14"
       ></a>
       <div className="flex flex-1 flex-col justify-start gap-1">
-        <time className="text-xs text-muted-foreground block">
+        <time className="text-sm text-muted-foreground block">
           <span>{timeStart}</span>
           <span> - </span>
           <span>{timeEnd}</span>
@@ -78,7 +78,7 @@ export default function TimelineItem({
           {title}
         </a>
 
-        <p className="text-muted-foreground">{subtitle}</p>
+        <p className="text-muted-foreground text-sm">{subtitle}</p>
         {bulletPoints && (
           <ul className="ml-4 list-outside list-disc">
             {bulletPoints.map((point, index) => (

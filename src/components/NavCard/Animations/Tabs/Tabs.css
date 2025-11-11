@@ -20,10 +20,6 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-.tabs-list-expanded .tab-item:hover::before {
-  background: rgba(255, 255, 255, 0.08);
-}
-
 .tab-item {
   position: relative;
   display: flex;
@@ -63,14 +59,6 @@
 .tab-item .tab-label {
   font-weight: 500;
   color: var(--text);
-}
-
-.tab-item:hover {
-  color: var(--text);
-}
-
-.tab-item:hover::before {
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .tab-item .svg-icon {

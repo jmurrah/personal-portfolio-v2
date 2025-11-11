@@ -64,7 +64,7 @@ export default function ProjectsContent() {
 
             return (
               <li key={status}>
-                {meta.icon}
+                <span className="text-sm">{meta.icon}</span>
                 <span className="font-bold"> {meta.label}:</span> {statusCounts[status]}
                 <span> - {meta.summary}</span>
               </li>

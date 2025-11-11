@@ -36,8 +36,7 @@ export default function Tabs({
     <div className={`tabs-list tabs-list-${variant}`}>
       {visibleTabs.map((tab) => {
         const isSelected = tab.id === selectedTab;
-        const baseColor =
-          variant === 'expanded';
+        const baseColor = undefined;
         const iconStyle =
           isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
 

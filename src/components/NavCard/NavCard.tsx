@@ -29,7 +29,6 @@ export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = 
       { id: 'education', icon: ICONS.education, label: 'Education' },
       { id: 'projects', icon: ICONS.project, label: 'Projects' },
       { id: 'blog', icon: ICONS.blog, label: 'Blog' },
-      // { id: 'resume', icon: ICONS.fileDownload, label: 'Resume' },
     ],
     [],
   );
@@ -102,10 +101,11 @@ export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = 
     <ExpandableCard
       renderTabs={renderTabs}
       expanded={isExpanded}
-      initialWidth="176px"
+      initialWidth="160px"
       initialHeight="256px"
       tabContent={renderTabContent()}
       className="ml-auto"
+      disableCardPadding
     />
   );
 }

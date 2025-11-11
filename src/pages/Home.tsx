@@ -322,7 +322,7 @@ export default function Home() {
                 direction="right"
                 delay={1550}
                 triggerExit={cardsExiting}
-                className={`z-100 w-44 ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 w-40 ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
                 isCustomCard={true}
               >
