@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ICONS, LOGOS, FLAGS } from '@/assets';
+import { ICONS, LOGOS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
@@ -33,10 +33,11 @@ const technologies = [
 ];
 
 const marqueeMessages = [
-  'Currently hacking on developer experience tools',
-  'Mentoring junior engineers and interns',
-  'Leading front-end infra initiatives at AT&T',
-  'Sharing lessons learned from OMSCS',
+  'Proud father of 3 cats',
+  'Hitting new gym PRs',
+  'Mentoring junior engineers',
+  'Carrying in unrated Valorant',
+  'Sharing lessons learned',
 ];
 
 type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
@@ -292,12 +293,19 @@ export default function Home() {
                 direction="right"
                 delay={1350}
                 triggerExit={cardsExiting}
-                className={`z-100 h-fit w-full ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 h-fit w-full rounded-lg p-1 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
+                isCustomCard={true}
               >
-                <div className="flex overflow-hidden max-w-full gap-2">
-                  <img src={FLAGS.gtech} className="w-1/2 h-auto object-contain" />
-                  <img src={FLAGS.auburn} className="w-1/2 h-auto object-contain" />
+                <div className="flex flex-col justify-center items-center">
+                  <div className="flex gap-1 justify-start items-center">
+                    <img src={ICONS.aubie} className="w-9 h-auto" />
+                    <p className="font-semibold">War Eagle!</p>
+                  </div>
+                  <div className="flex gap-1 justify-start items-center">
+                    <img src={ICONS.buzz} className="w-8.5 h-auto" />
+                    <p className="font-semibold">Sting 'Em!</p>
+                  </div>
                 </div>
               </AnimatedCard>
             </div>
@@ -322,10 +330,15 @@ export default function Home() {
                   href="/resume"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="resume w-full inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 bg-[var(--primary)] border-2"
+                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3 transition-colors"
                 >
-                  <SvgIcon src={ICONS.fileDownload} alt="Resume" color="var(--text)" />
-                  <p className="text-[var(--text)]">Resume</p>
+                  <SvgIcon
+                    src={ICONS.fileDownload}
+                    alt="Resume"
+                    color="var(--resume-icon-color)"
+                    size="large"
+                  />
+                  <p className="font-bold">Resume</p>
                 </a>
               </AnimatedCard>
             </div>
@@ -338,7 +351,11 @@ export default function Home() {
             onExitComplete={handleCardExited}
             isCustomCard={true}
           >
-            <SlidingMessage className="max-w-[324px] h-full" messages={marqueeMessages} duration={24} />
+            <SlidingMessage
+              className="max-w-[324px] h-full min-h-10"
+              messages={marqueeMessages}
+              duration={24}
+            />
             {/* <p>hello</p> */}
           </AnimatedCard>
         </div>
@@ -350,7 +367,7 @@ export default function Home() {
           className={`z-100 w-full flex flex-col gap-4 ${hideCards ? 'hidden' : ''}`}
           onExitComplete={handleCardExited}
         >
-          <h2>Technologies</h2>
+          <h2 className="text-[var(--text)]">Technologies</h2>
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (
               <TechnologyBadge key={tech.name} {...tech} />

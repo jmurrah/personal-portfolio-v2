@@ -25,11 +25,7 @@ export default function SlidingMessage({
     const isLast = index === infiniteStream.length - 1;
     if (!isLast) {
       nodes.push(
-        <span
-          key={`sep-${index}`}
-          aria-hidden="true"
-          className="sliding-message__separator"
-        />,
+        <span key={`sep-${index}`} aria-hidden="true" className="sliding-message__separator" />,
       );
     }
 
@@ -37,7 +33,11 @@ export default function SlidingMessage({
   });
 
   return (
-    <div className={`sliding-message ${className}`.trim()} role="status" aria-live="polite">
+    <div
+      className={`sliding-message flex items-center ${className}`.trim()}
+      role="status"
+      aria-live="polite"
+    >
       <div className="sliding-message__mask">
         <div className="sliding-message__track" style={{ animationDuration }}>
           {trackItems}

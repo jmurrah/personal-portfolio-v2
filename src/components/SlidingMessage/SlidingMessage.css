@@ -1,9 +1,9 @@
 .sliding-message {
   width: 100%;
   border: 1px solid var(--card-border);
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--card-bg);
-  padding: 0.35rem 0;
+  /* font-size: 18px; */
 }
 
 .sliding-message__mask {
@@ -36,10 +36,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.35rem 0;
   width: max-content;
   animation: sliding-message-marquee linear infinite;
   white-space: nowrap;
+}
+
+.sliding-message:hover .sliding-message__track {
+  animation-play-state: paused;
 }
 
 .sliding-message__item {
@@ -47,7 +50,7 @@
   align-items: center;
   font-weight: 500;
   color: var(--text);
-  padding: 0 0.25rem;
+  margin-bottom: 3px;
 }
 
 .sliding-message__separator {
