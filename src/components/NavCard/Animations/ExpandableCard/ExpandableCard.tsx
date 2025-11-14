@@ -90,9 +90,7 @@ export default function ExpandableCard({
                 >
                   <div className="card-content-viewport">
                     {tabContent ? (
-                      <div className="card-content-body tab-content-inner mt-1">
-                        {tabContent}
-                      </div>
+                      <div className="card-content-body tab-content-inner mt-1">{tabContent}</div>
                     ) : null}
                   </div>
                 </motion.div>

@@ -88,7 +88,7 @@ a {
 }
 
 .social-links .svg-icon-link {
-  transition: transform 200ms ease-in-out;
+  transition: transform 100ms ease-in-out;
 }
 
 .social-links .svg-icon-link:hover {
@@ -96,21 +96,58 @@ a {
 }
 
 .project-links .svg-icon-link {
-  transition: transform 200ms ease-in-out;
+  transition: transform 100ms ease-in-out;
 }
 
 .project-links .svg-icon-link:hover {
   transform: translateY(-2px);
 }
 
-.header-animation,
-.hover-active.timeline-title,
-.underline {
+.header-animation {
   color: var(--text);
   display: inline-block;
-  transition:
-    font-weight 300ms cubic-bezier(0.4, 0, 0.2, 1),
-    color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: font-weight 7000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-title {
+  color: var(--text);
+  display: inline-block;
+  font-weight: 500;
+  font-variation-settings: 'wght' 500;
+  transition: font-variation-settings 10000ms ease;
+}
+
+.underline-fill {
+  color: var(--primary);
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  transition: color 300ms ease-in-out;
+  isolation: isolate;
+  line-height: 1.5rem;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+
+.underline-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--primary);
+  z-index: -1;
+  transform: scaleY(0.05);
+  transform-origin: center bottom;
+  transition: transform 300ms ease;
+}
+
+.underline-fill:hover,
+.underline-fill:focus-visible {
+  color: var(--text);
+}
+
+.underline-fill:hover::after,
+.underline-fill:focus-visible::after {
+  transform: scaleY(1);
 }
 
 .resume {
@@ -128,25 +165,15 @@ a {
   background: var(--primary);
 }
 
-.hover-active.timeline-title,
-a:hover .underline {
-  font-weight: 700;
+.hover-active.timeline-title {
+  font-weight: 600;
+  font-variation-settings: 'wght' 600;
   color: var(--primary);
 }
 
 .hover-active {
   border-color: var(--primary);
   color: var(--primary);
-}
-
-.simple-underline {
-  text-decoration: underline;
-  text-decoration-color: currentColor;
-  text-underline-offset: 2px;
-}
-
-.simple-underline:hover {
-  text-decoration-color: var(--primary);
 }
 
 span {

@@ -176,7 +176,7 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className={`flex flex-col gap-4 w-full max-w-[300px] ${hideCards ? 'hidden' : ''}`}>
+        <div className={`flex flex-col gap-4 w-full max-w-[276px] ${hideCards ? 'hidden' : ''}`}>
           <AnimatedCard
             direction="left"
             delay={100}
@@ -202,10 +202,12 @@ export default function Home() {
               <SvgIcon src={ICONS.mapPin} alt="Map Pin Icon" color="var(--primary)" size="small" />
               Atlanta, GA
             </p>
-            <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
+            <p className="flex items-center gap-2 w-fit">
               <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
-              <span className="underline">jacob@murrah.dev</span>
-            </a>
+              <a href="mailto:jacob@murrah.dev">
+                <span className="underline-fill">jacob@murrah.dev</span>
+              </a>
+            </p>
           </AnimatedCard>
 
           <AnimatedCard
@@ -253,13 +255,13 @@ export default function Home() {
             <p>
               Software Engineer I @{' '}
               <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-                <span className="underline">AT&T</span>
+                <span className="underline-fill">AT&T</span>
               </a>
             </p>
             <p>
               OMSCS @{' '}
               <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-                <span className="underline">Georgia Tech</span>
+                <span className="underline-fill">Georgia Tech</span>
               </a>
             </p>
           </AnimatedCard>
@@ -293,7 +295,7 @@ export default function Home() {
                 direction="right"
                 delay={1350}
                 triggerExit={cardsExiting}
-                className={`z-100 h-fit w-full rounded-lg p-1 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 h-fit w-full rounded-lg p-2 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
                 isCustomCard={true}
               >
@@ -330,7 +332,7 @@ export default function Home() {
                   href="/resume"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3 transition-colors"
+                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3"
                 >
                   <SvgIcon
                     src={ICONS.fileDownload}
@@ -352,7 +354,7 @@ export default function Home() {
             isCustomCard={true}
           >
             <SlidingMessage
-              className="max-w-[324px] h-full min-h-10"
+              className="max-w-[348px] h-full min-h-10"
               messages={marqueeMessages}
               duration={18}
             />

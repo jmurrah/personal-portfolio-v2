@@ -63,7 +63,7 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
     document.documentElement.style.setProperty('--tile-size', `${tileSize}px`);
     document.documentElement.style.setProperty('--tile-gap', `${tileGap}px`);
     document.documentElement.style.setProperty('--fade-duration', fadeDuration);
-  }, [tileSize, tileGap, fadeDuration]);
+  }, [fadeDuration, tileGap, tileSize]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;

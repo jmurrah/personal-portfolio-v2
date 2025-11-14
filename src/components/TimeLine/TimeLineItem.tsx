@@ -43,7 +43,7 @@ export default function TimelineItem({
         onMouseLeave={handleMouseLeave}
         className={`flex items-center justify-center bg-white border relative z-10 ${active ? 'hover-active' : ''}`}
       >
-        <span className="relative flex shrink-0 overflow-hidden size-14">
+        <span className="relative flex shrink-0 overflow-hidden size-16">
           <img
             className="aspect-square h-full w-full bg-background object-contain"
             alt={imgAlt}
@@ -73,16 +73,16 @@ export default function TimelineItem({
           rel="noopener noreferrer"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className={`timeline-title font-semibold leading-none w-fit ${active ? 'hover-active' : ''}`}
+          className={`timeline-title leading-none w-fit ${active ? 'hover-active' : ''}`}
         >
           {title}
         </a>
 
-        <p className="text-muted-foreground text-sm">{subtitle}</p>
+        <p className="text-muted-foreground text-base italic">{subtitle}</p>
         {bulletPoints && (
           <ul className="ml-4 list-outside list-disc">
             {bulletPoints.map((point, index) => (
-              <li key={index} className="prose pr-8 dark:prose-invert">
+              <li key={index} className="prose pr-8 dark:prose-invert text-base">
                 {point}
               </li>
             ))}

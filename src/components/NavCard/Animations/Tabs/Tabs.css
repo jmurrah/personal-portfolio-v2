@@ -31,9 +31,6 @@
   cursor: pointer;
   color: var(--tab-color);
   background: transparent;
-  transition:
-    color 0.2s ease,
-    background-color 0.2s ease;
   border-radius: 0.85rem;
   overflow: hidden;
   padding: 0.65rem 0.85rem;
@@ -45,7 +42,6 @@
   inset: 0;
   border-radius: inherit;
   background: transparent;
-  transition: background 0.2s ease;
 }
 
 .tab-item .tab-content {

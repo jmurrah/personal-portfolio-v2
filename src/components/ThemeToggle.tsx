@@ -83,7 +83,6 @@ export default function ThemeToggle() {
         backgroundColor,
         color: iconColor,
         cursor: 'pointer',
-        transition: 'background-color 150ms ease, border-color 150ms ease',
       }}
     >
       <SvgIcon
