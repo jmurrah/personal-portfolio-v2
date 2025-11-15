@@ -40,7 +40,7 @@ export default function CurrentTime() {
     <div className="h-full w-full flex justify-center items-center">
       <p className="font-mono text-base text-[var(--text)]">
         <span className="italic">{time}</span>{' '}
-        <span className="text-base font-semibold text-[var(--text-muted)]">{timeZoneName}</span>
+        <span className="text-base font-semibold text-[var(--text)]">{timeZoneName}</span>
       </p>
     </div>
   );

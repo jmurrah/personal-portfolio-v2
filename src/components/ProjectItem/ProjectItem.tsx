@@ -55,7 +55,7 @@ export default function ProjectItem({
             src={ICONS.gitHub}
             alt={`${title} GitHub`}
             size="xsmall"
-            color="var(--text-muted)"
+            color="var(--text)"
             hoverColor="var(--primary)"
             className="project-links"
           />
@@ -66,7 +66,7 @@ export default function ProjectItem({
             src={ICONS.gitHub}
             alt={`${title} Live`}
             size="xsmall"
-            color="var(--text-muted)"
+            color="var(--text)"
             hoverColor="var(--primary)"
             className="project-links"
           />
