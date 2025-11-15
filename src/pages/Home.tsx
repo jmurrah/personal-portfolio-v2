@@ -287,9 +287,10 @@ export default function Home() {
                 triggerExit={cardsExiting}
                 className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
+                isCustomCard={true}
               >
                 <div>
-                  <p>Activity:</p>
+                  <img src="memoji.png"></img>
                 </div>
               </AnimatedCard>
               <AnimatedCard

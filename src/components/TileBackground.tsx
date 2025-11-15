@@ -48,7 +48,7 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
     updateGrid();
     window.addEventListener('resize', updateGrid);
     return () => window.removeEventListener('resize', updateGrid);
-  }, [tileSize, tileGap]);
+  }, [tileGap, tileSize]);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--tile-size', `${tileSize}px`);
@@ -147,8 +147,13 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
     const handleThemeChange = (event: Event) => {
       const customEvent = event as CustomEvent<AppThemeChangeDetail>;
       const { colors, initial } = customEvent.detail;
+      const targetColor = colors.to;
 
-      if (!grid.cols || !grid.rows) return;
+      if (!grid.cols || !grid.rows) {
+        currentColorRef.current = targetColor;
+        setBaseColor(targetColor);
+        return;
+      }
 
       const origin =
         lastHoverRef.current ??
@@ -157,31 +162,34 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
           col: Math.floor(grid.cols / 2),
         } as GridPosition);
 
+      const totalTiles = grid.cols * grid.rows;
+
       if (initial) {
+        timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+        timeoutsRef.current = [];
+        tileQueuesRef.current = Array.from({ length: totalTiles }, () => Promise.resolve());
+
         tilesRef.current.forEach((tile) => {
           if (tile) {
-            tile.style.setProperty('--tile-color', colors.to);
+            tile.style.setProperty('--tile-color', targetColor);
           }
         });
-        currentColorRef.current = colors.to;
-        setBaseColor(colors.to);
-      } else {
-        const stride = tileSize + tileGap;
-        const totalTiles = grid.cols * grid.rows;
-        const maxDelay = computeMaxDelay(origin, grid, stride);
 
-        for (let i = 0; i < totalTiles; i += 1) {
-          const delaySeconds = computeDelaySeconds(i, origin, grid.cols, stride);
-          enqueueTileTransition(i, delaySeconds, colors.to);
-        }
-
-        const totalDurationMs = (maxDelay + fadeDurationSeconds) * 1000;
-        const timeoutId = window.setTimeout(() => {
-          currentColorRef.current = colors.to;
-          setBaseColor(colors.to);
-        }, totalDurationMs);
-        timeoutsRef.current.push(timeoutId);
+        currentColorRef.current = targetColor;
+        setBaseColor(targetColor);
+        return;
       }
+
+      for (let i = 0; i < totalTiles; i += 1) {
+        const delaySeconds = computeDelaySeconds(i, origin, grid.cols, tileSize + tileGap);
+        enqueueTileTransition(i, delaySeconds, targetColor);
+      }
+
+      const queuesSnapshot = tileQueuesRef.current.map((queue) => queue);
+      Promise.all(queuesSnapshot).then(() => {
+        currentColorRef.current = targetColor;
+        setBaseColor(targetColor);
+      });
     };
 
     window.addEventListener(APP_THEME_CHANGE_EVENT, handleThemeChange as EventListener);
@@ -210,11 +218,7 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
           className="tile"
           ref={(node) => {
             tilesRef.current[i] = node;
-            if (!node) {
-              return;
-            }
-
-            if (!node.dataset.initializedColor) {
+            if (node && !node.dataset.initializedColor) {
               node.dataset.initializedColor = 'true';
               node.style.setProperty('--tile-color', currentColorRef.current);
             }
@@ -263,24 +267,6 @@ function computeDelaySeconds(
 
   const distance = Math.hypot(dx, dy);
   return distance * DELAY_PER_PIXEL;
-}
-
-function computeMaxDelay(origin: GridPosition, grid: GridSize, tileStride: number) {
-  const corners: GridPosition[] = [
-    { row: 0, col: 0 },
-    { row: 0, col: grid.cols - 1 },
-    { row: grid.rows - 1, col: 0 },
-    { row: grid.rows - 1, col: grid.cols - 1 },
-  ];
-
-  const maxDistance = corners.reduce((acc, corner) => {
-    const dx = (corner.col - origin.col) * tileStride;
-    const dy = (corner.row - origin.row) * tileStride;
-    const distance = Math.hypot(dx, dy);
-    return Math.max(acc, distance);
-  }, 0);
-
-  return maxDistance * DELAY_PER_PIXEL;
 }
 
 export default TileBackground;
