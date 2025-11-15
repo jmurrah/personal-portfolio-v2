@@ -17,7 +17,7 @@
 .tile-bg-container .tile {
   width: var(--tile-size);
   height: var(--tile-size);
-  background-color: var(--tile-base-color, var(--bg));
+  background-color: var(--tile-color, var(--tile-base-color, var(--bg)));
   transition: background-color var(--fade-duration) ease;
 }
 
