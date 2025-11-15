@@ -12,25 +12,31 @@ export default function SlidingMessage({
   className = '',
 }: SlidingMessageProps) {
   const cleanedMessages = messages.filter((message) => message?.trim().length);
-  const marqueeMessages = cleanedMessages;
-  const infiniteStream = [...marqueeMessages, ...marqueeMessages];
-  const animationDuration = `${Math.max(duration, 6)}s`;
-  const trackItems = infiniteStream.flatMap((message, index) => {
-    const nodes = [
-      <span key={`msg-${index}-${message}`} className="sliding-message__item">
-        {message}
-      </span>,
-    ];
 
-    const isLast = index === infiniteStream.length - 1;
-    if (!isLast) {
-      nodes.push(
-        <span key={`sep-${index}`} aria-hidden="true" className="sliding-message__separator" />,
+  if (!cleanedMessages.length) {
+    return null;
+  }
+
+  const trackItems: React.ReactNode[] = [];
+  for (let repeat = 0; repeat < 2; repeat += 1) {
+    cleanedMessages.forEach((message, index) => {
+      const keySuffix = `${repeat}-${index}`;
+      trackItems.push(
+        <span key={`msg-${keySuffix}`} className="sliding-message__item">
+          {message}
+        </span>,
       );
-    }
 
-    return nodes;
-  });
+      trackItems.push(
+        <span
+          key={`sep-${keySuffix}`}
+          aria-hidden="true"
+          className="sliding-message__separator"
+        />,
+      );
+    });
+  }
+  const animationDuration = `${Math.max(duration, 6)}s`;
 
   return (
     <div
