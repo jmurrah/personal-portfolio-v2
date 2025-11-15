@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS, LOGOS, MEMOJI } from '@/assets';
+import './Home.css';
 import AnimatedCard from '@/components/AnimatedCard';
 import CurrentTime from '@/components/CurrentTime';
 import SvgIcon from '@/components/SvgIcon';
@@ -78,6 +79,21 @@ export default function Home() {
     duration: 1000,
     isExiting: false,
   });
+
+  const buildTileClassName = useCallback(
+    (area: string, extra = '') =>
+      [
+        'home-grid__area',
+        `home-grid__area--${area}`,
+        'home-grid__card',
+        'z-100',
+        hideCards ? 'hidden' : '',
+        extra,
+      ]
+        .filter(Boolean)
+        .join(' '),
+    [hideCards],
+  );
 
   const isNavTabId = (value: string): value is NavTabId => value in tabRoutes;
 
@@ -269,111 +285,106 @@ export default function Home() {
           </AnimatedCard>
         </div>
 
-        <div className="flex flex-col gap-4 flex-1 w-full">
-          <div className="flex flex-col gap-4 md:flex-row">
-            <div className={`flex flex-col h-full gap-4 order-2 md:order-1 ${hideCards ? 'hidden' : ''}`}>
-              <div className="flex gap-4">
-                <AnimatedCard
-                  direction="right"
-                  delay={1350}
-                  triggerExit={cardsExiting}
-                  className={`z-100 ${hideCards ? 'hidden' : ''}`}
-                  onExitComplete={handleCardExited}
-                  isCustomCard={true}
-                >
-                  <ThemeToggle />
-                </AnimatedCard>
-                <AnimatedCard
-                  direction="right"
-                  delay={1350}
-                  triggerExit={cardsExiting}
-                  className={`z-100 h-full w-full bg-[var(--card-bg)] rounded-lg ${hideCards ? 'hidden' : ''}`}
-                  onExitComplete={handleCardExited}
-                  isCustomCard={true}
-                >
-                  <CurrentTime />
-                </AnimatedCard>
-              </div>
-              <AnimatedCard
-                direction="right"
-                delay={1350}
-                triggerExit={cardsExiting}
-                className={`z-100 h-full w-full rounded-lg bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <div className="flex h-full items-end">
-                  <img src={MEMOJI.memoji}></img>
-                </div>
-              </AnimatedCard>
-              <AnimatedCard
-                direction="right"
-                delay={1350}
-                triggerExit={cardsExiting}
-                className={`z-100 h-fit w-full rounded-lg p-2 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <div className="flex flex-col justify-center items-center">
-                  <div className="flex gap-1 justify-start items-center">
-                    <img src={ICONS.aubie} className="w-9 h-auto" />
-                    <p>War Eagle!</p>
-                  </div>
-                  <div className="flex gap-1 justify-start items-center">
-                    <img src={ICONS.buzz} className="w-8.5 h-auto" />
-                    <p>Sting 'Em!</p>
-                  </div>
-                </div>
-              </AnimatedCard>
-            </div>
-            <div className="flex flex-col gap-4 flex-1 order-1 md:order-2">
-              <div style={tabsAnimation.style} className="z-100 w-full">
-                <Tabs
-                  onTabClick={handleTabClick}
-                  readyToExpand={readyToShowTab}
-                  selectedTab={activeTab}
-                />
-              </div>
-
-              <AnimatedCard
-                direction="right"
-                delay={1550}
-                triggerExit={cardsExiting}
-                className={`z-100 w-40 ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <a
-                  href={`${import.meta.env.BASE_URL}resume`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3"
-                >
-                  <SvgIcon
-                    src={ICONS.fileDownload}
-                    alt="Resume"
-                    color="var(--resume-icon-color)"
-                    size="large"
-                  />
-                  <p className="font-bold">Resume</p>
-                </a>
-              </AnimatedCard>
-            </div>
-          </div>
+        <div className="home-grid md:order-first">
           <AnimatedCard
             direction="right"
             delay={1350}
             triggerExit={cardsExiting}
-            className={`z-100 h-full ${hideCards ? 'hidden' : ''}`}
+            className={buildTileClassName('theme')}
             onExitComplete={handleCardExited}
             isCustomCard={true}
           >
-            <SlidingMessage
-              className="max-w-[348px] h-full min-h-10"
-              messages={marqueeMessages}
-              duration={18}
-            />
-            {/* <p>hello</p> */}
+            <ThemeToggle />
+          </AnimatedCard>
+          <AnimatedCard
+            direction="right"
+            delay={1350}
+            triggerExit={cardsExiting}
+            className={buildTileClassName('clock', 'rounded-lg bg-[var(--card-bg)]')}
+            onExitComplete={handleCardExited}
+            isCustomCard={true}
+          >
+            <CurrentTime />
+          </AnimatedCard>
+          <AnimatedCard
+            direction="right"
+            delay={1350}
+            triggerExit={cardsExiting}
+            className={buildTileClassName('memoji', 'rounded-lg bg-[var(--card-bg)]')}
+            onExitComplete={handleCardExited}
+            isCustomCard={true}
+          >
+            <div className="flex h-full items-end">
+              <img src={MEMOJI.memoji} alt="Jacob Memoji" className="mx-auto max-w-full" />
+            </div>
+          </AnimatedCard>
+          <AnimatedCard
+            direction="right"
+            delay={1350}
+            triggerExit={cardsExiting}
+            className={buildTileClassName('spirit', 'rounded-lg p-2 bg-[var(--card-bg)]')}
+            onExitComplete={handleCardExited}
+            isCustomCard={true}
+          >
+            <div className="flex flex-col justify-center items-center gap-2">
+              <div className="flex gap-1 justify-start items-center">
+                <img src={ICONS.aubie} className="w-9 h-auto" alt="Auburn mascot" />
+                <p>War Eagle!</p>
+              </div>
+              <div className="flex gap-1 justify-start items-center">
+                <img src={ICONS.buzz} className="w-8.5 h-auto" alt="Georgia Tech mascot" />
+                <p>Sting 'Em!</p>
+              </div>
+            </div>
+          </AnimatedCard>
+          <AnimatedCard
+            direction="top"
+            delay={1350}
+            triggerExit={cardsExiting}
+            className={buildTileClassName('tabs')}
+            onExitComplete={handleCardExited}
+            isCustomCard={true}
+          >
+            <div style={tabsAnimation.style} className="w-full h-full">
+              <Tabs
+                onTabClick={handleTabClick}
+                readyToExpand={readyToShowTab}
+                selectedTab={activeTab}
+              />
+            </div>
+          </AnimatedCard>
+          <AnimatedCard
+            direction="right"
+            delay={1550}
+            triggerExit={cardsExiting}
+            className={buildTileClassName('resume')}
+            onExitComplete={handleCardExited}
+            isCustomCard={true}
+          >
+            <a
+              href={`${import.meta.env.BASE_URL}resume`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3"
+            >
+              <SvgIcon
+                src={ICONS.fileDownload}
+                alt="Resume"
+                color="var(--resume-icon-color)"
+                size="large"
+              />
+              <p className="font-bold">Resume</p>
+            </a>
+          </AnimatedCard>
+          <AnimatedCard
+            direction="right"
+            delay={1350}
+            triggerExit={cardsExiting}
+            className={buildTileClassName('marquee')}
+            onExitComplete={handleCardExited}
+            isCustomCard={true}
+          >
+            <SlidingMessage className="w-full min-h-10" messages={marqueeMessages} duration={18} />
           </AnimatedCard>
         </div>
 

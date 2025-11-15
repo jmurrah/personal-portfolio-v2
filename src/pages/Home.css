@@ -1,0 +1,81 @@
+/* Layout grid setup */
+.home-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    'theme clock memoji tabs'
+    'spirit spirit memoji tabs'
+    'marquee resume resume tabs';
+}
+
+/* Base classes */
+.home-grid__area {
+  width: 100%;
+}
+
+.home-grid__card {
+  height: 100%;
+}
+
+/* Named areas */
+.home-grid__area--theme {
+  grid-area: theme;
+}
+
+.home-grid__area--clock {
+  grid-area: clock;
+}
+
+.home-grid__area--memoji {
+  grid-area: memoji;
+}
+
+.home-grid__area--spirit {
+  grid-area: spirit;
+}
+
+.home-grid__area--tabs {
+  grid-area: tabs;
+}
+
+.home-grid__area--resume {
+  grid-area: resume;
+}
+
+.home-grid__area--marquee {
+  grid-area: marquee;
+}
+
+/* Medium breakpoint (≤768px) */
+@media (max-width: 768px) {
+  .home-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'theme tabs'
+      'clock tabs'
+      'memoji memoji'
+      'spirit spirit'
+      'resume resume'
+      'marquee marquee';
+  }
+}
+
+/* Mobile breakpoint (≤500px) */
+@media (max-width: 500px) {
+  .home-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'tabs'
+      'marquee';
+  }
+
+  .home-grid__area {
+    display: none;
+  }
+
+  .home-grid__area--tabs,
+  .home-grid__area--marquee {
+    display: block;
+  }
+}
