@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS, LOGOS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
+import CurrentTime from '@/components/CurrentTime';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/NavCard/NavCard';
@@ -271,16 +272,28 @@ export default function Home() {
         <div className="flex flex-col gap-4 flex-1 w-full">
           <div className="flex gap-4">
             <div className={`flex flex-col h-full w-full gap-4 ${hideCards ? 'hidden' : ''}`}>
-              <AnimatedCard
-                direction="right"
-                delay={1350}
-                triggerExit={cardsExiting}
-                className={`z-100 w-full ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <ThemeToggle />
-              </AnimatedCard>
+              <div className="flex gap-4">
+                <AnimatedCard
+                  direction="right"
+                  delay={1350}
+                  triggerExit={cardsExiting}
+                  className={`z-100 ${hideCards ? 'hidden' : ''}`}
+                  onExitComplete={handleCardExited}
+                  isCustomCard={true}
+                >
+                  <ThemeToggle />
+                </AnimatedCard>
+                <AnimatedCard
+                  direction="right"
+                  delay={1350}
+                  triggerExit={cardsExiting}
+                  className={`z-100 h-full w-full bg-[var(--card-bg)] rounded-lg ${hideCards ? 'hidden' : ''}`}
+                  onExitComplete={handleCardExited}
+                  isCustomCard={true}
+                >
+                  <CurrentTime />
+                </AnimatedCard>
+              </div>
               <AnimatedCard
                 direction="right"
                 delay={1350}

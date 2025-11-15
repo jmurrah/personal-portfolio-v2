@@ -34,7 +34,7 @@ export default function Tabs({
     variant === 'expanded' && selectedTab ? tabs.filter((tab) => tab.id === selectedTab) : tabs;
 
   return (
-    <div className={`tabs-list tabs-list-${variant}`}>
+    <div className={`tabs-list px-1 mt-2 tabs-list-${variant}`}>
       {visibleTabs.map((tab) => {
         const isSelected = tab.id === selectedTab;
         const baseColor = undefined;
@@ -54,7 +54,6 @@ export default function Tabs({
             }}
             aria-disabled={isInteractionLocked}
             tabIndex={isInteractionLocked ? -1 : 0}
-            title={targetHref}
             aria-label={`${tab.label} (${targetHref})`}
             style={{ '--tab-color': baseColor } as CSSProperties}
           >

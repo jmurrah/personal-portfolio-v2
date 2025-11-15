@@ -53,13 +53,15 @@
 }
 
 .sliding-message__separator {
-  width: 0.35rem;
-  height: 0.35rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  min-width: 0.4rem;
+  min-height: 0.4rem;
   border-radius: 999px;
   background: var(--primary);
-  display: inline-block;
-  flex-shrink: 0;
-  margin: 0 0.75rem;
+  display: block;
+  flex: 0 0 0.4rem;
+  margin: 0 0.85rem;
 }
 
 @keyframes sliding-message-marquee {

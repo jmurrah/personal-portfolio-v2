@@ -54,11 +54,11 @@ export default function ThemeToggle() {
 
   const backgroundColor = isHovered
     ? 'color-mix(in srgb, var(--bg) 90%, var(--primary) 10%)'
-    : 'transparent';
+    : 'var(--card-bg)';
 
   const borderColor = isHovered
     ? 'color-mix(in srgb, var(--card-border) 80%, var(--primary) 20%)'
-    : 'transparent';
+    : 'var(--card-border)';
 
   const iconColor = theme === 'dark' ? '#FDBA74' : '#6366F1';
   const iconSrc = theme === 'dark' ? ICONS.sun : ICONS.moon;
@@ -76,10 +76,10 @@ export default function ThemeToggle() {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
+        width: '2.25rem',
         height: '2.25rem',
         borderRadius: '0.5rem',
-        border: `1px solid ${borderColor}`,
+        border: `2px solid ${borderColor}`,
         backgroundColor,
         color: iconColor,
         cursor: 'pointer',

@@ -28,11 +28,7 @@ export default function SlidingMessage({
       );
 
       trackItems.push(
-        <span
-          key={`sep-${keySuffix}`}
-          aria-hidden="true"
-          className="sliding-message__separator"
-        />,
+        <span key={`sep-${keySuffix}`} aria-hidden="true" className="sliding-message__separator" />,
       );
     });
   }
