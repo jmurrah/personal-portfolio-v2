@@ -83,38 +83,23 @@ a {
   }
 }
 
-.svg-icon-link:hover {
-  transform: scale(1.2);
-}
-
-.social-links .svg-icon-link {
-  transition: transform 100ms ease-in-out;
+.social-links .svg-icon-link,
+.svg-icon-link .project-links {
+  transition: transform 150ms ease-in-out;
 }
 
 .social-links .svg-icon-link:hover {
   transform: translateY(-2px);
 }
 
-.project-links .svg-icon-link {
-  transition: transform 100ms ease-in-out;
-}
-
-.project-links .svg-icon-link:hover {
-  transform: translateY(-2px);
-}
-
-.header-animation {
-  color: var(--text);
-  display: inline-block;
-  transition: font-weight 7000ms cubic-bezier(0.4, 0, 0.2, 1);
+.svg-icon-link:hover .project-links {
+  transform: translateY(-1px);
 }
 
 .timeline-title {
   color: var(--text);
   display: inline-block;
   font-weight: 500;
-  font-variation-settings: 'wght' 500;
-  transition: font-variation-settings 10000ms ease;
 }
 
 .underline-fill {
@@ -122,7 +107,7 @@ a {
   position: relative;
   display: inline-block;
   text-decoration: none;
-  transition: color 300ms ease-in-out;
+  transition: color 250ms ease-in-out;
   isolation: isolate;
   line-height: 1.5rem;
   padding-left: 0.1rem;
@@ -137,7 +122,7 @@ a {
   z-index: -1;
   transform: scaleY(0.05);
   transform-origin: center bottom;
-  transition: transform 300ms ease;
+  transition: transform 250ms ease;
 }
 
 .underline-fill:hover,
@@ -167,7 +152,6 @@ a {
 
 .hover-active.timeline-title {
   font-weight: 600;
-  font-variation-settings: 'wght' 600;
   color: var(--primary);
 }
 

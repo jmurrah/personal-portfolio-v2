@@ -251,7 +251,8 @@ export default function Home() {
             className={`z-100 h-full flex flex-col justify-between items-start ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
-            <p className="text-[color:var(--primary)]">Currently ↓</p>
+            {/* <p className="text-[color:var(--primary)]">Currently ↴</p> */}
+            <p>Currently ↴</p>
             <p>
               Software Engineer I @{' '}
               <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">

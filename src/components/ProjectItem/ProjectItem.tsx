@@ -57,6 +57,7 @@ export default function ProjectItem({
             size="xsmall"
             color="var(--text-muted)"
             hoverColor="var(--primary)"
+            className="project-links"
           />
         )}
         {liveUrl && (
@@ -67,6 +68,7 @@ export default function ProjectItem({
             size="xsmall"
             color="var(--text-muted)"
             hoverColor="var(--primary)"
+            className="project-links"
           />
         )}
         <span className="ml-auto font-bold">{year}</span>

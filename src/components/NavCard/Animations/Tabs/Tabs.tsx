@@ -8,6 +8,7 @@ export type Tab = {
   id: string;
   icon: string;
   label: string;
+  href?: string;
 };
 
 export type TabsVariant = 'compact' | 'expanded';
@@ -39,18 +40,22 @@ export default function Tabs({
         const baseColor = undefined;
         const iconStyle =
           isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
+        const targetHref = tab.href ?? `/${tab.id}`;
 
         return (
-          <button
+          <a
             key={tab.id}
-            type="button"
+            href={targetHref}
             className={`tab-item tab-item-${variant} ${isSelected ? 'selected' : ''}`}
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               if (isInteractionLocked) return;
               onSelectTab(tab.id);
             }}
-            disabled={isInteractionLocked}
             aria-disabled={isInteractionLocked}
+            tabIndex={isInteractionLocked ? -1 : 0}
+            title={targetHref}
+            aria-label={`${tab.label} (${targetHref})`}
             style={{ '--tab-color': baseColor } as CSSProperties}
           >
             {showSelection && isSelected ? (
@@ -71,7 +76,7 @@ export default function Tabs({
               />
               <span className="tab-label">{tab.label}</span>
             </span>
-          </button>
+          </a>
         );
       })}
     </div>
