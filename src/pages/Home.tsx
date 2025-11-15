@@ -344,7 +344,7 @@ export default function Home() {
                 isCustomCard={true}
               >
                 <a
-                  href="/resume"
+                  href={`${import.meta.env.BASE_URL}resume`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3"
