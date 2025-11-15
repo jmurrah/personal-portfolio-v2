@@ -182,7 +182,7 @@ export default function Home() {
             direction="left"
             delay={100}
             triggerExit={cardsExiting}
-            className={`z-100 flex flex-col gap-1 justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
+            className={`z-100 flex flex-col gap-1.5 justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
             <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
