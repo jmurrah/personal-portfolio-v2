@@ -26,7 +26,7 @@ export default function TechnologyBadge({ name, logoSrc, accent }: TechnologyBad
       >
         <img src={logoSrc} alt={`${name} logo`} className="h-4 w-4 object-contain" />
       </span>
-      <h3 style={{ color: 'var(--text)' }}>{name}</h3>
+      <h3 className="text-[var(--text)] text-base">{name}</h3>
     </div>
   );
 }
