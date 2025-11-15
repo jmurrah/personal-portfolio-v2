@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { ICONS, LOGOS, MEMOJI } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import CurrentTime from '@/components/CurrentTime';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
-import Tabs from '@/components/NavCard/NavCard';
+import SimpleTabs from '@/components/SimpleTabs/SimpleTabs';
 import ThemeToggle from '@/components/ThemeToggle';
 import SlidingMessage from '@/components/SlidingMessage/SlidingMessage';
 
@@ -38,27 +37,8 @@ const marqueeMessages = [
   'Sharing lessons learned',
 ];
 
-type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
-
-const navTabIds: NavTabId[] = ['about', 'experience', 'education', 'projects', 'blog'];
-
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<NavTabId | null>(null);
   const noop = () => {};
-
-  const isNavTabId = (value: string): value is NavTabId =>
-    navTabIds.includes(value as NavTabId);
-
-  const handleTabClick = (tabId: string) => {
-    if (tabId === '') {
-      setActiveTab(null);
-      return;
-    }
-
-    if (isNavTabId(tabId)) {
-      setActiveTab((current) => (current === tabId ? null : tabId));
-    }
-  };
 
   return (
     <div>
@@ -215,11 +195,7 @@ export default function Home() {
             onExitComplete={noop}
             isCustomCard={true}
           >
-            <Tabs
-              onTabClick={handleTabClick}
-              readyToExpand={Boolean(activeTab)}
-              selectedTab={activeTab}
-            />
+            <SimpleTabs />
           </AnimatedCard>
           <AnimatedCard
             direction="right"
