@@ -252,7 +252,7 @@ export default function Home() {
             onExitComplete={handleCardExited}
           >
             {/* <p className="text-[color:var(--primary)]">Currently ↴</p> */}
-            <p>Currently ↴</p>
+            <p>Currently 🡓</p>
             <p>
               Software Engineer I @{' '}
               <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
@@ -285,11 +285,11 @@ export default function Home() {
                 direction="right"
                 delay={1350}
                 triggerExit={cardsExiting}
-                className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 h-full w-full rounded-lg bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
                 isCustomCard={true}
               >
-                <div>
+                <div className="flex h-full items-end">
                   <img src="memoji.png"></img>
                 </div>
               </AnimatedCard>

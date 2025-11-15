@@ -35,8 +35,9 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
   const currentColorRef = useRef(baseColor);
 
   const tilesRef = useRef<Array<HTMLDivElement | null>>([]);
-  const tileQueuesRef = useRef<Promise<void>[]>([]);
+  const tileReadyTimesRef = useRef<number[]>([]);
   const timeoutsRef = useRef<number[]>([]);
+  const baseColorTimeoutRef = useRef<number | null>(null);
   const lastHoverRef = useRef<GridPosition | null>(null);
 
   useEffect(() => {
@@ -96,52 +97,81 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
     const total = grid.cols * grid.rows;
     if (total <= 0) {
       tilesRef.current = [];
-      tileQueuesRef.current = [];
+      tileReadyTimesRef.current = [];
       return;
     }
 
     tilesRef.current.length = total;
 
-    if (tileQueuesRef.current.length < total) {
-      tileQueuesRef.current = tileQueuesRef.current.concat(
-        Array.from({ length: total - tileQueuesRef.current.length }, () => Promise.resolve()),
-      );
-    } else if (tileQueuesRef.current.length > total) {
-      tileQueuesRef.current.length = total;
+    const now = Date.now();
+    if (tileReadyTimesRef.current.length < total) {
+      const toAdd = total - tileReadyTimesRef.current.length;
+      tileReadyTimesRef.current = tileReadyTimesRef.current.concat(Array(toAdd).fill(now));
+    } else if (tileReadyTimesRef.current.length > total) {
+      tileReadyTimesRef.current = tileReadyTimesRef.current.slice(0, total);
     }
   }, [grid.cols, grid.rows]);
 
-  useEffect(() => {
-    return () => {
-      timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-      timeoutsRef.current = [];
-    };
+  const clearAllTimeouts = useCallback(() => {
+    timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    timeoutsRef.current = [];
+    if (baseColorTimeoutRef.current) {
+      window.clearTimeout(baseColorTimeoutRef.current);
+      baseColorTimeoutRef.current = null;
+    }
   }, []);
 
+  useEffect(() => clearAllTimeouts, [clearAllTimeouts]);
+
   const fadeDurationSeconds = useMemo(() => convertDurationToSeconds(fadeDuration), [fadeDuration]);
+  const tileStride = useMemo(() => tileSize + tileGap, [tileGap, tileSize]);
 
-  const enqueueTileTransition = useCallback(
-    (index: number, delaySeconds: number, color: string) => {
-      const runTransition = () =>
-        new Promise<void>((resolve) => {
-          const delayMs = Math.max(delaySeconds, 0) * 1000;
-          const startTimeout = window.setTimeout(() => {
-            const tile = tilesRef.current[index];
-            if (tile) {
-              tile.style.setProperty('--tile-color', color);
-            }
-            const settleTimeout = window.setTimeout(() => resolve(), fadeDurationSeconds * 1000);
-            timeoutsRef.current.push(settleTimeout);
-          }, delayMs);
+  const applyColorToAllTiles = useCallback((color: string) => {
+    tilesRef.current.forEach((tile) => {
+      if (tile) {
+        tile.style.setProperty('--tile-color', color);
+      }
+    });
+    setBaseColor(color);
+    currentColorRef.current = color;
+  }, []);
 
-          timeoutsRef.current.push(startTimeout);
-        });
+  const scheduleBaseColorUpdate = useCallback(
+    (color: string, delayMs: number) => {
+      if (baseColorTimeoutRef.current) {
+        window.clearTimeout(baseColorTimeoutRef.current);
+      }
 
-      const queue = tileQueuesRef.current[index] ?? Promise.resolve();
-      tileQueuesRef.current[index] = queue.then(runTransition);
+      baseColorTimeoutRef.current = window.setTimeout(
+        () => {
+          applyColorToAllTiles(color);
+          baseColorTimeoutRef.current = null;
+        },
+        Math.max(delayMs, 0),
+      );
     },
-    [fadeDurationSeconds],
+    [applyColorToAllTiles],
   );
+
+  const scheduleTileColorUpdate = useCallback((index: number, color: string, delayMs: number) => {
+    const applyColor = () => {
+      const tile = tilesRef.current[index];
+      if (tile) {
+        tile.style.setProperty('--tile-color', color);
+        return;
+      }
+
+      if (index >= tilesRef.current.length) {
+        return;
+      }
+
+      const retryId = window.setTimeout(applyColor, 16);
+      timeoutsRef.current.push(retryId);
+    };
+
+    const timeoutId = window.setTimeout(applyColor, Math.max(0, delayMs));
+    timeoutsRef.current.push(timeoutId);
+  }, []);
 
   useEffect(() => {
     const handleThemeChange = (event: Event) => {
@@ -150,8 +180,9 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
       const targetColor = colors.to;
 
       if (!grid.cols || !grid.rows) {
-        currentColorRef.current = targetColor;
-        setBaseColor(targetColor);
+        clearAllTimeouts();
+        tileReadyTimesRef.current = [];
+        applyColorToAllTiles(targetColor);
         return;
       }
 
@@ -162,40 +193,48 @@ const TileBackground: React.FC<TileBackgroundProps> = ({
           col: Math.floor(grid.cols / 2),
         } as GridPosition);
 
+      const now = Date.now();
+      const fadeDurationMs = fadeDurationSeconds * 1000;
       const totalTiles = grid.cols * grid.rows;
 
       if (initial) {
-        timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-        timeoutsRef.current = [];
-        tileQueuesRef.current = Array.from({ length: totalTiles }, () => Promise.resolve());
-
-        tilesRef.current.forEach((tile) => {
-          if (tile) {
-            tile.style.setProperty('--tile-color', targetColor);
-          }
-        });
-
-        currentColorRef.current = targetColor;
-        setBaseColor(targetColor);
+        clearAllTimeouts();
+        tileReadyTimesRef.current = Array(totalTiles).fill(now + fadeDurationMs);
+        applyColorToAllTiles(targetColor);
         return;
       }
 
+      let maxReadyTime = now;
+
       for (let i = 0; i < totalTiles; i += 1) {
-        const delaySeconds = computeDelaySeconds(i, origin, grid.cols, tileSize + tileGap);
-        enqueueTileTransition(i, delaySeconds, targetColor);
+        const baseDelaySeconds = computeDelaySeconds(i, origin, grid.cols, tileStride);
+        const intendedStart = now + baseDelaySeconds * 1000;
+        const previousReadyTime = tileReadyTimesRef.current[i] ?? now;
+        const startTime = Math.max(intendedStart, previousReadyTime);
+
+        scheduleTileColorUpdate(i, targetColor, startTime - now);
+
+        const readyTime = startTime + fadeDurationMs;
+        tileReadyTimesRef.current[i] = readyTime;
+        maxReadyTime = Math.max(maxReadyTime, readyTime);
       }
 
-      const queuesSnapshot = tileQueuesRef.current.map((queue) => queue);
-      Promise.all(queuesSnapshot).then(() => {
-        currentColorRef.current = targetColor;
-        setBaseColor(targetColor);
-      });
+      scheduleBaseColorUpdate(targetColor, maxReadyTime - now);
     };
 
     window.addEventListener(APP_THEME_CHANGE_EVENT, handleThemeChange as EventListener);
     return () =>
       window.removeEventListener(APP_THEME_CHANGE_EVENT, handleThemeChange as EventListener);
-  }, [enqueueTileTransition, grid.cols, grid.rows, tileGap, tileSize]);
+  }, [
+    applyColorToAllTiles,
+    clearAllTimeouts,
+    fadeDurationSeconds,
+    grid.cols,
+    grid.rows,
+    scheduleBaseColorUpdate,
+    scheduleTileColorUpdate,
+    tileStride,
+  ]);
 
   const total = grid.cols * grid.rows;
 
