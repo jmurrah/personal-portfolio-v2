@@ -47,6 +47,8 @@ import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
 import BuzzIcon from '@/assets/icons/BuzzIcon.png';
 import AubieIcon from '@/assets/icons/AubieIcon.png';
 
+import Memoji from '@/assets/memoji/Memoji.png';
+
 export const LOGOS = {
   adtran: AdtranLogo,
   att: AttLogo,
@@ -102,8 +104,14 @@ export const PHOTOS = {
   waterfall: WaterfallPhoto,
 } as const;
 
+export const MEMOJI = {
+  memoji: Memoji,
+} as const;
+
+
 export const ALL_ASSET_PATHS = [
   ...Object.values(LOGOS),
   ...Object.values(ICONS),
   ...Object.values(PHOTOS),
+  ...Object.values(MEMOJI),
 ] as readonly string[];

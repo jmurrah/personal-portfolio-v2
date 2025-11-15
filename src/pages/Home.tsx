@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ICONS, LOGOS } from '@/assets';
+import { ICONS, LOGOS, MEMOJI } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import CurrentTime from '@/components/CurrentTime';
 import SvgIcon from '@/components/SvgIcon';
@@ -303,7 +303,7 @@ export default function Home() {
                 isCustomCard={true}
               >
                 <div className="flex h-full items-end">
-                  <img src="memoji.png"></img>
+                  <img src={MEMOJI.memoji}></img>
                 </div>
               </AnimatedCard>
               <AnimatedCard

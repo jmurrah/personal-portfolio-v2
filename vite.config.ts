@@ -8,7 +8,7 @@ const projectRootDir = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig(() => {
   return {
-    base: '/',
+    base: '/personal-portfolio-v2/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
