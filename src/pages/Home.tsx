@@ -1,15 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ICONS, LOGOS, MEMOJI } from '@/assets';
-import './Home.css';
 import AnimatedCard from '@/components/AnimatedCard';
 import CurrentTime from '@/components/CurrentTime';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/NavCard/NavCard';
-import { useSlideAnimation } from '@/hooks/useSlideAnimation';
 import ThemeToggle from '@/components/ThemeToggle';
-import { BASE_ANIMATION_MS as DELAY } from '@/components/NavCard/animationConfig';
-import { useLocation, useNavigate } from 'react-router-dom';
 import SlidingMessage from '@/components/SlidingMessage/SlidingMessage';
 
 const technologies = [
@@ -44,162 +40,36 @@ const marqueeMessages = [
 
 type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
 
-const tabRoutes: Record<NavTabId, `/${NavTabId}`> = {
-  about: '/about',
-  experience: '/experience',
-  education: '/education',
-  projects: '/projects',
-  blog: '/blog',
-};
-
-const totalCards = 4;
-
-const getTabFromPath = (pathname: string): NavTabId | null => {
-  const [, firstSegment = ''] = pathname.split('/');
-  return (firstSegment in tabRoutes ? firstSegment : null) as NavTabId | null;
-};
+const navTabIds: NavTabId[] = ['about', 'experience', 'education', 'projects', 'blog'];
 
 export default function Home() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const routeTab = useMemo(() => getTabFromPath(location.pathname), [location.pathname]);
-  const [activeTab, setActiveTab] = useState<string | null>(() => routeTab);
-  const [readyToShowTab, setReadyToShowTab] = useState(() => Boolean(routeTab));
-  const [introDuration, setIntroDuration] = useState(() => (routeTab ? 650 : 1100));
-  const [cardsExiting, setCardsExiting] = useState(() => Boolean(routeTab));
-  const [, setExitedCardCount] = useState(0);
-  const [hideCards, setHideCards] = useState(false);
-  const internalNavRef = useRef(false);
-  const pendingTabRef = useRef<string | null>(routeTab);
-  const hasShownDefaultRef = useRef(routeTab === null);
+  const [activeTab, setActiveTab] = useState<NavTabId | null>(null);
+  const noop = () => {};
 
-  const tabsAnimation = useSlideAnimation({
-    direction: 'top',
-    delay: introDuration,
-    duration: 1000,
-    isExiting: false,
-  });
+  const isNavTabId = (value: string): value is NavTabId =>
+    navTabIds.includes(value as NavTabId);
 
-  const buildTileClassName = useCallback(
-    (area: string, extra = '') =>
-      [
-        'home-grid__area',
-        `home-grid__area--${area}`,
-        'home-grid__card',
-        'z-100',
-        hideCards ? 'hidden' : '',
-        extra,
-      ]
-        .filter(Boolean)
-        .join(' '),
-    [hideCards],
-  );
-
-  const isNavTabId = (value: string): value is NavTabId => value in tabRoutes;
-
-  useEffect(() => {
-    pendingTabRef.current = routeTab ?? null;
-
-    if (internalNavRef.current) {
-      internalNavRef.current = false;
+  const handleTabClick = (tabId: string) => {
+    if (tabId === '') {
+      setActiveTab(null);
       return;
     }
 
-    if (routeTab) {
-      setActiveTab(routeTab);
-      setIntroDuration(650);
-      setHideCards(false);
-      setCardsExiting(true);
-      setReadyToShowTab(false);
-      setExitedCardCount(0);
-    } else {
-      setIntroDuration(1100);
-      setPendingTabAndReset();
-    }
-  }, [routeTab]);
-
-  const setPendingTabAndReset = useCallback(() => {
-    hasShownDefaultRef.current = true;
-    setActiveTab(null);
-    setHideCards(false);
-    setReadyToShowTab(false);
-    setCardsExiting(false);
-    setExitedCardCount(0);
-  }, []);
-
-  const handleAllCardsExited = useCallback(() => {
-    if (pendingTabRef.current) {
-      setHideCards(true);
-      setReadyToShowTab(true);
-      setCardsExiting(false);
-    } else {
-      setPendingTabAndReset();
-    }
-  }, [setPendingTabAndReset]);
-
-  const handleCardExited = useCallback(() => {
-    setExitedCardCount((prev) => {
-      const newCount = prev + 1;
-      if (newCount === totalCards) {
-        handleAllCardsExited();
-      }
-      return newCount;
-    });
-  }, [handleAllCardsExited]);
-
-  const handleTabClick = (tabId: string) => {
-    const isClosing = tabId === '' || tabId === activeTab;
-    const nextTab = isClosing ? null : tabId;
-    const targetRoute = nextTab && isNavTabId(nextTab) ? tabRoutes[nextTab] : '/';
-
-    pendingTabRef.current = nextTab;
-
-    if (nextTab) {
-      setActiveTab(nextTab);
-    } else {
-      setActiveTab(null);
-    }
-
-    if (location.pathname !== targetRoute) {
-      internalNavRef.current = true;
-    }
-
-    setExitedCardCount(0);
-
-    if (isClosing) {
-      if (!hasShownDefaultRef.current) {
-        setPendingTabAndReset();
-      } else {
-        setIntroDuration(1100);
-        setCardsExiting(true);
-        setReadyToShowTab(false);
-        setTimeout(() => {
-          setHideCards(false);
-          setCardsExiting(false);
-        }, DELAY);
-      }
-    } else {
-      setIntroDuration(650);
-      setHideCards(false);
-      setReadyToShowTab(false);
-      setCardsExiting(true);
-    }
-
-    if (location.pathname !== targetRoute) {
-      navigate(targetRoute);
+    if (isNavTabId(tabId)) {
+      setActiveTab((current) => (current === tabId ? null : tabId));
     }
   };
 
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className={`flex flex-col gap-4 w-full md:max-w-[276px] w-full ${hideCards ? 'hidden' : ''}`}>
+        <div className="flex flex-col gap-4 w-full md:max-w-[276px]">
           <AnimatedCard
             direction="left"
             delay={100}
-            triggerExit={cardsExiting}
-            className={`z-100 flex flex-col gap-1.5 justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100 flex flex-col gap-1.5 justify-between w-full shrink-0"
+            onExitComplete={noop}
           >
             <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
             <p className="flex items-center gap-2">
@@ -230,9 +100,9 @@ export default function Home() {
           <AnimatedCard
             direction="left"
             delay={350}
-            triggerExit={cardsExiting}
-            className={`social-links z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="social-links z-100 flex justify-between items-center"
+            onExitComplete={noop}
           >
             <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
             <SvgIcon
@@ -264,9 +134,9 @@ export default function Home() {
           <AnimatedCard
             direction="right"
             delay={600}
-            triggerExit={cardsExiting}
-            className={`z-100 h-full flex flex-col justify-between items-start ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100 h-full flex flex-col justify-between items-start"
+            onExitComplete={noop}
           >
             {/* <p className="text-[color:var(--primary)]">Currently ↴</p> */}
             <p>Currently 🡓</p>
@@ -285,13 +155,13 @@ export default function Home() {
           </AnimatedCard>
         </div>
 
-        <div className="home-grid md:order-first">
+        <div className="flex flex-col gap-4 w-full">
           <AnimatedCard
             direction="right"
             delay={1350}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('theme')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100"
+            onExitComplete={noop}
             isCustomCard={true}
           >
             <ThemeToggle />
@@ -299,9 +169,9 @@ export default function Home() {
           <AnimatedCard
             direction="right"
             delay={1350}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('clock', 'rounded-lg bg-[var(--card-bg)]')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100 rounded-lg bg-[var(--card-bg)]"
+            onExitComplete={noop}
             isCustomCard={true}
           >
             <CurrentTime />
@@ -309,9 +179,9 @@ export default function Home() {
           <AnimatedCard
             direction="right"
             delay={1350}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('memoji', 'rounded-lg bg-[var(--card-bg)]')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100 rounded-lg bg-[var(--card-bg)]"
+            onExitComplete={noop}
             isCustomCard={true}
           >
             <div className="flex h-full items-end">
@@ -321,9 +191,9 @@ export default function Home() {
           <AnimatedCard
             direction="right"
             delay={1350}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('spirit', 'rounded-lg p-2 bg-[var(--card-bg)]')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100 rounded-lg p-2 bg-[var(--card-bg)]"
+            onExitComplete={noop}
             isCustomCard={true}
           >
             <div className="flex flex-col justify-center items-center gap-2">
@@ -340,25 +210,23 @@ export default function Home() {
           <AnimatedCard
             direction="top"
             delay={1350}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('tabs')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100"
+            onExitComplete={noop}
             isCustomCard={true}
           >
-            <div style={tabsAnimation.style} className="w-full h-full">
-              <Tabs
-                onTabClick={handleTabClick}
-                readyToExpand={readyToShowTab}
-                selectedTab={activeTab}
-              />
-            </div>
+            <Tabs
+              onTabClick={handleTabClick}
+              readyToExpand={Boolean(activeTab)}
+              selectedTab={activeTab}
+            />
           </AnimatedCard>
           <AnimatedCard
             direction="right"
             delay={1550}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('resume')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100"
+            onExitComplete={noop}
             isCustomCard={true}
           >
             <a
@@ -379,9 +247,9 @@ export default function Home() {
           <AnimatedCard
             direction="right"
             delay={1350}
-            triggerExit={cardsExiting}
-            className={buildTileClassName('marquee')}
-            onExitComplete={handleCardExited}
+            triggerExit={false}
+            className="z-100"
+            onExitComplete={noop}
             isCustomCard={true}
           >
             <SlidingMessage className="w-full min-h-10" messages={marqueeMessages} duration={18} />
@@ -391,9 +259,9 @@ export default function Home() {
         <AnimatedCard
           direction="bottom"
           delay={850}
-          triggerExit={cardsExiting}
-          className={`z-100 w-full flex flex-col gap-2 ${hideCards ? 'hidden' : ''}`}
-          onExitComplete={handleCardExited}
+          triggerExit={false}
+          className="z-100 w-full flex flex-col gap-2"
+          onExitComplete={noop}
         >
           <h2 className="text-[var(--text)]">Technologies</h2>
           <div className="flex flex-wrap gap-2">
