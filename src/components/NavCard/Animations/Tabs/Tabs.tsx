@@ -8,6 +8,7 @@ export type Tab = {
   id: string;
   icon: string;
   label: string;
+  href?: string;
 };
 
 export type TabsVariant = 'compact' | 'expanded';
@@ -33,25 +34,27 @@ export default function Tabs({
     variant === 'expanded' && selectedTab ? tabs.filter((tab) => tab.id === selectedTab) : tabs;
 
   return (
-    <div className={`tabs-list tabs-list-${variant}`}>
+    <div className={`tabs-list px-1 mt-2 tabs-list-${variant}`}>
       {visibleTabs.map((tab) => {
         const isSelected = tab.id === selectedTab;
-        const baseColor =
-          variant === 'expanded' || isSelected ? 'var(--text)' : 'var(--text-muted)';
+        const baseColor = undefined;
         const iconStyle =
           isSelected || variant === 'expanded' ? { color: 'var(--text)' } : undefined;
+        const targetHref = tab.href ?? `/${tab.id}`;
 
         return (
-          <button
+          <a
             key={tab.id}
-            type="button"
+            href={targetHref}
             className={`tab-item tab-item-${variant} ${isSelected ? 'selected' : ''}`}
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               if (isInteractionLocked) return;
               onSelectTab(tab.id);
             }}
-            disabled={isInteractionLocked}
             aria-disabled={isInteractionLocked}
+            tabIndex={isInteractionLocked ? -1 : 0}
+            aria-label={`${tab.label} (${targetHref})`}
             style={{ '--tab-color': baseColor } as CSSProperties}
           >
             {showSelection && isSelected ? (
@@ -72,7 +75,7 @@ export default function Tabs({
               />
               <span className="tab-label">{tab.label}</span>
             </span>
-          </button>
+          </a>
         );
       })}
     </div>

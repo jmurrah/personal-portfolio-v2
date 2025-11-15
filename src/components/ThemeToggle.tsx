@@ -27,11 +27,11 @@ export default function ThemeToggle() {
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const body = document.body;
-      const previousColor = getComputedStyle(body).getPropertyValue('--bg-dark').trim();
+      const previousColor = getComputedStyle(body).getPropertyValue('--bg').trim();
 
       body.classList.toggle('dark', theme === 'dark');
 
-      const nextColor = getComputedStyle(body).getPropertyValue('--bg-dark').trim();
+      const nextColor = getComputedStyle(body).getPropertyValue('--bg').trim();
 
       const detail: AppThemeChangeDetail = {
         theme,
@@ -53,12 +53,12 @@ export default function ThemeToggle() {
   };
 
   const backgroundColor = isHovered
-    ? 'color-mix(in srgb, var(--bg-light) 90%, var(--primary) 10%)'
-    : 'transparent';
+    ? 'color-mix(in srgb, var(--bg) 90%, var(--primary) 10%)'
+    : 'var(--card-bg)';
 
   const borderColor = isHovered
     ? 'color-mix(in srgb, var(--card-border) 80%, var(--primary) 20%)'
-    : 'transparent';
+    : 'var(--card-border)';
 
   const iconColor = theme === 'dark' ? '#FDBA74' : '#6366F1';
   const iconSrc = theme === 'dark' ? ICONS.sun : ICONS.moon;
@@ -76,14 +76,13 @@ export default function ThemeToggle() {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
+        width: '2.25rem',
         height: '2.25rem',
         borderRadius: '0.5rem',
-        border: `1px solid ${borderColor}`,
+        border: `2px solid ${borderColor}`,
         backgroundColor,
         color: iconColor,
         cursor: 'pointer',
-        transition: 'background-color 150ms ease, border-color 150ms ease',
       }}
     >
       <SvgIcon

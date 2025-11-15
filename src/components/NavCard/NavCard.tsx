@@ -24,12 +24,11 @@ export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = 
 
   const tabs: Tab[] = useMemo(
     () => [
-      { id: 'about', icon: ICONS.profile, label: 'About' },
-      { id: 'experience', icon: ICONS.briefcase, label: 'Experience' },
-      { id: 'education', icon: ICONS.education, label: 'Education' },
-      { id: 'projects', icon: ICONS.project, label: 'Projects' },
-      { id: 'blog', icon: ICONS.blog, label: 'Blog' },
-      // { id: 'resume', icon: ICONS.fileDownload, label: 'Resume' },
+      { id: 'about', icon: ICONS.profile, label: 'About', href: '/about' },
+      { id: 'experience', icon: ICONS.briefcase, label: 'Experience', href: '/experience' },
+      { id: 'education', icon: ICONS.education, label: 'Education', href: '/education' },
+      { id: 'projects', icon: ICONS.project, label: 'Projects', href: '/projects' },
+      { id: 'blog', icon: ICONS.blog, label: 'Blog', href: '/blog' },
     ],
     [],
   );
@@ -102,10 +101,11 @@ export default function Tabs({ onTabClick, readyToExpand = false, selectedTab = 
     <ExpandableCard
       renderTabs={renderTabs}
       expanded={isExpanded}
-      initialWidth="176px"
+      initialWidth="160px"
       initialHeight="256px"
       tabContent={renderTabContent()}
       className="ml-auto"
+      disableCardPadding
     />
   );
 }

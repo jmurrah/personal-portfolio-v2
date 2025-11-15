@@ -55,8 +55,9 @@ export default function ProjectItem({
             src={ICONS.gitHub}
             alt={`${title} GitHub`}
             size="xsmall"
-            color="var(--text-muted)"
+            color="var(--text)"
             hoverColor="var(--primary)"
+            className="project-links"
           />
         )}
         {liveUrl && (
@@ -65,16 +66,17 @@ export default function ProjectItem({
             src={ICONS.gitHub}
             alt={`${title} Live`}
             size="xsmall"
-            color="var(--text-muted)"
+            color="var(--text)"
             hoverColor="var(--primary)"
+            className="project-links"
           />
         )}
         <span className="ml-auto font-bold">{year}</span>
       </div>
       <div className="flex flex-col">
-        <p className="text-sm">{description}</p>
+        <p className="">{description}</p>
         {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 text-sm main">
+          <div className="flex flex-wrap gap-2 main">
             {tags.map((tag) => (
               <span key={tag}>#{tag}</span>
             ))}

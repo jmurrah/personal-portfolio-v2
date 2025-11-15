@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICONS, LOGOS } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
+import CurrentTime from '@/components/CurrentTime';
 import SvgIcon from '@/components/SvgIcon';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import Tabs from '@/components/NavCard/NavCard';
@@ -25,8 +26,8 @@ const technologies = [
   { name: 'Postman', logoSrc: LOGOS.postman, accent: 'rgba(255, 108, 55, 0.2)' },
   { name: 'Supabase', logoSrc: LOGOS.supabase, accent: 'rgba(63, 207, 142, 0.2)' },
   { name: 'MongoDB', logoSrc: LOGOS.mongoDb, accent: 'rgba(89, 150, 54, 0.2)' },
-  { name: 'Docker', logoSrc: LOGOS.docker, accent: 'rgba(0, 130, 202, 0.2)' },
   { name: 'Git', logoSrc: LOGOS.git, accent: 'rgba(241, 80, 47, 0.2)' },
+  { name: 'Docker', logoSrc: LOGOS.docker, accent: 'rgba(0, 130, 202, 0.2)' },
   { name: 'Tailwind CSS', logoSrc: LOGOS.tailwind, accent: 'rgba(56, 189, 248, 0.2)' },
   { name: 'Spring Boot', logoSrc: LOGOS.spring, accent: 'rgba(109, 179, 63, 0.2)' },
   { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
@@ -176,7 +177,7 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className={`flex flex-col gap-4 w-full max-w-[300px] ${hideCards ? 'hidden' : ''}`}>
+        <div className={`flex flex-col gap-4 w-full max-w-[276px] ${hideCards ? 'hidden' : ''}`}>
           <AnimatedCard
             direction="left"
             delay={100}
@@ -187,7 +188,7 @@ export default function Home() {
             <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
             <p className="flex items-center gap-2">
               <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
-              Full Stack Software Developer
+              Full Stack Developer
             </p>
             <p className="flex items-center gap-2">
               <SvgIcon
@@ -202,10 +203,12 @@ export default function Home() {
               <SvgIcon src={ICONS.mapPin} alt="Map Pin Icon" color="var(--primary)" size="small" />
               Atlanta, GA
             </p>
-            <a href="mailto:jacob@murrah.dev" className="flex items-center gap-2 w-fit">
+            <p className="flex items-center gap-2 w-fit">
               <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
-              <span className="underline">jacob@murrah.dev</span>
-            </a>
+              <a href="mailto:jacob@murrah.dev">
+                <span className="underline-fill">jacob@murrah.dev</span>
+              </a>
+            </p>
           </AnimatedCard>
 
           <AnimatedCard
@@ -249,17 +252,18 @@ export default function Home() {
             className={`z-100 h-full flex flex-col justify-between items-start ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
-            <p className="text-[color:var(--primary)]">Currently ↓</p>
+            {/* <p className="text-[color:var(--primary)]">Currently ↴</p> */}
+            <p>Currently 🡓</p>
             <p>
               Software Engineer I @{' '}
               <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-                <span className="underline">AT&T</span>
+                <span className="underline-fill">AT&T</span>
               </a>
             </p>
             <p>
               OMSCS @{' '}
               <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-                <span className="underline">Georgia Tech</span>
+                <span className="underline-fill">Georgia Tech</span>
               </a>
             </p>
           </AnimatedCard>
@@ -268,43 +272,56 @@ export default function Home() {
         <div className="flex flex-col gap-4 flex-1 w-full">
           <div className="flex gap-4">
             <div className={`flex flex-col h-full w-full gap-4 ${hideCards ? 'hidden' : ''}`}>
+              <div className="flex gap-4">
+                <AnimatedCard
+                  direction="right"
+                  delay={1350}
+                  triggerExit={cardsExiting}
+                  className={`z-100 ${hideCards ? 'hidden' : ''}`}
+                  onExitComplete={handleCardExited}
+                  isCustomCard={true}
+                >
+                  <ThemeToggle />
+                </AnimatedCard>
+                <AnimatedCard
+                  direction="right"
+                  delay={1350}
+                  triggerExit={cardsExiting}
+                  className={`z-100 h-full w-full bg-[var(--card-bg)] rounded-lg ${hideCards ? 'hidden' : ''}`}
+                  onExitComplete={handleCardExited}
+                  isCustomCard={true}
+                >
+                  <CurrentTime />
+                </AnimatedCard>
+              </div>
               <AnimatedCard
                 direction="right"
                 delay={1350}
                 triggerExit={cardsExiting}
-                className={`z-100 w-full ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 h-full w-full rounded-lg bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
                 isCustomCard={true}
               >
-                <ThemeToggle />
-              </AnimatedCard>
-              <AnimatedCard
-                direction="right"
-                delay={1350}
-                triggerExit={cardsExiting}
-                className={`z-100 h-full w-full ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-              >
-                <div>
-                  <p>Activity:</p>
+                <div className="flex h-full items-end">
+                  <img src="memoji.png"></img>
                 </div>
               </AnimatedCard>
               <AnimatedCard
                 direction="right"
                 delay={1350}
                 triggerExit={cardsExiting}
-                className={`z-100 h-fit w-full rounded-lg p-1 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 h-fit w-full rounded-lg p-2 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
                 isCustomCard={true}
               >
                 <div className="flex flex-col justify-center items-center">
                   <div className="flex gap-1 justify-start items-center">
                     <img src={ICONS.aubie} className="w-9 h-auto" />
-                    <p className="font-semibold">War Eagle!</p>
+                    <p>War Eagle!</p>
                   </div>
                   <div className="flex gap-1 justify-start items-center">
                     <img src={ICONS.buzz} className="w-8.5 h-auto" />
-                    <p className="font-semibold">Sting 'Em!</p>
+                    <p>Sting 'Em!</p>
                   </div>
                 </div>
               </AnimatedCard>
@@ -322,7 +339,7 @@ export default function Home() {
                 direction="right"
                 delay={1550}
                 triggerExit={cardsExiting}
-                className={`z-100 w-44 ${hideCards ? 'hidden' : ''}`}
+                className={`z-100 w-40 ${hideCards ? 'hidden' : ''}`}
                 onExitComplete={handleCardExited}
                 isCustomCard={true}
               >
@@ -330,7 +347,7 @@ export default function Home() {
                   href="/resume"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3 transition-colors"
+                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3"
                 >
                   <SvgIcon
                     src={ICONS.fileDownload}
@@ -352,9 +369,9 @@ export default function Home() {
             isCustomCard={true}
           >
             <SlidingMessage
-              className="max-w-[324px] h-full min-h-10"
+              className="max-w-[348px] h-full min-h-10"
               messages={marqueeMessages}
-              duration={24}
+              duration={18}
             />
             {/* <p>hello</p> */}
           </AnimatedCard>

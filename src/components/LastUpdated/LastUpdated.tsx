@@ -55,7 +55,7 @@ export default function LastUpdated() {
     lastUpdated ?? (isLoadingUpdate ? 'Fetching...' : 'Unable to load latest update');
 
   return (
-    <p className="text-sm text-[color:var(--text)] flex items-center gap-2 mb-2 relative z-10">
+    <p className="text-[color:var(--text)] flex items-center gap-2 mb-2 relative z-10 text-sm">
       <span className="primary">[</span>
       <span className="main">Last Updated:</span>
       <span className="main">{lastUpdatedLabel}</span>

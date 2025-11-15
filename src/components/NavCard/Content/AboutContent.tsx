@@ -35,12 +35,12 @@ export default function AboutContent() {
         <ImageStack images={aboutImages} />
       </div>
       <div className="flex w-full justify-center">
-        <div className="flex max-w-2xl flex-col gap-4 text-base leading-relaxed">
+        <div className="flex max-w-2xl flex-col gap-4">
           <p>
             Hello! I am Jacob Murrah, a software engineer who desires simplicity and speed in my
             daily life and in the way I write code. I am currently a student at{' '}
             <a
-              className="simple-underline"
+              className="underline-fill"
               href="https://www.auburn.edu/"
               title="Auburn"
               target="_blank"
@@ -50,7 +50,7 @@ export default function AboutContent() {
             </a>{' '}
             pursuing a Bachelor&apos;s degree in{' '}
             <a
-              className="simple-underline"
+              className="underline-fill"
               href="https://bulletin.auburn.edu/undergraduate/samuelginncollegeofengineering/departmentofcomputerscienceandsoftwareengineering/softwareengineering_major/"
               title="Software engineer"
               target="_blank"
@@ -66,7 +66,7 @@ export default function AboutContent() {
             To date, I have had the privilege of collaborating with various teams and engineers
             during my time at{' '}
             <a
-              className="simple-underline"
+              className="underline-fill"
               href="https://is4s.com/"
               title="IS4S"
               target="_blank"
@@ -76,7 +76,7 @@ export default function AboutContent() {
             </a>
             , throughout my 3 co-op terms at{' '}
             <a
-              className="simple-underline"
+              className="underline-fill"
               href="https://www.adtran.com/"
               title="Adtran"
               target="_blank"
@@ -86,7 +86,7 @@ export default function AboutContent() {
             </a>
             , and during my summer internship at{' '}
             <a
-              className="simple-underline"
+              className="underline-fill"
               href="https://www.att.com/"
               title="AT&T"
               target="_blank"
