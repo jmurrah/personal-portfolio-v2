@@ -108,7 +108,6 @@ export const MEMOJI = {
   memoji: Memoji,
 } as const;
 
-
 export const ALL_ASSET_PATHS = [
   ...Object.values(LOGOS),
   ...Object.values(ICONS),
