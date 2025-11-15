@@ -13,10 +13,10 @@ import SlidingMessage from '@/components/SlidingMessage/SlidingMessage';
 
 const technologies = [
   { name: 'Python', logoSrc: LOGOS.python, accent: 'rgba(53, 114, 165, 0.2)' },
-  { name: 'Java', logoSrc: LOGOS.java, accent: 'rgba(244, 117, 87, 0.2)' },
-  { name: 'Go', logoSrc: LOGOS.go, accent: 'rgba(0, 173, 216, 0.2)' },
   { name: 'TypeScript', logoSrc: LOGOS.typeScript, accent: 'rgba(49, 120, 198, 0.2)' },
   { name: 'React', logoSrc: LOGOS.react, accent: 'rgba(97, 218, 251, 0.2)' },
+  { name: 'Java', logoSrc: LOGOS.java, accent: 'rgba(244, 117, 87, 0.2)' },
+  { name: 'Go', logoSrc: LOGOS.go, accent: 'rgba(0, 173, 216, 0.2)' },
   { name: 'AWS', logoSrc: LOGOS.aws, accent: 'rgba(255, 153, 0, 0.2)' },
   {
     name: 'Google Cloud',
@@ -177,12 +177,12 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-wrap gap-4">
-        <div className={`flex flex-col gap-4 w-full max-w-[276px] ${hideCards ? 'hidden' : ''}`}>
+        <div className={`flex flex-col gap-4 w-full md:max-w-[276px] w-full ${hideCards ? 'hidden' : ''}`}>
           <AnimatedCard
             direction="left"
             delay={100}
             triggerExit={cardsExiting}
-            className={`z-100 h-56 flex flex-col justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
+            className={`z-100 flex flex-col gap-1 justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
             onExitComplete={handleCardExited}
           >
             <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
@@ -270,8 +270,8 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-4 flex-1 w-full">
-          <div className="flex gap-4">
-            <div className={`flex flex-col h-full w-full gap-4 ${hideCards ? 'hidden' : ''}`}>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <div className={`flex flex-col h-full gap-4 order-2 md:order-1 ${hideCards ? 'hidden' : ''}`}>
               <div className="flex gap-4">
                 <AnimatedCard
                   direction="right"
@@ -326,7 +326,7 @@ export default function Home() {
                 </div>
               </AnimatedCard>
             </div>
-            <div className="flex flex-col gap-4 flex-1">
+            <div className="flex flex-col gap-4 flex-1 order-1 md:order-2">
               <div style={tabsAnimation.style} className="z-100 w-full">
                 <Tabs
                   onTabClick={handleTabClick}
@@ -381,7 +381,7 @@ export default function Home() {
           direction="bottom"
           delay={850}
           triggerExit={cardsExiting}
-          className={`z-100 w-full flex flex-col gap-4 ${hideCards ? 'hidden' : ''}`}
+          className={`z-100 w-full flex flex-col gap-2 ${hideCards ? 'hidden' : ''}`}
           onExitComplete={handleCardExited}
         >
           <h2 className="text-[var(--text)]">Technologies</h2>
