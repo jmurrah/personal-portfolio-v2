@@ -19,11 +19,20 @@ function stripHtml(html?: string | null) {
   return div.textContent || div.innerText || '';
 }
 
+function cleanContent(html?: string | null) {
+  if (!html) return '';
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  doc.querySelectorAll('.subscription-widget, .subscription-widget-wrap, .subscription-widget-wrap-editor').forEach((el) => el.remove());
+  return doc.body.innerHTML;
+}
+
 export default function PostView({ post, onBack }: PostViewProps) {
   const publishedOn = formatDate(post.pubDate);
-  const content = post.content ?? post.description ?? '';
+  const rawContent = post.content ?? post.description ?? '';
+  const content = cleanContent(rawContent);
   const subtitle = stripHtml(post.description ?? '').trim();
-  const author = post.author || 'Jacob Murrah';
+  const author = post.author;
 
   return (
     <article className="post-view">

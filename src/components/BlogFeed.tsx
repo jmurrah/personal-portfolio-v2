@@ -23,6 +23,8 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
   const [posts, setPosts] = useState<FeedPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [authorHover, setAuthorHover] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -70,23 +72,30 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-[color:var(--text)]">Jacob Murrah&apos;s Blog</h2>
       <ul className="flex flex-col gap-6">
         {posts.map((post) => {
           const id = post.guid ?? post.link ?? post.title ?? Math.random().toString(36);
           const publishedOn = formatDate(post.pubDate ?? undefined);
           const preview = buildExcerpt(post.description);
-          const isActive = selectedGuid ? selectedGuid === id : false;
+          const isTitleHovered = hoveredCard === id && authorHover !== id;
+
           return (
             <li
               key={id}
-              className={`blog-card rounded-lg border border-[color:var(--card-border,#e5e7eb)] bg-[var(--card-bg,#0f1115)] p-4 shadow-sm transition hover:shadow-lg cursor-pointer ${
-                isActive ? 'ring-2 ring-[color:var(--primary,#22d3ee)]' : ''
-              }`}
+              className="blog-card border border-t-[color:var(--card-border)] bg-[var(--card-bg)] cursor-pointer"
               onClick={() => onSelect?.(post)}
+              onMouseEnter={() => setHoveredCard(id)}
+              onMouseLeave={() => {
+                setHoveredCard(null);
+                setAuthorHover(null);
+              }}
             >
               <div className="flex flex-col gap-2">
-                <h3 className="blog-card__title text-lg font-semibold text-[color:var(--primary,#22d3ee)] underline-fill w-fit">
+                <h3
+                  className={`blog-card__title text-lg font-semibold text-[color:var(--primary)] underline-fill w-fit ${
+                    isTitleHovered ? 'is-hovered' : ''
+                  }`}
+                >
                   {post.title}
                 </h3>
                 <div className="flex items-center gap-2 text-sm text-[color:var(--muted-text,#9ca3af)]">
@@ -98,6 +107,8 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
                     rel="noopener noreferrer"
                     className="underline-fill"
                     onClick={(e) => e.stopPropagation()}
+                    onMouseEnter={() => setAuthorHover(id)}
+                    onMouseLeave={() => setAuthorHover(null)}
                   >
                     Jacob Murrah
                   </a>
