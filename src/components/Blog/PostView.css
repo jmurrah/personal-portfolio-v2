@@ -24,7 +24,7 @@
 .post-link-btn {
   color: var(--primary, #22d3ee);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   background: transparent;
   border: none;
   padding: 4px 0;
@@ -47,7 +47,7 @@
 .post-title-block {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .post-title,
@@ -64,17 +64,18 @@
 }
 
 .post-subtitle {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text);
   line-height: 1.5;
 }
 
 .post-byline {
   display: flex;
+  margin-top: 4px;
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--muted-text, #9ca3af);
@@ -91,7 +92,7 @@
 .post-divider {
   margin: 8px 0 0;
   border: none;
-  border-top: 1px solid var(--card-border, rgba(255, 255, 255, 0.08));
+  border-top: 2px solid var(--card-border, rgba(255, 255, 255, 0.08));
 }
 
 .post-content {
@@ -142,7 +143,7 @@
   margin: 0;
   padding: 10px 12px;
   border-left: 3px solid var(--primary, #22d3ee);
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--card-bg, #0f1115) 90%, var(--text, #ffffff) 10%);
   color: var(--text);
 }
 

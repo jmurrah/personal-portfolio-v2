@@ -1,7 +1,0 @@
-.blog-card__title.underline-fill.is-hovered {
-  color: var(--text);
-}
-
-.blog-card__title.underline-fill.is-hovered::after {
-  transform: scaleY(1);
-}

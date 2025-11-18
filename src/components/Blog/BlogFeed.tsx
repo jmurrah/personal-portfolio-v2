@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { FeedPost } from '@/components/blogTypes';
+import type { FeedPost } from './types';
 import './BlogFeed.css';
 
 interface BlogFeedProps {
@@ -51,10 +51,20 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
       }
     }
 
-    fetchPosts();
+    function handleReady() {
+      if (!isMounted) return;
+      fetchPosts();
+    }
+
+    if (document.readyState === 'complete') {
+      handleReady();
+    } else {
+      window.addEventListener('load', handleReady, { once: true });
+    }
 
     return () => {
       isMounted = false;
+      window.removeEventListener('load', handleReady);
     };
   }, []);
 
@@ -72,6 +82,19 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
 
   return (
     <div className="flex flex-col gap-4">
+      <p className="text-[color:var(--text)]">
+        All posts come from my{' '}
+        <a
+          className="underline-fill"
+          href="https://jacobmurrah.substack.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation?.()}
+        >
+          Substack
+        </a>
+        . Read them here or at the source!
+      </p>
       <ul className="flex flex-col gap-6">
         {posts.map((post) => {
           const id = post.guid ?? post.link ?? post.title ?? Math.random().toString(36);
@@ -82,7 +105,7 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
           return (
             <li
               key={id}
-              className="blog-card border border-t-[color:var(--card-border)] bg-[var(--card-bg)] cursor-pointer"
+              className="blog-card border-t-2 border-[color:var(--card-border,#e5e7eb)] bg-[var(--card-bg,#0f1115)] p-3 cursor-pointer"
               onClick={() => onSelect?.(post)}
               onMouseEnter={() => setHoveredCard(id)}
               onMouseLeave={() => {
@@ -90,7 +113,7 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
                 setAuthorHover(null);
               }}
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex justify-between">
                 <h3
                   className={`blog-card__title text-lg font-semibold text-[color:var(--primary)] underline-fill w-fit ${
                     isTitleHovered ? 'is-hovered' : ''
@@ -98,27 +121,9 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
                 >
                   {post.title}
                 </h3>
-                <div className="flex items-center gap-2 text-sm text-[color:var(--muted-text,#9ca3af)]">
+                <div className="flex items-center gap-2 text-base color-[var(--text)]">
                   {publishedOn && <span>{publishedOn}</span>}
-                  <span>&bull;</span>
-                  <a
-                    href="https://jacobmurrah.substack.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline-fill"
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseEnter={() => setAuthorHover(id)}
-                    onMouseLeave={() => setAuthorHover(null)}
-                  >
-                    Jacob Murrah
-                  </a>
                 </div>
-                {preview && (
-                  <div
-                    className="leading-relaxed text-[color:var(--text)]"
-                    dangerouslySetInnerHTML={{ __html: preview }}
-                  />
-                )}
               </div>
             </li>
           );

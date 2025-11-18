@@ -50,6 +50,9 @@ export default function SimpleTabs() {
         })}
       </div>
       <div id={`tab-panel-${activeDefinition.id}`} role="tabpanel" className="simple-tabs__panel">
+        <h2 className="text-2xl font-semibold text-[color:var(--text)] capitalize mb-2">
+          {activeDefinition.label}
+        </h2>
         {activeDefinition.render()}
       </div>
     </div>

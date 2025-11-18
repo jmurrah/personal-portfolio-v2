@@ -1,4 +1,4 @@
-import type { FeedPost } from '@/components/blogTypes';
+import type { FeedPost } from './types';
 import './PostView.css';
 
 interface PostViewProps {
@@ -23,7 +23,11 @@ function cleanContent(html?: string | null) {
   if (!html) return '';
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
-  doc.querySelectorAll('.subscription-widget, .subscription-widget-wrap, .subscription-widget-wrap-editor').forEach((el) => el.remove());
+  doc
+    .querySelectorAll(
+      '.subscription-widget, .subscription-widget-wrap, .subscription-widget-wrap-editor',
+    )
+    .forEach((el) => el.remove());
   return doc.body.innerHTML;
 }
 
