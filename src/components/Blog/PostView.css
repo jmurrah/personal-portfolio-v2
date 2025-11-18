@@ -114,7 +114,7 @@
 .post-content h4,
 .post-content h5,
 .post-content h6 {
-  margin: 12px 0 12px;
+  margin: 24px 0 0px;
   line-height: 1.25;
   font-weight: 700;
   color: var(--text);
@@ -134,9 +134,23 @@
 
 .post-content ul,
 .post-content ol {
-  padding-left: 20px;
-  display: grid;
+  padding-left: 24px;
+  display: block;
   gap: 8px;
+}
+
+.post-content ol {
+  list-style: decimal;
+  list-style-position: outside;
+}
+
+.post-content ul {
+  list-style: disc;
+  list-style-position: outside;
+}
+
+.post-content li {
+  margin: 4px 0;
 }
 
 .post-content blockquote {
@@ -150,7 +164,21 @@
 .post-content img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 0;
+}
+
+.post-content figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.post-content figcaption {
+  font-style: italic;
+  color: var(--text);
+  text-align: center;
 }
 
 .post-content a {

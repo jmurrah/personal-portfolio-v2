@@ -95,7 +95,7 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
         </a>
         . Read them here or at the source!
       </p>
-      <ul className="flex flex-col gap-6">
+      <ul className="flex flex-col">
         {posts.map((post) => {
           const id = post.guid ?? post.link ?? post.title ?? Math.random().toString(36);
           const publishedOn = formatDate(post.pubDate ?? undefined);

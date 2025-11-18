@@ -28,6 +28,10 @@ function cleanContent(html?: string | null) {
       '.subscription-widget, .subscription-widget-wrap, .subscription-widget-wrap-editor',
     )
     .forEach((el) => el.remove());
+  doc.querySelectorAll('.image-link-expand, .restack-image, .view-image').forEach((el) => {
+    // Remove Substack image controls so we only render the image itself
+    el.remove();
+  });
   return doc.body.innerHTML;
 }
 
