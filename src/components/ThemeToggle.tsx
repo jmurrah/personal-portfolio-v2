@@ -1,20 +1,16 @@
+import { useState } from 'react';
 import { ICONS } from '@/assets';
-import {
-  APP_THEME_CHANGE_EVENT,
-  type AppThemeChangeDetail,
-  type ThemeName,
-} from '@/constants/events';
 import SvgIcon from '@/components/SvgIcon';
-import { useEffect, useRef, useState } from 'react';
+import { toggleTheme as runThemeToggle } from '@/themeToggle';
 
-type Theme = ThemeName;
+type Theme = 'light' | 'dark';
 
 const getInitialTheme = (): Theme => {
-  if (typeof window === 'undefined') {
+  if (typeof document === 'undefined') {
     return 'light';
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
 };
 
 const iconSize = 16;
@@ -22,33 +18,9 @@ const iconSize = 16;
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
   const [isHovered, setIsHovered] = useState(false);
-  const previousThemeRef = useRef<Theme>(theme);
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const body = document.body;
-      const previousColor = getComputedStyle(body).getPropertyValue('--bg').trim();
-
-      body.classList.toggle('dark', theme === 'dark');
-
-      const nextColor = getComputedStyle(body).getPropertyValue('--bg').trim();
-
-      const detail: AppThemeChangeDetail = {
-        theme,
-        prevTheme: previousThemeRef.current,
-        colors: {
-          from: previousColor,
-          to: nextColor,
-        },
-        initial: previousThemeRef.current === theme,
-      };
-
-      window.dispatchEvent(new CustomEvent(APP_THEME_CHANGE_EVENT, { detail }));
-      previousThemeRef.current = theme;
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
+  const handleToggle = () => {
+    runThemeToggle();
     setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
   };
 
@@ -65,13 +37,14 @@ export default function ThemeToggle() {
 
   return (
     <button
+      id="theme-toggle"
       type="button"
-      onClick={toggleTheme}
+      onClick={handleToggle}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
-      aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+      aria-label="Toggle theme"
       style={{
         display: 'inline-flex',
         alignItems: 'center',

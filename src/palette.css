@@ -1,5 +1,12 @@
 :root {
-  --font-sans: 'Neue Montreal', sans-serif;
+  --font-geist-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-geist-mono:
+    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  /* --font-sans: 'Neue Montreal', sans-serif; */
   --font-base-size: 1.125rem;
 
   /* Neutral ramp */
@@ -35,7 +42,7 @@
   --link-hover-color: var(--text);
 }
 
-body.dark {
+:root.dark {
   --bg: var(--neutral-900);
   --bg-light: var(--neutral-800);
   --bg-dark: var(--neutral-700);

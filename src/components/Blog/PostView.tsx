@@ -19,6 +19,40 @@ function stripHtml(html?: string | null) {
   return div.textContent || div.innerText || '';
 }
 
+function getFootnoteNumberFromHref(href?: string | null) {
+  if (!href) return null;
+  const match = href.match(/#footnote(?:-anchor)?-(\d+)/);
+  return match?.[1] ?? null;
+}
+
+function normalizeFootnotes(doc: Document) {
+  doc.querySelectorAll('a.footnote-anchor').forEach((link) => {
+    const number = getFootnoteNumberFromHref(link.getAttribute('href')) ?? link.textContent?.trim();
+    if (!number) return;
+    link.setAttribute('href', `#footnote-${number}`);
+    if (!link.id) link.id = `footnote-anchor-${number}`;
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+  });
+
+  doc.querySelectorAll('.footnote').forEach((footnote) => {
+    const numberLink = footnote.querySelector('a.footnote-number');
+    const number =
+      getFootnoteNumberFromHref(numberLink?.getAttribute('href')) ??
+      numberLink?.textContent?.trim();
+    if (!number || footnote.id) return;
+    footnote.id = `footnote-${number}`;
+  });
+
+  doc.querySelectorAll('a.footnote-number').forEach((link) => {
+    const number = getFootnoteNumberFromHref(link.getAttribute('href')) ?? link.textContent?.trim();
+    if (!number) return;
+    link.setAttribute('href', `#footnote-anchor-${number}`);
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+  });
+}
+
 function cleanContent(html?: string | null) {
   if (!html) return '';
   const parser = new DOMParser();
@@ -31,6 +65,21 @@ function cleanContent(html?: string | null) {
   doc.querySelectorAll('.image-link-expand, .restack-image, .view-image').forEach((el) => {
     // Remove Substack image controls so we only render the image itself
     el.remove();
+  });
+  normalizeFootnotes(doc);
+  doc.querySelectorAll('a').forEach((link) => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#')) {
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+      return;
+    }
+    link.setAttribute('target', '_blank');
+    const existingRel = link.getAttribute('rel') ?? '';
+    const relTokens = new Set(existingRel.split(/\s+/).filter(Boolean));
+    relTokens.add('noopener');
+    relTokens.add('noreferrer');
+    link.setAttribute('rel', Array.from(relTokens).join(' '));
   });
   return doc.body.innerHTML;
 }

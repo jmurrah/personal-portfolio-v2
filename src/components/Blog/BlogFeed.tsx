@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import type { FeedPost } from './types';
+import { getCachedBlogPosts, loadBlogPosts } from './feedService';
 import './BlogFeed.css';
 
 interface BlogFeedProps {
   onSelect?: (post: FeedPost) => void;
-  selectedGuid?: string | null;
 }
 
 function formatDate(value?: string | null) {
@@ -13,32 +13,25 @@ function formatDate(value?: string | null) {
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString();
 }
 
-function buildExcerpt(html?: string | null) {
-  if (!html) return '';
-  const trimmed = html.slice(0, 240);
-  return html.length > 240 ? `${trimmed}...` : trimmed;
-}
-
-export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
-  const [posts, setPosts] = useState<FeedPost[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function BlogFeed({ onSelect }: BlogFeedProps) {
+  const cachedPosts = getCachedBlogPosts();
+  const [posts, setPosts] = useState<FeedPost[]>(cachedPosts ?? []);
+  const [loading, setLoading] = useState(!cachedPosts);
   const [error, setError] = useState<string | null>(null);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-  const [authorHover, setAuthorHover] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
+    const hasCachedPosts = cachedPosts !== null;
 
     async function fetchPosts() {
-      setLoading(true);
       setError(null);
+      if (!hasCachedPosts) {
+        setLoading(true);
+      }
       try {
-        const res = await fetch(
-          'https://api.rss2json.com/v1/api.json?rss_url=https://jacobmurrah.substack.com/feed',
-        );
-        if (!res.ok) throw new Error(`Feed request failed: ${res.status}`);
-        const data = await res.json();
-        if (isMounted) setPosts(data.items || []);
+        const items = await loadBlogPosts();
+        if (isMounted) setPosts(items);
       } catch (err) {
         console.error('Failed to load RSS feed', err);
         if (isMounted) {
@@ -99,8 +92,7 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
         {posts.map((post) => {
           const id = post.guid ?? post.link ?? post.title ?? Math.random().toString(36);
           const publishedOn = formatDate(post.pubDate ?? undefined);
-          const preview = buildExcerpt(post.description);
-          const isTitleHovered = hoveredCard === id && authorHover !== id;
+          const isTitleHovered = hoveredCard === id;
 
           return (
             <li
@@ -110,7 +102,6 @@ export default function BlogFeed({ onSelect, selectedGuid }: BlogFeedProps) {
               onMouseEnter={() => setHoveredCard(id)}
               onMouseLeave={() => {
                 setHoveredCard(null);
-                setAuthorHover(null);
               }}
             >
               <div className="flex justify-between">

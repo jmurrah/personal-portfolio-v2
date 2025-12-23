@@ -52,7 +52,6 @@ export default function AnimatedCard({
         const entry = entries[0];
         if (!entry.isIntersecting && triggerExit) {
           setHasExited(true);
-          console.log('Card out of viewport, setting display: none');
           if (onExitComplete) onExitComplete();
           observer.disconnect();
         }

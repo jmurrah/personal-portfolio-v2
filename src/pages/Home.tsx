@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ICONS, LOGOS, MEMOJI } from '@/assets';
 import AnimatedCard from '@/components/AnimatedCard';
 import CurrentTime from '@/components/CurrentTime';
@@ -6,6 +7,7 @@ import TechnologyBadge from '@/components/TechnologyBadge';
 import SimpleTabs from '@/components/SimpleTabs/SimpleTabs';
 import ThemeToggle from '@/components/ThemeToggle';
 import SlidingMessage from '@/components/SlidingMessage/SlidingMessage';
+import { prefetchBlogPosts } from '@/components/Blog/feedService';
 
 const technologies = [
   { name: 'Python', logoSrc: LOGOS.python, accent: 'rgba(53, 114, 165, 0.2)' },
@@ -38,6 +40,10 @@ const marqueeMessages = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    prefetchBlogPosts();
+  }, []);
+
   const noop = () => {};
 
   return (

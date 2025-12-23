@@ -24,14 +24,8 @@ export default function TimelineItem({
   tags = [],
 }: TimelineItemProps) {
   const [active, setActive] = React.useState(false);
-  const handleMouseEnter: React.MouseEventHandler<HTMLAnchorElement> = () => {
-    setActive(true);
-    console.log('hovered');
-  };
-  const handleMouseLeave = () => {
-    console.log('unhovered');
-    setActive(false);
-  };
+  const handleMouseEnter: React.MouseEventHandler<HTMLAnchorElement> = () => setActive(true);
+  const handleMouseLeave = () => setActive(false);
 
   return (
     <li className="group flex flex-row items-start">

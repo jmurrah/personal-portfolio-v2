@@ -35,7 +35,7 @@ export default function AboutContent() {
         <ImageStack images={aboutImages} />
       </div>
       <div className="flex w-full justify-center">
-        <div className="flex max-w-2xl flex-col gap-4">
+        <div className="flex max-w-3xl flex-col gap-4">
           <p>
             Hello! I am Jacob Murrah, a software engineer who desires simplicity and speed in my
             daily life and in the way I write code. I am currently a student at{' '}
@@ -44,7 +44,7 @@ export default function AboutContent() {
               href="https://www.auburn.edu/"
               title="Auburn"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               Auburn University
             </a>{' '}
@@ -54,7 +54,7 @@ export default function AboutContent() {
               href="https://bulletin.auburn.edu/undergraduate/samuelginncollegeofengineering/departmentofcomputerscienceandsoftwareengineering/softwareengineering_major/"
               title="Software engineer"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               Software Engineering
             </a>
@@ -70,7 +70,7 @@ export default function AboutContent() {
               href="https://is4s.com/"
               title="IS4S"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               IS4S
             </a>
@@ -80,7 +80,7 @@ export default function AboutContent() {
               href="https://www.adtran.com/"
               title="Adtran"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               Adtran
             </a>
@@ -90,7 +90,7 @@ export default function AboutContent() {
               href="https://www.att.com/"
               title="AT&T"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               AT&amp;T
             </a>

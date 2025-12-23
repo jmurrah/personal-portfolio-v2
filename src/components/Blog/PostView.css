@@ -37,13 +37,6 @@
   gap: 12px;
 }
 
-.post-pub-link {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted-text, #9ca3af);
-}
-
 .post-title-block {
   display: flex;
   flex-direction: column;
@@ -209,6 +202,58 @@
 .post-content a:hover::after,
 .post-content a:focus-visible::after {
   transform: scaleY(1);
+}
+
+.post-content .footnote-anchor,
+.post-content .footnote-number {
+  line-height: 1;
+  font-weight: 600;
+  color: var(--footnote-link, #8b5cf6);
+  text-decoration: none;
+  background: transparent;
+}
+
+.post-content .footnote-anchor {
+  font-size: 0.75em;
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+.post-content .footnote-anchor::after,
+.post-content .footnote-number::after {
+  background: var(--footnote-link, #8b5cf6);
+}
+
+.post-content .footnotes {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--card-border, rgba(255, 255, 255, 0.08));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-content .footnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--muted-text, #9ca3af);
+}
+
+.post-content .footnote-number {
+  font-size: 14px;
+  line-height: inherit;
+  flex: 0 0 12px;
+  text-align: center;
+}
+
+.post-content .footnote-content {
+  color: var(--text);
+}
+
+.post-content .footnote-content p {
+  margin: 0;
 }
 
 .post-bottom-link {
