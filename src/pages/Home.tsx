@@ -13,9 +13,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-wrap gap-10">
-      <div className="w-full flex gap-4 self-center">
+      <div className="w-full flex flex-wrap gap-4 justify-center">
         <img className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between gap-y-1.5">
           <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
           <div className="flex gap-x-4 flex-wrap">
             <div className="flex gap-1 items-center">
@@ -76,11 +76,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <p>Currently 🡓</p>
-        <h2 className="flex items-center gap-2 text-lg">
-          <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
-          <span>Currently 🡓</span>
-        </h2>
+        <h2 className="text-xl mb-1">Currently</h2>
         <p>
           Software Engineer I @{' '}
           <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
@@ -94,11 +90,27 @@ export default function Home() {
           </a>
         </p>
       </div>
-      <div>
-        <h2 className="flex items-center gap-2 text-lg">
-          <SvgIcon src={ICONS.education} alt="Theme" size="medium" color="var(--primary)" />
+      <div className="flex flex-col max-w-sm w-full">
+        <h2 className="flex items-center gap-2 text-xl mb-1">
+          {/* <SvgIcon src={ICONS.education} alt="Theme" size="medium" color="var(--primary)" /> */}
           <span>Education</span>
         </h2>
+        <div className="flex flex-col gap-1 w-full">
+          <div>
+            <p>Georgia Institute of Technology</p>
+            <div className="flex justify-between items-center gap-x-8">
+              <p className="text-sm text-[var(--text-muted)]">M.S. in Computer Science</p>
+              <p className="text-sm text-[var(--text-muted)]">Dec. 2028</p>
+            </div>
+          </div>
+          <div>
+            <p>Auburn University</p>
+            <div className="flex justify-between items-center gap-x-8">
+              <p className="text-sm text-[var(--text-muted)]">B.E. in Software Engineering</p>
+              <p className="text-sm text-[var(--text-muted)]">Dec. 2025</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="w-full max-w-xs flex flex-col gap-2">
         <h2 className="flex items-center gap-2 text-lg">

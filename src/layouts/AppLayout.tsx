@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
+import Footer from '@/components/Footer';
 import PreloadAssets from '@/components/PreloadAssets';
 import PrimaryColorSelector from '@/components/PrimaryColorSelector';
 import SvgIcon from '@/components/SvgIcon';
@@ -35,8 +36,8 @@ export default function AppLayout() {
   return (
     <>
       <PreloadAssets />
-      <div className="flex flex-col items-center px-4 mt-10 w-full">
-        <header className="max-w-3xl sticky top-0 z-10 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
+      <div className="flex flex-col items-center px-4 my-10 w-full">
+        <header className="max-w-3xl sticky top-0 z-11 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
           <TerminalBreadcrumb />
           <button
             type="button"
@@ -153,6 +154,7 @@ export default function AppLayout() {
             <Outlet />
           </div>
         </main>
+        <Footer />
       </div>
     </>
   );
