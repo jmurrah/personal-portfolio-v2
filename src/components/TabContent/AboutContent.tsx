@@ -35,7 +35,7 @@ export default function AboutContent() {
         <ImageStack images={aboutImages} />
       </div>
       <div className="flex w-full justify-center">
-        <div className="flex max-w-3xl flex-col gap-4">
+        <div className="flex w-full flex-col gap-4">
           <p>
             Hello! I am Jacob Murrah, a software engineer who desires simplicity and speed in my
             daily life and in the way I write code. I am currently a student at{' '}

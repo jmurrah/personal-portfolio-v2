@@ -31,18 +31,23 @@ import LeetCodeIcon from '@/assets/icons/LeetCodeIcon.svg';
 import LinkedInIcon from '@/assets/icons/LinkedInIcon.svg';
 import MailIcon from '@/assets/icons/MailIcon.svg';
 import MapPinIcon from '@/assets/icons/MapPinIcon.svg';
+import MenuIcon from '@/assets/icons/MenuIcon.svg';
 import MoonIcon from '@/assets/icons/MoonIcon.svg';
 import ProfileIcon from '@/assets/icons/ProfileIcon.svg';
 import ProjectIcon from '@/assets/icons/ProjectIcon.svg';
 import SchoolIcon from '@/assets/icons/SchoolIcon.svg';
 import SunIcon from '@/assets/icons/SunIcon.svg';
 import BlogIcon from '@/assets/icons/BlogIcon.svg';
+import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
+import PaintIcon from '@/assets/icons/PaintIcon.svg';
+
 import CatsPhoto from '@/assets/photos/Cats.jpg';
 import GymPhoto from '@/assets/photos/Gym.png';
 import InternDayPhoto from '@/assets/photos/InternDay.jpg';
 import WeddingPhoto from '@/assets/photos/Wedding.jpg';
 import VolleyballPhoto from '@/assets/photos/Volleyball.jpg';
 import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
+import GraduationHeadshotPhoto from '@/assets/photos/GraduationHeadshot.jpg';
 
 import BuzzIcon from '@/assets/icons/BuzzIcon.png';
 import AubieIcon from '@/assets/icons/AubieIcon.png';
@@ -84,8 +89,11 @@ export const ICONS = {
   leetCode: LeetCodeIcon,
   linkedIn: LinkedInIcon,
   mail: MailIcon,
+  arrowUpRight: ArrowUpRightIcon,
   mapPin: MapPinIcon,
+  menu: MenuIcon,
   moon: MoonIcon,
+  paint: PaintIcon,
   profile: ProfileIcon,
   project: ProjectIcon,
   school: SchoolIcon,
@@ -102,6 +110,7 @@ export const PHOTOS = {
   wedding: WeddingPhoto,
   volleyball: VolleyballPhoto,
   waterfall: WaterfallPhoto,
+  graduationHeadshot: GraduationHeadshotPhoto,
 } as const;
 
 export const MEMOJI = {

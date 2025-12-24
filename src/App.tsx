@@ -1,7 +1,12 @@
 import './palette.css';
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import About from '@/pages/About';
+import Blog from '@/pages/Blog';
+import Education from '@/pages/Education';
+import Experience from '@/pages/Experience';
 import Home from '@/pages/Home';
+import Projects from '@/pages/Projects';
 import AppLayout from '@/layouts/AppLayout';
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -27,11 +32,11 @@ export default function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<Home />} />
-          <Route path="experience" element={<Home />} />
-          <Route path="education" element={<Home />} />
-          <Route path="projects" element={<Home />} />
-          <Route path="blog" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="experience" element={<Experience />} />
+          <Route path="education" element={<Education />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="blog" element={<Blog />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

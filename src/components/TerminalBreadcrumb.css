@@ -1,0 +1,69 @@
+.terminal-breadcrumb {
+  font-family:
+    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  color: var(--text-muted);
+}
+
+.terminal-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+}
+
+.terminal-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.terminal-breadcrumb__link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.terminal-breadcrumb__link--home {
+  color: var(--text-muted);
+}
+
+.terminal-breadcrumb__home-slash {
+  color: var(--text-muted);
+}
+
+.terminal-breadcrumb__link--home:hover .terminal-breadcrumb__home-slash,
+.terminal-breadcrumb__link--home:focus-visible .terminal-breadcrumb__home-slash {
+  color: var(--primary);
+}
+
+.terminal-breadcrumb__link:hover,
+.terminal-breadcrumb__link:focus-visible {
+  color: var(--primary);
+}
+
+.terminal-breadcrumb__current {
+  color: var(--text-main);
+}
+
+.terminal-breadcrumb__cursor {
+  width: 0.5rem;
+  height: 1rem;
+  background: var(--primary);
+  border-radius: 2px;
+  animation: terminal-blink 3s cubic-bezier(0.2, 1, 0.8, 1) infinite;
+}
+
+@keyframes terminal-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+}

@@ -1,15 +1,161 @@
-import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { ICONS } from '@/assets';
 import PreloadAssets from '@/components/PreloadAssets';
+import PrimaryColorSelector from '@/components/PrimaryColorSelector';
+import SvgIcon from '@/components/SvgIcon';
+import TerminalBreadcrumb from '@/components/TerminalBreadcrumb';
+import ThemeToggle from '@/components/ThemeToggle';
+
+type NavItem = {
+  title: string;
+  href: string;
+  external?: boolean;
+};
 
 export default function AppLayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  const mainNavItems: NavItem[] = [
+    { title: 'About', href: '/about' },
+    { title: 'Experience', href: '/experience' },
+    { title: 'Projects', href: '/projects' },
+    { title: 'Blog', href: '/blog' },
+  ];
+
+  const moreNavItems: NavItem[] = [{ title: 'Education', href: '/education' }];
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((current) => !current);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   return (
     <>
       <PreloadAssets />
-      <main className="flex justify-center items-center custom-margin w-full">
-        <div className="w-full max-w-3xl p-4 min-h-fit relative">
-          <Outlet />
-        </div>
-      </main>
+      <div className="flex flex-col items-center px-4 mt-10 w-full">
+        <header className="max-w-3xl sticky top-0 z-10 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
+          <TerminalBreadcrumb />
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded p-2 min-[576px]:hidden"
+            aria-label="Open navigation menu"
+            aria-expanded={isSidebarOpen}
+            aria-controls="sidebar-nav"
+          >
+            <SvgIcon src={ICONS.menu} alt="" size="medium" style={{ width: 24, height: 24 }} />
+            <span className="sr-only">Menu</span>
+          </button>
+          <nav className="hidden items-center space-x-4 min-[576px]:flex">
+            {mainNavItems.map((item) => (
+              <Link
+                key={item.title}
+                to={item.href}
+                className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium transition-colors duration-150"
+              >
+                {item.title}
+              </Link>
+            ))}
+          </nav>
+        </header>
+
+        {isSidebarOpen ? (
+          <div
+            onClick={closeSidebar}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                closeSidebar();
+              }
+            }}
+            role="button"
+            tabIndex={-1}
+            aria-label="Close sidebar"
+          />
+        ) : null}
+
+        <aside
+          id="sidebar-nav"
+          className={`bg-[color:var(--surface)] text-[color:var(--text-main)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 transform flex-col border-l shadow-xl transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="border-[color:var(--border)] flex h-16 flex-shrink-0 items-center justify-between border-b p-4">
+            <span className="text-[color:var(--primary)] font-mono text-lg font-semibold">
+              Navigation
+            </span>
+            <button
+              type="button"
+              onClick={closeSidebar}
+              className="text-[color:var(--text-muted)] hover:text-[color:var(--primary)] rounded"
+              aria-label="Close navigation menu"
+            >
+              Close
+            </button>
+          </div>
+
+          <div className="border-[color:var(--border)] flex-shrink-0 border-b p-4">
+            <div className="pb-4">
+              <ThemeToggle />
+            </div>
+            <PrimaryColorSelector />
+          </div>
+
+          <nav className="flex-1 overflow-y-auto p-4">
+            <ul className="space-y-2" role="list">
+              {mainNavItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <li key={item.title}>
+                    <Link
+                      to={item.href}
+                      className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
+                      aria-current={isActive ? 'page' : undefined}
+                      onClick={closeSidebar}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                );
+              })}
+
+              <li>
+                <hr className="border-[color:var(--border)] my-2 border-t" />
+              </li>
+
+              <li className="text-[color:var(--text-muted)] px-2 py-1 text-xs font-semibold tracking-wider uppercase">
+                More
+              </li>
+
+              {moreNavItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <li key={item.title}>
+                    <Link
+                      to={item.href}
+                      className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
+                      aria-current={isActive ? 'page' : undefined}
+                      onClick={closeSidebar}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </aside>
+
+        <main className="w-full max-w-2xl">
+          <div className="w-full min-w-0 break-words">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </>
   );
 }

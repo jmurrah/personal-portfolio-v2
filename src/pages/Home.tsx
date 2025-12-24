@@ -1,39 +1,8 @@
 import { useEffect } from 'react';
-import { LOGOS } from '@/assets';
 import { prefetchBlogPosts } from '@/components/Blog/feedService';
-import CurrentTime from '@/components/CurrentTime';
 import PrimaryColorSelector from '@/components/PrimaryColorSelector';
-import TechnologyBadge from '@/components/TechnologyBadge';
-import ThemeToggle from '@/components/ThemeToggle';
-import {
-  AboutContent,
-  BlogContent,
-  EducationContent,
-  ExperienceContent,
-  ProjectsContent,
-} from '@/components/TabContent';
-
-const technologies = [
-  { name: 'Python', logoSrc: LOGOS.python, accent: 'var(--tech-python)' },
-  { name: 'TypeScript', logoSrc: LOGOS.typeScript, accent: 'var(--tech-typescript)' },
-  { name: 'React', logoSrc: LOGOS.react, accent: 'var(--tech-react)' },
-  { name: 'Java', logoSrc: LOGOS.java, accent: 'var(--tech-java)' },
-  { name: 'Go', logoSrc: LOGOS.go, accent: 'var(--tech-go)' },
-  { name: 'AWS', logoSrc: LOGOS.aws, accent: 'var(--tech-aws)' },
-  {
-    name: 'Google Cloud',
-    logoSrc: LOGOS.googleCloud,
-    accent: 'var(--tech-google-cloud)',
-  },
-  { name: 'Postman', logoSrc: LOGOS.postman, accent: 'var(--tech-postman)' },
-  { name: 'Supabase', logoSrc: LOGOS.supabase, accent: 'var(--tech-supabase)' },
-  { name: 'MongoDB', logoSrc: LOGOS.mongoDb, accent: 'var(--tech-mongodb)' },
-  { name: 'Git', logoSrc: LOGOS.git, accent: 'var(--tech-git)' },
-  { name: 'Docker', logoSrc: LOGOS.docker, accent: 'var(--tech-docker)' },
-  { name: 'Tailwind CSS', logoSrc: LOGOS.tailwind, accent: 'var(--tech-tailwind)' },
-  { name: 'Spring Boot', logoSrc: LOGOS.spring, accent: 'var(--tech-spring)' },
-  { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'var(--tech-fastapi)' },
-];
+import SvgIcon from '@/components/SvgIcon';
+import { PHOTOS, ICONS } from '@/assets';
 
 export default function Home() {
   useEffect(() => {
@@ -42,7 +11,85 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex gap-4 place-self-center">
+        <img className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
+        <div className="flex flex-col justify-between">
+          <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
+          <div className="flex gap-x-4 flex-wrap">
+            <div className="flex gap-1 items-center">
+              <SvgIcon
+                src={ICONS.mapPin}
+                alt="Location"
+                size="2xsmall"
+                color="var(--text-muted)"
+                hoverColor="var(--primary)"
+              />
+              <p className="text-[var(--text-muted)]">Atlanta, GA</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <SvgIcon
+                src={ICONS.code}
+                alt="Specialty"
+                size="small"
+                color="var(--text-muted)"
+                hoverColor="var(--primary)"
+              />
+              <p className="text-[var(--text-muted)]">Full Stack Developer</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <SvgIcon
+                src={ICONS.calendar}
+                alt="Experience"
+                size="2xsmall"
+                color="var(--text-muted)"
+                hoverColor="var(--primary)"
+              />
+              <p className="text-[var(--text-muted)]">2+ YoE</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {[
+              { label: 'email', href: 'mailto:jacob@murrah.dev' },
+              { label: 'github', href: 'https://github.com/jmurrah' },
+              { label: 'linkedin', href: 'https://www.linkedin.com/in/jacobmurrah/' },
+            ].map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group gap-0.5 flex items-center text-[color:var(--text-muted)] transition-all duration-200 hover:text-[color:var(--text)]"
+              >
+                <span className="transition-colors duration-200">{link.label}</span>
+                <SvgIcon
+                  src={ICONS.arrowUpRight}
+                  alt={`${link.label} link`}
+                  size="xsmall"
+                  color="currentColor"
+                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="w-40 flex flex-col gap-2">
+        <h2 className="flex items-center gap-2 text-lg">
+          <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+          <span>Theme</span>
+        </h2>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1 w-28">
+            <p>Primary Color:</p>
+            <PrimaryColorSelector tileSize={28} gap="0.75rem" />
+          </div>
+        </div>
+      </div>
+      {/* <div className="h-20 w-30">
+        <h2>Theme</h2>
+        <PrimaryColorSelector tileSize={28} gap="0.75rem" />
+      </div> */}
+      {/* <div className="flex flex-wrap items-center gap-4">
         <ThemeToggle />
         <PrimaryColorSelector />
         <CurrentTime />
@@ -80,7 +127,7 @@ export default function Home() {
       <section className="flex flex-col gap-3">
         <h2 className="text-2xl font-semibold">Blog</h2>
         <BlogContent />
-      </section>
+      </section> */}
     </div>
   );
 }

@@ -5,6 +5,7 @@ body {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
+  font-size: 16px;
   font-family:
     'Geist',
     system-ui,
@@ -70,6 +71,16 @@ a {
 .svg-icon-xsmall {
   width: 18px;
   height: 18px;
+}
+
+.svg-icon-2xsmall {
+  width: 15px;
+  height: 15px;
+}
+
+.svg-icon-3xsmall {
+  width: 12px;
+  height: 12px;
 }
 
 .custom-margin {
