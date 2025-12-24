@@ -76,13 +76,8 @@ a {
   }
 }
 
-.social-links .svg-icon-link,
 .svg-icon-link .project-links {
   transition: transform 150ms ease-in-out;
-}
-
-.social-links .svg-icon-link:hover {
-  transform: translateY(-2px);
 }
 
 .svg-icon-link:hover .project-links {
@@ -126,21 +121,6 @@ a {
 .underline-fill:hover::after,
 .underline-fill:focus-visible::after {
   transform: scaleY(1);
-}
-
-.resume {
-  --resume-icon-color: var(--primary);
-  border-color: var(--primary);
-  color: var(--primary);
-  font-weight: 700;
-  background: var(--card-bg);
-}
-
-.resume:hover {
-  --resume-icon-color: var(--text);
-  border-color: var(--text);
-  color: var(--text);
-  background: var(--primary);
 }
 
 .hover-active.timeline-title {
