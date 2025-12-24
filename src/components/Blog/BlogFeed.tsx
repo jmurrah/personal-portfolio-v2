@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { FeedPost } from './types';
 import { getCachedBlogPosts, loadBlogPosts } from './feedService';
 import './BlogFeed.css';
@@ -14,7 +14,7 @@ function formatDate(value?: string | null) {
 }
 
 export default function BlogFeed({ onSelect }: BlogFeedProps) {
-  const cachedPosts = getCachedBlogPosts();
+  const cachedPosts = useMemo(() => getCachedBlogPosts(), []);
   const [posts, setPosts] = useState<FeedPost[]>(cachedPosts ?? []);
   const [loading, setLoading] = useState(!cachedPosts);
   const [error, setError] = useState<string | null>(null);
@@ -59,14 +59,14 @@ export default function BlogFeed({ onSelect }: BlogFeedProps) {
       isMounted = false;
       window.removeEventListener('load', handleReady);
     };
-  }, []);
+  }, [cachedPosts]);
 
   if (loading) {
     return <div>Loading posts...</div>;
   }
 
   if (error) {
-    return <div className="text-red-500">{error}</div>;
+    return <div className="text-[color:var(--danger)]">{error}</div>;
   }
 
   if (!posts.length) {
@@ -75,7 +75,7 @@ export default function BlogFeed({ onSelect }: BlogFeedProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-[color:var(--text)]">
+      <p>
         All posts come from my{' '}
         <a
           className="underline-fill"
@@ -97,7 +97,7 @@ export default function BlogFeed({ onSelect }: BlogFeedProps) {
           return (
             <li
               key={id}
-              className="blog-card border-t-2 border-[color:var(--card-border,#e5e7eb)] bg-[var(--card-bg,#0f1115)] p-3 cursor-pointer"
+              className="blog-card border-t-2 border-[var(--border)] bg-[var(--surface)] p-3 cursor-pointer"
               onClick={() => onSelect?.(post)}
               onMouseEnter={() => setHoveredCard(id)}
               onMouseLeave={() => {
@@ -112,7 +112,7 @@ export default function BlogFeed({ onSelect }: BlogFeedProps) {
                 >
                   {post.title}
                 </h3>
-                <div className="flex items-center gap-2 text-base color-[var(--text)]">
+                <div className="flex items-center gap-2 text-base text-[color:var(--text-muted)]">
                   {publishedOn && <span>{publishedOn}</span>}
                 </div>
               </div>

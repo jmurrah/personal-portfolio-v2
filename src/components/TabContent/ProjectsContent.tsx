@@ -1,8 +1,9 @@
-import ProjectItem, {
+import ProjectItem from '@/components/ProjectItem/ProjectItem';
+import {
   PROJECT_STATUS_META,
   type ProjectItemProps,
   type ProjectStatus,
-} from '@/components/ProjectItem/ProjectItem';
+} from '@/components/ProjectItem/projectStatus';
 
 const projectList: ProjectItemProps[] = [
   {
@@ -51,7 +52,7 @@ const totalProjects = projectList.length;
 export default function ProjectsContent() {
   return (
     <div className="flex flex-col">
-      <section className="text-[var(--text)]">
+      <section>
         <p className="mb-2">
           A running list of things I&apos;ve built, shipped, or safely retired.
         </p>

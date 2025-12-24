@@ -1,5 +1,5 @@
 .blog-card__title.underline-fill.is-hovered {
-  color: var(--text);
+  color: var(--surface);
 }
 
 .blog-card__title.underline-fill.is-hovered::after {
@@ -7,18 +7,11 @@
 }
 
 .blog-card {
-  background: var(--card-bg, #0f1115);
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease;
+  background: var(--surface);
 }
 
 .blog-card:hover,
 .blog-card:focus-within {
-  background: color-mix(in srgb, var(--card-bg, #0f1115) 90%, var(--text, #ffffff) 10%);
-  border-color: color-mix(
-    in srgb,
-    var(--card-border, rgba(255, 255, 255, 0.08)) 75%,
-    var(--text, #ffffff) 25%
-  );
+  background: color-mix(in srgb, var(--surface) 90%, var(--primary) 10%);
+  border-color: color-mix(in srgb, var(--border) 75%, var(--primary) 25%);
 }

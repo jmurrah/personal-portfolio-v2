@@ -1,56 +1,80 @@
-type ThemeName = 'light' | 'dark';
+import { initThemeFromStorage } from './theme/primaryTheme';
 
-const STORAGE_KEY = 'theme';
+export type ModeName = 'light' | 'dark';
 
-declare global {
-  interface Document {
-    startViewTransition?: (callback: () => void) => void;
-  }
-}
+const MODE_KEY = 'mode';
+const DEFAULT_MODE: ModeName = 'light';
 
-const getSystemTheme = (): ThemeName =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+let modeTransitionInFlight = false;
+let queuedMode: ModeName | null = null;
 
-const readStoredTheme = (): ThemeName | null => {
+const isModeName = (value: string | null): value is ModeName =>
+  value === 'light' || value === 'dark';
+
+const getBody = () => (typeof document === 'undefined' ? null : document.body);
+
+export const getStoredMode = (): ModeName => {
+  if (typeof window === 'undefined') return DEFAULT_MODE;
   try {
-    const value = localStorage.getItem(STORAGE_KEY);
-    return value === 'dark' || value === 'light' ? value : null;
+    const stored = localStorage.getItem(MODE_KEY);
+    return isModeName(stored) ? stored : DEFAULT_MODE;
   } catch {
-    return null;
+    return DEFAULT_MODE;
   }
 };
 
-const applyTheme = (theme: ThemeName, persist = true) => {
-  document.documentElement.classList.toggle('dark', theme === 'dark');
-  if (persist) {
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      // localStorage is best-effort; theme still applies without it.
+export const applyMode = (mode: ModeName) => {
+  const body = getBody();
+  if (!body) return;
+  body.classList.toggle('dark-mode', mode === 'dark');
+  if (typeof document !== 'undefined') {
+    document.documentElement.classList.toggle('dark-mode', mode === 'dark');
+  }
+  try {
+    localStorage.setItem(MODE_KEY, mode);
+  } catch {
+    // localStorage is best-effort.
+  }
+};
+
+export const applyModeWithTransition = (mode: ModeName) => {
+  if (typeof window === 'undefined') return;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion || !document.startViewTransition) {
+    applyMode(mode);
+    return;
+  }
+  if (modeTransitionInFlight) {
+    queuedMode = mode;
+    return;
+  }
+
+  try {
+    modeTransitionInFlight = true;
+    const transition = document.startViewTransition(() => applyMode(mode));
+    const clear = () => {
+      modeTransitionInFlight = false;
+      const nextMode = queuedMode;
+      queuedMode = null;
+      if (nextMode && nextMode !== mode) {
+        applyModeWithTransition(nextMode);
+      }
+    };
+    if (transition?.finished) {
+      transition.finished.then(clear, clear);
+    } else {
+      clear();
     }
+  } catch {
+    modeTransitionInFlight = false;
+    applyMode(mode);
   }
 };
 
 export const applyInitialTheme = () => {
-  if (typeof window === 'undefined') return;
-  const stored = readStoredTheme();
-  applyTheme(stored ?? getSystemTheme(), stored !== null);
-};
-
-export const toggleTheme = () => {
-  if (typeof document === 'undefined') return;
-
-  const switchTheme = () => {
-    const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-    applyTheme(nextTheme);
-  };
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Fallback: no view transitions or reduced motion preference => instant switch.
-  if (prefersReducedMotion || !document.startViewTransition) {
-    switchTheme();
-    return;
+  if (typeof document !== 'undefined') {
+    document.documentElement.classList.remove('dark');
   }
-
-  document.startViewTransition(switchTheme);
+  initThemeFromStorage();
+  applyMode(getStoredMode());
 };

@@ -35,11 +35,11 @@ export default function TimelineItem({
         rel="noopener noreferrer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`flex items-center justify-center bg-white border relative z-10 ${active ? 'hover-active' : ''}`}
+        className={`flex items-center justify-center bg-[var(--surface)] border border-[var(--border)] relative z-10 ${active ? 'hover-active' : ''}`}
       >
         <span className="relative flex shrink-0 overflow-hidden size-16">
           <img
-            className="aspect-square h-full w-full bg-background object-contain"
+            className="aspect-square h-full w-full bg-[var(--surface)] object-contain"
             alt={imgAlt}
             src={imgSrc}
             loading="eager"
@@ -55,7 +55,7 @@ export default function TimelineItem({
         className="w-6 h-14"
       ></a>
       <div className="flex flex-1 flex-col justify-start gap-1">
-        <time className="text-sm text-muted-foreground block">
+        <time className="text-sm text-[color:var(--text-muted)] block">
           <span>{timeStart}</span>
           <span> - </span>
           <span>{timeEnd}</span>
@@ -72,11 +72,11 @@ export default function TimelineItem({
           {title}
         </a>
 
-        <p className="text-muted-foreground text-base italic">{subtitle}</p>
+        <p className="text-[color:var(--text-muted)] text-base italic">{subtitle}</p>
         {bulletPoints && (
           <ul className="ml-4 list-outside list-disc">
             {bulletPoints.map((point, index) => (
-              <li key={index} className="prose pr-8 dark:prose-invert text-base">
+              <li key={index} className="pr-8 text-base">
                 {point}
               </li>
             ))}
