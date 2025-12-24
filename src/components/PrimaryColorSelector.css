@@ -1,29 +1,56 @@
-.primary-color-selector {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
+.primary-color-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.625rem;
 }
 
-.primary-color-swatch {
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  border-radius: 999px;
-  border: 2px solid var(--border);
+.primary-color-btn {
+  aspect-ratio: 1 / 1;
+  min-width: 20px;
+  min-height: 20px;
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 150ms ease,
+    opacity 150ms ease;
+  opacity: 0.8;
   background-color: var(--primary-light);
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.primary-color-swatch.is-selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary);
+.primary-color-btn:hover {
+  transform: scale(1.1);
+  opacity: 1;
 }
 
-.primary-color-label {
+.primary-color-btn.selected {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.primary-color-ring {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  aspect-ratio: 1 / 1;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 6px;
+  border: 0;
+  box-shadow:
+    0 0 0 2px var(--surface, transparent),
+    0 0 0 4px currentColor;
+  transition:
+    transform 300ms ease-out,
+    width 300ms ease-out,
+    color 300ms ease-out;
+}
+
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
