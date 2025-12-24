@@ -71,6 +71,14 @@ body.theme-blue,
   --primary-dark: #60a5fa;
 }
 
+[data-theme] {
+  --primary: var(--primary-light);
+}
+
+body.dark-mode [data-theme] {
+  --primary: var(--primary-dark);
+}
+
 /* --- APP DEFAULTS & TRANSITIONS --- */
 body {
   /* Default Theme: Coral */

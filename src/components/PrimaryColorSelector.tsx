@@ -38,7 +38,7 @@ export default function PrimaryColorSelector() {
         style={{
           transform: `translate(calc(${col} * (100% + ${GAP_REM}rem)), calc(${row} * (100% + ${GAP_REM}rem)))`,
           width: `calc((100% - ${COLS - 1} * ${GAP_REM}rem) / ${COLS})`,
-          color: 'var(--primary-light)',
+          color: 'var(--primary)',
         }}
       />
     </div>

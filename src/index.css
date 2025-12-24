@@ -92,7 +92,8 @@ a {
   font-weight: 500;
 }
 
-.underline-fill {
+.underline-fill,
+.post-content a {
   color: var(--primary);
   position: relative;
   display: inline-block;
@@ -104,7 +105,8 @@ a {
   padding-right: 0.1rem;
 }
 
-.underline-fill::after {
+.underline-fill::after,
+.post-content a::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -116,12 +118,16 @@ a {
 }
 
 .underline-fill:hover,
-.underline-fill:focus-visible {
+.underline-fill:focus-visible,
+.post-content a:hover,
+.post-content a:focus-visible {
   color: var(--surface);
 }
 
 .underline-fill:hover::after,
-.underline-fill:focus-visible::after {
+.underline-fill:focus-visible::after,
+.post-content a:hover::after,
+.post-content a:focus-visible::after {
   transform: scaleY(1);
 }
 
