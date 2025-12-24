@@ -36,8 +36,8 @@ export default function AppLayout() {
   return (
     <>
       <PreloadAssets />
-      <div className="flex flex-col items-center px-4 my-10 w-full">
-        <header className="max-w-3xl sticky top-0 z-11 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
+      <div className="flex flex-col items-center my-4 sm:my-10 w-full">
+        <header className="max-w-3xl sticky top-0 px-4 z-11 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
           <TerminalBreadcrumb />
           <button
             type="button"
@@ -149,12 +149,14 @@ export default function AppLayout() {
           </nav>
         </aside>
 
-        <main className="w-full max-w-2xl">
+        <main className="w-full max-w-2xl px-4">
           <div className="w-full min-w-0 break-words">
             <Outlet />
           </div>
         </main>
-        <Footer />
+        <div className="w-full px-4 flex justify-center items-center">
+          <Footer />
+        </div>
       </div>
     </>
   );
