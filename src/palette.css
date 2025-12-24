@@ -57,11 +57,18 @@ body.theme-green,
   --primary-dark: #4ade80;
 }
 
-/* Theme: Gold (Golden Hour) */
-body.theme-gold,
-[data-theme='gold'] {
-  --primary-light: #b86e00;
-  --primary-dark: #facc15;
+/* Theme: Cherry (Vivid Red) */
+body.theme-cherry,
+[data-theme='cherry'] {
+  --primary-light: #dc2626;
+  --primary-dark: #f87171;
+}
+
+/* Theme: Amethyst (Electric Violet) */
+body.theme-amethyst,
+[data-theme='amethyst'] {
+  --primary-light: #7c3aed;
+  --primary-dark: #a78bfa;
 }
 
 /* Theme: Blue (Deep Ocean) */

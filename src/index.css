@@ -109,7 +109,6 @@ a {
   position: relative;
   display: inline-block;
   text-decoration: none;
-  transition: color 250ms ease-in-out;
   isolation: isolate;
   line-height: 1.5rem;
   padding-left: 0.1rem;
@@ -133,6 +132,7 @@ a {
 .post-content a:hover,
 .post-content a:focus-visible {
   color: var(--surface);
+  transition: color 250ms ease-in-out;
 }
 
 .underline-fill:hover::after,

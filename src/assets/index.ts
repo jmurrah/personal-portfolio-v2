@@ -35,7 +35,6 @@ import MenuIcon from '@/assets/icons/MenuIcon.svg';
 import MoonIcon from '@/assets/icons/MoonIcon.svg';
 import ProfileIcon from '@/assets/icons/ProfileIcon.svg';
 import ProjectIcon from '@/assets/icons/ProjectIcon.svg';
-import SchoolIcon from '@/assets/icons/SchoolIcon.svg';
 import SunIcon from '@/assets/icons/SunIcon.svg';
 import BlogIcon from '@/assets/icons/BlogIcon.svg';
 import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
@@ -96,7 +95,6 @@ export const ICONS = {
   paint: PaintIcon,
   profile: ProfileIcon,
   project: ProjectIcon,
-  school: SchoolIcon,
   sun: SunIcon,
   blog: BlogIcon,
   aubie: AubieIcon,

@@ -3,6 +3,8 @@ import { prefetchBlogPosts } from '@/components/Blog/feedService';
 import PrimaryColorSelector from '@/components/PrimaryColorSelector';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
+import ThemeToggle from '@/components/ThemeToggle';
+import { ExperienceContent } from '@/components/TabContent';
 
 export default function Home() {
   useEffect(() => {
@@ -10,8 +12,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex gap-4 place-self-center">
+    <div className="flex flex-wrap gap-10">
+      <div className="w-full flex gap-4 self-center">
         <img className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
         <div className="flex flex-col justify-between">
           <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
@@ -36,7 +38,7 @@ export default function Home() {
               />
               <p className="text-[var(--text-muted)]">Full Stack Developer</p>
             </div>
-            <div className="flex gap-1 items-center">
+            {/* <div className="flex gap-1 items-center">
               <SvgIcon
                 src={ICONS.calendar}
                 alt="Experience"
@@ -45,9 +47,9 @@ export default function Home() {
                 hoverColor="var(--primary)"
               />
               <p className="text-[var(--text-muted)]">2+ YoE</p>
-            </div>
+            </div> */}
           </div>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-x-4">
             {[
               { label: 'email', href: 'mailto:jacob@murrah.dev' },
               { label: 'github', href: 'https://github.com/jmurrah' },
@@ -73,18 +75,48 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-40 flex flex-col gap-2">
+      <div>
+        <p>Currently 🡓</p>
+        <h2 className="flex items-center gap-2 text-lg">
+          <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+          <span>Currently 🡓</span>
+        </h2>
+        <p>
+          Software Engineer I @{' '}
+          <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+            <span className="underline-fill">AT&T</span>
+          </a>
+        </p>
+        <p>
+          OMSCS @{' '}
+          <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+            <span className="underline-fill">Georgia Tech</span>
+          </a>
+        </p>
+      </div>
+      <div>
+        <h2 className="flex items-center gap-2 text-lg">
+          <SvgIcon src={ICONS.education} alt="Theme" size="medium" color="var(--primary)" />
+          <span>Education</span>
+        </h2>
+      </div>
+      <div className="w-full max-w-xs flex flex-col gap-2">
         <h2 className="flex items-center gap-2 text-lg">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
           <span>Theme</span>
         </h2>
+        <ThemeToggle />
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1 w-28">
+          <div className="flex flex-col gap-1 w-full">
             <p>Primary Color:</p>
             <PrimaryColorSelector tileSize={28} gap="0.75rem" />
           </div>
         </div>
       </div>
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Experience</h2>
+        <ExperienceContent />
+      </section>
       {/* <div className="h-20 w-30">
         <h2>Theme</h2>
         <PrimaryColorSelector tileSize={28} gap="0.75rem" />

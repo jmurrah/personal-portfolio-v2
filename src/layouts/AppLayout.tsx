@@ -18,13 +18,11 @@ export default function AppLayout() {
   const { pathname } = useLocation();
 
   const mainNavItems: NavItem[] = [
-    { title: 'About', href: '/about' },
-    { title: 'Experience', href: '/experience' },
+    { title: 'Home', href: '/' },
     { title: 'Projects', href: '/projects' },
     { title: 'Blog', href: '/blog' },
+    { title: 'Resume', href: '/JacobMurrahResume.pdf', external: true },
   ];
-
-  const moreNavItems: NavItem[] = [{ title: 'Education', href: '/education' }];
 
   const toggleSidebar = () => {
     setIsSidebarOpen((current) => !current);
@@ -52,15 +50,27 @@ export default function AppLayout() {
             <span className="sr-only">Menu</span>
           </button>
           <nav className="hidden items-center space-x-4 min-[576px]:flex">
-            {mainNavItems.map((item) => (
-              <Link
-                key={item.title}
-                to={item.href}
-                className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium transition-colors duration-150"
-              >
-                {item.title}
-              </Link>
-            ))}
+            {mainNavItems.map((item) =>
+              item.external ? (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium transition-colors duration-150"
+                >
+                  {item.title}
+                </a>
+              ) : (
+                <Link
+                  key={item.title}
+                  to={item.href}
+                  className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium transition-colors duration-150"
+                >
+                  {item.title}
+                </Link>
+              ),
+            )}
           </nav>
         </header>
 
@@ -111,38 +121,26 @@ export default function AppLayout() {
                 const isActive = pathname === item.href;
                 return (
                   <li key={item.title}>
-                    <Link
-                      to={item.href}
-                      className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
-                      aria-current={isActive ? 'page' : undefined}
-                      onClick={closeSidebar}
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                );
-              })}
-
-              <li>
-                <hr className="border-[color:var(--border)] my-2 border-t" />
-              </li>
-
-              <li className="text-[color:var(--text-muted)] px-2 py-1 text-xs font-semibold tracking-wider uppercase">
-                More
-              </li>
-
-              {moreNavItems.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <li key={item.title}>
-                    <Link
-                      to={item.href}
-                      className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
-                      aria-current={isActive ? 'page' : undefined}
-                      onClick={closeSidebar}
-                    >
-                      {item.title}
-                    </Link>
+                    {item.external ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
+                        onClick={closeSidebar}
+                      >
+                        {item.title}
+                      </a>
+                    ) : (
+                      <Link
+                        to={item.href}
+                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
+                        aria-current={isActive ? 'page' : undefined}
+                        onClick={closeSidebar}
+                      >
+                        {item.title}
+                      </Link>
+                    )}
                   </li>
                 );
               })}

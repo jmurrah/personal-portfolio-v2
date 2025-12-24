@@ -1,4 +1,4 @@
-export const primaryThemes = ['coral', 'rose', 'green', 'gold', 'blue'] as const;
+export const primaryThemes = ['coral', 'rose', 'green', 'cherry', 'blue', 'amethyst'] as const;
 
 export type PrimaryThemeName = (typeof primaryThemes)[number];
 
