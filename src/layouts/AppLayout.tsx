@@ -55,7 +55,7 @@ export default function AppLayout() {
       <div className="flex flex-col items-center py-4 sm:py-10 w-full min-h-screen">
         <div ref={headerSentinelRef} className="h-px w-full" aria-hidden="true" />
         <header
-          className={`max-w-3xl sticky top-0 z-11 w-full bg-[color:var(--bg)] mb-10 border-b ${
+          className={`max-w-3xl sticky top-0 z-11 w-full bg-[color:var(--bg)] mb-2 sm:mb-10 border-b ${
             isHeaderStuck ? 'border-[color:var(--border)]' : 'border-transparent'
           }`}
         >

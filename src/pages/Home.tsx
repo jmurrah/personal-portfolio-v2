@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { prefetchBlogPosts } from '@/components/Blog/feedService';
 import PrimaryColorSelector from '@/components/PrimaryColorSelector';
 import SvgIcon from '@/components/SvgIcon';
@@ -7,15 +7,53 @@ import ThemeToggle from '@/components/ThemeToggle';
 import { ExperienceContent } from '@/components/TabContent';
 
 export default function Home() {
+  const headerRowRef = useRef<HTMLDivElement | null>(null);
+  const headshotRef = useRef<HTMLImageElement | null>(null);
+  const headerContentRef = useRef<HTMLDivElement | null>(null);
+  const [isHeaderWrapped, setIsHeaderWrapped] = useState(false);
+
+  const updateHeaderWrap = useCallback(() => {
+    const image = headshotRef.current;
+    const content = headerContentRef.current;
+    if (!image || !content) return;
+    const wrapped = content.offsetTop > image.offsetTop + 1;
+    setIsHeaderWrapped((prev) => (prev === wrapped ? prev : wrapped));
+  }, []);
+
   useEffect(() => {
     prefetchBlogPosts();
   }, []);
 
+  useLayoutEffect(() => {
+    updateHeaderWrap();
+  }, [updateHeaderWrap]);
+
+  useLayoutEffect(() => {
+    const container = headerRowRef.current;
+    if (!container || typeof ResizeObserver === 'undefined') return;
+    let frame = 0;
+    const handle = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateHeaderWrap);
+    };
+    const observer = new ResizeObserver(handle);
+    observer.observe(container);
+    window.addEventListener('resize', handle);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handle);
+      cancelAnimationFrame(frame);
+    };
+  }, [updateHeaderWrap]);
+
   return (
     <div className="flex flex-wrap gap-10">
-      <div className="w-full flex flex-wrap gap-4 justify-center">
-        <img className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
-        <div className="flex flex-col justify-between gap-y-1.5">
+      <div ref={headerRowRef} className="w-full flex flex-wrap gap-4 justify-center">
+        <img ref={headshotRef} className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
+        <div
+          ref={headerContentRef}
+          className={`flex flex-col gap-y-1.5 ${isHeaderWrapped ? 'items-center' : 'items-start'}`}
+        >
           <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
           <div className="flex gap-x-4 flex-wrap">
             <div className="flex gap-1 items-center">
@@ -36,7 +74,7 @@ export default function Home() {
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
               />
-              <p className="text-[var(--text-muted)]">Full Stack Developer</p>
+              <p className="text-[var(--text-muted)]">Full-Stack Developer</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-x-4">
@@ -44,6 +82,7 @@ export default function Home() {
               { label: 'email', href: 'mailto:jacob@murrah.dev' },
               { label: 'github', href: 'https://github.com/jmurrah' },
               { label: 'linkedin', href: 'https://www.linkedin.com/in/jacobmurrah/' },
+              { label: 'resume', href: '/JacobMurrahResume.pdf' },
             ].map((link) => (
               <a
                 key={link.label}
@@ -66,7 +105,18 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <h2 className="text-xl mb-1">Currently</h2>
+        <h2 className="text-xl mb-1 font-bold">About</h2>
+        <p>
+          I specialize in full-stack development and build applications that prioritize simplicity
+          and efficiency.
+        </p>
+        <p>
+          When I'm not coding, you'll find me at the gym, playing Valorant, or watching Anime, all
+          with my wife and cats!
+        </p>
+      </div>
+      <div>
+        <h2 className="text-xl mb-1 font-bold">Currently</h2>
         <p>
           Software Engineer I @{' '}
           <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
@@ -81,10 +131,7 @@ export default function Home() {
         </p>
       </div>
       <div className="flex flex-col max-w-sm w-full">
-        <h2 className="flex items-center gap-2 text-xl mb-1">
-          {/* <SvgIcon src={ICONS.education} alt="Theme" size="medium" color="var(--primary)" /> */}
-          <span>Education</span>
-        </h2>
+        <h2 className="text-xl mb-1 font-bold">Education</h2>
         <div className="flex flex-col gap-1 w-full">
           <div>
             <p>Georgia Institute of Technology</p>
@@ -103,7 +150,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full max-w-xs flex flex-col gap-2">
-        <h2 className="flex items-center gap-2 text-lg">
+        <h2 className="flex items-center gap-2 text-xl">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
           <span>Theme</span>
         </h2>
