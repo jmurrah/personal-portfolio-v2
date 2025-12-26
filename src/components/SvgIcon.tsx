@@ -1,6 +1,6 @@
 import React from 'react';
 
-type SvgIconSize = 'xsmall' | 'small' | 'medium' | 'large';
+type SvgIconSize = '3xsmall' | '2xsmall' | 'xsmall' | 'small' | 'medium' | 'large';
 
 interface SvgIconProps extends React.HTMLAttributes<HTMLSpanElement> {
   href?: string;
@@ -16,7 +16,7 @@ export default function SvgIcon({
   src,
   alt,
   size = 'medium',
-  color = 'var(--text)',
+  color = 'currentColor',
   hoverColor = 'var(--primary)',
   className,
   style,

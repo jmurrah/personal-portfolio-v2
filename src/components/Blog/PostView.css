@@ -1,0 +1,257 @@
+.post-view {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: inherit;
+}
+
+.post-shell {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.post-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.post-link-btn {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.post-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-title,
+.post-title-link {
+  font-size: clamp(28px, 4vw, 36px);
+  line-height: 1.2;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+.post-title-link {
+  display: inline;
+}
+
+.post-subtitle {
+  font-size: 16px;
+  color: inherit;
+  line-height: 1.5;
+}
+
+.post-byline {
+  display: flex;
+  margin-top: 4px;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.post-author {
+  font-weight: 600;
+}
+
+.post-date {
+  color: inherit;
+}
+
+.post-divider {
+  margin: 8px 0 0;
+  border: none;
+  border-top: 2px solid var(--border);
+}
+
+.post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: inherit;
+}
+
+.post-content p {
+  margin: 0;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  margin: 24px 0 0px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: inherit;
+}
+
+.post-content h1 {
+  font-size: 28px;
+}
+
+.post-content h2 {
+  font-size: 24px;
+}
+
+.post-content h3 {
+  font-size: 20px;
+}
+
+.post-content h4 {
+  font-size: 18px;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 24px;
+  display: block;
+  gap: 8px;
+}
+
+.post-content ol {
+  list-style: decimal;
+  list-style-position: outside;
+}
+
+.post-content ul {
+  list-style: disc;
+  list-style-position: outside;
+}
+
+.post-content li {
+  margin: 4px 0;
+}
+
+.post-content blockquote {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--primary);
+  background: color-mix(in srgb, var(--surface) 90%, var(--primary) 10%);
+  color: inherit;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+
+.post-content figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.post-content figcaption {
+  font-style: italic;
+  color: inherit;
+  text-align: center;
+}
+
+.post-content a:has(img),
+.post-content a:has(figure) {
+  color: inherit;
+  display: inline;
+  line-height: inherit;
+  pointer-events: none;
+  cursor: default;
+  padding: 0;
+  position: static;
+  background-image: none;
+  background-size: 0;
+}
+.post-content .footnote-anchor,
+.post-content .footnote-number {
+  line-height: 1;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.post-content .footnote-anchor {
+  font-size: 0.75em;
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+.post-content .footnote-anchor::after,
+.post-content .footnote-number::after {
+  background: var(--primary);
+}
+
+.post-content .footnotes {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-content .footnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.post-content [id^='footnote-'],
+.post-content [id^='footnote-anchor-'] {
+  scroll-margin-top: 80px;
+}
+
+.post-content .footnote-number {
+  font-size: 14px;
+  line-height: inherit;
+  flex: 0 0 12px;
+  text-align: center;
+}
+
+.post-content .footnote-content {
+  color: inherit;
+}
+
+.post-content .footnote-content p {
+  margin: 0;
+}
+
+.post-bottom-link {
+  margin-top: 4px;
+  margin-left: auto;
+}
+.post-bottom-link,
+.post-link-btn {
+  display: inline-block;
+  width: fit-content;
+}

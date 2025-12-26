@@ -1,0 +1,9 @@
+.blog-card {
+  background: var(--surface);
+}
+
+.blog-card:hover,
+.blog-card:focus-within {
+  background: color-mix(in srgb, var(--surface) 90%, var(--primary) 10%);
+  border-color: color-mix(in srgb, var(--border) 75%, var(--primary) 25%);
+}

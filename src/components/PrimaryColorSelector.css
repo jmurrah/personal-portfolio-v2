@@ -1,0 +1,70 @@
+.primary-color-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: var(--tile-size, 2rem);
+  justify-content: stretch;
+  align-content: start;
+  gap: var(--tile-gap, 0.625rem);
+  --tile-radius: 6px;
+}
+
+.primary-color-btn {
+  width: 100%;
+  height: var(--tile-size, 2rem);
+  min-width: 0;
+  min-height: var(--tile-size, 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--tile-radius);
+  box-shadow: none;
+  background-color: var(--primary);
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.primary-color-btn:hover,
+.primary-color-btn:focus-visible {
+  transform: scale(1.04);
+}
+
+.primary-color-btn.selected {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.primary-color-btn.selected:hover,
+.primary-color-btn.selected:focus-visible {
+  transform: scale(1.05);
+}
+
+.primary-color-ring {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: var(--tile-size, 2rem);
+  height: var(--tile-size, 2rem);
+  border-radius: var(--tile-radius);
+  border: 0;
+  box-sizing: border-box;
+  box-shadow:
+    0 0 0 2px var(--surface, transparent),
+    0 0 0 4px currentColor;
+  transition:
+    transform 300ms ease-out,
+    width 300ms ease-out,
+    height 300ms ease-out,
+    color 300ms ease-out;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

@@ -1,397 +1,214 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ICONS, LOGOS, MEMOJI } from '@/assets';
-import AnimatedCard from '@/components/AnimatedCard';
-import CurrentTime from '@/components/CurrentTime';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { prefetchBlogPosts } from '@/components/Blog/feedService';
+import PrimaryColorSelector from '@/components/PrimaryColorSelector';
 import SvgIcon from '@/components/SvgIcon';
-import TechnologyBadge from '@/components/TechnologyBadge';
-import Tabs from '@/components/NavCard/NavCard';
-import { useSlideAnimation } from '@/hooks/useSlideAnimation';
+import { PHOTOS, ICONS } from '@/assets';
 import ThemeToggle from '@/components/ThemeToggle';
-import { BASE_ANIMATION_MS as DELAY } from '@/components/NavCard/animationConfig';
-import { useLocation, useNavigate } from 'react-router-dom';
-import SlidingMessage from '@/components/SlidingMessage/SlidingMessage';
-
-const technologies = [
-  { name: 'Python', logoSrc: LOGOS.python, accent: 'rgba(53, 114, 165, 0.2)' },
-  { name: 'Java', logoSrc: LOGOS.java, accent: 'rgba(244, 117, 87, 0.2)' },
-  { name: 'Go', logoSrc: LOGOS.go, accent: 'rgba(0, 173, 216, 0.2)' },
-  { name: 'TypeScript', logoSrc: LOGOS.typeScript, accent: 'rgba(49, 120, 198, 0.2)' },
-  { name: 'React', logoSrc: LOGOS.react, accent: 'rgba(97, 218, 251, 0.2)' },
-  { name: 'AWS', logoSrc: LOGOS.aws, accent: 'rgba(255, 153, 0, 0.2)' },
-  {
-    name: 'Google Cloud',
-    logoSrc: LOGOS.googleCloud,
-    accent: 'rgba(66, 133, 244, 0.2)',
-  },
-  { name: 'Postman', logoSrc: LOGOS.postman, accent: 'rgba(255, 108, 55, 0.2)' },
-  { name: 'Supabase', logoSrc: LOGOS.supabase, accent: 'rgba(63, 207, 142, 0.2)' },
-  { name: 'MongoDB', logoSrc: LOGOS.mongoDb, accent: 'rgba(89, 150, 54, 0.2)' },
-  { name: 'Git', logoSrc: LOGOS.git, accent: 'rgba(241, 80, 47, 0.2)' },
-  { name: 'Docker', logoSrc: LOGOS.docker, accent: 'rgba(0, 130, 202, 0.2)' },
-  { name: 'Tailwind CSS', logoSrc: LOGOS.tailwind, accent: 'rgba(56, 189, 248, 0.2)' },
-  { name: 'Spring Boot', logoSrc: LOGOS.spring, accent: 'rgba(109, 179, 63, 0.2)' },
-  { name: 'FastAPI', logoSrc: LOGOS.fastApi, accent: 'rgba(5, 153, 139, 0.2)' },
-];
-
-const marqueeMessages = [
-  'Proud father of 3 cats',
-  'Hitting new gym PRs',
-  'Mentoring junior engineers',
-  'Carrying in unrated Valorant',
-  'Sharing lessons learned',
-];
-
-type NavTabId = 'about' | 'experience' | 'education' | 'projects' | 'blog';
-
-const tabRoutes: Record<NavTabId, `/${NavTabId}`> = {
-  about: '/about',
-  experience: '/experience',
-  education: '/education',
-  projects: '/projects',
-  blog: '/blog',
-};
-
-const totalCards = 4;
-
-const getTabFromPath = (pathname: string): NavTabId | null => {
-  const [, firstSegment = ''] = pathname.split('/');
-  return (firstSegment in tabRoutes ? firstSegment : null) as NavTabId | null;
-};
+import { ExperienceContent } from '@/components/TabContent';
 
 export default function Home() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const routeTab = useMemo(() => getTabFromPath(location.pathname), [location.pathname]);
-  const [activeTab, setActiveTab] = useState<string | null>(() => routeTab);
-  const [readyToShowTab, setReadyToShowTab] = useState(() => Boolean(routeTab));
-  const [introDuration, setIntroDuration] = useState(() => (routeTab ? 650 : 1100));
-  const [cardsExiting, setCardsExiting] = useState(() => Boolean(routeTab));
-  const [, setExitedCardCount] = useState(0);
-  const [hideCards, setHideCards] = useState(false);
-  const internalNavRef = useRef(false);
-  const pendingTabRef = useRef<string | null>(routeTab);
-  const hasShownDefaultRef = useRef(routeTab === null);
+  const headerRowRef = useRef<HTMLDivElement | null>(null);
+  const headshotRef = useRef<HTMLImageElement | null>(null);
+  const headerContentRef = useRef<HTMLDivElement | null>(null);
+  const [isHeaderWrapped, setIsHeaderWrapped] = useState(false);
 
-  const tabsAnimation = useSlideAnimation({
-    direction: 'top',
-    delay: introDuration,
-    duration: 1000,
-    isExiting: false,
-  });
-
-  const isNavTabId = (value: string): value is NavTabId => value in tabRoutes;
-
-  useEffect(() => {
-    pendingTabRef.current = routeTab ?? null;
-
-    if (internalNavRef.current) {
-      internalNavRef.current = false;
-      return;
-    }
-
-    if (routeTab) {
-      setActiveTab(routeTab);
-      setIntroDuration(650);
-      setHideCards(false);
-      setCardsExiting(true);
-      setReadyToShowTab(false);
-      setExitedCardCount(0);
-    } else {
-      setIntroDuration(1100);
-      setPendingTabAndReset();
-    }
-  }, [routeTab]);
-
-  const setPendingTabAndReset = useCallback(() => {
-    hasShownDefaultRef.current = true;
-    setActiveTab(null);
-    setHideCards(false);
-    setReadyToShowTab(false);
-    setCardsExiting(false);
-    setExitedCardCount(0);
+  const updateHeaderWrap = useCallback(() => {
+    const image = headshotRef.current;
+    const content = headerContentRef.current;
+    if (!image || !content) return;
+    const wrapped = content.offsetTop > image.offsetTop + 1;
+    setIsHeaderWrapped((prev) => (prev === wrapped ? prev : wrapped));
   }, []);
 
-  const handleAllCardsExited = useCallback(() => {
-    if (pendingTabRef.current) {
-      setHideCards(true);
-      setReadyToShowTab(true);
-      setCardsExiting(false);
-    } else {
-      setPendingTabAndReset();
-    }
-  }, [setPendingTabAndReset]);
+  useEffect(() => {
+    prefetchBlogPosts();
+  }, []);
 
-  const handleCardExited = useCallback(() => {
-    setExitedCardCount((prev) => {
-      const newCount = prev + 1;
-      if (newCount === totalCards) {
-        handleAllCardsExited();
-      }
-      return newCount;
-    });
-  }, [handleAllCardsExited]);
+  useLayoutEffect(() => {
+    updateHeaderWrap();
+  }, [updateHeaderWrap]);
 
-  const handleTabClick = (tabId: string) => {
-    const isClosing = tabId === '' || tabId === activeTab;
-    const nextTab = isClosing ? null : tabId;
-    const targetRoute = nextTab && isNavTabId(nextTab) ? tabRoutes[nextTab] : '/';
-
-    pendingTabRef.current = nextTab;
-
-    if (nextTab) {
-      setActiveTab(nextTab);
-    } else {
-      setActiveTab(null);
-    }
-
-    if (location.pathname !== targetRoute) {
-      internalNavRef.current = true;
-    }
-
-    setExitedCardCount(0);
-
-    if (isClosing) {
-      if (!hasShownDefaultRef.current) {
-        setPendingTabAndReset();
-      } else {
-        setIntroDuration(1100);
-        setCardsExiting(true);
-        setReadyToShowTab(false);
-        setTimeout(() => {
-          setHideCards(false);
-          setCardsExiting(false);
-        }, DELAY);
-      }
-    } else {
-      setIntroDuration(650);
-      setHideCards(false);
-      setReadyToShowTab(false);
-      setCardsExiting(true);
-    }
-
-    if (location.pathname !== targetRoute) {
-      navigate(targetRoute);
-    }
-  };
+  useLayoutEffect(() => {
+    const container = headerRowRef.current;
+    if (!container || typeof ResizeObserver === 'undefined') return;
+    let frame = 0;
+    const handle = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateHeaderWrap);
+    };
+    const observer = new ResizeObserver(handle);
+    observer.observe(container);
+    window.addEventListener('resize', handle);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handle);
+      cancelAnimationFrame(frame);
+    };
+  }, [updateHeaderWrap]);
 
   return (
-    <div>
-      <div className="relative flex flex-wrap gap-4">
-        <div className={`flex flex-col gap-4 w-full max-w-[276px] ${hideCards ? 'hidden' : ''}`}>
-          <AnimatedCard
-            direction="left"
-            delay={100}
-            triggerExit={cardsExiting}
-            className={`z-100 h-56 flex flex-col justify-between w-full shrink-0 ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
-          >
-            <h1 className="text-[color:var(--primary)] text-4xl font-bold">Jacob Murrah</h1>
-            <p className="flex items-center gap-2">
-              <SvgIcon src={ICONS.code} alt="Code Icon" color="var(--primary)" size="small" />
-              Full Stack Developer
-            </p>
-            <p className="flex items-center gap-2">
+    <div className="flex flex-wrap gap-10">
+      <div ref={headerRowRef} className="w-full flex flex-wrap gap-4 justify-center">
+        <img ref={headshotRef} className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
+        <div
+          ref={headerContentRef}
+          className={`flex flex-col gap-y-1.5 ${isHeaderWrapped ? 'items-center' : 'items-start'}`}
+        >
+          <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
+          <div className="flex gap-x-4 flex-wrap">
+            <div className="flex gap-1 items-center">
               <SvgIcon
-                src={ICONS.calendar}
-                alt="Calendar Icon"
-                color="var(--primary)"
-                size="small"
+                src={ICONS.mapPin}
+                alt="Location"
+                size="2xsmall"
+                color="var(--text-muted)"
+                hoverColor="var(--primary)"
               />
-              2+ Years of Experience
-            </p>
-            <p className="flex items-center gap-2">
-              <SvgIcon src={ICONS.mapPin} alt="Map Pin Icon" color="var(--primary)" size="small" />
-              Atlanta, GA
-            </p>
-            <p className="flex items-center gap-2 w-fit">
-              <SvgIcon src={ICONS.mail} alt="Email Icon" color="var(--primary)" size="small" />
-              <a href="mailto:jacob@murrah.dev">
-                <span className="underline-fill">jacob@murrah.dev</span>
-              </a>
-            </p>
-          </AnimatedCard>
-
-          <AnimatedCard
-            direction="left"
-            delay={350}
-            triggerExit={cardsExiting}
-            className={`social-links z-100 flex justify-between items-center ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
-          >
-            <SvgIcon href="https://github.com/jmurrah" src={ICONS.gitHub} alt="GitHub" />
-            <SvgIcon
-              href="https://linkedin.com/in/jacobmurrah"
-              src={ICONS.linkedIn}
-              alt="LinkedIn"
-              hoverColor="var(--primary)"
-            />
-            <SvgIcon
-              href="https://leetcode.com/jmurrah"
-              src={ICONS.leetCode}
-              alt="LeetCode"
-              hoverColor="var(--primary)"
-            />
-            <SvgIcon
-              href="https://www.buymeacoffee.com/jmurrah"
-              src={ICONS.coffee}
-              alt="Buy Me a Coffee"
-              hoverColor="var(--primary)"
-            />
-            <SvgIcon
-              href="mailto:jacob@murrah.dev"
-              src={ICONS.mail}
-              alt="Email"
-              hoverColor="var(--primary)"
-            />
-          </AnimatedCard>
-
-          <AnimatedCard
-            direction="right"
-            delay={600}
-            triggerExit={cardsExiting}
-            className={`z-100 h-full flex flex-col justify-between items-start ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
-          >
-            {/* <p className="text-[color:var(--primary)]">Currently ↴</p> */}
-            <p>Currently 🡓</p>
-            <p>
-              Software Engineer I @{' '}
-              <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-                <span className="underline-fill">AT&T</span>
-              </a>
-            </p>
-            <p>
-              OMSCS @{' '}
-              <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-                <span className="underline-fill">Georgia Tech</span>
-              </a>
-            </p>
-          </AnimatedCard>
-        </div>
-
-        <div className="flex flex-col gap-4 flex-1 w-full">
-          <div className="flex gap-4">
-            <div className={`flex flex-col h-full w-full gap-4 ${hideCards ? 'hidden' : ''}`}>
-              <div className="flex gap-4">
-                <AnimatedCard
-                  direction="right"
-                  delay={1350}
-                  triggerExit={cardsExiting}
-                  className={`z-100 ${hideCards ? 'hidden' : ''}`}
-                  onExitComplete={handleCardExited}
-                  isCustomCard={true}
-                >
-                  <ThemeToggle />
-                </AnimatedCard>
-                <AnimatedCard
-                  direction="right"
-                  delay={1350}
-                  triggerExit={cardsExiting}
-                  className={`z-100 h-full w-full bg-[var(--card-bg)] rounded-lg ${hideCards ? 'hidden' : ''}`}
-                  onExitComplete={handleCardExited}
-                  isCustomCard={true}
-                >
-                  <CurrentTime />
-                </AnimatedCard>
-              </div>
-              <AnimatedCard
-                direction="right"
-                delay={1350}
-                triggerExit={cardsExiting}
-                className={`z-100 h-full w-full rounded-lg bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <div className="flex h-full items-end">
-                  <img src={MEMOJI.memoji}></img>
-                </div>
-              </AnimatedCard>
-              <AnimatedCard
-                direction="right"
-                delay={1350}
-                triggerExit={cardsExiting}
-                className={`z-100 h-fit w-full rounded-lg p-2 bg-[var(--card-bg)] ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <div className="flex flex-col justify-center items-center">
-                  <div className="flex gap-1 justify-start items-center">
-                    <img src={ICONS.aubie} className="w-9 h-auto" />
-                    <p>War Eagle!</p>
-                  </div>
-                  <div className="flex gap-1 justify-start items-center">
-                    <img src={ICONS.buzz} className="w-8.5 h-auto" />
-                    <p>Sting 'Em!</p>
-                  </div>
-                </div>
-              </AnimatedCard>
+              <p className="text-[var(--text-muted)]">Atlanta, GA</p>
             </div>
-            <div className="flex flex-col gap-4 flex-1">
-              <div style={tabsAnimation.style} className="z-100 w-full">
-                <Tabs
-                  onTabClick={handleTabClick}
-                  readyToExpand={readyToShowTab}
-                  selectedTab={activeTab}
-                />
-              </div>
-
-              <AnimatedCard
-                direction="right"
-                delay={1550}
-                triggerExit={cardsExiting}
-                className={`z-100 w-40 ${hideCards ? 'hidden' : ''}`}
-                onExitComplete={handleCardExited}
-                isCustomCard={true}
-              >
-                <a
-                  href={`${import.meta.env.BASE_URL}resume`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="resume w-full inline-flex items-center justify-center gap-3 rounded-lg px-4 py-2 border-3"
-                >
-                  <SvgIcon
-                    src={ICONS.fileDownload}
-                    alt="Resume"
-                    color="var(--resume-icon-color)"
-                    size="large"
-                  />
-                  <p className="font-bold">Resume</p>
-                </a>
-              </AnimatedCard>
+            <div className="flex gap-1 items-center">
+              <SvgIcon
+                src={ICONS.code}
+                alt="Specialty"
+                size="small"
+                color="var(--text-muted)"
+                hoverColor="var(--primary)"
+              />
+              <p className="text-[var(--text-muted)]">Full-Stack Developer</p>
             </div>
           </div>
-          <AnimatedCard
-            direction="right"
-            delay={1350}
-            triggerExit={cardsExiting}
-            className={`z-100 h-full ${hideCards ? 'hidden' : ''}`}
-            onExitComplete={handleCardExited}
-            isCustomCard={true}
-          >
-            <SlidingMessage
-              className="max-w-[348px] h-full min-h-10"
-              messages={marqueeMessages}
-              duration={18}
-            />
-            {/* <p>hello</p> */}
-          </AnimatedCard>
-        </div>
-
-        <AnimatedCard
-          direction="bottom"
-          delay={850}
-          triggerExit={cardsExiting}
-          className={`z-100 w-full flex flex-col gap-4 ${hideCards ? 'hidden' : ''}`}
-          onExitComplete={handleCardExited}
-        >
-          <h2 className="text-[var(--text)]">Technologies</h2>
-          <div className="flex flex-wrap gap-2">
-            {technologies.map((tech) => (
-              <TechnologyBadge key={tech.name} {...tech} />
+          <div className="flex flex-wrap gap-x-4">
+            {[
+              { label: 'email', href: 'mailto:jacob@murrah.dev' },
+              { label: 'github', href: 'https://github.com/jmurrah' },
+              { label: 'linkedin', href: 'https://www.linkedin.com/in/jacobmurrah/' },
+              { label: 'resume', href: '/JacobMurrahResume.pdf' },
+            ].map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group gap-0.5 flex items-center text-[color:var(--text-muted)] transition-all duration-200 hover:text-[color:var(--text)]"
+              >
+                <span className="transition-colors duration-200">{link.label}</span>
+                <SvgIcon
+                  src={ICONS.arrowUpRight}
+                  alt={`${link.label} link`}
+                  size="xsmall"
+                  color="currentColor"
+                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                />
+              </a>
             ))}
           </div>
-        </AnimatedCard>
+        </div>
       </div>
+      <div>
+        <h2 className="text-xl mb-1 font-bold">About</h2>
+        <p>
+          I specialize in full-stack development and build applications that prioritize simplicity
+          and efficiency.
+        </p>
+        <p>
+          When I'm not coding, you'll find me at the gym, playing Valorant, or watching Anime, all
+          with my wife and cats!
+        </p>
+      </div>
+      <div>
+        <h2 className="text-xl mb-1 font-bold">Currently</h2>
+        <p>
+          Software Engineer I @{' '}
+          <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+            <span className="underline-fill">AT&T</span>
+          </a>
+        </p>
+        <p>
+          OMSCS @{' '}
+          <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+            <span className="underline-fill">Georgia Tech</span>
+          </a>
+        </p>
+      </div>
+      <div className="flex flex-col max-w-sm w-full">
+        <h2 className="text-xl mb-1 font-bold">Education</h2>
+        <div className="flex flex-col gap-1 w-full">
+          <div>
+            <p>Georgia Institute of Technology</p>
+            <div className="flex justify-between items-center gap-x-8">
+              <p className="text-sm text-[var(--text-muted)]">M.S. in Computer Science</p>
+              <p className="text-sm text-[var(--text-muted)]">Dec. 2028</p>
+            </div>
+          </div>
+          <div>
+            <p>Auburn University</p>
+            <div className="flex justify-between items-center gap-x-8">
+              <p className="text-sm text-[var(--text-muted)]">B.E. in Software Engineering</p>
+              <p className="text-sm text-[var(--text-muted)]">Dec. 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-full max-w-xs flex flex-col gap-2">
+        <h2 className="flex items-center gap-2 text-xl">
+          <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+          <span>Theme</span>
+        </h2>
+        <ThemeToggle />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1 w-full">
+            <p>Primary Color:</p>
+            <PrimaryColorSelector tileSize={28} gap="0.75rem" />
+          </div>
+        </div>
+      </div>
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Experience</h2>
+        <ExperienceContent />
+      </section>
+      {/* <div className="h-20 w-30">
+        <h2>Theme</h2>
+        <PrimaryColorSelector tileSize={28} gap="0.75rem" />
+      </div> */}
+      {/* <div className="flex flex-wrap items-center gap-4">
+        <ThemeToggle />
+        <PrimaryColorSelector />
+        <CurrentTime />
+      </div>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Technologies</h2>
+        <div className="flex flex-wrap gap-2">
+          {technologies.map((tech) => (
+            <TechnologyBadge key={tech.name} {...tech} />
+          ))}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">About</h2>
+        <AboutContent />
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Experience</h2>
+        <ExperienceContent />
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Education</h2>
+        <EducationContent />
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Projects</h2>
+        <ProjectsContent />
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-2xl font-semibold">Blog</h2>
+        <BlogContent />
+      </section> */}
     </div>
   );
 }

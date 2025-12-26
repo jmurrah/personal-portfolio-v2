@@ -1,66 +1,116 @@
 :root {
-  --font-sans: 'Neue Montreal', sans-serif;
-  --font-base-size: 1.125rem;
+  /* --- BASE COLORS --- */
+  --bg-light: #efe9f5;
+  --surface-light: #e4dcf1;
+  --text-main-light: #2e2040;
+  --text-muted-light: #584a75;
+  --border-light: #d1c5e0;
 
-  /* Neutral ramp */
-  --neutral-50: #f5f5f5;
-  --neutral-100: #e5e5e5;
-  --neutral-200: #d4d4d4;
-  --neutral-300: #bbbbbb;
-  --neutral-400: #979797;
-  --neutral-500: #70707b;
-  --neutral-600: #3f3f46;
-  --neutral-700: #32343a;
-  --neutral-800: #2a2d33;
-  --neutral-900: #1a1b1f;
-  --neutral-white: #ffffff;
-  --neutral-black: #000000;
+  --bg-dark: #16121f;
+  --surface-dark: #231d30;
+  --text-main-dark: #f0e6fc;
+  --text-muted-dark: #bcb3cc;
+  --border-dark: #3a324d;
 
-  /* Accent ramp */
-  --accent-base: hsl(270, 100%, 55%);
-  --accent-secondary: hsl(268, 75%, 62%);
-  --accent-tertiary: hsl(272, 85%, 70%);
+  /* Semantic colors */
+  --danger-light: #ef4444;
+  --danger-dark: #f87171;
 
-  /* Light theme tokens */
-  --bg: var(--neutral-50);
-  --bg-light: var(--neutral-white);
-  --bg-dark: var(--neutral-100);
-  --text: var(--neutral-900);
-  --text-muted: var(--neutral-500);
-  --primary: var(--accent-base);
-  --secondary: var(--accent-secondary);
-  --card-bg: var(--neutral-white);
-  --card-border: var(--neutral-100);
-  --link-color: var(--text);
-  --link-hover-color: var(--text);
+  /* Tech accents */
+  --tech-python: rgba(53, 114, 165, 0.5);
+  --tech-typescript: rgba(49, 120, 198, 0.5);
+  --tech-react: rgba(97, 218, 251, 0.5);
+  --tech-java: rgba(244, 117, 87, 0.5);
+  --tech-go: rgba(0, 173, 216, 0.5);
+  --tech-aws: rgba(255, 153, 0, 0.5);
+  --tech-google-cloud: rgba(66, 133, 244, 0.5);
+  --tech-postman: rgba(255, 108, 55, 0.5);
+  --tech-supabase: rgba(63, 207, 142, 0.5);
+  --tech-mongodb: rgba(89, 150, 54, 0.5);
+  --tech-git: rgba(241, 80, 47, 0.5);
+  --tech-docker: rgba(0, 130, 202, 0.5);
+  --tech-tailwind: rgba(56, 189, 248, 0.5);
+  --tech-spring: rgba(61, 114, 26, 0.5);
+  --tech-fastapi: rgba(5, 153, 139, 0.5);
 }
 
-body.dark {
-  --bg: var(--neutral-900);
-  --bg-light: var(--neutral-800);
-  --bg-dark: var(--neutral-700);
-  --text: var(--neutral-50);
-  --text-muted: var(--neutral-300);
-  --primary: var(--accent-secondary);
-  --secondary: var(--accent-tertiary);
-  --card-bg: var(--neutral-800);
-  --card-border: var(--neutral-700);
-  --link-color: var(--text);
-  --link-hover-color: var(--text);
+/* --- THEME DEFINITIONS --- */
+
+/* Theme: Coral (Sunset) */
+body.theme-coral,
+[data-theme='coral'] {
+  --primary-light: #ea580c;
+  --primary-dark: #fb923c;
 }
 
+/* Theme: Rose (Electric) */
+body.theme-rose,
+[data-theme='rose'] {
+  --primary-light: #db2777;
+  --primary-dark: #f472b6;
+}
+
+/* Theme: Green (Acid/Nature) */
+body.theme-green,
+[data-theme='green'] {
+  --primary-light: #15803d;
+  --primary-dark: #4ade80;
+}
+
+/* Theme: Cherry (Vivid Red) */
+body.theme-cherry,
+[data-theme='cherry'] {
+  --primary-light: #dc2626;
+  --primary-dark: #f87171;
+}
+
+/* Theme: Amethyst (Electric Violet) */
+body.theme-amethyst,
+[data-theme='amethyst'] {
+  --primary-light: #7c3aed;
+  --primary-dark: #a78bfa;
+}
+
+/* Theme: Blue (Deep Ocean) */
+body.theme-blue,
+[data-theme='blue'] {
+  --primary-light: #2563eb;
+  --primary-dark: #60a5fa;
+}
+
+[data-theme] {
+  --primary: var(--primary-light);
+}
+
+body.dark-mode [data-theme] {
+  --primary: var(--primary-dark);
+}
+
+/* --- APP DEFAULTS & TRANSITIONS --- */
 body {
-  font-family: var(--font-sans);
-  font-size: var(--font-base-size);
-  line-height: 1.6;
-  background: var(--bg);
-  color: var(--text);
+  /* Default Theme: Coral */
+  --primary-light: #ea580c;
+  --primary-dark: #fb923c;
+
+  background-color: var(--bg-light);
+  color: var(--text-main-light);
+
+  --bg: var(--bg-light);
+  --primary: var(--primary-light);
+  --surface: var(--surface-light);
+  --text-muted: var(--text-muted-light);
+  --border: var(--border-light);
+  --danger: var(--danger-light);
 }
 
-a {
-  color: var(--link-color);
-}
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-main-dark);
 
-a:hover {
-  color: var(--link-hover-color);
+  --bg: var(--bg-dark);
+  --primary: var(--primary-dark);
+  --surface: var(--surface-dark);
+  --text-muted: var(--text-muted-dark);
+  --border: var(--border-dark);
+  --danger: var(--danger-dark);
 }
