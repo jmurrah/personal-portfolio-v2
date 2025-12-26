@@ -142,7 +142,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <h2 className="text-xl mb-1">About</h2>
+        <h2 className="text-xl mb-1 font-semibold">About</h2>
         <div className="flex flex-col gap-2">
           <p className="text-[var(--text-muted)]">
             I specialize in{' '}
@@ -199,7 +199,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <h2 className="text-xl mb-1">Currently</h2>
+        <h2 className="text-xl mb-1 font-semibold">Currently</h2>
         <div className="flex flex-col gap-1">
           <p className="text-[var(--text-muted)]">
             Software Engineer I @{' '}
@@ -216,7 +216,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col max-w-sm w-full">
-        <h2 className="text-xl mb-1">Education</h2>
+        <h2 className="text-xl mb-1 font-semibold">Education</h2>
         <div className="flex flex-col gap-1 w-full">
           <div>
             <p>Georgia Institute of Technology</p>
@@ -235,7 +235,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col w-full">
-        <h2 className="text-xl mb-1">Technologies</h2>
+        <h2 className="text-xl mb-1 font-semibold">Technologies</h2>
         <div className="flex flex-col gap-1 w-full">
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (
