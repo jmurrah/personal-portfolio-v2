@@ -38,16 +38,6 @@ export default function Home() {
               />
               <p className="text-[var(--text-muted)]">Full Stack Developer</p>
             </div>
-            {/* <div className="flex gap-1 items-center">
-              <SvgIcon
-                src={ICONS.calendar}
-                alt="Experience"
-                size="2xsmall"
-                color="var(--text-muted)"
-                hoverColor="var(--primary)"
-              />
-              <p className="text-[var(--text-muted)]">2+ YoE</p>
-            </div> */}
           </div>
           <div className="flex flex-wrap gap-x-4">
             {[

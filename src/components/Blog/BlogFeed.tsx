@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import type { FeedPost } from './types';
 import { getCachedBlogPosts, loadBlogPosts } from './feedService';
+import { getPostPath, getPostSlug } from './postRouting';
 import './BlogFeed.css';
-
-interface BlogFeedProps {
-  onSelect?: (post: FeedPost) => void;
-}
 
 function formatDate(value?: string | null) {
   if (!value) return '';
@@ -13,12 +11,11 @@ function formatDate(value?: string | null) {
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString();
 }
 
-export default function BlogFeed({ onSelect }: BlogFeedProps) {
+export default function BlogFeed() {
   const cachedPosts = useMemo(() => getCachedBlogPosts(), []);
   const [posts, setPosts] = useState<FeedPost[]>(cachedPosts ?? []);
   const [loading, setLoading] = useState(!cachedPosts);
   const [error, setError] = useState<string | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -90,32 +87,26 @@ export default function BlogFeed({ onSelect }: BlogFeedProps) {
       </p>
       <ul className="flex flex-col">
         {posts.map((post) => {
-          const id = post.guid ?? post.link ?? post.title ?? Math.random().toString(36);
+          const slug = getPostSlug(post);
+          const id = post.guid ?? post.link ?? slug;
           const publishedOn = formatDate(post.pubDate ?? undefined);
-          const isTitleHovered = hoveredCard === id;
 
           return (
-            <li
-              key={id}
-              className="blog-card border-t-2 border-[var(--border)] bg-[var(--surface)] p-3 cursor-pointer"
-              onClick={() => onSelect?.(post)}
-              onMouseEnter={() => setHoveredCard(id)}
-              onMouseLeave={() => {
-                setHoveredCard(null);
-              }}
-            >
-              <div className="flex justify-between">
-                <h3
-                  className={`blog-card__title text-lg font-semibold text-[color:var(--primary)] underline-fill w-fit ${
-                    isTitleHovered ? 'is-hovered' : ''
-                  }`}
-                >
-                  {post.title}
-                </h3>
-                <div className="flex items-center gap-2 text-base text-[color:var(--text-muted)]">
-                  {publishedOn && <span>{publishedOn}</span>}
+            <li key={id}>
+              <Link
+                to={getPostPath(post)}
+                className="blog-card block w-full border-t-2 border-[var(--border)] bg-[var(--surface)] p-3"
+                aria-label={post.title ? `Read ${post.title}` : 'Read blog post'}
+              >
+                <div className="flex justify-between">
+                  <h3 className="blog-card__title text-lg font-semibold text-[color:var(--primary)] underline-fill w-fit">
+                    {post.title}
+                  </h3>
+                  <div className="flex items-center gap-2 text-base text-[color:var(--text-muted)]">
+                    {publishedOn && <span>{publishedOn}</span>}
+                  </div>
                 </div>
-              </div>
+              </Link>
             </li>
           );
         })}

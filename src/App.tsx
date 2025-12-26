@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import About from '@/pages/About';
 import Blog from '@/pages/Blog';
+import BlogPost from '@/pages/BlogPost';
 import Education from '@/pages/Education';
 import Experience from '@/pages/Experience';
 import Home from '@/pages/Home';
@@ -32,11 +33,9 @@ export default function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="experience" element={<Experience />} />
-          <Route path="education" element={<Education />} />
           <Route path="projects" element={<Projects />} />
           <Route path="blog" element={<Blog />} />
+          <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

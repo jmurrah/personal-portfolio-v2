@@ -36,7 +36,7 @@ export default function AppLayout() {
   return (
     <>
       <PreloadAssets />
-      <div className="flex flex-col items-center my-4 sm:my-10 w-full">
+      <div className="flex flex-col items-center py-4 sm:py-10 w-full min-h-screen">
         <header className="max-w-3xl sticky top-0 px-4 z-11 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
           <TerminalBreadcrumb />
           <button
@@ -154,7 +154,7 @@ export default function AppLayout() {
             <Outlet />
           </div>
         </main>
-        <div className="w-full px-4 flex justify-center items-center">
+        <div className="w-full px-4 flex justify-center items-center mt-auto">
           <Footer />
         </div>
       </div>

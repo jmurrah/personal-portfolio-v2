@@ -1,8 +1,10 @@
+import { BlogContent } from "@/components/TabContent";
+
 export default function Blog() {
   return (
     <section>
-      <h1>Blog</h1>
-      <p>Placeholder page for Blog.</p>
+      <h1 className="text-3xl mb-6">Blog</h1>
+      <BlogContent />
     </section>
   );
 }

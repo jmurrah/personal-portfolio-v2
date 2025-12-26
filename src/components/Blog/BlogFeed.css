@@ -1,8 +1,18 @@
-.blog-card__title.underline-fill.is-hovered {
+.blog-card .blog-card__title.underline-fill {
+  transition: color 250ms ease-in-out;
+}
+
+.blog-card .blog-card__title.underline-fill::after {
+  transform: scaleY(0);
+}
+
+.blog-card:hover .blog-card__title.underline-fill,
+.blog-card:focus-within .blog-card__title.underline-fill {
   color: var(--surface);
 }
 
-.blog-card__title.underline-fill.is-hovered::after {
+.blog-card:hover .blog-card__title.underline-fill::after,
+.blog-card:focus-within .blog-card__title.underline-fill::after {
   transform: scaleY(1);
 }
 
