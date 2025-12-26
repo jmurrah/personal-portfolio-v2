@@ -157,7 +157,8 @@ export default function Home() {
       </div>
       <div className="flex flex-col max-w-sm w-full">
         <h2 className="text-xl mb-1 font-bold">Technologies</h2>
-        <div className="flex flex-col gap-1 w-full"></div>
+        <div className="flex flex-col gap-1 w-full">
+        </div>
       </div>
       <div className="w-full max-w-xs flex flex-col gap-2">
         <h2 className="flex items-center gap-2 text-xl">
