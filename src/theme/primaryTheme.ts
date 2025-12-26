@@ -1,9 +1,9 @@
-export const primaryThemes = ['coral', 'rose', 'green', 'cherry', 'blue', 'amethyst'] as const;
+export const primaryThemes = ['teal', 'rose', 'green', 'cherry', 'amethyst', 'blue'] as const;
 
 export type PrimaryThemeName = (typeof primaryThemes)[number];
 
 const STORAGE_KEY = 'theme';
-const DEFAULT_THEME: PrimaryThemeName = 'coral';
+const DEFAULT_THEME: PrimaryThemeName = 'blue';
 
 const themeClasses = primaryThemes.map((theme) => `theme-${theme}`);
 

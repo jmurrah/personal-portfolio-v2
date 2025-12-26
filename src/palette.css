@@ -12,6 +12,24 @@
   --text-muted-dark: #bcb3cc;
   --border-dark: #3a324d;
 
+  /* Theme palettes */
+  --theme-teal-primary-light: #0f766e;
+  --theme-teal-primary-dark: #2dd4bf;
+  --theme-rose-primary-light: #bb1f65;
+  --theme-rose-primary-dark: #f472b6;
+  --theme-green-primary-light: #137237;
+  --theme-green-primary-dark: #4ade80;
+  --theme-cherry-primary-light: #c40a11;
+  --theme-cherry-primary-dark: #ff3b3b;
+  --theme-amethyst-primary-light: #7834ec;
+  --theme-amethyst-primary-dark: #a78bfa;
+  --theme-blue-primary-light: #1556e6;
+  --theme-blue-primary-dark: #60a5fa;
+
+  /* Default theme (Blue) */
+  --primary-light: var(--theme-blue-primary-light);
+  --primary-dark: var(--theme-blue-primary-dark);
+
   /* Semantic colors */
   --danger-light: #ef4444;
   --danger-dark: #f87171;
@@ -36,46 +54,46 @@
 
 /* --- THEME DEFINITIONS --- */
 
-/* Theme: Coral (Sunset) */
-body.theme-coral,
-[data-theme='coral'] {
-  --primary-light: #ea580c;
-  --primary-dark: #fb923c;
+/* Theme: Teal (Sunset) */
+body.theme-teal,
+[data-theme='teal'] {
+  --primary-light: var(--theme-teal-primary-light);
+  --primary-dark: var(--theme-teal-primary-dark);
 }
 
 /* Theme: Rose (Electric) */
 body.theme-rose,
 [data-theme='rose'] {
-  --primary-light: #db2777;
-  --primary-dark: #f472b6;
+  --primary-light: var(--theme-rose-primary-light);
+  --primary-dark: var(--theme-rose-primary-dark);
 }
 
 /* Theme: Green (Acid/Nature) */
 body.theme-green,
 [data-theme='green'] {
-  --primary-light: #15803d;
-  --primary-dark: #4ade80;
+  --primary-light: var(--theme-green-primary-light);
+  --primary-dark: var(--theme-green-primary-dark);
 }
 
 /* Theme: Cherry (Vivid Red) */
 body.theme-cherry,
 [data-theme='cherry'] {
-  --primary-light: #dc2626;
-  --primary-dark: #f87171;
+  --primary-light: var(--theme-cherry-primary-light);
+  --primary-dark: var(--theme-cherry-primary-dark);
 }
 
 /* Theme: Amethyst (Electric Violet) */
 body.theme-amethyst,
 [data-theme='amethyst'] {
-  --primary-light: #7c3aed;
-  --primary-dark: #a78bfa;
+  --primary-light: var(--theme-amethyst-primary-light);
+  --primary-dark: var(--theme-amethyst-primary-dark);
 }
 
 /* Theme: Blue (Deep Ocean) */
 body.theme-blue,
 [data-theme='blue'] {
-  --primary-light: #2563eb;
-  --primary-dark: #60a5fa;
+  --primary-light: var(--theme-blue-primary-light);
+  --primary-dark: var(--theme-blue-primary-dark);
 }
 
 [data-theme] {
@@ -88,10 +106,6 @@ body.dark-mode [data-theme] {
 
 /* --- APP DEFAULTS & TRANSITIONS --- */
 body {
-  /* Default Theme: Coral */
-  --primary-light: #ea580c;
-  --primary-dark: #fb923c;
-
   background-color: var(--bg-light);
   color: var(--text-main-light);
 
