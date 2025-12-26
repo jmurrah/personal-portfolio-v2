@@ -1,11 +1,8 @@
 import './palette.css';
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import About from '@/pages/About';
 import Blog from '@/pages/Blog';
 import BlogPost from '@/pages/BlogPost';
-import Education from '@/pages/Education';
-import Experience from '@/pages/Experience';
 import Home from '@/pages/Home';
 import Projects from '@/pages/Projects';
 import AppLayout from '@/layouts/AppLayout';
