@@ -12,6 +12,8 @@ import { applyFont, getStoredFont, FONT_STACKS, type FontChoice } from '@/fontTo
 import './OptionSelector.css';
 import './PrimaryColorSelector.css';
 
+type CSSVars = CSSProperties & Record<string, string | number>;
+
 type ThemeFontToggleProps = {
   tileSize?: number | string;
   gap?: number | string;
@@ -58,17 +60,19 @@ export default function ThemeFontToggle({
   const modeLabel = nextMode === 'dark' ? 'Dark' : 'Light';
   const modeIcon = nextMode === 'dark' ? ICONS.moon : ICONS.sun;
 
-  const fontGridStyle: CSSProperties = {
+  const fontGridStyle: CSSVars = {
     '--option-columns': 2,
     '--tile-size': typeof tileSize === 'number' ? `${tileSize}px` : tileSize,
     '--tile-gap': isCompact ? '0px' : gap,
-    gridTemplateColumns: isCompact ? 'repeat(auto-fit, minmax(120px, 1fr))' : undefined,
-    gap: isCompact ? '0' : undefined,
   };
+  if (isCompact) {
+    fontGridStyle.gridTemplateColumns = 'repeat(auto-fit, minmax(120px, 1fr))';
+    fontGridStyle.gap = '0';
+  }
 
   const content = isCompact ? (
     <>
-      <div className="option-grid" style={{ '--option-columns': 1 } as CSSProperties}>
+      <div className="option-grid" style={{ '--option-columns': 1 } as CSSVars}>
         <button
           type="button"
           onClick={handleModeToggle}
@@ -115,10 +119,10 @@ export default function ThemeFontToggle({
         {
           '--tile-size': typeof tileSize === 'number' ? `${tileSize}px` : tileSize,
           '--tile-gap': gap,
-        } as CSSProperties
+        } as CSSVars
       }
     >
-      <div className="option-grid" style={{ '--option-columns': 1 } as CSSProperties}>
+      <div className="option-grid" style={{ '--option-columns': 1 } as CSSVars}>
         <button
           type="button"
           onClick={handleModeToggle}
