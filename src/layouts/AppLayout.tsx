@@ -3,10 +3,9 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
 import Footer from '@/components/Footer';
 import PreloadAssets from '@/components/PreloadAssets';
-import PrimaryColorSelector from '@/components/PrimaryColorSelector';
+import ThemeFontToggle from '@/components/ThemeFontToggle';
 import SvgIcon from '@/components/SvgIcon';
 import TerminalBreadcrumb from '@/components/TerminalBreadcrumb';
-import ThemeToggle from '@/components/ThemeToggle';
 
 type NavItem = {
   title: string;
@@ -123,9 +122,7 @@ export default function AppLayout() {
           }}
         >
           <div className="border-[color:var(--border)] flex h-16 flex-shrink-0 items-center justify-between border-b p-4">
-            <span className="text-[color:var(--primary)] font-mono text-lg font-semibold">
-              Navigation
-            </span>
+            <span className="text-[color:var(--primary)] text-lg font-semibold">Navigation</span>
             <button
               type="button"
               onClick={closeSidebar}
@@ -137,10 +134,7 @@ export default function AppLayout() {
           </div>
 
           <div className="border-[color:var(--border)] flex-shrink-0 border-b p-4">
-            <div className="pb-4">
-              <ThemeToggle />
-            </div>
-            <PrimaryColorSelector />
+            <ThemeFontToggle isCompact />
           </div>
 
           <nav className="flex-1 overflow-y-auto p-4">

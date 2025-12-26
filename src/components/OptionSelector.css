@@ -1,0 +1,73 @@
+.option-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--option-columns, 3), minmax(0, 1fr));
+  grid-auto-rows: var(--tile-size, 2.25rem);
+  gap: var(--tile-gap, 0.75rem);
+  align-content: start;
+}
+
+.option-btn {
+  width: 100%;
+  height: var(--tile-size, 2.25rem);
+  min-width: 0;
+  min-height: var(--tile-size, 2.25rem);
+  padding: 0 0.5rem;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.option-btn:hover,
+.option-btn:focus-visible {
+  border-color: color-mix(in srgb, var(--border) 75%, var(--primary) 25%);
+}
+
+.option-btn.selected {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--surface) 88%, var(--primary) 12%);
+}
+
+.option-btn--neutral {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface);
+}
+
+.option-btn--neutral:hover,
+.option-btn--neutral:focus-visible {
+  border-color: color-mix(in srgb, var(--border) 70%, var(--text) 30%);
+}
+
+.option-btn--neutral.selected {
+  border-color: color-mix(in srgb, var(--border) 70%, var(--text) 30%);
+  background: color-mix(in srgb, var(--surface) 85%, var(--text) 15%);
+  color: var(--text);
+}
+
+.font-group {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0;
+}
+
+.font-group .option-btn {
+  border-radius: 0;
+}
+
+.font-group .option-btn:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.font-group .option-btn + .option-btn {
+  border-left: 0;
+  border-top: 0;
+}
+
+.font-group .option-btn:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}

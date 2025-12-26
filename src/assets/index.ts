@@ -39,6 +39,8 @@ import BlogIcon from '@/assets/icons/BlogIcon.svg';
 import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
 import PaintIcon from '@/assets/icons/PaintIcon.svg';
 import ClockIcon from '@/assets/icons/ClockIcon.svg';
+import ATTIcon from '@/assets/icons/AT&TIcon.png';
+import AdtranIcon from '@/assets/icons/AdtranIcon.png';
 
 import CatsPhoto from '@/assets/photos/Cats.jpg';
 import GymPhoto from '@/assets/photos/Gym.png';
@@ -99,6 +101,8 @@ export const ICONS = {
   aubie: AubieIcon,
   buzz: BuzzIcon,
   clock: ClockIcon,
+  att: ATTIcon,
+  adtran: AdtranIcon,
 } as const;
 
 export const PHOTOS = {

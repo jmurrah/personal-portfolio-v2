@@ -20,22 +20,10 @@
   box-shadow: none;
   background-color: var(--primary);
   cursor: pointer;
-  transition: transform 150ms ease;
-}
-
-.primary-color-btn:hover,
-.primary-color-btn:focus-visible {
-  transform: scale(1.04);
 }
 
 .primary-color-btn.selected {
-  transform: scale(1.05);
   opacity: 1;
-}
-
-.primary-color-btn.selected:hover,
-.primary-color-btn.selected:focus-visible {
-  transform: scale(1.05);
 }
 
 .primary-color-ring {

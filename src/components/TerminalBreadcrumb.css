@@ -1,7 +1,5 @@
 .terminal-breadcrumb {
-  font-family:
-    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: var(--font-family);
   color: var(--text-muted);
 }
 

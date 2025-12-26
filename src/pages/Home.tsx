@@ -7,10 +7,9 @@ import {
   type CSSProperties,
 } from 'react';
 import { prefetchBlogPosts } from '@/components/Blog/feedService';
-import PrimaryColorSelector from '@/components/PrimaryColorSelector';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
-import ThemeToggle from '@/components/ThemeToggle';
+import ThemeFontToggle from '@/components/ThemeFontToggle';
 import { technologies } from '@/constants/technologies';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
@@ -198,39 +197,69 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div>
-        <h2 className="text-xl mb-1 font-semibold">Currently</h2>
-        <div className="flex flex-col gap-1">
-          <p className="text-[var(--text-muted)]">
-            Software Engineer I @{' '}
-            <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-              <span className="underline-fill">AT&T</span>
-            </a>
-          </p>
-          <p className="text-[var(--text-muted)]">
-            OMSCS @{' '}
-            <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-              <span className="underline-fill">Georgia Tech</span>
-            </a>
-          </p>
+      <div className="flex flex-wrap w-full justify-between gap-10">
+        <div className="w-fit flex-shrink-0">
+          <h2 className="text-xl mb-1 font-semibold">Currently</h2>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-[var(--text-muted)]">
+              Software Engineer I @{' '}
+              <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+                <span className="underline-fill">AT&T</span>
+              </a>
+            </h3>
+            <h3 className="text-[var(--text-muted)]">
+              OMSCS @{' '}
+              <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+                <span className="underline-fill">Georgia Tech</span>
+              </a>
+            </h3>
+            <h3 className="text-[var(--text-muted)]">
+              Writing @{' '}
+              <a
+                href="https://jacobmurrah.substack.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-fill"
+              >
+                Blog
+              </a>
+            </h3>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col max-w-sm w-full">
-        <h2 className="text-xl mb-1 font-semibold">Education</h2>
-        <div className="flex flex-col gap-1 w-full">
-          <div>
-            <p>Georgia Institute of Technology</p>
-            <div className="flex justify-between items-center gap-x-8">
-              <p className="text-sm text-[var(--text-muted)]">M.S. in Computer Science</p>
-              <p className="text-sm text-[var(--text-muted)]">Dec. 2028</p>
+        <div className="flex flex-col flex-1 min-w-[280px]">
+          <h2 className="text-xl mb-1 font-semibold">Education</h2>
+          <div className="flex flex-col gap-1 w-full">
+            <div>
+              <h3>Georgia Institute of Technology</h3>
+              <div className="flex justify-between items-center gap-x-2">
+                <p className="text-sm text-[var(--text-muted)]">M.S. in Computer Science</p>
+                <p className="text-sm text-[var(--text-muted)]">Dec. 2028</p>
+              </div>
+            </div>
+            <div>
+              <h3>Auburn University</h3>
+              <div className="flex justify-between items-center gap-x-2">
+                <p className="text-sm text-[var(--text-muted)]">B.E. in Software Engineering</p>
+                <p className="text-sm text-[var(--text-muted)]">Dec. 2025</p>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="">
+        <h2 className="text-xl mb-1 font-semibold">Experience</h2>
+        <div className="flex flex-col gap-1">
           <div>
-            <p>Auburn University</p>
-            <div className="flex justify-between items-center gap-x-8">
-              <p className="text-sm text-[var(--text-muted)]">B.E. in Software Engineering</p>
-              <p className="text-sm text-[var(--text-muted)]">Dec. 2025</p>
-            </div>
+            <h3 className="flex items-center gap-2 text-lg">
+              <img className="h-5 w-5" src={ICONS.att} alt="AT&T" />
+              AT&T
+            </h3>
+          </div>
+          <div>
+            <h3 className="flex items-center gap-2 text-lg">
+              <img className="h-5 w-5" src={ICONS.adtran} alt="Adtran" />
+              Adtran
+            </h3>
           </div>
         </div>
       </div>
@@ -244,18 +273,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full max-w-xs flex flex-col gap-2">
-        <h2 className="flex items-center gap-2 text-xl">
+      <div className="w-full flex flex-col gap-3">
+        <h2 className="flex items-center gap-2 text-lg">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
-          <span>Theme</span>
+          <span>Theme &amp; Font</span>
         </h2>
-        <ThemeToggle />
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1 w-full">
-            <p>Primary Color:</p>
-            <PrimaryColorSelector tileSize={28} gap="0.75rem" />
-          </div>
-        </div>
+        <ThemeFontToggle />
       </div>
     </div>
   );

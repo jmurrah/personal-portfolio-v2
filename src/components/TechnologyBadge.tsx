@@ -9,16 +9,6 @@ export default function TechnologyBadge({ name, logoSrc, accent }: TechnologyBad
     <div
       className="inline-flex items-center gap-1.5 rounded-sm border p-1.5"
       style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}
-      onMouseEnter={(event) => {
-        const target = event.currentTarget;
-        target.style.backgroundColor = 'color-mix(in srgb, var(--surface) 88%, var(--primary) 12%)';
-        target.style.borderColor = 'color-mix(in srgb, var(--border) 75%, var(--primary) 25%)';
-      }}
-      onMouseLeave={(event) => {
-        const target = event.currentTarget;
-        target.style.backgroundColor = 'var(--surface)';
-        target.style.borderColor = 'var(--border)';
-      }}
     >
       <span
         className="tech-badge__icon flex h-6 w-6 items-center justify-center rounded-sm"

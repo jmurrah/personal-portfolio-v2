@@ -60,7 +60,10 @@ export default function Footer() {
       <div className="flex flex-col flex-wrap justify-between items-center gap-x-4 gap-y-2 min-[480px]:flex-row">
         <span className="whitespace-nowrap">© {year} Jacob Murrah</span>
         <div className="flex flex-wrap gap-x-8 gap-y-4 sm:gap-x-4 justify-center items-center">
-          <div className="flex items-center gap-1.5 font-mono text-xs">
+          <div
+            className="flex items-center gap-1.5 text-xs"
+            style={{ fontFamily: 'var(--font-family)' }}
+          >
             <SvgIcon src={ICONS.clock} alt="Clock" size="3xsmall" color="var(--text-muted)" />
             <span className="italic">{time}</span>
             <span className="text-[color:var(--text-muted)]">{timeZoneName}</span>

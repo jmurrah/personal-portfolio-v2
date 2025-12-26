@@ -4,6 +4,7 @@ export type ModeName = 'light' | 'dark';
 
 const MODE_KEY = 'mode';
 const DEFAULT_MODE: ModeName = 'dark';
+export const MODE_CHANGED_EVENT = 'mode-change';
 
 const isModeName = (value: string | null): value is ModeName =>
   value === 'light' || value === 'dark';
@@ -31,6 +32,9 @@ export const applyMode = (mode: ModeName) => {
     localStorage.setItem(MODE_KEY, mode);
   } catch {
     // localStorage is best-effort.
+  }
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(MODE_CHANGED_EVENT, { detail: { mode } }));
   }
 };
 

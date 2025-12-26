@@ -41,20 +41,10 @@ export default function BlogFeed() {
       }
     }
 
-    function handleReady() {
-      if (!isMounted) return;
-      fetchPosts();
-    }
-
-    if (document.readyState === 'complete') {
-      handleReady();
-    } else {
-      window.addEventListener('load', handleReady, { once: true });
-    }
+    fetchPosts();
 
     return () => {
       isMounted = false;
-      window.removeEventListener('load', handleReady);
     };
   }, [cachedPosts]);
 
