@@ -106,29 +106,35 @@ export default function Home() {
       </div>
       <div>
         <h2 className="text-xl mb-1 font-bold">About</h2>
-        <p>
-          I specialize in full-stack development and build applications that prioritize simplicity
-          and efficiency.
-        </p>
-        <p>
-          When I'm not coding, you'll find me at the gym, playing Valorant, or watching Anime, all
-          with my wife and cats!
-        </p>
+        <div className="flex flex-col gap-2">
+          <p>
+            I specialize in <span className="font-bold">full-stack</span> development and build
+            applications that prioritize <span className="font-bold">simplicity</span> and{' '}
+            <span className="font-bold">efficiency</span>. My experience in{' '}
+            <span className="font-bold">machine learning</span> and{' '}
+            <span className="font-bold">system design</span> allows me to create{' '}
+            <span className="font-bold">intelligent</span> and{' '}
+            <span className="font-bold">scalable</span> systems.
+          </p>
+          <p>When I'm not coding, I enjoy hanging out with my wife and cats!</p>
+        </div>
       </div>
       <div>
         <h2 className="text-xl mb-1 font-bold">Currently</h2>
-        <p>
-          Software Engineer I @{' '}
-          <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-            <span className="underline-fill">AT&T</span>
-          </a>
-        </p>
-        <p>
-          OMSCS @{' '}
-          <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
-            <span className="underline-fill">Georgia Tech</span>
-          </a>
-        </p>
+        <div className="flex flex-col gap-1">
+          <p>
+            Software Engineer I @{' '}
+            <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+              <span className="underline-fill">AT&T</span>
+            </a>
+          </p>
+          <p>
+            OMSCS @{' '}
+            <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
+              <span className="underline-fill">Georgia Tech</span>
+            </a>
+          </p>
+        </div>
       </div>
       <div className="flex flex-col max-w-sm w-full">
         <h2 className="text-xl mb-1 font-bold">Education</h2>
@@ -149,6 +155,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className="flex flex-col max-w-sm w-full">
+        <h2 className="text-xl mb-1 font-bold">Technologies</h2>
+        <div className="flex flex-col gap-1 w-full">
+        </div>
+      </div>
       <div className="w-full max-w-xs flex flex-col gap-2">
         <h2 className="flex items-center gap-2 text-xl">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
@@ -162,10 +173,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <section className="flex flex-col gap-3">
+      {/* <section className="flex flex-col gap-3">
         <h2 className="text-2xl font-semibold">Experience</h2>
         <ExperienceContent />
-      </section>
+      </section> */}
       {/* <div className="h-20 w-30">
         <h2>Theme</h2>
         <PrimaryColorSelector tileSize={28} gap="0.75rem" />
