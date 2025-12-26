@@ -1,4 +1,4 @@
-import { BlogContent } from "@/components/TabContent";
+import { BlogContent } from '@/components/TabContent';
 
 export default function Blog() {
   return (

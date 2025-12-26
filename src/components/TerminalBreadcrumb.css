@@ -25,7 +25,6 @@
 .terminal-breadcrumb__link {
   color: var(--text-muted);
   text-decoration: none;
-  transition: color 150ms ease;
 }
 
 .terminal-breadcrumb__link--home {
@@ -44,10 +43,6 @@
 .terminal-breadcrumb__link:hover,
 .terminal-breadcrumb__link:focus-visible {
   color: var(--primary);
-}
-
-.terminal-breadcrumb__current {
-  color: var(--text-main);
 }
 
 .terminal-breadcrumb__cursor {

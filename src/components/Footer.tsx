@@ -57,12 +57,12 @@ export default function Footer() {
 
   return (
     <footer className="mt-10 w-full max-w-2xl rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] px-5 py-4 text-sm text-[color:var(--text-muted)]">
-      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 md:flex-row">
+      <div className="flex flex-col flex-wrap justify-between items-center gap-x-4 gap-y-2 min-[480px]:flex-row">
         <span className="whitespace-nowrap">© {year} Jacob Murrah</span>
         <div className="flex flex-wrap gap-x-8 gap-y-4 sm:gap-x-4 justify-center items-center">
           <div className="flex items-center gap-1.5 font-mono text-xs">
             <SvgIcon src={ICONS.clock} alt="Clock" size="3xsmall" color="var(--text-muted)" />
-            <span className="text-[color:var(--text-main)] italic">{time}</span>
+            <span className="italic">{time}</span>
             <span className="text-[color:var(--text-muted)]">{timeZoneName}</span>
           </div>
           <span className="hidden h-4 w-px bg-[color:var(--border)] sm:inline-block" />

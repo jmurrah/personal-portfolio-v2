@@ -106,40 +106,31 @@ a {
 .underline-fill,
 .post-content a {
   color: var(--primary);
-  position: relative;
-  display: inline-block;
   text-decoration: none;
-  isolation: isolate;
   line-height: 1.5rem;
   padding-left: 0.1rem;
   padding-right: 0.1rem;
-}
-
-.underline-fill::after,
-.post-content a::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--primary);
-  z-index: -1;
-  transform: scaleY(0.05);
-  transform-origin: center bottom;
-  transition: transform 250ms ease;
+  display: inline;
+  background-image: linear-gradient(var(--primary), var(--primary));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.12em;
+  transition-property: background-size, color;
+  transition-duration: 250ms, 0ms;
+  transition-timing-function: ease, ease-in-out;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .underline-fill:hover,
 .underline-fill:focus-visible,
 .post-content a:hover,
-.post-content a:focus-visible {
+.post-content a:focus-visible,
+a:hover .underline-fill,
+a:focus-visible .underline-fill {
   color: var(--surface);
-  transition: color 250ms ease-in-out;
-}
-
-.underline-fill:hover::after,
-.underline-fill:focus-visible::after,
-.post-content a:hover::after,
-.post-content a:focus-visible::after {
-  transform: scaleY(1);
+  transition-duration: 250ms, 250ms;
+  background-size: 100% 100%;
 }
 
 .hover-active.timeline-title {

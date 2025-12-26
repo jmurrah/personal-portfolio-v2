@@ -99,8 +99,8 @@ export default function BlogFeed() {
                 aria-label={post.title ? `Read ${post.title}` : 'Read blog post'}
               >
                 <div className="flex justify-between">
-                  <h3 className="blog-card__title text-lg font-semibold text-[color:var(--primary)] underline-fill w-fit">
-                    {post.title}
+                  <h3 className="blog-card__title text-lg font-semibold text-[color:var(--primary)]">
+                    <span className="underline-fill">{post.title}</span>
                   </h3>
                   <div className="flex items-center gap-2 text-base text-[color:var(--text-muted)]">
                     {publishedOn && <span>{publishedOn}</span>}

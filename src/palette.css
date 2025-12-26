@@ -95,6 +95,7 @@ body {
   background-color: var(--bg-light);
   color: var(--text-main-light);
 
+  --bg: var(--bg-light);
   --primary: var(--primary-light);
   --surface: var(--surface-light);
   --text-muted: var(--text-muted-light);
@@ -106,6 +107,7 @@ body.dark-mode {
   background-color: var(--bg-dark);
   color: var(--text-main-dark);
 
+  --bg: var(--bg-dark);
   --primary: var(--primary-dark);
   --surface: var(--surface-dark);
   --text-muted: var(--text-muted-dark);

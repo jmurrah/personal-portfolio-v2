@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
 import Footer from '@/components/Footer';
@@ -16,7 +16,9 @@ type NavItem = {
 
 export default function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isHeaderStuck, setIsHeaderStuck] = useState(false);
   const { pathname } = useLocation();
+  const headerSentinelRef = useRef<HTMLDivElement | null>(null);
 
   const mainNavItems: NavItem[] = [
     { title: 'Home', href: '/' },
@@ -33,46 +35,67 @@ export default function AppLayout() {
     setIsSidebarOpen(false);
   };
 
+  useEffect(() => {
+    const sentinel = headerSentinelRef.current;
+    if (!sentinel || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsHeaderStuck(!entry.isIntersecting);
+    });
+
+    observer.observe(sentinel);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <>
       <PreloadAssets />
       <div className="flex flex-col items-center py-4 sm:py-10 w-full min-h-screen">
-        <header className="max-w-3xl sticky top-0 px-4 z-11 flex h-24 w-full items-center justify-between pt-5 pb-10 select-none backdrop-blur-[10px] [mask:linear-gradient(black,black,transparent)]">
-          <TerminalBreadcrumb />
-          <button
-            type="button"
-            onClick={toggleSidebar}
-            className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded p-2 min-[576px]:hidden"
-            aria-label="Open navigation menu"
-            aria-expanded={isSidebarOpen}
-            aria-controls="sidebar-nav"
-          >
-            <SvgIcon src={ICONS.menu} alt="" size="medium" style={{ width: 24, height: 24 }} />
-            <span className="sr-only">Menu</span>
-          </button>
-          <nav className="hidden items-center space-x-4 min-[576px]:flex">
-            {mainNavItems.map((item) =>
-              item.external ? (
-                <a
-                  key={item.title}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium transition-colors duration-150"
-                >
-                  {item.title}
-                </a>
-              ) : (
-                <Link
-                  key={item.title}
-                  to={item.href}
-                  className="text-[color:var(--text-main)] hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium transition-colors duration-150"
-                >
-                  {item.title}
-                </Link>
-              ),
-            )}
-          </nav>
+        <div ref={headerSentinelRef} className="h-px w-full" aria-hidden="true" />
+        <header
+          className={`max-w-3xl sticky top-0 z-11 w-full bg-[color:var(--bg)] mb-10 border-b ${
+            isHeaderStuck ? 'border-[color:var(--border)]' : 'border-transparent'
+          }`}
+        >
+          <div className="flex h-24 w-full items-center justify-between px-4 pt-5 select-none">
+            <TerminalBreadcrumb />
+            <button
+              type="button"
+              onClick={toggleSidebar}
+              className="hover:text-[color:var(--primary)] rounded p-2 min-[576px]:hidden"
+              aria-label="Open navigation menu"
+              aria-expanded={isSidebarOpen}
+              aria-controls="sidebar-nav"
+            >
+              <SvgIcon src={ICONS.menu} alt="" size="medium" style={{ width: 24, height: 24 }} />
+              <span className="sr-only">Menu</span>
+            </button>
+            <nav className="hidden items-center space-x-4 min-[576px]:flex">
+              {mainNavItems.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.title}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[var(--primary)] rounded px-3 py-2 text-sm font-medium"
+                  >
+                    {item.title}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.title}
+                    to={item.href}
+                    className="hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium"
+                  >
+                    {item.title}
+                  </Link>
+                ),
+              )}
+            </nav>
+          </div>
         </header>
 
         {isSidebarOpen ? (
@@ -91,7 +114,7 @@ export default function AppLayout() {
 
         <aside
           id="sidebar-nav"
-          className={`bg-[color:var(--surface)] text-[color:var(--text-main)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 transform flex-col border-l shadow-xl transition-transform duration-300 ease-in-out ${
+          className={`bg-[color:var(--surface)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 transform flex-col border-l shadow-xl transition-transform duration-300 ease-in-out ${
             isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -127,7 +150,7 @@ export default function AppLayout() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
+                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
                         onClick={closeSidebar}
                       >
                         {item.title}
@@ -135,7 +158,7 @@ export default function AppLayout() {
                     ) : (
                       <Link
                         to={item.href}
-                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 transition-colors duration-150 focus:outline-none"
+                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
                         aria-current={isActive ? 'page' : undefined}
                         onClick={closeSidebar}
                       >

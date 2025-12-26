@@ -25,7 +25,7 @@
   color: var(--primary);
   font-weight: 600;
   font-size: 15px;
-  background: transparent;
+  background-color: transparent;
   border: none;
   padding: 4px 0;
   cursor: pointer;
@@ -52,8 +52,7 @@
   text-decoration: none;
 }
 .post-title-link {
-  display: inline-block;
-  width: fit-content;
+  display: inline;
 }
 
 .post-subtitle {
@@ -125,6 +124,10 @@
   font-size: 20px;
 }
 
+.post-content h4 {
+  font-size: 18px;
+}
+
 .post-content ul,
 .post-content ol {
   padding-left: 24px;
@@ -183,20 +186,16 @@
   cursor: default;
   padding: 0;
   position: static;
+  background-image: none;
+  background-size: 0;
 }
-
-.post-content a:has(img)::after,
-.post-content a:has(figure)::after {
-  content: none;
-}
-
 .post-content .footnote-anchor,
 .post-content .footnote-number {
   line-height: 1;
   font-weight: 600;
   color: var(--primary);
   text-decoration: none;
-  background: transparent;
+  background-color: transparent;
 }
 
 .post-content .footnote-anchor {
@@ -225,6 +224,11 @@
   gap: 10px;
   font-size: 14px;
   color: var(--text-muted);
+}
+
+.post-content [id^='footnote-'],
+.post-content [id^='footnote-anchor-'] {
+  scroll-margin-top: 80px;
 }
 
 .post-content .footnote-number {

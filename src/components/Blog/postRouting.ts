@@ -14,7 +14,10 @@ function formatDateSlug(value?: string | null) {
 function getTitleAcronym(title?: string | null) {
   if (!title) return '';
   const words = title.match(/[a-z0-9]+(?:'[a-z0-9]+)*/gi) ?? [];
-  return words.map((word) => word[0]).join('').toLowerCase();
+  return words
+    .map((word) => word[0])
+    .join('')
+    .toLowerCase();
 }
 
 function slugifyFallback(value: string) {

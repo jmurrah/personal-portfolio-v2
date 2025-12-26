@@ -42,15 +42,15 @@ export default function BlogPost() {
     };
   }, []);
 
-  if (!slug) {
-    return <Navigate to="/blog" replace />;
-  }
-
-  const normalizedSlug = slug.toLowerCase();
+  const normalizedSlug = (slug ?? '').toLowerCase();
   const post = useMemo(
     () => posts.find((item) => getPostSlug(item) === normalizedSlug),
     [posts, normalizedSlug],
   );
+
+  if (!slug) {
+    return <Navigate to="/blog" replace />;
+  }
 
   if (loading) {
     return <div>Loading post...</div>;

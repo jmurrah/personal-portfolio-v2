@@ -117,9 +117,9 @@ export default function PostView({ post, onBack }: PostViewProps) {
                 href={post.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="post-title-link underline-fill"
+                className="post-title-link"
               >
-                {post.title}
+                <span className="underline-fill">{post.title}</span>
               </a>
             ) : (
               <h1 className="post-title">{post.title}</h1>
