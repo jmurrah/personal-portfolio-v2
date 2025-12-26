@@ -1,16 +1,31 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from 'react';
 import { prefetchBlogPosts } from '@/components/Blog/feedService';
 import PrimaryColorSelector from '@/components/PrimaryColorSelector';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
 import ThemeToggle from '@/components/ThemeToggle';
-// import { ExperienceContent } from '@/components/TabContent';
+import { technologies } from '@/constants/technologies';
+import TechnologyBadge from '@/components/TechnologyBadge';
+import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
 
 export default function Home() {
   const headerRowRef = useRef<HTMLDivElement | null>(null);
   const headshotRef = useRef<HTMLImageElement | null>(null);
   const headerContentRef = useRef<HTMLDivElement | null>(null);
   const [isHeaderWrapped, setIsHeaderWrapped] = useState(false);
+  const { theme, primaryThemes } = usePrimaryTheme();
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() =>
+    typeof document !== 'undefined'
+      ? document.documentElement.classList.contains('dark-mode')
+      : false,
+  );
 
   const updateHeaderWrap = useCallback(() => {
     const image = headshotRef.current;
@@ -45,6 +60,28 @@ export default function Home() {
       cancelAnimationFrame(frame);
     };
   }, [updateHeaderWrap]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains('dark-mode'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const accentThemes = (() => {
+    const idx = primaryThemes.indexOf(theme);
+    if (idx === -1) return primaryThemes;
+    return [...primaryThemes.slice(idx + 1), ...primaryThemes.slice(0, idx)];
+  })();
+
+  const getAccentColor = (index: number) => {
+    const sourceList = accentThemes.length ? accentThemes : primaryThemes;
+    const colorName = sourceList[index % sourceList.length];
+    const shade = isDarkMode ? 'dark' : 'light';
+    return `var(--theme-${colorName}-primary-${shade})`;
+  };
 
   return (
     <div className="flex flex-wrap gap-10">
@@ -89,9 +126,9 @@ export default function Home() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group gap-0.5 flex items-center text-[color:var(--text-muted)] transition-all duration-200 hover:text-[color:var(--text)]"
+                className="group gap-0.5 flex items-center text-[color:var(--text-muted)] hover:text-[var(--text)]"
               >
-                <span className="transition-colors duration-200">{link.label}</span>
+                <span>{link.label}</span>
                 <SvgIcon
                   src={ICONS.arrowUpRight}
                   alt={`${link.label} link`}
@@ -105,30 +142,72 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <h2 className="text-xl mb-1 font-bold">About</h2>
+        <h2 className="text-xl mb-1">About</h2>
         <div className="flex flex-col gap-2">
-          <p>
-            I specialize in <span className="font-bold">full-stack</span> development and build
-            applications that prioritize <span className="font-bold">simplicity</span> and{' '}
-            <span className="font-bold">efficiency</span>. My experience in{' '}
-            <span className="font-bold">machine learning</span> and{' '}
-            <span className="font-bold">system design</span> allows me to create{' '}
-            <span className="font-bold">intelligent</span> and{' '}
-            <span className="font-bold">scalable</span> systems.
+          <p className="text-[var(--text-muted)]">
+            I specialize in{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(0) } as CSSProperties}
+            >
+              full-stack development
+            </span>{' '}
+            and build applications that prioritize{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(1) } as CSSProperties}
+            >
+              simplicity
+            </span>{' '}
+            and{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(2) } as CSSProperties}
+            >
+              efficiency
+            </span>
+            . My experience in{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(3) } as CSSProperties}
+            >
+              machine learning
+            </span>{' '}
+            and{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(4) } as CSSProperties}
+            >
+              system design
+            </span>{' '}
+            enables me to create{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(5) } as CSSProperties}
+            >
+              intelligent
+            </span>{' '}
+            and{' '}
+            <span
+              className="accent-underline"
+              style={{ '--accent-underline-color': getAccentColor(6) } as React.CSSProperties}
+            >
+              scalable
+            </span>{' '}
+            systems.
           </p>
-          <p>When I'm not coding, I enjoy hanging out with my wife and cats!</p>
         </div>
       </div>
       <div>
-        <h2 className="text-xl mb-1 font-bold">Currently</h2>
+        <h2 className="text-xl mb-1">Currently</h2>
         <div className="flex flex-col gap-1">
-          <p>
+          <p className="text-[var(--text-muted)]">
             Software Engineer I @{' '}
             <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
               <span className="underline-fill">AT&T</span>
             </a>
           </p>
-          <p>
+          <p className="text-[var(--text-muted)]">
             OMSCS @{' '}
             <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
               <span className="underline-fill">Georgia Tech</span>
@@ -137,7 +216,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col max-w-sm w-full">
-        <h2 className="text-xl mb-1 font-bold">Education</h2>
+        <h2 className="text-xl mb-1">Education</h2>
         <div className="flex flex-col gap-1 w-full">
           <div>
             <p>Georgia Institute of Technology</p>
@@ -155,9 +234,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col max-w-sm w-full">
-        <h2 className="text-xl mb-1 font-bold">Technologies</h2>
-        <div className="flex flex-col gap-1 w-full"></div>
+      <div className="flex flex-col w-full">
+        <h2 className="text-xl mb-1">Technologies</h2>
+        <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-wrap gap-2">
+            {technologies.map((tech) => (
+              <TechnologyBadge key={tech.name} {...tech} />
+            ))}
+          </div>
+        </div>
       </div>
       <div className="w-full max-w-xs flex flex-col gap-2">
         <h2 className="flex items-center gap-2 text-xl">
@@ -172,53 +257,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">Experience</h2>
-        <ExperienceContent />
-      </section> */}
-      {/* <div className="h-20 w-30">
-        <h2>Theme</h2>
-        <PrimaryColorSelector tileSize={28} gap="0.75rem" />
-      </div> */}
-      {/* <div className="flex flex-wrap items-center gap-4">
-        <ThemeToggle />
-        <PrimaryColorSelector />
-        <CurrentTime />
-      </div>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">Technologies</h2>
-        <div className="flex flex-wrap gap-2">
-          {technologies.map((tech) => (
-            <TechnologyBadge key={tech.name} {...tech} />
-          ))}
-        </div>
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">About</h2>
-        <AboutContent />
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">Experience</h2>
-        <ExperienceContent />
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">Education</h2>
-        <EducationContent />
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">Projects</h2>
-        <ProjectsContent />
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold">Blog</h2>
-        <BlogContent />
-      </section> */}
     </div>
   );
 }

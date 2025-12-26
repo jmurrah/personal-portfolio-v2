@@ -24,7 +24,6 @@ import BriefcaseIcon from '@/assets/icons/BriefcaseIcon.svg';
 import CalendarIcon from '@/assets/icons/CalendarIcon.svg';
 import CodeIcon from '@/assets/icons/CodeIcon.svg';
 import CoffeeIcon from '@/assets/icons/CoffeeIcon.svg';
-import EducationIcon from '@/assets/icons/EducationIcon.svg';
 import FileDownloadIcon from '@/assets/icons/FileDownloadIcon.svg';
 import GitHubIcon from '@/assets/icons/GitHubIcon.svg';
 import LeetCodeIcon from '@/assets/icons/LeetCodeIcon.svg';
@@ -83,7 +82,6 @@ export const ICONS = {
   calendar: CalendarIcon,
   code: CodeIcon,
   coffee: CoffeeIcon,
-  education: EducationIcon,
   fileDownload: FileDownloadIcon,
   gitHub: GitHubIcon,
   leetCode: LeetCodeIcon,

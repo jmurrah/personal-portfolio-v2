@@ -228,7 +228,7 @@
 
 .post-content [id^='footnote-'],
 .post-content [id^='footnote-anchor-'] {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 100px;
 }
 
 .post-content .footnote-number {

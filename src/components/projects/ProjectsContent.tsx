@@ -74,7 +74,6 @@ export default function ProjectsContent() {
         </ul>
       </section>
 
-      {/* <p className="text-lg mt-4">All Projects</p> */}
       <div className="flex flex-col gap-6 mt-12">
         {projectList.map((project) => (
           <ProjectItem key={`${project.title}-${project.year}`} {...project} />

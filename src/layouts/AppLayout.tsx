@@ -59,12 +59,12 @@ export default function AppLayout() {
             isHeaderStuck ? 'border-[color:var(--border)]' : 'border-transparent'
           }`}
         >
-          <div className="flex h-24 w-full items-center justify-between px-4 pt-5 select-none">
+          <div className="flex h-24 w-full items-center justify-between px-4 select-none">
             <TerminalBreadcrumb />
             <button
               type="button"
               onClick={toggleSidebar}
-              className="hover:text-[color:var(--primary)] rounded p-2 min-[576px]:hidden"
+              className="nav-link hover:text-[var(--primary)] rounded p-2 min-[576px]:hidden"
               aria-label="Open navigation menu"
               aria-expanded={isSidebarOpen}
               aria-controls="sidebar-nav"
@@ -80,7 +80,7 @@ export default function AppLayout() {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[var(--primary)] rounded px-3 py-2 text-sm font-medium"
+                    className="nav-link hover:text-[var(--primary)] rounded px-3 py-2 text-sm font-medium"
                   >
                     {item.title}
                   </a>
@@ -88,7 +88,7 @@ export default function AppLayout() {
                   <Link
                     key={item.title}
                     to={item.href}
-                    className="hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium"
+                    className="nav-link hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium"
                   >
                     {item.title}
                   </Link>
@@ -97,9 +97,9 @@ export default function AppLayout() {
             </nav>
           </div>
         </header>
-
         {isSidebarOpen ? (
           <div
+            className="fixed inset-0 z-30 bg-black/25 backdrop-blur-sm"
             onClick={closeSidebar}
             onKeyDown={(event) => {
               if (event.key === 'Escape') {
@@ -114,9 +114,13 @@ export default function AppLayout() {
 
         <aside
           id="sidebar-nav"
-          className={`bg-[color:var(--surface)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 transform flex-col border-l shadow-xl transition-transform duration-300 ease-in-out ${
-            isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          aria-hidden={!isSidebarOpen}
+          className="bg-[color:var(--surface)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 flex-col border-l shadow-xl transition-transform duration-300 ease-in-out"
+          style={{
+            transform: isSidebarOpen ? 'translateX(0)' : 'translateX(100%)',
+            opacity: isSidebarOpen ? 1 : 0,
+            pointerEvents: isSidebarOpen ? 'auto' : 'none',
+          }}
         >
           <div className="border-[color:var(--border)] flex h-16 flex-shrink-0 items-center justify-between border-b p-4">
             <span className="text-[color:var(--primary)] font-mono text-lg font-semibold">
@@ -125,7 +129,7 @@ export default function AppLayout() {
             <button
               type="button"
               onClick={closeSidebar}
-              className="text-[color:var(--text-muted)] hover:text-[color:var(--primary)] rounded"
+              className="nav-link text-[color:var(--text-muted)] hover:text-[color:var(--primary)] rounded"
               aria-label="Close navigation menu"
             >
               Close
@@ -150,7 +154,7 @@ export default function AppLayout() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
+                        className="nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
                         onClick={closeSidebar}
                       >
                         {item.title}
@@ -158,7 +162,7 @@ export default function AppLayout() {
                     ) : (
                       <Link
                         to={item.href}
-                        className="hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
+                        className="nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
                         aria-current={isActive ? 'page' : undefined}
                         onClick={closeSidebar}
                       >

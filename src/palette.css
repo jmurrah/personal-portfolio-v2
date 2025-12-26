@@ -13,22 +13,22 @@
   --border-dark: #3a324d;
 
   /* Theme palettes */
-  --theme-teal-primary-light: #0f766e;
+  --theme-teal-primary-light: #0e6f66;
   --theme-teal-primary-dark: #2dd4bf;
-  --theme-rose-primary-light: #bb1f65;
-  --theme-rose-primary-dark: #f472b6;
-  --theme-green-primary-light: #137237;
-  --theme-green-primary-dark: #4ade80;
-  --theme-cherry-primary-light: #c40a11;
-  --theme-cherry-primary-dark: #ff3b3b;
-  --theme-amethyst-primary-light: #7834ec;
-  --theme-amethyst-primary-dark: #a78bfa;
   --theme-blue-primary-light: #1556e6;
   --theme-blue-primary-dark: #60a5fa;
+  --theme-amethyst-primary-light: #7834ec;
+  --theme-amethyst-primary-dark: #a78bfa;
+  --theme-rose-primary-light: #bb1f65;
+  --theme-rose-primary-dark: #f472b6;
+  --theme-cherry-primary-light: #c40a11;
+  --theme-cherry-primary-dark: #ff3b3b;
+  --theme-green-primary-light: #137237;
+  --theme-green-primary-dark: #4ade80;
 
-  /* Default theme (Blue) */
-  --primary-light: var(--theme-blue-primary-light);
-  --primary-dark: var(--theme-blue-primary-dark);
+  /* Default theme (Teal) */
+  --primary-light: var(--theme-teal-primary-light);
+  --primary-dark: var(--theme-teal-primary-dark);
 
   /* Semantic colors */
   --danger-light: #ef4444;
@@ -53,47 +53,40 @@
 }
 
 /* --- THEME DEFINITIONS --- */
-
-/* Theme: Teal (Sunset) */
 body.theme-teal,
 [data-theme='teal'] {
   --primary-light: var(--theme-teal-primary-light);
   --primary-dark: var(--theme-teal-primary-dark);
 }
 
-/* Theme: Rose (Electric) */
-body.theme-rose,
-[data-theme='rose'] {
-  --primary-light: var(--theme-rose-primary-light);
-  --primary-dark: var(--theme-rose-primary-dark);
+body.theme-blue,
+[data-theme='blue'] {
+  --primary-light: var(--theme-blue-primary-light);
+  --primary-dark: var(--theme-blue-primary-dark);
 }
 
-/* Theme: Green (Acid/Nature) */
-body.theme-green,
-[data-theme='green'] {
-  --primary-light: var(--theme-green-primary-light);
-  --primary-dark: var(--theme-green-primary-dark);
-}
-
-/* Theme: Cherry (Vivid Red) */
-body.theme-cherry,
-[data-theme='cherry'] {
-  --primary-light: var(--theme-cherry-primary-light);
-  --primary-dark: var(--theme-cherry-primary-dark);
-}
-
-/* Theme: Amethyst (Electric Violet) */
 body.theme-amethyst,
 [data-theme='amethyst'] {
   --primary-light: var(--theme-amethyst-primary-light);
   --primary-dark: var(--theme-amethyst-primary-dark);
 }
 
-/* Theme: Blue (Deep Ocean) */
-body.theme-blue,
-[data-theme='blue'] {
-  --primary-light: var(--theme-blue-primary-light);
-  --primary-dark: var(--theme-blue-primary-dark);
+body.theme-rose,
+[data-theme='rose'] {
+  --primary-light: var(--theme-rose-primary-light);
+  --primary-dark: var(--theme-rose-primary-dark);
+}
+
+body.theme-cherry,
+[data-theme='cherry'] {
+  --primary-light: var(--theme-cherry-primary-light);
+  --primary-dark: var(--theme-cherry-primary-dark);
+}
+
+body.theme-green,
+[data-theme='green'] {
+  --primary-light: var(--theme-green-primary-light);
+  --primary-dark: var(--theme-green-primary-dark);
 }
 
 [data-theme] {
@@ -112,6 +105,7 @@ body {
   --bg: var(--bg-light);
   --primary: var(--primary-light);
   --surface: var(--surface-light);
+  --text: var(--text-main-light);
   --text-muted: var(--text-muted-light);
   --border: var(--border-light);
   --danger: var(--danger-light);
@@ -124,6 +118,7 @@ body.dark-mode {
   --bg: var(--bg-dark);
   --primary: var(--primary-dark);
   --surface: var(--surface-dark);
+  --text: var(--text-main-dark);
   --text-muted: var(--text-muted-dark);
   --border: var(--border-dark);
   --danger: var(--danger-dark);

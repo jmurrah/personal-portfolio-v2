@@ -1,11 +1,7 @@
 import './palette.css';
 import { useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import Blog from '@/pages/Blog';
-import BlogPost from '@/pages/BlogPost';
-import Home from '@/pages/Home';
-import Projects from '@/pages/Projects';
-import AppLayout from '@/layouts/AppLayout';
+import { BrowserRouter, useNavigate } from 'react-router-dom';
+import AppRoutes from '@/app/routes';
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -27,15 +23,7 @@ export default function App() {
   return (
     <BrowserRouter basename={basename}>
       <RedirectHandler />
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<Home />} />
-          <Route path="projects" element={<Projects />} />
-          <Route path="blog" element={<Blog />} />
-          <Route path="blog/:slug" element={<BlogPost />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
