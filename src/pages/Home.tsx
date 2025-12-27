@@ -276,15 +276,6 @@ export default function Home() {
                     <li>Incoming January 2026.</li>
                   </ul>
                 </div>
-                <div>
-                  <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
-                    <p>Software Engineer Intern</p>
-                    <p className="shrink-0">Jun. 2025 - Aug. 2025</p>
-                  </div>
-                  <ul className="bullet-list text-sm">
-                    <li>Cricket Wireless web application for monitoring device inventory.</li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
@@ -302,6 +293,24 @@ export default function Home() {
                 </div>
                 <ul className="bullet-list text-sm">
                   <li>Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <img className="h-7 w-7" src={ICONS.att} alt="AT&T" />
+            <div className="w-full">
+              <div className="flex justify-between items-center mt-0.5">
+                <h3 className="flex items-center gap-2">AT&T</h3>
+                <p>Atlanta, AL</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                  <p>Software Engineer Intern</p>
+                  <p className="shrink-0">Jun. 2025 - Aug. 2025</p>
+                </div>
+                <ul className="bullet-list text-sm">
+                  <li>Cricket Wireless web application for monitoring device inventory.</li>
                 </ul>
               </div>
             </div>
@@ -336,7 +345,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col gap-3 max-w-[300px]">
+      <div className="w-full flex flex-col gap-3">
         <h2 className="flex items-center gap-2 text-lg">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
           <span>Theme & Font</span>
