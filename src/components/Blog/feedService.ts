@@ -10,11 +10,6 @@ export function loadBlogPosts(): Promise<FeedPost[]> {
   return Promise.resolve(cachedPosts);
 }
 
-export function prefetchBlogPosts() {
-  // No-op; posts already in bundle
-  return;
-}
-
 export function getCachedBlogPosts() {
   return cachedPosts;
 }
