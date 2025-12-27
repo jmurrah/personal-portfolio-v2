@@ -16,6 +16,30 @@
       crossorigin
     />
     <link rel="prefetch" href="/blog" as="document" />
+    <style>
+      /* Prevent light flash before JS runs */
+      body {
+        background: #efe9f5;
+        color: #2e2040;
+      }
+      .dark-mode body {
+        background: #16121f;
+        color: #f0e6fc;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          const stored = localStorage.getItem('mode');
+          const prefersDark =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = stored ? stored === 'dark' : prefersDark;
+          document.documentElement.classList.toggle('dark-mode', isDark);
+        } catch (e) {
+          /* no-op */
+        }
+      })();
+    </script>
     <title>Jacob Murrah</title>
   </head>
 
