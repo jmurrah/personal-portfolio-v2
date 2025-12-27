@@ -183,7 +183,7 @@ export default function AppLayout() {
           <ThemeFontToggle isCompact />
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4">
+        <nav className="flex-1 overflow-y-auto scrollbar p-4">
           <ul className="space-y-2" role="list">
             {mainNavItems.map((item) => {
               const isActive = pathname === item.href;

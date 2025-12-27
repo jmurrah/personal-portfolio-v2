@@ -91,10 +91,14 @@ body.theme-green,
 
 [data-theme] {
   --primary: var(--primary-light);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary);
 }
 
 body.dark-mode [data-theme] {
   --primary: var(--primary-dark);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary);
 }
 
 /* --- APP DEFAULTS & TRANSITIONS --- */

@@ -6,6 +6,20 @@ import {
   primaryThemes,
   type PrimaryThemeName,
 } from '@/theme/primaryTheme';
+import { MODE_CHANGED_EVENT } from '@/themeToggle';
+
+const updateAccentVariables = () => {
+  if (typeof document === 'undefined') return;
+  const body = document.body;
+  if (!body) return;
+  const primary = getComputedStyle(body).getPropertyValue('--primary').trim();
+  if (!primary) return;
+  const targets = [body, document.documentElement];
+  targets.forEach((el) => {
+    el?.style.setProperty('--color-accent', primary);
+    el?.style.setProperty('--color-accent-hover', primary);
+  });
+};
 
 export const usePrimaryTheme = () => {
   const [theme, setThemeState] = useState<PrimaryThemeName>(() => getStoredTheme());
@@ -22,6 +36,7 @@ export const usePrimaryTheme = () => {
   useEffect(() => {
     applyTheme(theme);
     persistTheme(theme);
+    updateAccentVariables();
   }, [theme]);
 
   useEffect(() => {
@@ -32,6 +47,7 @@ export const usePrimaryTheme = () => {
       setTheme(next as PrimaryThemeName);
     };
     window.addEventListener('storage', onStorage);
+
     const onThemeChange = (event: Event) => {
       const customEvent = event as CustomEvent<PrimaryThemeName>;
       if (!customEvent.detail || !primaryThemes.includes(customEvent.detail)) return;
@@ -39,9 +55,13 @@ export const usePrimaryTheme = () => {
     };
     window.addEventListener('primary-theme-change', onThemeChange as EventListener);
 
+    const onModeChange = () => updateAccentVariables();
+    window.addEventListener(MODE_CHANGED_EVENT, onModeChange);
+
     return () => {
       window.removeEventListener('storage', onStorage);
       window.removeEventListener('primary-theme-change', onThemeChange as EventListener);
+      window.removeEventListener(MODE_CHANGED_EVENT, onModeChange);
     };
   }, [setTheme]);
 

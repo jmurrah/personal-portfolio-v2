@@ -7,6 +7,7 @@ import { applyInitialFont } from './fontToggle';
 
 // Prevent flash of unstyled/theme-less content until app mounts.
 document.documentElement.classList.add('app-loading');
+document.body.classList.add('scrollbar');
 applyInitialFont();
 applyInitialTheme();
 
