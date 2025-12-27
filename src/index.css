@@ -133,18 +133,23 @@ a {
   font-weight: 500;
 }
 
+strong {
+  font-weight: 600;
+}
+
 .underline-fill,
 .post-content a {
   color: var(--primary);
   text-decoration: none;
-  line-height: 1.5rem;
+  line-height: 1.7rem;
   padding-left: 0.1rem;
   padding-right: 0.1rem;
+  padding-bottom: 0.15rem;
   display: inline;
   background-image: linear-gradient(var(--primary), var(--primary));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: 100% 0.12em;
+  background-size: 100% 0.13em;
   transition-property: background-size, color;
   transition-duration: 250ms, 0ms;
   transition-timing-function: ease, ease-in-out;
@@ -179,4 +184,14 @@ a:focus-visible .underline-fill {
 
 body.dark-mode .tech-badge__icon {
   background: color-mix(in srgb, var(--surface) 50%, var(--tech-accent) 50%);
+}
+
+@keyframes codex-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: codex-spin 1s linear infinite;
 }
