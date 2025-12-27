@@ -50,6 +50,11 @@ export default function AppLayout() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname]);
+
   useLayoutEffect(() => {
     const header = headerRef.current;
     if (!header) return;
@@ -79,16 +84,18 @@ export default function AppLayout() {
     <>
       <PreloadAssets />
       <div className="flex flex-col items-center pb-4 sm:pb-10 w-full min-h-screen">
-        <div ref={headerSentinelRef} className="h-4 sm:h-10 w-full" aria-hidden="true" />
+        <div ref={headerSentinelRef} className="h-6 sm:h-12 w-full" aria-hidden="true" />
         <header
           ref={headerRef}
-          className={`w-full bg-[color:var(--bg)] border-b ${
-            isHeaderStuck
-              ? 'fixed left-0 right-0 top-0 z-11 border-[color:var(--border)]'
-              : 'sticky top-0 z-11 border-transparent'
+          className={`w-full bg-[color:var(--bg)] ${
+            isHeaderStuck ? 'fixed left-0 right-0 top-0 z-11' : 'sticky top-0 z-11'
           }`}
         >
-          <div className="mx-auto flex h-24 w-full max-w-3xl items-center justify-between px-4 select-none">
+          <div
+            className={`mx-auto flex h-24 w-full max-w-3xl items-center justify-between px-4 select-none border-b ${
+              isHeaderStuck ? 'border-[color:var(--border)]' : 'border-transparent'
+            }`}
+          >
             <TerminalBreadcrumb />
             <button
               type="button"
@@ -131,25 +138,26 @@ export default function AppLayout() {
           className="w-full mb-2 sm:mb-6"
           style={{ height: isHeaderStuck ? headerHeight : 0 }}
         />
-        {isSidebarOpen ? (
-          <div
-            className="fixed inset-0 z-30 bg-black/25 backdrop-blur-sm"
-            onClick={closeSidebar}
-            onKeyDown={(event) => {
-              if (event.key === 'Escape') {
-                closeSidebar();
-              }
-            }}
-            role="button"
-            tabIndex={-1}
-            aria-label="Close sidebar"
-          />
-        ) : null}
+        <div
+          className={`fixed inset-0 z-30 bg-black/25 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
+            isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={closeSidebar}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              closeSidebar();
+            }
+          }}
+          role="button"
+          tabIndex={-1}
+          aria-label="Close sidebar"
+          aria-hidden={!isSidebarOpen}
+        />
 
         <aside
           id="sidebar-nav"
           aria-hidden={!isSidebarOpen}
-          className="bg-[color:var(--surface)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 flex-col border-l shadow-xl transition-transform duration-300 ease-in-out"
+          className="bg-[color:var(--surface)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 flex-col border-l shadow-xl transition-[transform,opacity] duration-300 ease-in-out"
           style={{
             transform: isSidebarOpen ? 'translateX(0)' : 'translateX(100%)',
             opacity: isSidebarOpen ? 1 : 0,
