@@ -27,13 +27,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Background-load blog feed without blocking initial render
-    void import('@/components/Blog/feedService').then(({ prefetchBlogPosts }) => {
-      prefetchBlogPosts();
-    });
-  }, []);
-
-  useEffect(() => {
     const frame = requestAnimationFrame(updateHeaderWrap);
     return () => cancelAnimationFrame(frame);
   }, [updateHeaderWrap]);

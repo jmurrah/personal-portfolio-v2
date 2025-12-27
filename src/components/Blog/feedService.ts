@@ -35,7 +35,7 @@ export function prefetchBlogPosts() {
   if (typeof window === 'undefined') return;
   const idle =
     (window as typeof window & { requestIdleCallback?: (cb: () => void) => number })
-      .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 0));
+      .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1500));
   idle(() => {
     void loadBlogPosts();
   });
