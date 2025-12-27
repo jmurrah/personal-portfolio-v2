@@ -90,8 +90,8 @@ export default function Home() {
           ref={headerContentRef}
           className={`flex flex-col gap-y-1.5 ${isHeaderWrapped ? 'items-center' : 'items-start'}`}
         >
-          <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
-          <div className="flex gap-x-4 flex-wrap">
+          <h1 className="text-3xl text-[var(--primary)] text-center">Jacob Murrah</h1>
+          <div className="flex gap-x-4 flex-wrap justify-center">
             <div className="flex gap-1 items-center">
               <SvgIcon
                 src={ICONS.mapPin}
@@ -100,7 +100,7 @@ export default function Home() {
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
               />
-              <p className="text-[var(--text-muted)]">Atlanta, GA</p>
+              <p className="text-[var(--text-muted)] text-center">Atlanta, GA</p>
             </div>
             <div className="flex gap-1 items-center">
               <SvgIcon
@@ -110,10 +110,20 @@ export default function Home() {
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
               />
-              <p className="text-[var(--text-muted)]">Full-Stack Developer</p>
+              <p className="text-[var(--text-muted)] text-center">Full-Stack Developer</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <SvgIcon
+                src={ICONS.calendar}
+                alt="Specialty"
+                size="2xsmall"
+                color="var(--text-muted)"
+                hoverColor="var(--primary)"
+              />
+              <p className="text-[var(--text-muted)] text-center">2+ YoE</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-x-4">
+          <div className="flex flex-wrap gap-x-4 justify-center">
             {[
               { label: 'email', href: 'mailto:jacob@murrah.dev' },
               { label: 'github', href: 'https://github.com/jmurrah' },
