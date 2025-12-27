@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import type { FeedPost } from './types';
-import { getCachedBlogPosts, loadBlogPosts } from './feedService';
+import { getCachedBlogPosts } from './feedService';
 import { getPostPath, getPostSlug } from './postRouting';
 import './BlogFeed.css';
 
@@ -13,48 +12,7 @@ function formatDate(value?: string | null) {
 
 export default function BlogFeed() {
   const cachedPosts = useMemo(() => getCachedBlogPosts(), []);
-  const [posts, setPosts] = useState<FeedPost[]>(cachedPosts ?? []);
-  const [loading, setLoading] = useState(!cachedPosts);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    const hasCachedPosts = cachedPosts !== null;
-
-    async function fetchPosts() {
-      setError(null);
-      if (!hasCachedPosts) {
-        setLoading(true);
-      }
-      try {
-        const items = await loadBlogPosts();
-        if (isMounted) setPosts(items);
-      } catch (err) {
-        console.error('Failed to load RSS feed', err);
-        if (isMounted) {
-          setError('Unable to load posts right now.');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchPosts();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [cachedPosts]);
-
-  if (loading) {
-    return <div>Loading posts...</div>;
-  }
-
-  if (error) {
-    return <div className="text-[color:var(--danger)]">{error}</div>;
-  }
+  const posts = cachedPosts ?? [];
 
   if (!posts.length) {
     return <div>No posts found.</div>;

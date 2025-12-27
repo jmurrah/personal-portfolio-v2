@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { getCachedBlogPosts, loadBlogPosts } from '@/components/Blog/feedService';
+import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostSlug } from '@/components/Blog/postRouting';
 import PostView from '@/components/Blog/PostView';
 import type { FeedPost } from '@/components/Blog/types';
@@ -9,38 +9,7 @@ export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const cachedPosts = useMemo(() => getCachedBlogPosts(), []);
-  const [posts, setPosts] = useState<FeedPost[]>(cachedPosts ?? []);
-  const [loading, setLoading] = useState(!cachedPosts);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchPosts() {
-      setError(null);
-      try {
-        const items = await loadBlogPosts();
-        if (isMounted) {
-          setPosts(items);
-        }
-      } catch (err) {
-        console.error('Failed to load RSS feed', err);
-        if (isMounted) {
-          setError('Unable to load posts right now.');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchPosts();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const [posts] = useState<FeedPost[]>(cachedPosts ?? []);
 
   const normalizedSlug = (slug ?? '').toLowerCase();
   const post = useMemo(
@@ -50,14 +19,6 @@ export default function BlogPost() {
 
   if (!slug) {
     return <Navigate to="/blog" replace />;
-  }
-
-  if (loading) {
-    return <div>Loading post...</div>;
-  }
-
-  if (error) {
-    return <div className="text-[color:var(--danger)]">{error}</div>;
   }
 
   if (!post) {

@@ -23,3 +23,9 @@
   Cache-Control: public, max-age=31536000, immutable
 /*.svg
   Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML at the edge but keep it fresh
+/
+  Cache-Control: public, max-age=600, stale-while-revalidate=86400
+/*.html
+  Cache-Control: public, max-age=600, stale-while-revalidate=86400

@@ -1,44 +1,18 @@
+import prerendered from '@/constants/prerenderedPosts.json';
 import type { FeedPost } from './types';
 
-const FEED_URL =
-  'https://api.rss2json.com/v1/api.json?rss_url=https://jacobmurrah.substack.com/feed';
-
-let cachedPosts: FeedPost[] | null = null;
-let inFlight: Promise<FeedPost[]> | null = null;
-
-async function requestPosts(): Promise<FeedPost[]> {
-  const res = await fetch(FEED_URL);
-  if (!res.ok) {
-    throw new Error(`Feed request failed: ${res.status}`);
-  }
-  const data = await res.json();
-  return Array.isArray(data?.items) ? data.items : [];
-}
+// Posts are bundled at build time; no runtime fetch
+const cachedPosts: FeedPost[] = Array.isArray((prerendered as { items?: FeedPost[] }).items)
+  ? (prerendered as { items: FeedPost[] }).items
+  : [];
 
 export function loadBlogPosts(): Promise<FeedPost[]> {
-  if (cachedPosts) return Promise.resolve(cachedPosts);
-  if (inFlight) return inFlight;
-
-  inFlight = requestPosts()
-    .then((posts) => {
-      cachedPosts = posts;
-      return posts;
-    })
-    .finally(() => {
-      inFlight = null;
-    });
-
-  return inFlight;
+  return Promise.resolve(cachedPosts);
 }
 
 export function prefetchBlogPosts() {
-  if (typeof window === 'undefined') return;
-  const idle =
-    (window as typeof window & { requestIdleCallback?: (cb: () => void) => number })
-      .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1500));
-  idle(() => {
-    void loadBlogPosts();
-  });
+  // No-op; posts already in bundle
+  return;
 }
 
 export function getCachedBlogPosts() {
