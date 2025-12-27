@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
+import React, { useEffect, useState, type CSSProperties } from 'react';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
@@ -7,47 +7,12 @@ import TechnologyBadge from '@/components/TechnologyBadge';
 import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
 
 export default function Home() {
-  const headerRowRef = useRef<HTMLDivElement | null>(null);
-  const headshotRef = useRef<HTMLImageElement | null>(null);
-  const headerContentRef = useRef<HTMLDivElement | null>(null);
-  const [isHeaderWrapped, setIsHeaderWrapped] = useState(false);
   const { theme, primaryThemes } = usePrimaryTheme();
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() =>
     typeof document !== 'undefined'
       ? document.documentElement.classList.contains('dark-mode')
       : false,
   );
-
-  const updateHeaderWrap = useCallback(() => {
-    const image = headshotRef.current;
-    const content = headerContentRef.current;
-    if (!image || !content) return;
-    const wrapped = content.offsetTop > image.offsetTop + 1;
-    setIsHeaderWrapped((prev) => (prev === wrapped ? prev : wrapped));
-  }, []);
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(updateHeaderWrap);
-    return () => cancelAnimationFrame(frame);
-  }, [updateHeaderWrap]);
-
-  useEffect(() => {
-    const container = headerRowRef.current;
-    if (!container || typeof ResizeObserver === 'undefined') return;
-    let frame = 0;
-    const handle = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(updateHeaderWrap);
-    };
-    const observer = new ResizeObserver(handle);
-    observer.observe(container);
-    window.addEventListener('resize', handle);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', handle);
-      cancelAnimationFrame(frame);
-    };
-  }, [updateHeaderWrap]);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -73,21 +38,19 @@ export default function Home() {
 
   return (
     <div className="flex flex-wrap gap-14 mt-10">
-      <div ref={headerRowRef} className="w-full flex flex-wrap gap-4 justify-center mb-10">
+      <div className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start mb-10 text-center sm:text-left">
         <img
-          ref={headshotRef}
           className="w-auto h-24 rounded-lg"
           src={PHOTOS.graduationHeadshot}
           alt="Portrait of Jacob Murrah"
           width={96}
           height={96}
+          decoding="async"
+          fetchPriority="high"
         />
-        <div
-          ref={headerContentRef}
-          className={`flex flex-col gap-y-1.5 ${isHeaderWrapped ? 'items-center' : 'items-start'}`}
-        >
-          <h1 className="text-3xl text-[var(--primary)] text-center">Jacob Murrah</h1>
-          <div className="flex gap-x-4 flex-wrap justify-center">
+        <div className="flex flex-col gap-y-1.5 items-center sm:items-start w-full sm:w-auto">
+          <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
+          <div className="flex gap-x-4 flex-wrap justify-center sm:justify-start">
             <div className="flex gap-1 items-center">
               <SvgIcon
                 src={ICONS.mapPin}
@@ -96,7 +59,7 @@ export default function Home() {
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
               />
-              <p className="text-[var(--text-muted)] text-center">Atlanta, GA</p>
+              <p className="text-[var(--text-muted)]">Atlanta, GA</p>
             </div>
             <div className="flex gap-1 items-center">
               <SvgIcon
@@ -106,7 +69,7 @@ export default function Home() {
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
               />
-              <p className="text-[var(--text-muted)] text-center">Full-Stack Developer</p>
+              <p className="text-[var(--text-muted)]">Full-Stack Developer</p>
             </div>
             <div className="flex gap-1 items-center">
               <SvgIcon
@@ -116,10 +79,10 @@ export default function Home() {
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
               />
-              <p className="text-[var(--text-muted)] text-center">2+ YoE</p>
+              <p className="text-[var(--text-muted)]">2+ YoE</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-x-4 justify-center">
+          <div className="flex flex-wrap gap-x-4 justify-center sm:justify-start">
             {[
               { label: 'email', href: 'mailto:jacob@murrah.dev' },
               { label: 'github', href: 'https://github.com/jmurrah' },

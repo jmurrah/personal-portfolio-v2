@@ -5,7 +5,7 @@
     url('/fonts/Geist/Geist-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -15,7 +15,7 @@
     url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-Variable.ttf') format('truetype');
   font-weight: 200 800;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -25,12 +25,15 @@
     url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-VariableItalic.ttf') format('truetype');
   font-weight: 200 800;
   font-style: italic;
-  font-display: swap;
+  font-display: optional;
 }
 
 @import 'tailwindcss';
 
 :root {
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary);
+  --color-mantle: var(--surface);
   --font-family:
     'Geist', 'General Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -40,6 +43,7 @@ body {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
+  overflow-y: auto;
   font-size: 16px;
   font-family: var(
     --font-family,
@@ -232,4 +236,37 @@ a:focus-visible .underline-fill {
 
 .loading-spinner {
   animation: codex-spin 1s linear infinite;
+}
+
+@layer utilities {
+  :global(.scrollbar),
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent, var(--primary)) transparent;
+  }
+
+  :global(.scrollbar::-webkit-scrollbar),
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  :global(.scrollbar::-webkit-scrollbar-track),
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :global(.scrollbar::-webkit-scrollbar-thumb),
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-accent, var(--primary));
+    border-radius: 999px;
+  }
+
+  :global(.scrollbar::-webkit-scrollbar-thumb:hover),
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(
+      --color-accent-hover,
+      color-mix(in oklch, currentColor, var(--surface, var(--color-mantle, #1e1e2e)))
+    );
+  }
 }
