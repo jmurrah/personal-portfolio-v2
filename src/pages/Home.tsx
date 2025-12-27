@@ -302,7 +302,7 @@ export default function Home() {
             <div className="w-full">
               <div className="flex justify-between items-center mt-0.5">
                 <h3 className="flex items-center gap-2">AT&T</h3>
-                <p>Atlanta, AL</p>
+                <p>Atlanta, GA</p>
               </div>
               <div>
                 <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
