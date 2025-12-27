@@ -42,7 +42,10 @@ export default function TimelineItem({
             className="aspect-square h-full w-full bg-[var(--surface)] object-contain"
             alt={imgAlt}
             src={imgSrc}
-            loading="eager"
+            loading="lazy"
+            decoding="async"
+            width={64}
+            height={64}
           />
         </span>
       </a>

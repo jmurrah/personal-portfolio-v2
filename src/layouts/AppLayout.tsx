@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
 import Footer from '@/components/Footer';
-import PreloadAssets from '@/components/PreloadAssets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
 import SvgIcon from '@/components/SvgIcon';
 import TerminalBreadcrumb from '@/components/TerminalBreadcrumb';
@@ -82,7 +81,6 @@ export default function AppLayout() {
 
   return (
     <>
-      <PreloadAssets />
       <div className="flex flex-col items-center pb-4 sm:pb-10 w-full min-h-screen">
         <div ref={headerSentinelRef} className="h-6 sm:h-12 w-full" aria-hidden="true" />
         <header

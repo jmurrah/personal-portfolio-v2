@@ -39,9 +39,9 @@ import BlogIcon from '@/assets/icons/BlogIcon.svg';
 import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
 import PaintIcon from '@/assets/icons/PaintIcon.svg';
 import ClockIcon from '@/assets/icons/ClockIcon.svg';
-import ATTIcon from '@/assets/icons/AT&TIcon.png';
-import AdtranIcon from '@/assets/icons/AdtranIcon.png';
-import AuburnEngIcon from '@/assets/icons/AuburnEngIcon.png';
+import ATTIcon from '@/assets/icons/AT&TIcon.webp';
+import AdtranIcon from '@/assets/icons/AdtranIcon.webp';
+import AuburnEngIcon from '@/assets/icons/AuburnEngIcon.webp';
 
 import CatsPhoto from '@/assets/photos/Cats.jpg';
 import GymPhoto from '@/assets/photos/Gym.png';
@@ -49,12 +49,12 @@ import InternDayPhoto from '@/assets/photos/InternDay.jpg';
 import WeddingPhoto from '@/assets/photos/Wedding.jpg';
 import VolleyballPhoto from '@/assets/photos/Volleyball.jpg';
 import WaterfallPhoto from '@/assets/photos/Waterfall.jpg';
-import GraduationHeadshotPhoto from '@/assets/photos/GraduationHeadshot.jpg';
+import GraduationHeadshotPhoto from '@/assets/photos/GraduationHeadshot.webp';
 
-import BuzzIcon from '@/assets/icons/BuzzIcon.png';
-import AubieIcon from '@/assets/icons/AubieIcon.png';
+import BuzzIcon from '@/assets/icons/BuzzIcon.webp';
+import AubieIcon from '@/assets/icons/AubieIcon.webp';
 
-import Memoji from '@/assets/memoji/Memoji.png';
+import Memoji from '@/assets/memoji/Memoji.webp';
 
 export const LOGOS = {
   adtran: AdtranLogo,

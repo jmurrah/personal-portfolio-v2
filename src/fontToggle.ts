@@ -4,9 +4,10 @@ const FONT_KEY = 'font-preference';
 const DEFAULT_FONT: FontChoice = 'geist';
 
 export const FONT_STACKS: Record<FontChoice, string> = {
-  geist: "'Geist', 'General Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
+  geist:
+    "'Geist', 'General Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   general:
-    "'General Sans', 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
+    "'General Sans', 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
 };
 
 const isFontChoice = (value: string | null): value is FontChoice =>

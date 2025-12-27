@@ -1,10 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap');
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src:
+    url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-Variable.woff2') format('woff2'),
+    url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-Variable.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src:
+    url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-VariableItalic.woff2') format('woff2'),
+    url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-VariableItalic.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 @import 'tailwindcss';
 
 :root {
   --font-family:
-    'Geist', 'General Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    'Geist', 'General Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 html,

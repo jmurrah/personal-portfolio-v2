@@ -45,7 +45,7 @@
 
 .terminal-breadcrumb__cursor {
   width: 0.5rem;
-  height: 1rem;
+  height: 0.9rem;
   background: var(--primary);
   border-radius: 2px;
   animation: terminal-blink 3s cubic-bezier(0.2, 1, 0.8, 1) infinite;
