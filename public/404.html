@@ -11,7 +11,9 @@
         } catch (e) {
           /* no-op */
         }
-        window.location.replace('/');
+        var base = '/';
+        if (!base.endsWith('/')) base += '/';
+        window.location.replace(base);
       })();
     </script>
   </head>
