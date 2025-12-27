@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
 import Footer from '@/components/Footer';
@@ -16,8 +16,10 @@ type NavItem = {
 export default function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isHeaderStuck, setIsHeaderStuck] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
   const { pathname } = useLocation();
   const headerSentinelRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   const mainNavItems: NavItem[] = [
     { title: 'Home', href: '/' },
@@ -48,17 +50,45 @@ export default function AppLayout() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const updateHeight = () => {
+      setHeaderHeight(header.getBoundingClientRect().height);
+    };
+
+    updateHeight();
+
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateHeight) : null;
+
+    if (resizeObserver) {
+      resizeObserver.observe(header);
+    } else {
+      window.addEventListener('resize', updateHeight);
+    }
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   return (
     <>
       <PreloadAssets />
-      <div className="flex flex-col items-center py-4 sm:py-10 w-full min-h-screen">
-        <div ref={headerSentinelRef} className="h-px w-full" aria-hidden="true" />
+      <div className="flex flex-col items-center pb-4 sm:pb-10 w-full min-h-screen">
+        <div ref={headerSentinelRef} className="h-4 sm:h-10 w-full" aria-hidden="true" />
         <header
-          className={`max-w-3xl sticky top-0 z-11 w-full bg-[color:var(--bg)] mb-2 sm:mb-6 border-b ${
-            isHeaderStuck ? 'border-[color:var(--border)]' : 'border-transparent'
+          ref={headerRef}
+          className={`w-full bg-[color:var(--bg)] border-b ${
+            isHeaderStuck
+              ? 'fixed left-0 right-0 top-0 z-11 border-[color:var(--border)]'
+              : 'sticky top-0 z-11 border-transparent'
           }`}
         >
-          <div className="flex h-24 w-full items-center justify-between px-4 select-none">
+          <div className="mx-auto flex h-24 w-full max-w-3xl items-center justify-between px-4 select-none">
             <TerminalBreadcrumb />
             <button
               type="button"
@@ -96,6 +126,11 @@ export default function AppLayout() {
             </nav>
           </div>
         </header>
+        <div
+          aria-hidden="true"
+          className="w-full mb-2 sm:mb-6"
+          style={{ height: isHeaderStuck ? headerHeight : 0 }}
+        />
         {isSidebarOpen ? (
           <div
             className="fixed inset-0 z-30 bg-black/25 backdrop-blur-sm"
