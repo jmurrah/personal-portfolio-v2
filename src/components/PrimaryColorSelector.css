@@ -1,8 +1,10 @@
 .primary-color-grid {
   position: relative;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: var(--tile-size, 2rem);
+  grid-template-columns: repeat(3, minmax(var(--tile-size, 2.75rem), 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
   justify-content: stretch;
   align-content: start;
   gap: var(--tile-gap, 0.625rem);
@@ -11,16 +13,18 @@
 
 .primary-color-btn {
   width: 100%;
-  height: var(--tile-size, 2rem);
-  min-width: 0;
-  min-height: var(--tile-size, 2rem);
+  min-width: var(--tile-size, 2.75rem);
+  min-height: var(--tile-size, 2.75rem);
+  aspect-ratio: 1 / 1;
   padding: 0;
   border: 0;
   border-radius: var(--tile-radius);
   box-shadow: none;
   background-color: var(--primary);
   cursor: pointer;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .primary-color-btn.selected {

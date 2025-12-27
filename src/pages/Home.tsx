@@ -224,7 +224,7 @@ export default function Home() {
               </a>
             </h3>
             <h3>
-              Writing on {' '}
+              Writing on{' '}
               <a
                 href="https://jacobmurrah.substack.com/"
                 target="_blank"
@@ -270,7 +270,7 @@ export default function Home() {
                 <div>
                   <div className="flex justify-between items-start text-[var(--text-muted)] text-sm">
                     <p>Software Engineer I</p>
-                    <p className='shrink-0'>Jan. 2026 - Present</p>
+                    <p className="shrink-0">Jan. 2026 - Present</p>
                   </div>
                   <ul className="bullet-list text-sm">
                     <li>Incoming January 2026.</li>
@@ -279,7 +279,7 @@ export default function Home() {
                 <div>
                   <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                     <p>Software Engineer Intern</p>
-                    <p className='shrink-0'>Jun. 2025 - Aug. 2025</p>
+                    <p className="shrink-0">Jun. 2025 - Aug. 2025</p>
                   </div>
                   <ul className="bullet-list text-sm">
                     <li>Cricket Wireless web application for monitoring device inventory.</li>
@@ -298,7 +298,7 @@ export default function Home() {
               <div>
                 <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Undergraduate Research Assistant</p>
-                  <p className='shrink-0'>Aug. 2025 - Dec. 2025</p>
+                  <p className="shrink-0">Aug. 2025 - Dec. 2025</p>
                 </div>
                 <ul className="bullet-list text-sm">
                   <li>Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.</li>
@@ -316,7 +316,7 @@ export default function Home() {
               <div>
                 <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Software Engineer Co-op</p>
-                  <p className='shrink-0'>May 2023 - Dec. 2024</p>
+                  <p className="shrink-0">May 2023 - Dec. 2024</p>
                 </div>
                 <ul className="bullet-list text-sm">
                   <li>Developer tooling and Mosaic One SaaS for network monitoring.</li>
@@ -336,10 +336,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col gap-3">
+      <div className="w-full flex flex-col gap-3 max-w-[300px]">
         <h2 className="flex items-center gap-2 text-lg">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
-          <span>Theme &amp; Font</span>
+          <span>Theme & Font</span>
         </h2>
         <ThemeFontToggle />
       </div>

@@ -41,7 +41,7 @@ import PaintIcon from '@/assets/icons/PaintIcon.svg';
 import ClockIcon from '@/assets/icons/ClockIcon.svg';
 import ATTIcon from '@/assets/icons/AT&TIcon.png';
 import AdtranIcon from '@/assets/icons/AdtranIcon.png';
-import AuburnEngIcon from '@/assets/icons/AuburnEngIcon.png'
+import AuburnEngIcon from '@/assets/icons/AuburnEngIcon.png';
 
 import CatsPhoto from '@/assets/photos/Cats.jpg';
 import GymPhoto from '@/assets/photos/Gym.png';
@@ -104,7 +104,7 @@ export const ICONS = {
   clock: ClockIcon,
   att: ATTIcon,
   adtran: AdtranIcon,
-  auburnEng: AuburnEngIcon
+  auburnEng: AuburnEngIcon,
 } as const;
 
 export const PHOTOS = {
