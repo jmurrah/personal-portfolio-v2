@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
 import Footer from '@/components/Footer';
@@ -54,12 +54,16 @@ export default function AppLayout() {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [pathname]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
 
+    let frame = 0;
     const updateHeight = () => {
-      setHeaderHeight(header.getBoundingClientRect().height);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        setHeaderHeight(header.getBoundingClientRect().height);
+      });
     };
 
     updateHeight();
@@ -76,6 +80,7 @@ export default function AppLayout() {
     return () => {
       resizeObserver?.disconnect();
       window.removeEventListener('resize', updateHeight);
+      cancelAnimationFrame(frame);
     };
   }, []);
 

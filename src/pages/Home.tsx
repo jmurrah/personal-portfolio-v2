@@ -1,12 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-} from 'react';
-import { prefetchBlogPosts } from '@/components/Blog/feedService';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
@@ -35,14 +27,18 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    prefetchBlogPosts();
+    // Background-load blog feed without blocking initial render
+    void import('@/components/Blog/feedService').then(({ prefetchBlogPosts }) => {
+      prefetchBlogPosts();
+    });
   }, []);
 
-  useLayoutEffect(() => {
-    updateHeaderWrap();
+  useEffect(() => {
+    const frame = requestAnimationFrame(updateHeaderWrap);
+    return () => cancelAnimationFrame(frame);
   }, [updateHeaderWrap]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const container = headerRowRef.current;
     if (!container || typeof ResizeObserver === 'undefined') return;
     let frame = 0;

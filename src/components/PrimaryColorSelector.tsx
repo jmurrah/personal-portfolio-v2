@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
 import './PrimaryColorSelector.css';
 
@@ -25,11 +25,12 @@ export default function PrimaryColorSelector({ tileSize, gap }: PrimaryColorSele
     });
   }, [theme]);
 
-  useLayoutEffect(() => {
-    updateRing();
+  useEffect(() => {
+    const frame = requestAnimationFrame(updateRing);
+    return () => cancelAnimationFrame(frame);
   }, [updateRing, primaryThemes]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const container = containerRef.current;
     if (!container || typeof ResizeObserver === 'undefined') return;
     let frame = 0;
@@ -87,14 +88,7 @@ export default function PrimaryColorSelector({ tileSize, gap }: PrimaryColorSele
           </button>
         );
       })}
-      <div
-        className="primary-color-ring"
-        data-theme={theme}
-        style={{
-          ...ringStyle,
-          color: 'var(--primary)',
-        }}
-      />
+      <div className="primary-color-ring" data-theme={theme} style={ringStyle} />
     </div>
   );
 }
