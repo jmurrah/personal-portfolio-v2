@@ -85,7 +85,12 @@ export default function Home() {
   return (
     <div className="flex flex-wrap gap-14 mt-10">
       <div ref={headerRowRef} className="w-full flex flex-wrap gap-4 justify-center mb-10">
-        <img ref={headshotRef} className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
+        <img
+          ref={headshotRef}
+          className="w-auto h-24 rounded-lg"
+          src={PHOTOS.graduationHeadshot}
+          alt="Portrait of Jacob Murrah"
+        />
         <div
           ref={headerContentRef}
           className={`flex flex-col gap-y-1.5 ${isHeaderWrapped ? 'items-center' : 'items-start'}`}

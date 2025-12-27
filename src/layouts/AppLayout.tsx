@@ -138,26 +138,31 @@ export default function AppLayout() {
           className="w-full mb-2 sm:mb-6"
           style={{ height: isHeaderStuck ? headerHeight : 0 }}
         />
-        <div
-          className={`fixed inset-0 z-30 bg-black/25 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
-            isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-          onClick={closeSidebar}
-          onKeyDown={(event) => {
-            if (event.key === 'Escape') {
-              closeSidebar();
-            }
-          }}
-          role="button"
-          tabIndex={-1}
-          aria-label="Close sidebar"
-          aria-hidden={!isSidebarOpen}
-        />
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 z-30 bg-black/25 backdrop-blur-sm transition-opacity duration-300 ease-in-out opacity-100 pointer-events-auto"
+            onClick={closeSidebar}
+            onKeyDown={(event) => {
+              if (
+                event.key === 'Escape' ||
+                event.key === 'Enter' ||
+                event.key === ' ' ||
+                event.key === 'Spacebar'
+              ) {
+                event.preventDefault();
+                closeSidebar();
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Close sidebar"
+          />
+        )}
 
         <aside
           id="sidebar-nav"
-          aria-hidden={!isSidebarOpen}
           className="bg-[color:var(--surface)] border-[color:var(--border)] fixed inset-y-0 right-0 z-40 flex w-64 flex-col border-l shadow-xl transition-[transform,opacity] duration-300 ease-in-out"
+          inert={!isSidebarOpen}
           style={{
             transform: isSidebarOpen ? 'translateX(0)' : 'translateX(100%)',
             opacity: isSidebarOpen ? 1 : 0,
