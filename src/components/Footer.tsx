@@ -56,7 +56,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="mt-10 w-full max-w-2xl rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] px-5 py-4 text-sm text-[color:var(--text-muted)]">
+    <footer className="mt-16 w-full max-w-2xl rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] px-5 py-4 text-sm text-[color:var(--text-muted)]">
       <div className="flex flex-col flex-wrap justify-between items-center gap-x-4 gap-y-2 min-[480px]:flex-row">
         <span className="whitespace-nowrap">© {year} Jacob Murrah</span>
         <div className="flex flex-wrap gap-x-8 gap-y-4 sm:gap-x-4 justify-center items-center">

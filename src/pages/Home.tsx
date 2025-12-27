@@ -83,8 +83,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-wrap gap-10">
-      <div ref={headerRowRef} className="w-full flex flex-wrap gap-4 justify-center">
+    <div className="flex flex-wrap gap-14 mt-10">
+      <div ref={headerRowRef} className="w-full flex flex-wrap gap-4 justify-center mb-10">
         <img ref={headshotRef} className="w-auto h-24 rounded-lg" src={PHOTOS.graduationHeadshot} />
         <div
           ref={headerContentRef}
@@ -207,31 +207,31 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="flex flex-wrap w-full justify-between gap-10">
+      <div className="flex flex-wrap w-full justify-between gap-14">
         <div className="w-fit flex-shrink-0">
           <h2 className="text-xl mb-1 font-semibold">Currently</h2>
           <div className="flex flex-col gap-1">
-            <h3 className="text-[var(--text-muted)]">
+            <h3>
               Software Engineer I @{' '}
               <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
                 <span className="underline-fill">AT&T</span>
               </a>
             </h3>
-            <h3 className="text-[var(--text-muted)]">
+            <h3>
               OMSCS @{' '}
               <a href="https://www.gatech.edu/" target="_blank" rel="noopener noreferrer">
                 <span className="underline-fill">Georgia Tech</span>
               </a>
             </h3>
-            <h3 className="text-[var(--text-muted)]">
-              Writing @{' '}
+            <h3>
+              Writing on {' '}
               <a
                 href="https://jacobmurrah.substack.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline-fill"
               >
-                Blog
+                Substack
               </a>
             </h3>
           </div>
@@ -256,25 +256,78 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="">
-        <h2 className="text-xl mb-1 font-semibold">Experience</h2>
-        <div className="flex flex-col gap-1">
-          <div>
-            <h3 className="flex items-center gap-2 text-lg">
-              <img className="h-5 w-5" src={ICONS.att} alt="AT&T" />
-              AT&T
-            </h3>
+      <div className="w-full">
+        <h2 className="text-xl mb-2 font-semibold">Experience</h2>
+        <div className="flex flex-col gap-4 w-full">
+          <div className="flex items-start gap-2">
+            <img className="h-7 w-7" src={ICONS.att} alt="AT&T" />
+            <div className="w-full">
+              <div className="flex justify-between items-center mt-0.5">
+                <h3 className="flex items-center gap-2">AT&T</h3>
+                <p>Atlanta, GA</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <div>
+                  <div className="flex justify-between items-start text-[var(--text-muted)] text-sm">
+                    <p>Software Engineer I</p>
+                    <p className='shrink-0'>Jan. 2026 - Present</p>
+                  </div>
+                  <ul className="bullet-list text-sm">
+                    <li>Incoming January 2026.</li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                    <p>Software Engineer Intern</p>
+                    <p className='shrink-0'>Jun. 2025 - Aug. 2025</p>
+                  </div>
+                  <ul className="bullet-list text-sm">
+                    <li>Cricket Wireless web application for monitoring device inventory.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 className="flex items-center gap-2 text-lg">
-              <img className="h-5 w-5" src={ICONS.adtran} alt="Adtran" />
-              Adtran
-            </h3>
+          <div className="flex items-start gap-2">
+            <img className="h-7 w-7" src={ICONS.auburnEng} alt="Auburn" />
+            <div className="w-full">
+              <div className="flex justify-between items-center mt-0.5">
+                <h3 className="flex items-center gap-2">Auburn University</h3>
+                <p>Auburn, AL</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                  <p>Undergraduate Research Assistant</p>
+                  <p className='shrink-0'>Aug. 2025 - Dec. 2025</p>
+                </div>
+                <ul className="bullet-list text-sm">
+                  <li>Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <img className="h-7 w-7" src={ICONS.adtran} alt="Adtran" />
+            <div className="w-full">
+              <div className="flex justify-between items-center mt-0.5">
+                <h3 className="flex items-center gap-2">Adtran</h3>
+                <p>Huntsville, AL</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                  <p>Software Engineer Co-op</p>
+                  <p className='shrink-0'>May 2023 - Dec. 2024</p>
+                </div>
+                <ul className="bullet-list text-sm">
+                  <li>Developer tooling and Mosaic One SaaS for network monitoring.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="flex flex-col w-full">
-        <h2 className="text-xl mb-1 font-semibold">Technologies</h2>
+        <h2 className="text-lg mb-1 font-semibold">Technologies</h2>
         <div className="flex flex-col gap-1 w-full">
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (

@@ -45,7 +45,7 @@
 
 .post-title,
 .post-title-link {
-  font-size: clamp(28px, 4vw, 36px);
+  font-size: clamp(30px, 4vw, 36px);
   line-height: 1.2;
   font-weight: 700;
   color: inherit;

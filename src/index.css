@@ -137,6 +137,18 @@ strong {
   font-weight: 600;
 }
 
+.bullet-list {
+  list-style: disc;
+  list-style-position: outside;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.bullet-list li {
+  line-height: 1.5;
+}
+
 .underline-fill,
 .post-content a {
   color: var(--primary);
@@ -149,7 +161,9 @@ strong {
   background-image: linear-gradient(var(--primary), var(--primary));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: 100% 0.13em;
+  /* Keep the underline 2px until text is ~28px, then grow to 3px without using ems */
+  --underline-size: clamp(2px, calc(2ch - 25px), 3px);
+  background-size: 100% var(--underline-size);
   transition-property: background-size, color;
   transition-duration: 250ms, 0ms;
   transition-timing-function: ease, ease-in-out;
@@ -177,13 +191,10 @@ a:focus-visible .underline-fill {
   color: var(--primary);
 }
 
-.tech-badge__icon {
-  background: color-mix(in srgb, var(--surface) 65%, var(--tech-accent) 35%);
-  border: 1px solid var(--border);
-}
-
-body.dark-mode .tech-badge__icon {
-  background: color-mix(in srgb, var(--surface) 50%, var(--tech-accent) 50%);
+.tech-badge {
+  background: color-mix(in srgb, var(--surface) 88%, var(--tech-accent, var(--primary)) 12%);
+  border-color: color-mix(in srgb, var(--border) 70%, var(--tech-accent, var(--primary)) 30%);
+  color: var(--text);
 }
 
 @keyframes codex-spin {
