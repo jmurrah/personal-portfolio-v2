@@ -1,23 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <title>Redirecting…</title>
-    <meta http-equiv="refresh" content="0; url=/personal-portfolio-v2/" />
     <script>
       (function () {
-        var base = '/personal-portfolio-v2';
-        var path = window.location.pathname.startsWith(base)
-          ? window.location.pathname.slice(base.length)
-          : window.location.pathname;
-        if (!path.startsWith('/')) {
-          path = '/' + path;
+        var path = window.location.pathname + window.location.search + window.location.hash;
+        try {
+          sessionStorage.setItem('redirect-path', path);
+        } catch (e) {
+          /* no-op */
         }
-        var redirectTarget = path + window.location.search + window.location.hash;
-        sessionStorage.setItem('redirect-path', redirectTarget);
-        window.location.replace(base + '/');
+        window.location.replace('/');
       })();
     </script>
   </head>
-  <body></body>
+  <body>
+    <p>Redirecting…</p>
+  </body>
 </html>
