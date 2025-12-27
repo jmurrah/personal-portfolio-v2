@@ -18,16 +18,10 @@ export default function PrimaryColorSelector({ tileSize, gap }: PrimaryColorSele
     const activeButton = buttonRefs.current.get(theme);
     if (!container || !activeButton) return;
 
-    const containerRect = container.getBoundingClientRect();
-    const buttonRect = activeButton.getBoundingClientRect();
-
-    const left = buttonRect.left - containerRect.left + container.scrollLeft;
-    const top = buttonRect.top - containerRect.top + container.scrollTop;
-
     setRingStyle({
-      transform: `translate(${left}px, ${top}px)`,
-      width: `${buttonRect.width}px`,
-      height: `${buttonRect.height}px`,
+      transform: `translate(${activeButton.offsetLeft}px, ${activeButton.offsetTop}px)`,
+      width: `${activeButton.offsetWidth}px`,
+      height: `${activeButton.offsetHeight}px`,
     });
   }, [theme]);
 

@@ -29,7 +29,7 @@
 
 .primary-color-btn:hover,
 .primary-color-btn:focus-visible {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .primary-color-ring {
@@ -43,8 +43,8 @@
   border: 0;
   box-sizing: border-box;
   box-shadow:
-    0 0 0 2px var(--surface, transparent),
-    0 0 0 4px currentColor;
+    0 0 0 3px var(--surface, transparent),
+    0 0 0 6px currentColor;
   transition:
     transform 300ms ease-out,
     width 300ms ease-out,

@@ -330,8 +330,8 @@ export default function Home() {
         <h2 className="text-lg mb-1 font-semibold">Technologies</h2>
         <div className="flex flex-col gap-1 w-full">
           <div className="flex flex-wrap gap-2">
-            {technologies.map((tech) => (
-              <TechnologyBadge key={tech.name} {...tech} />
+            {technologies.map((tech, index) => (
+              <TechnologyBadge key={tech} name={tech} accent={getAccentColor(index)} />
             ))}
           </div>
         </div>

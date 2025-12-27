@@ -194,7 +194,6 @@ a:focus-visible .underline-fill {
 .tech-badge {
   background: color-mix(in srgb, var(--surface) 88%, var(--tech-accent, var(--primary)) 12%);
   border-color: color-mix(in srgb, var(--border) 70%, var(--tech-accent, var(--primary)) 30%);
-  color: var(--text);
 }
 
 @keyframes codex-spin {
