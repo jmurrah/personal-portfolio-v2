@@ -2,7 +2,6 @@ import './palette.css';
 import { useEffect } from 'react';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
 import AppRoutes from '@/app/routes';
-import { loadBlogPosts } from '@/components/Blog/feedService';
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -21,12 +20,6 @@ function RedirectHandler() {
 }
 
 export default function App() {
-  useEffect(() => {
-    loadBlogPosts().catch((error) => {
-      console.warn('Blog prefetch failed; will retry on demand.', error);
-    });
-  }, []);
-
   return (
     <BrowserRouter basename={basename}>
       <RedirectHandler />

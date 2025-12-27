@@ -32,7 +32,13 @@ export function loadBlogPosts(): Promise<FeedPost[]> {
 }
 
 export function prefetchBlogPosts() {
-  void loadBlogPosts();
+  if (typeof window === 'undefined') return;
+  const idle =
+    (window as typeof window & { requestIdleCallback?: (cb: () => void) => number })
+      .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 0));
+  idle(() => {
+    void loadBlogPosts();
+  });
 }
 
 export function getCachedBlogPosts() {
