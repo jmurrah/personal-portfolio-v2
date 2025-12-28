@@ -1,7 +1,6 @@
 import prerendered from '@/constants/prerenderedPosts.json';
 import type { FeedPost } from './types';
 
-// Posts are bundled at build time; no runtime fetch
 const cachedPosts: FeedPost[] = Array.isArray((prerendered as { items?: FeedPost[] }).items)
   ? (prerendered as { items: FeedPost[] }).items
   : [];

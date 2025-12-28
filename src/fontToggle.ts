@@ -33,7 +33,7 @@ export const applyFont = (font: FontChoice) => {
   try {
     localStorage.setItem(FONT_KEY, font);
   } catch {
-    // localStorage is best-effort
+    return;
   }
 };
 

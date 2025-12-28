@@ -33,7 +33,7 @@ export const persistTheme = (name: PrimaryThemeName) => {
   try {
     localStorage.setItem(STORAGE_KEY, name);
   } catch {
-    // localStorage is best-effort.
+    return;
   }
 };
 

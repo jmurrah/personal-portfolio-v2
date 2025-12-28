@@ -1,5 +1,4 @@
 :root {
-  /* --- BASE COLORS --- */
   --bg-light: #efe9f5;
   --surface-light: #e4dcf1;
   --text-main-light: #2e2040;
@@ -12,7 +11,6 @@
   --text-muted-dark: #bcb3cc;
   --border-dark: #3a324d;
 
-  /* Theme palettes */
   --theme-teal-primary-light: #0e6f66;
   --theme-teal-primary-dark: #2dd4bf;
   --theme-blue-primary-light: #1556e6;
@@ -26,15 +24,12 @@
   --theme-green-primary-light: #137237;
   --theme-green-primary-dark: #4ade80;
 
-  /* Default theme (Teal) */
   --primary-light: var(--theme-teal-primary-light);
   --primary-dark: var(--theme-teal-primary-dark);
 
-  /* Semantic colors */
   --danger-light: #ef4444;
   --danger-dark: #f87171;
 
-  /* Tech accents */
   --tech-python: rgba(53, 114, 165, 0.5);
   --tech-typescript: rgba(49, 120, 198, 0.5);
   --tech-react: rgba(97, 218, 251, 0.5);
@@ -52,7 +47,6 @@
   --tech-fastapi: rgba(5, 153, 139, 0.5);
 }
 
-/* --- THEME DEFINITIONS --- */
 body.theme-teal,
 [data-theme='teal'] {
   --primary-light: var(--theme-teal-primary-light);
@@ -101,7 +95,6 @@ body.dark-mode [data-theme] {
   --color-accent-hover: var(--primary);
 }
 
-/* --- APP DEFAULTS & TRANSITIONS --- */
 body {
   background-color: var(--bg-light);
   color: var(--text-main-light);

@@ -63,7 +63,6 @@ function cleanContent(html?: string | null) {
     )
     .forEach((el) => el.remove());
   doc.querySelectorAll('.image-link-expand, .restack-image, .view-image').forEach((el) => {
-    // Remove Substack image controls so we only render the image itself
     el.remove();
   });
   normalizeFootnotes(doc);

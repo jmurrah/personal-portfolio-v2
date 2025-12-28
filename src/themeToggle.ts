@@ -31,7 +31,7 @@ export const applyMode = (mode: ModeName) => {
   try {
     localStorage.setItem(MODE_KEY, mode);
   } catch {
-    // localStorage is best-effort.
+    return;
   }
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new CustomEvent(MODE_CHANGED_EVENT, { detail: { mode } }));

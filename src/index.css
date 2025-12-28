@@ -210,7 +210,6 @@ strong {
   background-image: linear-gradient(var(--primary), var(--primary));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  /* Keep the underline 2px until text is ~28px, then grow to 3px without using ems */
   --underline-size: clamp(2px, calc(2ch - 25px), 3px);
   background-size: 100% var(--underline-size);
   transition-property: background-size, color;
