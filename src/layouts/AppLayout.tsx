@@ -16,7 +16,6 @@ export default function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isHeaderStuck, setIsHeaderStuck] = useState(false);
   const { pathname } = useLocation();
-  const HEADER_HEIGHT_PX = 96; // matches h-24
   const headerSentinelRef = useRef<HTMLDivElement | null>(null);
 
   const mainNavItems: NavItem[] = [
@@ -28,10 +27,17 @@ export default function AppLayout() {
 
   const toggleSidebar = () => setIsSidebarOpen((current) => !current);
   const closeSidebar = () => setIsSidebarOpen(false);
+  const scrollToTop = (behavior: ScrollBehavior = 'auto') => {
+    const targets = [document.scrollingElement, document.documentElement, document.body] as const;
+    targets.forEach((target) => target?.scrollTo({ top: 0, behavior }));
+    window.scrollTo({ top: 0, behavior });
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    scrollToTop('auto');
+    const raf = requestAnimationFrame(() => scrollToTop('auto'));
+    return () => cancelAnimationFrame(raf);
     closeSidebar();
   }, [pathname]);
 
@@ -55,7 +61,9 @@ export default function AppLayout() {
               isHeaderStuck ? 'border-[color:var(--border)]' : 'border-transparent'
             }`}
             style={{
-              WebkitMaskImage: isHeaderStuck ? 'none' : 'linear-gradient(black, black, transparent)',
+              WebkitMaskImage: isHeaderStuck
+                ? 'none'
+                : 'linear-gradient(black, black, transparent)',
               maskImage: isHeaderStuck ? 'none' : 'linear-gradient(black, black, transparent)',
             }}
           >
@@ -89,7 +97,13 @@ export default function AppLayout() {
                     key={item.title}
                     to={item.href}
                     className="nav-link hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium"
-                    onClick={closeSidebar}
+                    onClick={(event) => {
+                      if (pathname === item.href) {
+                        event.preventDefault();
+                        scrollToTop('smooth');
+                      }
+                      closeSidebar();
+                    }}
                   >
                     {item.title}
                   </Link>
@@ -169,7 +183,13 @@ export default function AppLayout() {
                       to={item.href}
                       className="nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
                       aria-current={isActive ? 'page' : undefined}
-                      onClick={closeSidebar}
+                      onClick={(event) => {
+                        if (pathname === item.href) {
+                          event.preventDefault();
+                          scrollToTop('smooth');
+                        }
+                        closeSidebar();
+                      }}
                     >
                       {item.title}
                     </Link>

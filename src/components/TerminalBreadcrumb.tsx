@@ -11,11 +11,18 @@ export default function TerminalBreadcrumb() {
   const navigate = useNavigate();
   const segments = getSegments(pathname);
 
+  const scrollToTop = (behavior: ScrollBehavior = 'smooth') => {
+    const targets = [document.scrollingElement, document.documentElement, document.body] as const;
+    targets.forEach((target) => target?.scrollTo({ top: 0, behavior }));
+    window.scrollTo({ top: 0, behavior });
+  };
+
   const handleHomeClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
     if (pathname === '/') {
       event.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollToTop('smooth');
     } else {
+      scrollToTop('auto');
       navigate('/');
     }
   };
@@ -41,6 +48,14 @@ export default function TerminalBreadcrumb() {
                 className={`terminal-breadcrumb__link${isLast ? ' terminal-breadcrumb__current' : ''}`}
                 to={href}
                 aria-current={isLast ? 'page' : undefined}
+                onClick={(event) => {
+                  if (isLast && pathname === href) {
+                    event.preventDefault();
+                    scrollToTop('smooth');
+                  } else {
+                    scrollToTop('auto');
+                  }
+                }}
               >
                 {segment}/
               </Link>
