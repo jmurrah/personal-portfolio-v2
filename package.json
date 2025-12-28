@@ -11,6 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@tanstack/react-router": "^1.144.0",
     "framer-motion": "^12.23.24",
     "geist": "^1.5.1",
     "react": "^19.1.1",
