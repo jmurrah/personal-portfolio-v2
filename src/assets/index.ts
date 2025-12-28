@@ -8,6 +8,7 @@ import MenuIcon from '@/assets/icons/MenuIcon.svg';
 import MoonIcon from '@/assets/icons/MoonIcon.svg';
 import SunIcon from '@/assets/icons/SunIcon.svg';
 import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
+import ArrowRightIcon from '@/assets/icons/ArrowRightIcon.svg';
 import PaintIcon from '@/assets/icons/PaintIcon.svg';
 import ClockIcon from '@/assets/icons/ClockIcon.svg';
 import ATTIcon from '@/assets/icons/AT&TIcon.webp';
@@ -23,6 +24,7 @@ export const ICONS = {
   linkedIn: LinkedInIcon,
   mail: MailIcon,
   arrowUpRight: ArrowUpRightIcon,
+  arrowRight: ArrowRightIcon,
   mapPin: MapPinIcon,
   menu: MenuIcon,
   moon: MoonIcon,

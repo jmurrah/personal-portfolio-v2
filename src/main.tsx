@@ -1,9 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
 import './index.css';
-import App from './App.tsx';
+import './palette.css';
 import { applyInitialTheme } from './themeToggle';
 import { applyInitialFont } from './fontToggle';
+import { router } from './app/routes';
+
 document.documentElement.classList.add('app-loading');
 document.body.classList.add('scrollbar');
 applyInitialFont();
@@ -11,7 +14,7 @@ applyInitialTheme();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>,
 );
 

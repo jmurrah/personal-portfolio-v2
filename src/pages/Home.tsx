@@ -1,10 +1,13 @@
-import React, { useEffect, useState, type CSSProperties } from 'react';
+import React, { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
 import { technologies } from '@/constants/technologies';
 import TechnologyBadge from '@/components/TechnologyBadge';
 import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
+import { getCachedBlogPosts } from '@/components/Blog/feedService';
+import { getPostPath, getPostSlug } from '@/components/Blog/postRouting';
 
 export default function Home() {
   const { theme, primaryThemes } = usePrimaryTheme();
@@ -35,6 +38,17 @@ export default function Home() {
     const shade = isDarkMode ? 'dark' : 'light';
     return `var(--theme-${colorName}-primary-${shade})`;
   };
+
+  const formatDate = (value?: string | null) => {
+    if (!value) return '';
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString();
+  };
+
+  const recentPosts = useMemo(() => {
+    const posts = getCachedBlogPosts() ?? [];
+    return posts.slice(0, 3);
+  }, []);
 
   return (
     <div className="flex flex-wrap gap-14 mt-10">
@@ -94,7 +108,7 @@ export default function Home() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group gap-0.5 flex items-center text-[color:var(--text-muted)] hover:text-[var(--text)]"
+                className="group gap-0.5 flex items-center"
               >
                 <span>{link.label}</span>
                 <SvgIcon
@@ -294,6 +308,75 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className="w-full">
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg mb-2 font-semibold">Featured Projects</h2>
+          <Link to="/projects" className="group gap-0.5 flex items-center underline-fill">
+            <div className="flex justify-center items-center">
+              <p>all projects</p>
+              <SvgIcon
+                src={ICONS.arrowRight}
+                alt="All projects"
+                size="2xsmall"
+                color="currentColor"
+                className="transition-transform duration-200 group-hover:translate-x-0.5 svg-icon-shadow"
+              />
+            </div>
+          </Link>
+        </div>
+        <div className="flex flex-col gap-1 w-full">
+          <p>LettCode Repetition Extension</p>
+        </div>
+      </div>
+      <div className="w-full">
+        <div className="flex justify-between items-center mb-2">
+          <h2 className="text-lg font-semibold">Recent Posts</h2>
+          <Link to="/blog" className="group gap-0.5 flex items-center underline-fill">
+            <div className="flex justify-center items-center">
+              <p>all posts</p>
+              <SvgIcon
+                src={ICONS.arrowRight}
+                alt="All posts"
+                size="2xsmall"
+                color="currentColor"
+                className="transition-transform duration-200 group-hover:translate-x-0.5 svg-icon-shadow"
+              />
+            </div>
+          </Link>
+        </div>
+        <div className="flex flex-col gap-2 w-full">
+          {recentPosts.length ? (
+            <ul className="flex flex-col">
+              {recentPosts.map((post) => {
+                const slug = getPostSlug(post);
+                const id = post.guid ?? post.link ?? slug;
+                const publishedOn = formatDate(post.pubDate ?? undefined);
+
+                return (
+                  <li key={id}>
+                    <Link
+                      to={getPostPath(post)}
+                      className="blog-card block w-full border-t-2 border-[var(--border)] bg-[var(--surface)] p-3"
+                      aria-label={post.title ? `Read ${post.title}` : 'Read blog post'}
+                    >
+                      <div className="flex justify-between">
+                        <h3 className="blog-card__title font-semibold text-[color:var(--primary)]">
+                          <span className="underline-fill">{post.title}</span>
+                        </h3>
+                        <div className="flex items-center gap-2 text-sm text-[color:var(--text-muted)]">
+                          {publishedOn && <span>{publishedOn}</span>}
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="text-[color:var(--text-muted)]">No posts yet.</p>
+          )}
+        </div>
+      </div>
       <div className="flex flex-col w-full">
         <h2 className="text-lg mb-1 font-semibold">Technologies</h2>
         <div className="flex flex-col gap-1 w-full">
@@ -304,12 +387,84 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col gap-3">
-        <h2 className="flex items-center gap-2 text-lg">
-          <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
-          <span>Theme & Font</span>
-        </h2>
-        <ThemeFontToggle />
+      <div className="w-full flex justify-center items-center gap-14 flex-wrap">
+        <div className="w-full flex flex-col gap-3 self-start shrink-0 max-w-sm">
+          <h2 className="flex items-center gap-2 text-lg">
+            <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+            <span>Theme</span>
+          </h2>
+          <ThemeFontToggle />
+        </div>
+        <div className="w-full flex flex-col self-start">
+          <h2 className="flex items-center gap-2 text-lg mb-1">
+            <SvgIcon src={ICONS.calendar} alt="Chat" size="small" color="var(--primary)" />
+            <span>Contact</span>
+          </h2>
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <p className="text-md">Always open to talk about anything!</p>
+              <button className="w-full rounded-lg text-center bg-[var(--primary)]">
+                <a
+                  href="https://cal.com/jmurrah/30min?overlayCalendar=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p className="text-[var(--surface)] py-2 font-semibold flex justify-center items-center gap-2">
+                    <SvgIcon src={ICONS.calendar} alt="Book" size="small" color="var(--surface)" />
+                    <span>Book a Chat</span>
+                  </p>
+                </a>
+              </button>
+            </div>
+            <div className="h-px w-full bg-[color:var(--border)]" />
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col items-center">
+                <a
+                  href="mailto:jacob@murrah.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                >
+                  <div className="flex justify-center items-center">
+                    <p className="text-[var(--text)]">email</p>
+                    <SvgIcon
+                      src={ICONS.arrowUpRight}
+                      alt="LinkedIn"
+                      size="xsmall"
+                      color="var(--text)"
+                      className="transition-transform duration-200 group-hover:translate-x-0.5"
+                    />
+                  </div>
+                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
+                    jacob@murrah.dev
+                  </p>
+                </a>
+              </div>
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://www.linkedin.com/in/jacobmurrah/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                >
+                  <div className="flex justify-center items-center">
+                    <p className="text-[var(--text)]">linkedin</p>
+                    <SvgIcon
+                      src={ICONS.arrowUpRight}
+                      alt="LinkedIn"
+                      size="xsmall"
+                      color="var(--text)"
+                      className="transition-transform duration-200 group-hover:translate-x-0.5"
+                    />
+                  </div>
+                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
+                    /in/jacobmurrah
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

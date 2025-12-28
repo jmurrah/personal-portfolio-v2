@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import { ICONS } from '@/assets';
 import Footer from '@/components/Footer';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
@@ -35,9 +35,6 @@ export default function AppLayout() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    scrollToTop('auto');
-    const raf = requestAnimationFrame(() => scrollToTop('auto'));
-    return () => cancelAnimationFrame(raf);
     closeSidebar();
   }, [pathname]);
 
@@ -53,6 +50,7 @@ export default function AppLayout() {
 
   return (
     <div className="flex flex-col items-center pb-4 sm:pb-10 w-full min-h-screen">
+      <ScrollRestoration />
       <div ref={headerSentinelRef} className="h-6 sm:h-12 w-full shrink-0" aria-hidden="true" />
       <header className="sticky top-0 z-20 w-full bg-[color:var(--bg)]/90 backdrop-blur-md">
         <div className="w-full mx-auto max-w-3xl px-4">
