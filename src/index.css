@@ -239,26 +239,26 @@ a:focus-visible .underline-fill {
 }
 
 @layer utilities {
-  .scrollbar {
+  :is(html, body, .scrollbar) {
     scrollbar-width: thin;
     scrollbar-color: var(--color-accent, var(--primary)) transparent;
   }
 
-  .scrollbar::-webkit-scrollbar {
+  :is(html, body, .scrollbar)::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
-  .scrollbar::-webkit-scrollbar-track {
+  :is(html, body, .scrollbar)::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  .scrollbar::-webkit-scrollbar-thumb {
+  :is(html, body, .scrollbar)::-webkit-scrollbar-thumb {
     background: var(--color-accent, var(--primary));
     border-radius: 999px;
   }
 
-  .scrollbar::-webkit-scrollbar-thumb:hover {
+  :is(html, body, .scrollbar)::-webkit-scrollbar-thumb:hover {
     background: var(
       --color-accent-hover,
       color-mix(in oklch, currentColor, var(--surface, var(--color-mantle, #1e1e2e)))

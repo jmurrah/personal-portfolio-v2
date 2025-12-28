@@ -56,6 +56,61 @@
     height 300ms ease-out;
 }
 
+/* Theme swatches: lock each tile to its palette color (light/dark aware) */
+.primary-color-btn[data-theme='teal'],
+.primary-color-ring[data-theme='teal'] {
+  --primary: var(--theme-teal-primary-light);
+}
+:root.dark-mode .primary-color-btn[data-theme='teal'],
+:root.dark-mode .primary-color-ring[data-theme='teal'] {
+  --primary: var(--theme-teal-primary-dark);
+}
+
+.primary-color-btn[data-theme='blue'],
+.primary-color-ring[data-theme='blue'] {
+  --primary: var(--theme-blue-primary-light);
+}
+:root.dark-mode .primary-color-btn[data-theme='blue'],
+:root.dark-mode .primary-color-ring[data-theme='blue'] {
+  --primary: var(--theme-blue-primary-dark);
+}
+
+.primary-color-btn[data-theme='amethyst'],
+.primary-color-ring[data-theme='amethyst'] {
+  --primary: var(--theme-amethyst-primary-light);
+}
+:root.dark-mode .primary-color-btn[data-theme='amethyst'],
+:root.dark-mode .primary-color-ring[data-theme='amethyst'] {
+  --primary: var(--theme-amethyst-primary-dark);
+}
+
+.primary-color-btn[data-theme='rose'],
+.primary-color-ring[data-theme='rose'] {
+  --primary: var(--theme-rose-primary-light);
+}
+:root.dark-mode .primary-color-btn[data-theme='rose'],
+:root.dark-mode .primary-color-ring[data-theme='rose'] {
+  --primary: var(--theme-rose-primary-dark);
+}
+
+.primary-color-btn[data-theme='cherry'],
+.primary-color-ring[data-theme='cherry'] {
+  --primary: var(--theme-cherry-primary-light);
+}
+:root.dark-mode .primary-color-btn[data-theme='cherry'],
+:root.dark-mode .primary-color-ring[data-theme='cherry'] {
+  --primary: var(--theme-cherry-primary-dark);
+}
+
+.primary-color-btn[data-theme='green'],
+.primary-color-ring[data-theme='green'] {
+  --primary: var(--theme-green-primary-light);
+}
+:root.dark-mode .primary-color-btn[data-theme='green'],
+:root.dark-mode .primary-color-ring[data-theme='green'] {
+  --primary: var(--theme-green-primary-dark);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

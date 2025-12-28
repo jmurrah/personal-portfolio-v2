@@ -233,7 +233,7 @@ export default function Home() {
         <h2 className="text-xl mb-2 font-semibold">Experience</h2>
         <div className="flex flex-col gap-4 w-full">
           <div className="flex items-start gap-2">
-            <img className="h-7 w-7" src={ICONS.att} alt="AT&T" width={28} height={28} />
+            {/* <img className="h-7 w-7" src={ICONS.att} alt="AT&T" width={28} height={28} /> */}
             <div className="w-full">
               <div className="flex justify-between items-center mt-0.5">
                 <h3 className="flex items-center gap-2">AT&T</h3>
@@ -253,7 +253,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <img className="h-7 w-7" src={ICONS.auburnEng} alt="Auburn" width={28} height={28} />
+            {/* <img className="h-7 w-7" src={ICONS.auburnEng} alt="Auburn" width={28} height={28} /> */}
             <div className="w-full">
               <div className="flex justify-between items-center mt-0.5">
                 <h3 className="flex items-center gap-2">Auburn University</h3>
@@ -271,7 +271,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <img className="h-7 w-7" src={ICONS.att} alt="AT&T" width={28} height={28} />
+            {/* <img className="h-7 w-7" src={ICONS.att} alt="AT&T" width={28} height={28} /> */}
             <div className="w-full">
               <div className="flex justify-between items-center mt-0.5">
                 <h3 className="flex items-center gap-2">AT&T</h3>
@@ -289,7 +289,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <img className="h-7 w-7" src={ICONS.adtran} alt="Adtran" width={28} height={28} />
+            {/* <img className="h-7 w-7" src={ICONS.adtran} alt="Adtran" width={28} height={28} /> */}
             <div className="w-full">
               <div className="flex justify-between items-center mt-0.5">
                 <h3 className="flex items-center gap-2">Adtran</h3>

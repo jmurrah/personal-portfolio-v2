@@ -22,10 +22,11 @@ export const getStoredTheme = (): PrimaryThemeName => {
 
 export const applyTheme = (name: PrimaryThemeName) => {
   if (typeof document === 'undefined') return;
-  const { body } = document;
+  const { body, documentElement } = document;
   if (!body) return;
   body.classList.remove(...themeClasses);
   body.setAttribute('data-theme', name);
+  documentElement.setAttribute('data-theme', name);
 };
 
 export const persistTheme = (name: PrimaryThemeName) => {

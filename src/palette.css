@@ -29,76 +29,9 @@
 
   --danger-light: #ef4444;
   --danger-dark: #f87171;
-
-  --tech-python: rgba(53, 114, 165, 0.5);
-  --tech-typescript: rgba(49, 120, 198, 0.5);
-  --tech-react: rgba(97, 218, 251, 0.5);
-  --tech-java: rgba(244, 117, 87, 0.5);
-  --tech-go: rgba(0, 173, 216, 0.5);
-  --tech-aws: rgba(255, 153, 0, 0.5);
-  --tech-google-cloud: rgba(66, 133, 244, 0.5);
-  --tech-postman: rgba(255, 108, 55, 0.5);
-  --tech-supabase: rgba(63, 207, 142, 0.5);
-  --tech-mongodb: rgba(89, 150, 54, 0.5);
-  --tech-git: rgba(241, 80, 47, 0.5);
-  --tech-docker: rgba(0, 130, 202, 0.5);
-  --tech-tailwind: rgba(56, 189, 248, 0.5);
-  --tech-spring: rgba(61, 114, 26, 0.5);
-  --tech-fastapi: rgba(5, 153, 139, 0.5);
 }
 
-body.theme-teal,
-[data-theme='teal'] {
-  --primary-light: var(--theme-teal-primary-light);
-  --primary-dark: var(--theme-teal-primary-dark);
-}
-
-body.theme-blue,
-[data-theme='blue'] {
-  --primary-light: var(--theme-blue-primary-light);
-  --primary-dark: var(--theme-blue-primary-dark);
-}
-
-body.theme-amethyst,
-[data-theme='amethyst'] {
-  --primary-light: var(--theme-amethyst-primary-light);
-  --primary-dark: var(--theme-amethyst-primary-dark);
-}
-
-body.theme-rose,
-[data-theme='rose'] {
-  --primary-light: var(--theme-rose-primary-light);
-  --primary-dark: var(--theme-rose-primary-dark);
-}
-
-body.theme-cherry,
-[data-theme='cherry'] {
-  --primary-light: var(--theme-cherry-primary-light);
-  --primary-dark: var(--theme-cherry-primary-dark);
-}
-
-body.theme-green,
-[data-theme='green'] {
-  --primary-light: var(--theme-green-primary-light);
-  --primary-dark: var(--theme-green-primary-dark);
-}
-
-[data-theme] {
-  --primary: var(--primary-light);
-  --color-accent: var(--primary);
-  --color-accent-hover: var(--primary);
-}
-
-body.dark-mode [data-theme] {
-  --primary: var(--primary-dark);
-  --color-accent: var(--primary);
-  --color-accent-hover: var(--primary);
-}
-
-body {
-  background-color: var(--bg-light);
-  color: var(--text-main-light);
-
+:root {
   --bg: var(--bg-light);
   --primary: var(--primary-light);
   --surface: var(--surface-light);
@@ -106,12 +39,55 @@ body {
   --text-muted: var(--text-muted-light);
   --border: var(--border-light);
   --danger: var(--danger-light);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary);
 }
 
-body.dark-mode {
-  background-color: var(--bg-dark);
-  color: var(--text-main-dark);
+/* Theme selection: applies to both html and body */
+[data-theme='teal'] {
+  --primary-light: var(--theme-teal-primary-light);
+  --primary-dark: var(--theme-teal-primary-dark);
+}
 
+[data-theme='blue'] {
+  --primary-light: var(--theme-blue-primary-light);
+  --primary-dark: var(--theme-blue-primary-dark);
+}
+
+[data-theme='amethyst'] {
+  --primary-light: var(--theme-amethyst-primary-light);
+  --primary-dark: var(--theme-amethyst-primary-dark);
+}
+
+[data-theme='rose'] {
+  --primary-light: var(--theme-rose-primary-light);
+  --primary-dark: var(--theme-rose-primary-dark);
+}
+
+[data-theme='cherry'] {
+  --primary-light: var(--theme-cherry-primary-light);
+  --primary-dark: var(--theme-cherry-primary-dark);
+}
+
+[data-theme='green'] {
+  --primary-light: var(--theme-green-primary-light);
+  --primary-dark: var(--theme-green-primary-dark);
+}
+
+/* Light vs dark derived tokens */
+:root[data-theme] {
+  --primary: var(--primary-light);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary);
+}
+
+:root.dark-mode[data-theme] {
+  --primary: var(--primary-dark);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary);
+}
+
+:root.dark-mode {
   --bg: var(--bg-dark);
   --primary: var(--primary-dark);
   --surface: var(--surface-dark);
@@ -119,4 +95,9 @@ body.dark-mode {
   --text-muted: var(--text-muted-dark);
   --border: var(--border-dark);
   --danger: var(--danger-dark);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
 }
