@@ -22,6 +22,9 @@ type ThemeFontToggleProps = {
 export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: ThemeFontToggleProps) {
   const [mode, setMode] = useState<ModeName>(() => getStoredMode());
   const [font, setFont] = useState<FontChoice>(() => getStoredFont());
+  const gapValue = typeof gap === 'number' ? `${gap}px` : gap;
+  const tileSizeValue = typeof tileSize === 'number' ? `${tileSize}px` : tileSize;
+  const colorTileSize = typeof tileSize === 'number' ? tileSize : undefined;
 
   useEffect(() => {
     const syncFromDom = () => {
@@ -57,12 +60,12 @@ export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: Them
 
   const fontGridStyle: CSSVars = {
     '--option-columns': 2,
-    '--tile-size': typeof tileSize === 'number' ? `${tileSize}px` : tileSize,
-    '--tile-gap': gap,
+    '--tile-size': tileSizeValue,
+    '--tile-gap': gapValue,
     gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
   };
   const content = (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col w-full" style={{ gap: gapValue }}>
       <div className="option-grid" style={{ '--option-columns': 1 } as CSSVars}>
         <button
           type="button"
@@ -109,7 +112,7 @@ export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: Them
     <div className="flex flex-col gap-4 w-full">
       {content}
       <div className="h-px w-full bg-[color:var(--border)]" />
-      <PrimaryColorSelector height={32} gap="0.75rem" />
+      <PrimaryColorSelector height={colorTileSize} gap={gapValue} />
     </div>
   );
 }

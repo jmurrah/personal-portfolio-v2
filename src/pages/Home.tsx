@@ -51,7 +51,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-14 mt-10">
+    <div className="flex flex-wrap gap-14 mt-14">
       <div className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start mb-10 text-center sm:text-left">
         <img
           className="w-auto h-24 rounded-lg"
@@ -444,8 +444,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col md:flex-row md:items-start gap-10 md:gap-14">
-        <div className="w-full md:w-3/5 flex flex-col self-start">
+      <div className="w-full flex flex-row flex-wrap items-start gap-10 md:gap-12">
+        <div className="flex flex-col gap-3 self-start flex-[2_1_0] min-w-[140px] max-w-full">
+          <h2 className="flex items-center gap-2 text-lg">
+            <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+            <span>Theme</span>
+          </h2>
+          <ThemeFontToggle />
+        </div>
+        <div className="flex flex-col self-start flex-[3_1_0] min-w-[220px]">
           <h2 className="flex items-center gap-2 text-lg mb-1">
             <SvgIcon src={ICONS.calendar} alt="Chat" size="small" color="var(--primary)" />
             <span>Contact</span>
@@ -514,13 +521,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="w-full md:w-2/5 flex flex-col gap-3 self-start shrink-0">
-          <h2 className="flex items-center gap-2 text-lg">
-            <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
-            <span>Theme</span>
-          </h2>
-          <ThemeFontToggle />
         </div>
       </div>
     </div>
