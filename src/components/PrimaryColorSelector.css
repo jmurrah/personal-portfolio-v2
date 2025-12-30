@@ -28,11 +28,12 @@
 
 .primary-color-btn.selected {
   opacity: 1;
+  transform: scale(1.03);
 }
 
 .primary-color-btn:hover,
 .primary-color-btn:focus-visible {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
 .primary-color-ring {
@@ -47,8 +48,8 @@
   box-sizing: border-box;
   color: var(--primary);
   box-shadow:
-    0 0 0 2px var(--surface, transparent),
-    0 0 0 4px currentColor;
+    0 0 0 3px var(--surface, transparent),
+    0 0 0 5px currentColor;
   transition:
     transform 300ms ease-out,
     width 300ms ease-out,

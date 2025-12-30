@@ -219,7 +219,7 @@ export default function AppLayout() {
               <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
               <span>Theme</span>
             </h2>
-            <ThemeFontToggle />
+            <ThemeFontToggle tileSize={32} gap="0.75rem" />
           </div>
         </div>
       </aside>

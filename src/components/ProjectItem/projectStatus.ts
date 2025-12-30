@@ -16,7 +16,7 @@ export interface ProjectItemProps {
   status: ProjectStatus;
   title: string;
   description: string;
-  year: string | number;
+  year: string;
   tags?: string[];
   githubUrl?: string;
   liveUrl?: string;

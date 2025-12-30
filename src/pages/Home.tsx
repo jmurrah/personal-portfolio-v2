@@ -50,7 +50,7 @@ export default function Home() {
             <div className="flex gap-1 items-center">
               <SvgIcon
                 src={ICONS.code}
-                alt="Specialty"
+                alt="Code icon"
                 size="small"
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
@@ -60,7 +60,7 @@ export default function Home() {
             <div className="flex gap-1 items-center">
               <SvgIcon
                 src={ICONS.calendar}
-                alt="Specialty"
+                alt="Calendar icon"
                 size="2xsmall"
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
@@ -71,8 +71,8 @@ export default function Home() {
           <div className="flex flex-wrap gap-x-4 justify-center sm:justify-start">
             {[
               { label: 'email', href: 'mailto:jacob@murrah.dev' },
-              { label: 'github', href: 'https://github.com/jmurrah' },
               { label: 'linkedin', href: 'https://www.linkedin.com/in/jacobmurrah/' },
+              { label: 'github', href: 'https://github.com/jmurrah' },
               { label: 'resume', href: '/JacobMurrahResume.pdf' },
             ].map((link) => (
               <a
@@ -85,7 +85,7 @@ export default function Home() {
                 <span>{link.label}</span>
                 <SvgIcon
                   src={ICONS.arrowUpRight}
-                  alt={`${link.label} link`}
+                  alt="External link arrow"
                   size="xsmall"
                   color="currentColor"
                   className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
@@ -230,6 +230,7 @@ export default function Home() {
                       'Azure',
                     ]}
                     className="mt-1.5 text-xs"
+                    tagClassName=""
                   />
                 </div>
               </div>
@@ -252,6 +253,7 @@ export default function Home() {
                 <TagList
                   tags={['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel', 'CAD']}
                   className="mt-1.5 text-xs"
+                  tagClassName=""
                 />
               </div>
             </div>
@@ -281,6 +283,7 @@ export default function Home() {
                     'MongoDB',
                   ]}
                   className="mt-1.5 text-xs"
+                  tagClassName=""
                 />
               </div>
             </div>
@@ -302,6 +305,7 @@ export default function Home() {
                 <TagList
                   tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
                   className="mt-1.5 text-xs"
+                  tagClassName=""
                 />
               </div>
             </div>
@@ -316,7 +320,7 @@ export default function Home() {
               <p>all projects</p>
               <SvgIcon
                 src={ICONS.arrowRight}
-                alt="All projects"
+                alt="Arrow right icon"
                 size="2xsmall"
                 color="currentColor"
                 className="transition-transform duration-200 group-hover:translate-x-0.5 svg-icon-shadow"
@@ -339,6 +343,7 @@ export default function Home() {
             <TagList
               tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
               className="mt-1.5 text-xs"
+              tagClassName=""
             />
           </div>
         </div>
@@ -351,7 +356,7 @@ export default function Home() {
               <p>all posts</p>
               <SvgIcon
                 src={ICONS.arrowRight}
-                alt="All posts"
+                alt="Arrow right icon"
                 size="2xsmall"
                 color="currentColor"
                 className="transition-transform duration-200 group-hover:translate-x-0.5 svg-icon-shadow"
@@ -393,19 +398,19 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-start gap-10 md:gap-12">
-        <div className="flex flex-col gap-3 self-start flex-[2_1_0] min-w-[185px] max-w-full">
+        <div className="flex flex-col gap-2 self-start flex-[2_1_0] min-w-[185px] max-w-full">
           <h2 className="flex items-center gap-2 text-lg">
             <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
             <span>Theme</span>
           </h2>
-          <ThemeFontToggle />
+          <ThemeFontToggle tileSize={32} gap="0.75rem" />
         </div>
         <div className="flex flex-col self-start flex-[3_1_0] min-w-[220px]">
           <h2 className="flex items-center gap-2 text-lg mb-1">
             <SvgIcon src={ICONS.calendar} alt="Chat" size="small" color="var(--primary)" />
             <span>Contact</span>
           </h2>
-          <div className="w-full flex flex-col gap-4">
+          <div className="w-full flex flex-col gap-3">
             <div className="flex flex-col gap-2">
               <p className="text-[var(--text-muted)]">Always open to talk about anything!</p>
               <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-200 hover:scale-[1.03]">
@@ -415,7 +420,12 @@ export default function Home() {
                   rel="noopener noreferrer"
                 >
                   <p className="text-[var(--surface)] py-2 font-semibold flex justify-center items-center gap-2">
-                    <SvgIcon src={ICONS.calendar} alt="Book" size="small" color="var(--surface)" />
+                    <SvgIcon
+                      src={ICONS.calendar}
+                      alt="Calendar icon"
+                      size="small"
+                      color="var(--surface)"
+                    />
                     <span>Book a Chat</span>
                   </p>
                 </a>
@@ -434,7 +444,7 @@ export default function Home() {
                     <p className="text-[var(--text)]">email</p>
                     <SvgIcon
                       src={ICONS.arrowUpRight}
-                      alt="LinkedIn"
+                      alt="External link arrow"
                       size="xsmall"
                       color="var(--text)"
                       className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
@@ -456,7 +466,7 @@ export default function Home() {
                     <p className="text-[var(--text)]">linkedin</p>
                     <SvgIcon
                       src={ICONS.arrowUpRight}
-                      alt="LinkedIn"
+                      alt="External link arrow"
                       size="xsmall"
                       color="var(--text)"
                       className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
@@ -464,6 +474,28 @@ export default function Home() {
                   </div>
                   <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
                     /in/jacobmurrah
+                  </p>
+                </a>
+              </div>
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://github.com/jmurrah"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="arrow-link group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                >
+                  <div className="flex justify-center items-center">
+                    <p className="text-[var(--text)]">github</p>
+                    <SvgIcon
+                      src={ICONS.arrowUpRight}
+                      alt="LinkedIn"
+                      size="xsmall"
+                      color="var(--text)"
+                      className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
+                    />
+                  </div>
+                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
+                    /jmurrah
                   </p>
                 </a>
               </div>

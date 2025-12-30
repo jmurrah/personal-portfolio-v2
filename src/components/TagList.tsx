@@ -1,10 +1,10 @@
 interface TagListProps {
   tags: string[];
-  className?: string;
-  tagClassName?: string;
+  className: string;
+  tagClassName: string;
 }
 
-export default function TagList({ tags, className = '', tagClassName = '' }: TagListProps) {
+export default function TagList({ tags, className, tagClassName }: TagListProps) {
   if (!tags.length) return null;
 
   return (

@@ -54,7 +54,7 @@ export default function ProjectItem({
       <div className="flex flex-col">
         <p className="">{description}</p>
         {tags.length > 0 && (
-          <TagList tags={tags} className="mt-1 text-sm text-[var(--text-muted)]" />
+          <TagList tags={tags} className="mt-1 text-sm text-[var(--text-muted)]" tagClassName="" />
         )}
       </div>
     </div>

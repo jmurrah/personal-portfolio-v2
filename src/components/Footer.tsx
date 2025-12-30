@@ -65,7 +65,7 @@ export default function Footer() {
             style={{ fontFamily: 'var(--font-family)' }}
           >
             <SvgIcon src={ICONS.clock} alt="Clock" size="3xsmall" color="var(--text-muted)" />
-            <span className="italic">{time}</span>
+            <span className="italic text-[var(--primary-muted)]">{time}</span>
             <span className="text-[color:var(--text-muted)]">{timeZoneName}</span>
           </div>
           <span className="hidden h-4 w-px bg-[color:var(--border)] sm:inline-block" />
@@ -79,6 +79,7 @@ export default function Footer() {
                 size="xsmall"
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
+                className="transition-transform duration-200 hover:-translate-y-0.5"
               />
             ))}
           </div>
