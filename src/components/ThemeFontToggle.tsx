@@ -57,6 +57,7 @@ export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: Them
   const nextMode = mode === 'dark' ? 'light' : 'dark';
   const modeLabel = nextMode === 'dark' ? 'Dark' : 'Light';
   const modeIcon = nextMode === 'dark' ? ICONS.moon : ICONS.sun;
+  const modeIconColor = nextMode === 'dark' ? '#0400ffff' : '#ecad00ff';
 
   const fontGridStyle: CSSVars = {
     '--option-columns': 2,
@@ -65,26 +66,27 @@ export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: Them
     gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
   };
   const content = (
-    <div className="flex flex-col w-full" style={{ gap: gapValue }}>
-      <div className="option-grid" style={{ '--option-columns': 1 } as CSSVars}>
-        <button
-          type="button"
-          onClick={handleModeToggle}
-          aria-pressed={mode === 'dark'}
-          className={`option-btn option-btn--neutral${mode === 'dark' ? ' selected' : ''}`}
-          aria-label="Toggle light and dark mode"
-        >
-          <div className="flex items-center justify-center gap-2">
-            <SvgIcon
-              src={modeIcon}
-              alt={modeLabel === 'Light' ? 'Sun icon' : 'Moon icon'}
-              size="small"
-              color="currentColor"
-            />
-            <span>{modeLabel}</span>
-          </div>
-        </button>
-      </div>
+    <div
+      className="font-toggle-grid"
+      style={{ '--tile-size': tileSizeValue, '--tile-gap': gapValue } as CSSVars}
+    >
+      <button
+        type="button"
+        onClick={handleModeToggle}
+        aria-pressed={mode === 'dark'}
+        className={`option-btn option-btn--neutral font-toggle-mode${mode === 'dark' ? ' selected' : ''}`}
+        aria-label="Toggle light and dark mode"
+      >
+        <div className="flex items-center justify-center gap-2">
+          <SvgIcon
+            src={modeIcon}
+            alt={modeLabel === 'Light' ? 'Sun icon' : 'Moon icon'}
+            size="small"
+            color={modeIconColor}
+          />
+        </div>
+      </button>
+
       <div className="option-grid font-group" style={fontGridStyle}>
         <button
           type="button"

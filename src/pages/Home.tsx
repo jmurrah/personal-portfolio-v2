@@ -9,7 +9,7 @@ import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostPath, getPostSlug } from '@/components/Blog/postRouting';
 
 export default function Home() {
-  const { getAccentColor, getMutedAccentColor } = useAccentColors();
+  const { getPrimaryMutedColor } = useAccentColors();
 
   const formatDate = (value?: string | null) => {
     if (!value) return '';
@@ -23,7 +23,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-14 mt-14">
+    <div className="flex flex-wrap gap-14 mt-10">
       <div className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start mb-10 text-center sm:text-left">
         <img
           className="w-auto h-24 rounded-lg"
@@ -80,7 +80,7 @@ export default function Home() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group gap-0.5 flex items-center"
+                className="arrow-link group gap-0.5 flex items-center"
               >
                 <span>{link.label}</span>
                 <SvgIcon
@@ -88,7 +88,7 @@ export default function Home() {
                   alt={`${link.label} link`}
                   size="xsmall"
                   color="currentColor"
-                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
                 />
               </a>
             ))}
@@ -102,49 +102,49 @@ export default function Home() {
             I specialize in{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(0) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               full-stack development
             </span>{' '}
             and build applications that prioritize{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(1) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               simplicity
             </span>{' '}
             and{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(2) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               efficiency
             </span>
             . My experience in{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(3) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               machine learning
             </span>{' '}
             and{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(4) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               system design
             </span>{' '}
             enables me to create{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(5) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               intelligent
             </span>{' '}
             and{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(6) } as CSSProperties}
+              style={{ '--accent-underline-color': getPrimaryMutedColor() } as CSSProperties}
             >
               scalable
             </span>{' '}
@@ -212,7 +212,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 <div>
-                  <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm">
+                  <div className="flex justify-between items-start text-[var(--text-muted)] text-sm">
                     <p>Software Engineer I</p>
                     <p className="shrink-0">Jan. 2026 - Present</p>
                   </div>
@@ -220,10 +220,16 @@ export default function Home() {
                     <li>Incoming January 2026.</li>
                   </ul>
                   <TagList
-                    tags={['Python', 'TypeScript', 'Java', 'Docker', 'MongoDB', 'PostgreSQL', 'Azure']}
-                    getAccentColor={getMutedAccentColor}
+                    tags={[
+                      'Python',
+                      'TypeScript',
+                      'Java',
+                      'Docker',
+                      'MongoDB',
+                      'PostgreSQL',
+                      'Azure',
+                    ]}
                     className="mt-1.5 text-xs"
-                    startIndex={0}
                   />
                 </div>
               </div>
@@ -236,7 +242,7 @@ export default function Home() {
                 <p>Auburn, AL</p>
               </div>
               <div>
-                <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Undergraduate Research Assistant</p>
                   <p className="shrink-0">Aug. 2025 - Dec. 2025</p>
                 </div>
@@ -245,9 +251,7 @@ export default function Home() {
                 </ul>
                 <TagList
                   tags={['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel', 'CAD']}
-                  getAccentColor={getMutedAccentColor}
                   className="mt-1.5 text-xs"
-                  startIndex={7}
                 />
               </div>
             </div>
@@ -259,7 +263,7 @@ export default function Home() {
                 <p>Atlanta, GA</p>
               </div>
               <div>
-                <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Software Engineer Intern</p>
                   <p className="shrink-0">Jun. 2025 - Aug. 2025</p>
                 </div>
@@ -267,10 +271,16 @@ export default function Home() {
                   <li>Cricket Wireless web application for monitoring store inventory.</li>
                 </ul>
                 <TagList
-                  tags={['TypeScript', 'React', 'Java', 'Spring Boot', 'Figma', 'Docker', 'MongoDB']}
-                  getAccentColor={getMutedAccentColor}
+                  tags={[
+                    'TypeScript',
+                    'React',
+                    'Java',
+                    'Spring Boot',
+                    'Figma',
+                    'Docker',
+                    'MongoDB',
+                  ]}
                   className="mt-1.5 text-xs"
-                  startIndex={14}
                 />
               </div>
             </div>
@@ -282,7 +292,7 @@ export default function Home() {
                 <p>Huntsville, AL</p>
               </div>
               <div>
-                <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Software Engineer Co-op</p>
                   <p className="shrink-0">May 2023 - Dec. 2024</p>
                 </div>
@@ -291,9 +301,7 @@ export default function Home() {
                 </ul>
                 <TagList
                   tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
-                  getAccentColor={getMutedAccentColor}
                   className="mt-1.5 text-xs"
-                  startIndex={21}
                 />
               </div>
             </div>
@@ -330,9 +338,7 @@ export default function Home() {
             </p>
             <TagList
               tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
-              getAccentColor={getMutedAccentColor}
-              className="mt-1 text-xs"
-              startIndex={4}
+              className="mt-1.5 text-xs"
             />
           </div>
         </div>
@@ -387,7 +393,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-start gap-10 md:gap-12">
-        <div className="flex flex-col gap-3 self-start flex-[2_1_0] min-w-[140px] max-w-full">
+        <div className="flex flex-col gap-3 self-start flex-[2_1_0] min-w-[185px] max-w-full">
           <h2 className="flex items-center gap-2 text-lg">
             <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
             <span>Theme</span>
@@ -402,7 +408,7 @@ export default function Home() {
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <p className="text-[var(--text-muted)]">Always open to talk about anything!</p>
-              <button className="w-full rounded-lg text-center bg-[var(--primary)]">
+              <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-200 hover:scale-[1.03]">
                 <a
                   href="https://cal.com/jmurrah/30min?overlayCalendar=true"
                   target="_blank"
@@ -422,7 +428,7 @@ export default function Home() {
                   href="mailto:jacob@murrah.dev"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                  className="arrow-link group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
                 >
                   <div className="flex justify-center items-center">
                     <p className="text-[var(--text)]">email</p>
@@ -431,7 +437,7 @@ export default function Home() {
                       alt="LinkedIn"
                       size="xsmall"
                       color="var(--text)"
-                      className="transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
                     />
                   </div>
                   <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
@@ -444,7 +450,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/jacobmurrah/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                  className="arrow-link group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
                 >
                   <div className="flex justify-center items-center">
                     <p className="text-[var(--text)]">linkedin</p>
@@ -453,7 +459,7 @@ export default function Home() {
                       alt="LinkedIn"
                       size="xsmall"
                       color="var(--text)"
-                      className="transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
                     />
                   </div>
                   <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">

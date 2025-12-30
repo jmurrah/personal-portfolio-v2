@@ -48,21 +48,84 @@
   color: var(--text);
 }
 
+.font-toggle-grid {
+  display: grid;
+  grid-template-columns: minmax(var(--tile-size, 2.25rem), auto) 1fr;
+  grid-auto-rows: minmax(var(--tile-size, 2.25rem), auto);
+  gap: var(--tile-gap, 0.75rem);
+  align-items: stretch;
+}
+
+.font-toggle-mode {
+  align-self: stretch;
+  justify-self: stretch;
+  width: auto;
+  min-width: var(--tile-size, 2.25rem);
+  height: 100%;
+  min-height: var(--tile-size, 2.25rem);
+  aspect-ratio: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.font-toggle-mode:hover,
+.font-toggle-mode:focus-visible {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--surface) 95%, var(--primary) 5%);
+}
+
+.font-toggle-mode.selected {
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+
+.font-toggle-mode.selected:hover,
+.font-toggle-mode.selected:focus-visible {
+  border: 2px solid var(--primary);
+  background: color-mix(in srgb, var(--surface) 95%, var(--primary) 5%);
+}
+
 .font-group {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 0.25rem;
+  align-self: stretch;
+  height: 100%;
+  grid-auto-rows: 1fr;
+  align-items: stretch;
 }
 
 .font-group .option-btn {
   background: transparent;
   color: var(--text);
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 6px;
+  height: 100%;
+  min-height: var(--tile-size, 2.25rem);
 }
 
 .font-group .option-btn.selected {
-  border-color: var(--primary);
-  color: var(--text);
+  border: 2px solid var(--primary);
+  color: var(--primary);
   font-weight: 600;
   background: transparent;
+}
+
+.font-group .option-btn:hover,
+.font-group .option-btn:focus-visible {
+  border-color: var(--primary);
+  border-width: 1px;
+  background: color-mix(in srgb, var(--surface) 95%, var(--primary) 5%);
+  color: var(--primary);
+}
+
+.font-group .option-btn.selected:hover,
+.font-group .option-btn.selected:focus-visible {
+  border-width: 2px;
+  background: color-mix(in srgb, var(--surface) 95%, var(--primary) 5%);
 }

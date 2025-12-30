@@ -1,7 +1,6 @@
 import SvgIcon from '@/components/SvgIcon';
 import { ICONS } from '@/assets';
 import TagList from '@/components/TagList';
-import { useAccentColors } from '@/hooks/useAccentColors';
 import { PROJECT_STATUS_META, type ProjectItemProps } from './projectStatus';
 
 export default function ProjectItem({
@@ -14,7 +13,6 @@ export default function ProjectItem({
   liveUrl,
 }: ProjectItemProps) {
   const statusMeta = PROJECT_STATUS_META[status];
-  const { getMutedAccentColor } = useAccentColors();
 
   return (
     <div className="flex flex-col border-t-2 border-[var(--border)]">
@@ -56,11 +54,7 @@ export default function ProjectItem({
       <div className="flex flex-col">
         <p className="">{description}</p>
         {tags.length > 0 && (
-          <TagList
-            tags={tags}
-            getAccentColor={getMutedAccentColor}
-            className="mt-1 text-sm text-[var(--text-muted)]"
-          />
+          <TagList tags={tags} className="mt-1 text-sm text-[var(--text-muted)]" />
         )}
       </div>
     </div>

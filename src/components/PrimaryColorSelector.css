@@ -32,7 +32,7 @@
 
 .primary-color-btn:hover,
 .primary-color-btn:focus-visible {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 .primary-color-ring {
