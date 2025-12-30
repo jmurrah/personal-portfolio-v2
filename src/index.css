@@ -130,6 +130,19 @@ a {
   margin-left: 1.75px;
 }
 
+.tag-pill {
+  color: color-mix(
+    in srgb,
+    var(--text-muted) 60%,
+    var(--tag-accent, var(--primary)) 40%
+  );
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
 .accent-underline {
   color: var(--text);
   text-decoration: underline;

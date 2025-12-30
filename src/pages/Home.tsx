@@ -1,43 +1,17 @@
-import React, { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
+import TagList from '@/components/TagList';
 import { technologies } from '@/constants/technologies';
 import TechnologyBadge from '@/components/TechnologyBadge';
-import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
+import { useAccentColors } from '@/hooks/useAccentColors';
 import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostPath, getPostSlug } from '@/components/Blog/postRouting';
 
 export default function Home() {
-  const { theme, primaryThemes } = usePrimaryTheme();
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() =>
-    typeof document !== 'undefined'
-      ? document.documentElement.classList.contains('dark-mode')
-      : false,
-  );
-
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-    const observer = new MutationObserver(() => {
-      setIsDarkMode(document.documentElement.classList.contains('dark-mode'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-
-  const accentThemes = (() => {
-    const idx = primaryThemes.indexOf(theme);
-    if (idx === -1) return primaryThemes;
-    return [...primaryThemes.slice(idx + 1), ...primaryThemes.slice(0, idx)];
-  })();
-
-  const getAccentColor = (index: number) => {
-    const sourceList = accentThemes.length ? accentThemes : primaryThemes;
-    const colorName = sourceList[index % sourceList.length];
-    const shade = isDarkMode ? 'dark' : 'light';
-    return `var(--theme-${colorName}-primary-${shade})`;
-  };
+  const { getAccentColor } = useAccentColors();
 
   const formatDate = (value?: string | null) => {
     if (!value) return '';
@@ -172,7 +146,7 @@ export default function Home() {
             and{' '}
             <span
               className="accent-underline"
-              style={{ '--accent-underline-color': getAccentColor(6) } as React.CSSProperties}
+              style={{ '--accent-underline-color': getAccentColor(6) } as CSSProperties}
             >
               scalable
             </span>{' '}
@@ -248,16 +222,20 @@ export default function Home() {
                     <li>Incoming January 2026.</li>
                   </ul>
                 </div>
-                <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
-                  <SvgIcon
-                    src={ICONS.tag}
-                    alt="All projects"
-                    size="3xsmall"
-                    color="currentColor"
-                    className="shrink-0 mt-0.5"
-                  />
-                  <p>Python / TypeScript / Java / Docker / MongoDB / PostgreSQL / Azure</p>
-                </div>
+                <TagList
+                  tags={['Python', 'TypeScript', 'Java', 'Docker', 'MongoDB', 'PostgreSQL', 'Azure']}
+                  getAccentColor={getAccentColor}
+                  className="mt-1 text-xs text-[var(--text-muted)]"
+                  icon={
+                    <SvgIcon
+                      src={ICONS.tag}
+                      alt="All projects"
+                      size="3xsmall"
+                      color="currentColor"
+                      className="shrink-0"
+                    />
+                  }
+                />
               </div>
             </div>
           </div>
@@ -275,16 +253,20 @@ export default function Home() {
                 <ul className="bullet-list text-sm">
                   <li>Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.</li>
                 </ul>
-                <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
-                  <SvgIcon
-                    src={ICONS.tag}
-                    alt="All projects"
-                    size="3xsmall"
-                    color="currentColor"
-                    className="shrink-0 mt-0.5"
-                  />
-                  <p>TypeScript / NextJS / Python / Docker / Supabase / Vercel / CAD</p>
-                </div>
+                <TagList
+                  tags={['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel', 'CAD']}
+                  getAccentColor={getAccentColor}
+                  className="mt-1 text-xs text-[var(--text-muted)]"
+                  icon={
+                    <SvgIcon
+                      src={ICONS.tag}
+                      alt="All projects"
+                      size="3xsmall"
+                      color="currentColor"
+                      className="shrink-0"
+                    />
+                  }
+                />
               </div>
             </div>
           </div>
@@ -302,16 +284,20 @@ export default function Home() {
                 <ul className="bullet-list text-sm">
                   <li>Cricket Wireless web application for monitoring store inventory.</li>
                 </ul>
-                <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
-                  <SvgIcon
-                    src={ICONS.tag}
-                    alt="All projects"
-                    size="3xsmall"
-                    color="currentColor"
-                    className="shrink-0 mt-0.5"
-                  />
-                  <p>TypeScript / React / Java / Spring Boot / Figma / Docker / MongoDB</p>
-                </div>
+                <TagList
+                  tags={['TypeScript', 'React', 'Java', 'Spring Boot', 'Figma', 'Docker', 'MongoDB']}
+                  getAccentColor={getAccentColor}
+                  className="mt-1 text-xs text-[var(--text-muted)]"
+                  icon={
+                    <SvgIcon
+                      src={ICONS.tag}
+                      alt="All projects"
+                      size="3xsmall"
+                      color="currentColor"
+                      className="shrink-0"
+                    />
+                  }
+                />
               </div>
             </div>
           </div>
@@ -330,16 +316,20 @@ export default function Home() {
                   <li>Developer tooling and Mosaic One SaaS for network monitoring.</li>
                 </ul>
               </div>
-              <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
-                <SvgIcon
-                  src={ICONS.tag}
-                  alt="All projects"
-                  size="3xsmall"
-                  color="currentColor"
-                  className="shrink-0 mt-0.5"
-                />
-                <p>Python / TypeScript / Angular / Docker / PostgreSQL / AWS</p>
-              </div>
+              <TagList
+                tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
+                getAccentColor={getAccentColor}
+                className="mt-1 text-xs text-[var(--text-muted)]"
+                icon={
+                  <SvgIcon
+                    src={ICONS.tag}
+                    alt="All projects"
+                    size="3xsmall"
+                    color="currentColor"
+                    className="shrink-0"
+                  />
+                }
+              />
             </div>
           </div>
         </div>
@@ -372,16 +362,20 @@ export default function Home() {
             <p className="text-[var(--text-muted)] text-sm">
               Web extension that helps users track{' '}
             </p>
-            <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
-              <SvgIcon
-                src={ICONS.tag}
-                alt="All projects"
-                size="3xsmall"
-                color="currentColor"
-                className="shrink-0 mt-0.5"
-              />
-              <p>Python / TypeScript / Angular / Docker / PostgreSQL / AWS</p>
-            </div>
+            <TagList
+              tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
+              getAccentColor={getAccentColor}
+              className="mt-1 text-xs text-[var(--text-muted)]"
+              icon={
+                <SvgIcon
+                  src={ICONS.tag}
+                  alt="All projects"
+                  size="3xsmall"
+                  color="currentColor"
+                  className="shrink-0"
+                />
+              }
+            />
           </div>
         </div>
       </div>
