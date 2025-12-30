@@ -77,12 +77,13 @@ export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: Them
         className={`option-btn option-btn--neutral font-toggle-mode${mode === 'dark' ? ' selected' : ''}`}
         aria-label="Toggle light and dark mode"
       >
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center w-full h-full">
           <SvgIcon
             src={modeIcon}
             alt={modeLabel === 'Light' ? 'Sun icon' : 'Moon icon'}
-            size="small"
+            size="medium"
             color={modeIconColor}
+            style={{ width: '60%', height: '60%', minWidth: '1.25rem' }}
           />
         </div>
       </button>
