@@ -39,6 +39,24 @@ export default function AppLayout() {
   }, [pathname]);
 
   useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (!isSidebarOpen) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+
+    return () => {
+      html.style.overflow = previousHtmlOverflow;
+      body.style.overflow = previousBodyOverflow;
+    };
+  }, [isSidebarOpen]);
+
+  useEffect(() => {
     const sentinel = headerSentinelRef.current;
     if (!sentinel || typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(([entry]) => {
@@ -134,7 +152,7 @@ export default function AppLayout() {
 
       <aside
         id="sidebar-nav"
-        className="bg-[color:var(--surface)] border-[color:var(--border)] fixed right-0 z-40 flex w-64 flex-col border-l shadow-xl transition-[transform,opacity] duration-300 ease-in-out"
+        className="bg-[color:var(--surface)] border-[color:var(--border)] fixed right-0 z-40 flex w-64 flex-col overflow-y-auto scrollbar border-l shadow-xl transition-[transform,opacity] duration-300 ease-in-out pr-3"
         inert={!isSidebarOpen}
         style={{
           top: 0,
@@ -142,6 +160,7 @@ export default function AppLayout() {
           transform: isSidebarOpen ? 'translateX(0)' : 'translateX(100%)',
           opacity: isSidebarOpen ? 1 : 0,
           pointerEvents: isSidebarOpen ? 'auto' : 'none',
+          scrollbarGutter: 'stable both-edges',
         }}
       >
         <div className="border-[color:var(--border)] flex h-16 flex-shrink-0 items-center justify-between border-b p-4">
@@ -156,11 +175,7 @@ export default function AppLayout() {
           </button>
         </div>
 
-        <div className="border-[color:var(--border)] flex-shrink-0 border-b p-4">
-          <ThemeFontToggle isCompact />
-        </div>
-
-        <nav className="flex-1 overflow-y-auto scrollbar p-4">
+        <nav className="p-4 border-b border-[color:var(--border)]">
           <ul className="space-y-2" role="list">
             {mainNavItems.map((item) => {
               const isActive = pathname === item.href;
@@ -197,6 +212,16 @@ export default function AppLayout() {
             })}
           </ul>
         </nav>
+
+        <div className="p-4">
+          <div className="w-full flex flex-col gap-3 self-start shrink-0">
+            <h2 className="flex items-center gap-2 text-lg">
+              <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+              <span>Theme</span>
+            </h2>
+            <ThemeFontToggle />
+          </div>
+        </div>
       </aside>
 
       <main className="w-full max-w-2xl px-8">

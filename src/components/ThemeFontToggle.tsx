@@ -17,14 +17,9 @@ type CSSVars = CSSProperties & Record<string, string | number>;
 type ThemeFontToggleProps = {
   tileSize?: number | string;
   gap?: number | string;
-  isCompact?: boolean;
 };
 
-export default function ThemeFontToggle({
-  tileSize = 32,
-  gap = '0.75rem',
-  isCompact = false,
-}: ThemeFontToggleProps) {
+export default function ThemeFontToggle({ tileSize = 32, gap = '0.75rem' }: ThemeFontToggleProps) {
   const [mode, setMode] = useState<ModeName>(() => getStoredMode());
   const [font, setFont] = useState<FontChoice>(() => getStoredFont());
 
@@ -63,15 +58,11 @@ export default function ThemeFontToggle({
   const fontGridStyle: CSSVars = {
     '--option-columns': 2,
     '--tile-size': typeof tileSize === 'number' ? `${tileSize}px` : tileSize,
-    '--tile-gap': isCompact ? '0px' : gap,
+    '--tile-gap': gap,
+    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
   };
-  if (isCompact) {
-    fontGridStyle.gridTemplateColumns = 'repeat(auto-fit, minmax(120px, 1fr))';
-    fontGridStyle.gap = '0';
-  }
-
-  const content = isCompact ? (
-    <>
+  const content = (
+    <div className="flex flex-col gap-2">
       <div className="option-grid" style={{ '--option-columns': 1 } as CSSVars}>
         <button
           type="button"
@@ -91,57 +82,7 @@ export default function ThemeFontToggle({
           </div>
         </button>
       </div>
-      <div className="option-grid font-group font-group--compact" style={fontGridStyle}>
-        <button
-          type="button"
-          onClick={() => handleFontChange('geist')}
-          aria-pressed={font === 'geist'}
-          className={`option-btn${font === 'geist' ? ' selected' : ''}`}
-          style={{ fontFamily: FONT_STACKS.geist }}
-        >
-          Geist
-        </button>
-        <button
-          type="button"
-          onClick={() => handleFontChange('general')}
-          aria-pressed={font === 'general'}
-          className={`option-btn${font === 'general' ? ' selected' : ''}`}
-          style={{ fontFamily: FONT_STACKS.general }}
-        >
-          General Sans
-        </button>
-      </div>
-    </>
-  ) : (
-    <div
-      className="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full"
-      style={
-        {
-          '--tile-size': typeof tileSize === 'number' ? `${tileSize}px` : tileSize,
-          '--tile-gap': gap,
-        } as CSSVars
-      }
-    >
-      <div className="option-grid" style={{ '--option-columns': 1 } as CSSVars}>
-        <button
-          type="button"
-          onClick={handleModeToggle}
-          aria-pressed={mode === 'dark'}
-          className={`option-btn option-btn--neutral${mode === 'dark' ? ' selected' : ''}`}
-          aria-label="Toggle light and dark mode"
-        >
-          <div className="flex items-center justify-center gap-2">
-            <SvgIcon
-              src={modeIcon}
-              alt={modeLabel === 'Light' ? 'Sun icon' : 'Moon icon'}
-              size="small"
-              color="currentColor"
-            />
-            <span>{modeLabel}</span>
-          </div>
-        </button>
-      </div>
-      <div className="sm:col-span-2 option-grid font-group" style={fontGridStyle}>
+      <div className="option-grid font-group" style={fontGridStyle}>
         <button
           type="button"
           onClick={() => handleFontChange('geist')}
@@ -168,7 +109,7 @@ export default function ThemeFontToggle({
     <div className="flex flex-col gap-4 w-full">
       {content}
       <div className="h-px w-full bg-[color:var(--border)]" />
-      <PrimaryColorSelector tileSize={28} gap="0.75rem" />
+      <PrimaryColorSelector height={32} gap="0.75rem" />
     </div>
   );
 }

@@ -24,8 +24,8 @@
   --theme-green-primary-light: #137237;
   --theme-green-primary-dark: #4ade80;
 
-  --primary-light: var(--theme-teal-primary-light);
-  --primary-dark: var(--theme-teal-primary-dark);
+  --primary-light: var(--theme-blue-primary-light);
+  --primary-dark: var(--theme-blue-primary-dark);
 
   --danger-light: #ef4444;
   --danger-dark: #f87171;

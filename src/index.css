@@ -126,6 +126,10 @@ a {
   height: 12px;
 }
 
+.tags {
+  margin-left: 1.75px;
+}
+
 .accent-underline {
   color: var(--text);
   text-decoration: underline;
@@ -141,6 +145,7 @@ a {
 
 .nav-link:hover {
   color: var(--primary) !important;
+  cursor: pointer;
 }
 
 .custom-margin {

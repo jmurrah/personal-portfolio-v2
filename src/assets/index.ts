@@ -11,6 +11,7 @@ import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
 import ArrowRightIcon from '@/assets/icons/ArrowRightIcon.svg';
 import PaintIcon from '@/assets/icons/PaintIcon.svg';
 import ClockIcon from '@/assets/icons/ClockIcon.svg';
+import TagIcon from '@/assets/icons/TagIcon.svg';
 import ATTIcon from '@/assets/icons/AT&TIcon.webp';
 import AdtranIcon from '@/assets/icons/AdtranIcon.webp';
 import AuburnEngIcon from '@/assets/icons/AuburnEngIcon.webp';
@@ -34,6 +35,7 @@ export const ICONS = {
   att: ATTIcon,
   adtran: AdtranIcon,
   auburnEng: AuburnEngIcon,
+  tag: TagIcon,
 } as const;
 
 export const PHOTOS = {

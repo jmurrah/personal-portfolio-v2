@@ -233,13 +233,12 @@ export default function Home() {
         <h2 className="text-xl mb-2 font-semibold">Experience</h2>
         <div className="flex flex-col gap-4 w-full">
           <div className="flex items-start gap-2">
-            {/* <img className="h-7 w-7" src={ICONS.att} alt="AT&T" width={28} height={28} /> */}
             <div className="w-full">
-              <div className="flex justify-between items-center mt-0.5">
-                <h3 className="flex items-center gap-2">AT&T</h3>
+              <div className="flex justify-between items-center">
+                <h3>AT&T</h3>
                 <p>Atlanta, GA</p>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col">
                 <div>
                   <div className="flex justify-between items-start text-[var(--text-muted)] text-sm">
                     <p>Software Engineer I</p>
@@ -249,14 +248,23 @@ export default function Home() {
                     <li>Incoming January 2026.</li>
                   </ul>
                 </div>
+                <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
+                  <SvgIcon
+                    src={ICONS.tag}
+                    alt="All projects"
+                    size="3xsmall"
+                    color="currentColor"
+                    className="shrink-0 mt-0.5"
+                  />
+                  <p>Python / TypeScript / Java / Docker / MongoDB / PostgreSQL / Azure</p>
+                </div>
               </div>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            {/* <img className="h-7 w-7" src={ICONS.auburnEng} alt="Auburn" width={28} height={28} /> */}
             <div className="w-full">
-              <div className="flex justify-between items-center mt-0.5">
-                <h3 className="flex items-center gap-2">Auburn University</h3>
+              <div className="flex justify-between items-center">
+                <h3>Auburn University</h3>
                 <p>Auburn, AL</p>
               </div>
               <div>
@@ -267,14 +275,23 @@ export default function Home() {
                 <ul className="bullet-list text-sm">
                   <li>Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.</li>
                 </ul>
+                <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
+                  <SvgIcon
+                    src={ICONS.tag}
+                    alt="All projects"
+                    size="3xsmall"
+                    color="currentColor"
+                    className="shrink-0 mt-0.5"
+                  />
+                  <p>TypeScript / NextJS / Python / Docker / Supabase / Vercel / CAD</p>
+                </div>
               </div>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            {/* <img className="h-7 w-7" src={ICONS.att} alt="AT&T" width={28} height={28} /> */}
             <div className="w-full">
-              <div className="flex justify-between items-center mt-0.5">
-                <h3 className="flex items-center gap-2">AT&T</h3>
+              <div className="flex justify-between items-center">
+                <h3>AT&T</h3>
                 <p>Atlanta, GA</p>
               </div>
               <div>
@@ -283,16 +300,25 @@ export default function Home() {
                   <p className="shrink-0">Jun. 2025 - Aug. 2025</p>
                 </div>
                 <ul className="bullet-list text-sm">
-                  <li>Cricket Wireless web application for monitoring device inventory.</li>
+                  <li>Cricket Wireless web application for monitoring store inventory.</li>
                 </ul>
+                <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
+                  <SvgIcon
+                    src={ICONS.tag}
+                    alt="All projects"
+                    size="3xsmall"
+                    color="currentColor"
+                    className="shrink-0 mt-0.5"
+                  />
+                  <p>TypeScript / React / Java / Spring Boot / Figma / Docker / MongoDB</p>
+                </div>
               </div>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            {/* <img className="h-7 w-7" src={ICONS.adtran} alt="Adtran" width={28} height={28} /> */}
             <div className="w-full">
-              <div className="flex justify-between items-center mt-0.5">
-                <h3 className="flex items-center gap-2">Adtran</h3>
+              <div className="flex justify-between items-center">
+                <h3>Adtran</h3>
                 <p>Huntsville, AL</p>
               </div>
               <div>
@@ -303,6 +329,16 @@ export default function Home() {
                 <ul className="bullet-list text-sm">
                   <li>Developer tooling and Mosaic One SaaS for network monitoring.</li>
                 </ul>
+              </div>
+              <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
+                <SvgIcon
+                  src={ICONS.tag}
+                  alt="All projects"
+                  size="3xsmall"
+                  color="currentColor"
+                  className="shrink-0 mt-0.5"
+                />
+                <p>Python / TypeScript / Angular / Docker / PostgreSQL / AWS</p>
               </div>
             </div>
           </div>
@@ -325,7 +361,28 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex flex-col gap-1 w-full">
-          <p>LettCode Repetition Extension</p>
+          <div>
+            <div className="flex justify-between items-center">
+              <h3>LeetCode Repetition Extension</h3>
+              <div className="flex items-center gap-2 text-sm">
+                <p>github</p>
+                <p>live</p>
+              </div>
+            </div>
+            <p className="text-[var(--text-muted)] text-sm">
+              Web extension that helps users track{' '}
+            </p>
+            <div className="tags mt-1 flex gap-1 items-start text-xs text-[var(--text-muted)]">
+              <SvgIcon
+                src={ICONS.tag}
+                alt="All projects"
+                size="3xsmall"
+                color="currentColor"
+                className="shrink-0 mt-0.5"
+              />
+              <p>Python / TypeScript / Angular / Docker / PostgreSQL / AWS</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="w-full">
@@ -387,22 +444,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center items-center gap-14 flex-wrap">
-        <div className="w-full flex flex-col gap-3 self-start shrink-0 max-w-sm">
-          <h2 className="flex items-center gap-2 text-lg">
-            <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
-            <span>Theme</span>
-          </h2>
-          <ThemeFontToggle />
-        </div>
-        <div className="w-full flex flex-col self-start">
+      <div className="w-full flex flex-col md:flex-row md:items-start gap-10 md:gap-14">
+        <div className="w-full md:w-3/5 flex flex-col self-start">
           <h2 className="flex items-center gap-2 text-lg mb-1">
             <SvgIcon src={ICONS.calendar} alt="Chat" size="small" color="var(--primary)" />
             <span>Contact</span>
           </h2>
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <p className="text-md">Always open to talk about anything!</p>
+              <p className="text-[var(--text-muted)]">Always open to talk about anything!</p>
               <button className="w-full rounded-lg text-center bg-[var(--primary)]">
                 <a
                   href="https://cal.com/jmurrah/30min?overlayCalendar=true"
@@ -464,6 +514,13 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-full md:w-2/5 flex flex-col gap-3 self-start shrink-0">
+          <h2 className="flex items-center gap-2 text-lg">
+            <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
+            <span>Theme</span>
+          </h2>
+          <ThemeFontToggle />
         </div>
       </div>
     </div>

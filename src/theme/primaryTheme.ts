@@ -3,7 +3,7 @@ export const primaryThemes = ['teal', 'blue', 'cherry', 'green', 'amethyst', 'ro
 export type PrimaryThemeName = (typeof primaryThemes)[number];
 
 const STORAGE_KEY = 'theme';
-const DEFAULT_THEME: PrimaryThemeName = 'teal';
+const DEFAULT_THEME: PrimaryThemeName = 'blue';
 
 const themeClasses = primaryThemes.map((theme) => `theme-${theme}`);
 

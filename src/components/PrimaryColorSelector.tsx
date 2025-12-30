@@ -3,11 +3,11 @@ import { usePrimaryTheme } from '@/hooks/usePrimaryTheme';
 import './PrimaryColorSelector.css';
 
 type PrimaryColorSelectorProps = {
-  tileSize?: number | string;
-  gap?: number | string;
+  height?: number;
+  gap?: string;
 };
 
-export default function PrimaryColorSelector({ tileSize, gap }: PrimaryColorSelectorProps) {
+export default function PrimaryColorSelector({ height, gap }: PrimaryColorSelectorProps) {
   const { theme, setTheme, primaryThemes } = usePrimaryTheme();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const buttonRefs = useRef(new Map<string, HTMLButtonElement>());
@@ -49,11 +49,11 @@ export default function PrimaryColorSelector({ tileSize, gap }: PrimaryColorSele
   }, [updateRing]);
 
   const style: CSSProperties & Record<string, string> = {};
-  if (tileSize !== undefined) {
-    style['--tile-size'] = typeof tileSize === 'number' ? `${tileSize}px` : tileSize;
+  if (height !== undefined) {
+    style['--tile-size'] = `${height}px`;
   }
   if (gap !== undefined) {
-    style['--tile-gap'] = typeof gap === 'number' ? `${gap}px` : gap;
+    style['--tile-gap'] = gap;
   }
 
   return (

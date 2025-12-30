@@ -3,8 +3,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(var(--tile-size, 2.75rem), 1fr));
-  grid-template-rows: repeat(2, 1fr);
-  grid-auto-rows: 1fr;
+  grid-template-rows: repeat(2, var(--tile-size, 2.75rem));
+  grid-auto-rows: var(--tile-size, 2.75rem);
   justify-content: stretch;
   align-content: start;
   gap: var(--tile-gap, 0.625rem);
@@ -13,9 +13,8 @@
 
 .primary-color-btn {
   width: 100%;
+  height: var(--tile-size, 2.75rem);
   min-width: var(--tile-size, 2.75rem);
-  min-height: var(--tile-size, 2.75rem);
-  aspect-ratio: 1 / 1;
   padding: 0;
   border: 0;
   border-radius: var(--tile-radius);
