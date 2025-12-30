@@ -14,7 +14,7 @@ export default function ProjectItem({
   liveUrl,
 }: ProjectItemProps) {
   const statusMeta = PROJECT_STATUS_META[status];
-  const { getAccentColor } = useAccentColors();
+  const { getMutedAccentColor } = useAccentColors();
 
   return (
     <div className="flex flex-col border-t-2 border-[var(--border)]">
@@ -58,7 +58,7 @@ export default function ProjectItem({
         {tags.length > 0 && (
           <TagList
             tags={tags}
-            getAccentColor={getAccentColor}
+            getAccentColor={getMutedAccentColor}
             className="mt-1 text-sm text-[var(--text-muted)]"
           />
         )}

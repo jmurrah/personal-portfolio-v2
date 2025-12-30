@@ -4,35 +4,32 @@ interface TagListProps {
   tags: string[];
   getAccentColor: (index: number) => string;
   className?: string;
-  icon?: ReactNode;
   tagClassName?: string;
-  separator?: string;
+  startIndex?: number;
 }
 
 export default function TagList({
   tags,
   getAccentColor,
   className = '',
-  icon,
   tagClassName = '',
-  separator = '/',
+  startIndex = 0,
 }: TagListProps) {
   if (!tags.length) return null;
 
   return (
-    <div className={`tags flex flex-wrap items-start gap-1 ${className}`.trim()}>
-      {icon ? <p className="shrink-0 flex items-center m-0 leading-none">{icon}</p> : null}
-      {tags.map((tag, index) => (
-        <div key={`${tag}-${index}`} className="flex items-center gap-1">
-          {index > 0 && <p className="text-[var(--text-muted)] m-0 leading-none">{separator}</p>}
+    <div className={`tags flex items-start gap-1 ${className}`.trim()}>
+      <div className="flex flex-wrap items-center gap-2">
+        {tags.map((tag, index) => (
           <p
+            key={`${tag}-${index}`}
             className={`tag-pill leading-none m-0 ${tagClassName}`.trim()}
-            style={{ '--tag-accent': getAccentColor(index) } as CSSProperties}
+            style={{ '--tag-accent-muted': getAccentColor(startIndex + index) } as CSSProperties}
           >
             {tag}
           </p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

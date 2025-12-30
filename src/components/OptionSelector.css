@@ -50,24 +50,19 @@
 
 .font-group {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0;
+  gap: 0.25rem;
 }
 
 .font-group .option-btn {
-  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 6px;
 }
 
-.font-group .option-btn:first-child {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-
-.font-group .option-btn + .option-btn {
-  border-left: 0;
-  border-top: 0;
-}
-
-.font-group .option-btn:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+.font-group .option-btn.selected {
+  border-color: var(--primary);
+  color: var(--text);
+  font-weight: 600;
+  background: transparent;
 }

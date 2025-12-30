@@ -4,14 +4,12 @@ import SvgIcon from '@/components/SvgIcon';
 import { PHOTOS, ICONS } from '@/assets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
 import TagList from '@/components/TagList';
-import { technologies } from '@/constants/technologies';
-import TechnologyBadge from '@/components/TechnologyBadge';
 import { useAccentColors } from '@/hooks/useAccentColors';
 import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostPath, getPostSlug } from '@/components/Blog/postRouting';
 
 export default function Home() {
-  const { getAccentColor } = useAccentColors();
+  const { getAccentColor, getMutedAccentColor } = useAccentColors();
 
   const formatDate = (value?: string | null) => {
     if (!value) return '';
@@ -205,7 +203,7 @@ export default function Home() {
       </div>
       <div className="w-full">
         <h2 className="text-xl mb-2 font-semibold">Experience</h2>
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-6 w-full">
           <div className="flex items-start gap-2">
             <div className="w-full">
               <div className="flex justify-between items-center">
@@ -214,28 +212,20 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 <div>
-                  <div className="flex justify-between items-start text-[var(--text-muted)] text-sm">
+                  <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm">
                     <p>Software Engineer I</p>
                     <p className="shrink-0">Jan. 2026 - Present</p>
                   </div>
                   <ul className="bullet-list text-sm">
                     <li>Incoming January 2026.</li>
                   </ul>
+                  <TagList
+                    tags={['Python', 'TypeScript', 'Java', 'Docker', 'MongoDB', 'PostgreSQL', 'Azure']}
+                    getAccentColor={getMutedAccentColor}
+                    className="mt-1.5 text-xs"
+                    startIndex={0}
+                  />
                 </div>
-                <TagList
-                  tags={['Python', 'TypeScript', 'Java', 'Docker', 'MongoDB', 'PostgreSQL', 'Azure']}
-                  getAccentColor={getAccentColor}
-                  className="mt-1 text-xs text-[var(--text-muted)]"
-                  icon={
-                    <SvgIcon
-                      src={ICONS.tag}
-                      alt="All projects"
-                      size="3xsmall"
-                      color="currentColor"
-                      className="shrink-0"
-                    />
-                  }
-                />
               </div>
             </div>
           </div>
@@ -246,7 +236,7 @@ export default function Home() {
                 <p>Auburn, AL</p>
               </div>
               <div>
-                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Undergraduate Research Assistant</p>
                   <p className="shrink-0">Aug. 2025 - Dec. 2025</p>
                 </div>
@@ -255,17 +245,9 @@ export default function Home() {
                 </ul>
                 <TagList
                   tags={['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel', 'CAD']}
-                  getAccentColor={getAccentColor}
-                  className="mt-1 text-xs text-[var(--text-muted)]"
-                  icon={
-                    <SvgIcon
-                      src={ICONS.tag}
-                      alt="All projects"
-                      size="3xsmall"
-                      color="currentColor"
-                      className="shrink-0"
-                    />
-                  }
+                  getAccentColor={getMutedAccentColor}
+                  className="mt-1.5 text-xs"
+                  startIndex={7}
                 />
               </div>
             </div>
@@ -277,7 +259,7 @@ export default function Home() {
                 <p>Atlanta, GA</p>
               </div>
               <div>
-                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Software Engineer Intern</p>
                   <p className="shrink-0">Jun. 2025 - Aug. 2025</p>
                 </div>
@@ -286,17 +268,9 @@ export default function Home() {
                 </ul>
                 <TagList
                   tags={['TypeScript', 'React', 'Java', 'Spring Boot', 'Figma', 'Docker', 'MongoDB']}
-                  getAccentColor={getAccentColor}
-                  className="mt-1 text-xs text-[var(--text-muted)]"
-                  icon={
-                    <SvgIcon
-                      src={ICONS.tag}
-                      alt="All projects"
-                      size="3xsmall"
-                      color="currentColor"
-                      className="shrink-0"
-                    />
-                  }
+                  getAccentColor={getMutedAccentColor}
+                  className="mt-1.5 text-xs"
+                  startIndex={14}
                 />
               </div>
             </div>
@@ -308,28 +282,20 @@ export default function Home() {
                 <p>Huntsville, AL</p>
               </div>
               <div>
-                <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
+                <div className="mt-[-0px] flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
                   <p>Software Engineer Co-op</p>
                   <p className="shrink-0">May 2023 - Dec. 2024</p>
                 </div>
                 <ul className="bullet-list text-sm">
                   <li>Developer tooling and Mosaic One SaaS for network monitoring.</li>
                 </ul>
+                <TagList
+                  tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
+                  getAccentColor={getMutedAccentColor}
+                  className="mt-1.5 text-xs"
+                  startIndex={21}
+                />
               </div>
-              <TagList
-                tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
-                getAccentColor={getAccentColor}
-                className="mt-1 text-xs text-[var(--text-muted)]"
-                icon={
-                  <SvgIcon
-                    src={ICONS.tag}
-                    alt="All projects"
-                    size="3xsmall"
-                    color="currentColor"
-                    className="shrink-0"
-                  />
-                }
-              />
             </div>
           </div>
         </div>
@@ -364,17 +330,9 @@ export default function Home() {
             </p>
             <TagList
               tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
-              getAccentColor={getAccentColor}
-              className="mt-1 text-xs text-[var(--text-muted)]"
-              icon={
-                <SvgIcon
-                  src={ICONS.tag}
-                  alt="All projects"
-                  size="3xsmall"
-                  color="currentColor"
-                  className="shrink-0"
-                />
-              }
+              getAccentColor={getMutedAccentColor}
+              className="mt-1 text-xs"
+              startIndex={4}
             />
           </div>
         </div>
@@ -426,16 +384,6 @@ export default function Home() {
           ) : (
             <p className="text-[color:var(--text-muted)]">No posts yet.</p>
           )}
-        </div>
-      </div>
-      <div className="flex flex-col w-full">
-        <h2 className="text-lg mb-1 font-semibold">Technologies</h2>
-        <div className="flex flex-col gap-1 w-full">
-          <div className="flex flex-wrap gap-2">
-            {technologies.map((tech, index) => (
-              <TechnologyBadge key={tech} name={tech} accent={getAccentColor(index)} />
-            ))}
-          </div>
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-start gap-10 md:gap-12">

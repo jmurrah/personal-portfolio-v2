@@ -26,15 +26,31 @@ export const useAccentColors = () => {
     return [...primaryThemes.slice(idx + 1), ...primaryThemes.slice(0, idx)];
   }, [primaryThemes, theme]);
 
-  const getAccentColor = useCallback(
+  const resolveColorName = useCallback(
     (index: number) => {
       const sourceList = accentThemes.length ? accentThemes : primaryThemes;
-      const colorName = sourceList[index % sourceList.length] as PrimaryThemeName;
+      return sourceList[index % sourceList.length] as PrimaryThemeName;
+    },
+    [accentThemes, primaryThemes],
+  );
+
+  const getAccentColor = useCallback(
+    (index: number) => {
+      const colorName = resolveColorName(index);
       const shade = isDarkMode ? 'dark' : 'light';
       return `var(--theme-${colorName}-primary-${shade})`;
     },
-    [accentThemes, isDarkMode, primaryThemes],
+    [isDarkMode, resolveColorName],
   );
 
-  return { getAccentColor };
+  const getMutedAccentColor = useCallback(
+    (index: number) => {
+      const colorName = resolveColorName(index);
+      const shade = isDarkMode ? 'dark' : 'light';
+      return `var(--theme-${colorName}-primary-muted-${shade})`;
+    },
+    [isDarkMode, resolveColorName],
+  );
+
+  return { getAccentColor, getMutedAccentColor };
 };
