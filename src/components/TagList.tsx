@@ -9,7 +9,7 @@ export default function TagList({ tags, className, tagClassName }: TagListProps)
 
   return (
     <div className={`tags flex items-start gap-1 ${className}`.trim()}>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1">
         {tags.map((tag, index) => (
           <p key={`${tag}-${index}`} className={`tag-pill leading-none m-0 ${tagClassName}`.trim()}>
             {tag}

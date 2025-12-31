@@ -33,14 +33,19 @@ export default function Footer() {
       icon: ICONS.mail,
     },
     {
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/jacobmurrah/',
+      icon: ICONS.linkedIn,
+    },
+    {
       label: 'GitHub',
       href: 'https://github.com/jmurrah',
       icon: ICONS.gitHub,
     },
     {
-      label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/jacobmurrah/',
-      icon: ICONS.linkedIn,
+      label: 'Resume',
+      href: '/JacobMurrahResume.pdf',
+      icon: ICONS.resume,
     },
   ];
 
@@ -65,7 +70,7 @@ export default function Footer() {
             style={{ fontFamily: 'var(--font-family)' }}
           >
             <SvgIcon src={ICONS.clock} alt="Clock" size="3xsmall" color="var(--text-muted)" />
-            <span className="italic text-[var(--primary-muted)]">{time}</span>
+            <span className="italic text-[var(--text-muted)]">{time}</span>
             <span className="text-[color:var(--text-muted)]">{timeZoneName}</span>
           </div>
           <span className="hidden h-4 w-px bg-[color:var(--border)] sm:inline-block" />
@@ -79,7 +84,7 @@ export default function Footer() {
                 size="xsmall"
                 color="var(--text-muted)"
                 hoverColor="var(--primary)"
-                className="transition-transform duration-200 hover:-translate-y-0.5"
+                className="transition-transform duration-150 hover:-translate-y-0.5"
               />
             ))}
           </div>

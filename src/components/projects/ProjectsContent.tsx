@@ -74,7 +74,7 @@ export default function ProjectsContent() {
         </ul>
       </section>
 
-      <div className="flex flex-col gap-6 mt-12">
+      <div className="flex flex-col gap-7 mt-12">
         {projectList.map((project) => (
           <ProjectItem key={`${project.title}-${project.year}`} {...project} />
         ))}

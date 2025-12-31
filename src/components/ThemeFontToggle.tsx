@@ -74,7 +74,7 @@ export default function ThemeFontToggle({ tileSize, gap }: ThemeFontToggleProps)
         type="button"
         onClick={handleModeToggle}
         aria-pressed={mode === 'dark'}
-        className={`max-w-[60px] option-btn option-btn--neutral font-toggle-mode${mode === 'dark' ? ' selected' : ''}`}
+        className={`max-w-[68px] option-btn option-btn--neutral font-toggle-mode${mode === 'dark' ? ' selected' : ''}`}
         aria-label="Toggle light and dark mode"
       >
         <div className="flex items-center justify-center w-full h-full">

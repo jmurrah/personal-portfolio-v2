@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-wrap gap-14 mt-10">
-      <div className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start mb-10 text-center sm:text-left">
+      <div className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start mb-6 text-center sm:text-left">
         <img
           className="w-auto h-24 rounded-lg"
           src={PHOTOS.graduationHeadshot}
@@ -88,7 +88,7 @@ export default function Home() {
                   alt="External link arrow"
                   size="xsmall"
                   color="currentColor"
-                  className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
+                  className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
                 />
               </a>
             ))}
@@ -203,7 +203,7 @@ export default function Home() {
       </div>
       <div className="w-full">
         <h2 className="text-xl mb-2 font-semibold">Experience</h2>
-        <div className="flex flex-col gap-6 w-full">
+        <div className="flex flex-col gap-7 w-full">
           <div className="flex items-start gap-2">
             <div className="w-full">
               <div className="flex justify-between items-center">
@@ -220,15 +220,7 @@ export default function Home() {
                     <li>Incoming January 2026.</li>
                   </ul>
                   <TagList
-                    tags={[
-                      'Python',
-                      'TypeScript',
-                      'Java',
-                      'Docker',
-                      'MongoDB',
-                      'PostgreSQL',
-                      'Azure',
-                    ]}
+                    tags={['Python', 'TypeScript', 'Java', 'Docker', 'MongoDB', 'SQL', 'Azure']}
                     className="mt-1.5 text-xs"
                     tagClassName=""
                   />
@@ -303,7 +295,7 @@ export default function Home() {
                   <li>Developer tooling and Mosaic One SaaS for network monitoring.</li>
                 </ul>
                 <TagList
-                  tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
+                  tags={['Python', 'TypeScript', 'Angular', 'Docker', 'SQL', 'AWS']}
                   className="mt-1.5 text-xs"
                   tagClassName=""
                 />
@@ -323,7 +315,7 @@ export default function Home() {
                 alt="Arrow right icon"
                 size="2xsmall"
                 color="currentColor"
-                className="transition-transform duration-200 group-hover:translate-x-0.5 svg-icon-shadow"
+                className="transition-transform duration-150 group-hover:translate-x-0.5 svg-icon-shadow"
               />
             </div>
           </Link>
@@ -341,7 +333,7 @@ export default function Home() {
               Web extension that helps users track{' '}
             </p>
             <TagList
-              tags={['Python', 'TypeScript', 'Angular', 'Docker', 'PostgreSQL', 'AWS']}
+              tags={['Python', 'TypeScript', 'Angular', 'Docker', 'SQL', 'AWS']}
               className="mt-1.5 text-xs"
               tagClassName=""
             />
@@ -359,7 +351,7 @@ export default function Home() {
                 alt="Arrow right icon"
                 size="2xsmall"
                 color="currentColor"
-                className="transition-transform duration-200 group-hover:translate-x-0.5 svg-icon-shadow"
+                className="transition-transform duration-150 group-hover:translate-x-0.5 svg-icon-shadow"
               />
             </div>
           </Link>
@@ -413,7 +405,7 @@ export default function Home() {
           <div className="w-full flex flex-col gap-3">
             <div className="flex flex-col gap-2">
               <p className="text-[var(--text-muted)]">Always open to talk about anything!</p>
-              <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-200 hover:scale-[1.03]">
+              <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-150 hover:scale-[1.03]">
                 <a
                   href="https://cal.com/jmurrah/30min?overlayCalendar=true"
                   target="_blank"
@@ -438,19 +430,19 @@ export default function Home() {
                   href="mailto:jacob@murrah.dev"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="arrow-link group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                  className="arrow-link-group group w-full flex flex-wrap justify-between items-center gap-2 text-[var(--text)]"
                 >
-                  <div className="flex justify-center items-center">
+                  <span className="arrow-link-target inline-flex items-center gap-0.5">
                     <p className="text-[var(--text)]">email</p>
                     <SvgIcon
                       src={ICONS.arrowUpRight}
                       alt="External link arrow"
                       size="xsmall"
                       color="var(--text)"
-                      className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
                     />
-                  </div>
-                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
+                  </span>
+                  <p className="text-[var(--text-muted)] transition-colors group-hover:text-[var(--text)] group-focus-visible:text-[var(--text)]">
                     jacob@murrah.dev
                   </p>
                 </a>
@@ -460,20 +452,20 @@ export default function Home() {
                   href="https://www.linkedin.com/in/jacobmurrah/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="arrow-link group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                  className="arrow-link-group group w-full flex flex-wrap justify-between items-center gap-2 text-[var(--text)]"
                 >
-                  <div className="flex justify-center items-center">
+                  <span className="arrow-link-target inline-flex items-center gap-0.5">
                     <p className="text-[var(--text)]">linkedin</p>
                     <SvgIcon
                       src={ICONS.arrowUpRight}
                       alt="External link arrow"
                       size="xsmall"
                       color="var(--text)"
-                      className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
                     />
-                  </div>
-                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
-                    /in/jacobmurrah
+                  </span>
+                  <p className="text-[var(--text-muted)] transition-colors group-hover:text-[var(--text)] group-focus-visible:text-[var(--text)]">
+                    jacobmurrah
                   </p>
                 </a>
               </div>
@@ -482,20 +474,20 @@ export default function Home() {
                   href="https://github.com/jmurrah"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="arrow-link group w-full flex flex-wrap justify-between items-center text-[var(--text)]"
+                  className="arrow-link-group group w-full flex flex-wrap justify-between items-center gap-2 text-[var(--text)]"
                 >
-                  <div className="flex justify-center items-center">
+                  <span className="arrow-link-target inline-flex items-center gap-0.5">
                     <p className="text-[var(--text)]">github</p>
                     <SvgIcon
                       src={ICONS.arrowUpRight}
                       alt="LinkedIn"
                       size="xsmall"
                       color="var(--text)"
-                      className="arrow-link__icon transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
                     />
-                  </div>
-                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)]">
-                    /jmurrah
+                  </span>
+                  <p className="text-[var(--text-muted)] transition-colors group-hover:text-[var(--text)] group-focus-visible:text-[var(--text)]">
+                    jmurrah
                   </p>
                 </a>
               </div>

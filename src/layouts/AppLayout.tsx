@@ -152,7 +152,7 @@ export default function AppLayout() {
 
       <aside
         id="sidebar-nav"
-        className="bg-[color:var(--surface)] border-[color:var(--border)] fixed right-0 z-40 flex w-64 flex-col overflow-y-auto scrollbar border-l shadow-xl transition-[transform,opacity] duration-300 ease-in-out pr-3"
+        className="bg-[color:var(--surface)] border-[color:var(--border)] fixed right-0 z-40 flex w-[265px] flex-col overflow-y-auto scrollbar border-l shadow-xl transition-[transform,opacity] duration-300 ease-in-out"
         inert={!isSidebarOpen}
         style={{
           top: 0,
