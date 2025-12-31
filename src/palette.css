@@ -11,6 +11,18 @@
   --text-muted-dark: #bcb3cc;
   --border-dark: #3a324d;
 
+  --status-active-light: #166534;
+  --status-passive-light: #b86a00;
+  --status-shutdown-light: #6b7280;
+
+  --status-active-dark: #4ade80;
+  --status-passive-dark: #fbbf24;
+  --status-shutdown-dark: #9ca3af;
+
+  --status-active: var(--status-active-light);
+  --status-passive: var(--status-passive-light);
+  --status-shutdown: var(--status-shutdown-light);
+
   --theme-teal-primary-light: #0e6f66;
   --theme-teal-primary-dark: #2dd4bf;
   --theme-blue-primary-light: #1556e6;
@@ -129,6 +141,10 @@
   --text-muted: var(--text-muted-dark);
   --border: var(--border-dark);
   --danger: var(--danger-dark);
+
+  --status-active: var(--status-active-dark);
+  --status-passive: var(--status-passive-dark);
+  --status-shutdown: var(--status-shutdown-dark);
 
   --color-accent: var(--primary);
   --color-accent-hover: var(--primary);

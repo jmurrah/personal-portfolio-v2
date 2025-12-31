@@ -8,6 +8,8 @@ import { useAccentColors } from '@/hooks/useAccentColors';
 import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostPath, getPostSlug } from '@/components/Blog/postRouting';
 import type { FeedPost } from '@/components/Blog/types';
+import ProjectItem from '@/components/ProjectItem/ProjectItem';
+import { PROJECTS } from '@/constants/projects';
 
 type HeroLink = { label: string; href: string };
 type EducationItem = { school: string; degree: string; graduation: string };
@@ -77,6 +79,8 @@ const CONTACT_LINKS: ContactLink[] = [
   { label: 'linkedin', href: 'https://www.linkedin.com/in/jacobmurrah/', display: 'jacobmurrah' },
   { label: 'github', href: 'https://github.com/jmurrah', display: 'jmurrah' },
 ];
+
+const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured);
 
 const formatDate = (value?: string | null): string => {
   const text = value ?? '';
@@ -208,7 +212,7 @@ function CurrentSection() {
         <h3>
           Software Engineer I @{' '}
           <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
-            <span className="underline-fill">AT&amp;T</span>
+            <span className="underline-fill">AT&T</span>
           </a>
         </h3>
         <h3>
@@ -256,7 +260,7 @@ function ExperienceSection() {
   return (
     <div className="w-full">
       <h2 className="text-xl mb-2 font-semibold">Experience</h2>
-      <div className="flex flex-col gap-7 w-full">
+      <div className="flex flex-col gap-5 w-full">
         {EXPERIENCES.map((item) => (
           <div
             key={`${item.company}-${item.role}-${item.dates}`}
@@ -288,10 +292,12 @@ function ExperienceSection() {
 }
 
 function FeaturedProjectsSection() {
+  const hasFeatured = FEATURED_PROJECTS.length > 0;
+
   return (
     <div className="w-full">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg mb-2 font-semibold">Featured Projects</h2>
+        <h2 className="text-lg mb-1 font-semibold">Featured Projects</h2>
         <Link to="/projects" className="group gap-0.5 flex items-center underline-fill">
           <div className="flex justify-center items-center">
             <p>all projects</p>
@@ -305,22 +311,19 @@ function FeaturedProjectsSection() {
           </div>
         </Link>
       </div>
-      <div className="flex flex-col gap-1 w-full">
-        <div>
-          <div className="flex justify-between items-center">
-            <h3>LeetCode Repetition Extension</h3>
-            <div className="flex items-center gap-2 text-sm">
-              <p>github</p>
-              <p>live</p>
-            </div>
-          </div>
-          <p className="text-[var(--text-muted)] text-sm">Web extension that helps users track </p>
-          <TagList
-            tags={['Python', 'TypeScript', 'Angular', 'Docker', 'SQL', 'AWS']}
-            className="mt-1.5 text-xs"
-            tagClassName=""
-          />
-        </div>
+      <div className="flex flex-col gap-3 w-full">
+        {hasFeatured ? (
+          FEATURED_PROJECTS.map((project) => (
+            <ProjectItem
+              key={`${project.title}-${project.year}`}
+              size="base"
+              showStatusBar={false}
+              {...project}
+            />
+          ))
+        ) : (
+          <p className="text-[var(--text-muted)] text-sm">No featured projects yet.</p>
+        )}
       </div>
     </div>
   );
@@ -331,7 +334,7 @@ function RecentPostsSection({ posts }: { posts: FeedPost[] }) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-center mb-1">
         <h2 className="text-lg font-semibold">Recent Posts</h2>
         <Link to="/blog" className="group gap-0.5 flex items-center underline-fill">
           <div className="flex justify-center items-center">
@@ -384,15 +387,15 @@ function RecentPostsSection({ posts }: { posts: FeedPost[] }) {
 
 function ThemeContactSection() {
   return (
-    <div className="w-full flex flex-row flex-wrap items-start gap-10 md:gap-12">
-      <div className="flex flex-col gap-2 self-start flex-[2_1_0] min-w-[185px] max-w-full">
+    <div className="w-full flex flex-row flex-wrap items-start gap-14">
+      <div className="flex flex-col gap-2 self-start flex-[4_1_0] min-w-[185px] max-w-full">
         <h2 className="flex items-center gap-2 text-lg">
           <SvgIcon src={ICONS.paint} alt="Theme" size="medium" color="var(--primary)" />
           <span>Theme</span>
         </h2>
         <ThemeFontToggle tileSize={32} gap="0.75rem" />
       </div>
-      <div className="flex flex-col self-start flex-[3_1_0] min-w-[220px]">
+      <div className="flex flex-col self-start flex-[5_1_0] min-w-[220px]">
         <h2 className="flex items-center gap-2 text-lg mb-1">
           <SvgIcon src={ICONS.calendar} alt="Chat" size="small" color="var(--primary)" />
           <span>Contact</span>

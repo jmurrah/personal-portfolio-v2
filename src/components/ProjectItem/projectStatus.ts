@@ -1,22 +1,35 @@
 type StatusMeta = {
-  icon: string;
   label: string;
   summary: string;
 };
 
-export type ProjectStatus = 'active' | 'passive' | 'shutdown';
+export const PROJECT_STATUS = {
+  ACTIVE: 'active',
+  PASSIVE: 'passive',
+  SHUTDOWN: 'shutdown',
+} as const;
+
+export type ProjectStatus = (typeof PROJECT_STATUS)[keyof typeof PROJECT_STATUS];
 
 export const PROJECT_STATUS_META: Record<ProjectStatus, StatusMeta> = {
-  active: { icon: '🟢', label: 'Active', summary: 'Currently developing' },
-  passive: { icon: '🟡', label: 'Passive', summary: 'Running but not developing' },
-  shutdown: { icon: '⚪', label: 'Shut Down', summary: 'No longer running' },
+  [PROJECT_STATUS.ACTIVE]: { label: 'Active', summary: 'Currently developing' },
+  [PROJECT_STATUS.PASSIVE]: { label: 'Passive', summary: 'Maintaining but not developing' },
+  [PROJECT_STATUS.SHUTDOWN]: { label: 'Shut Down', summary: 'No longer maintained' },
+};
+
+export const PROJECT_STATUS_COLOR_VARS: Record<ProjectStatus, string> = {
+  [PROJECT_STATUS.ACTIVE]: 'var(--status-active)',
+  [PROJECT_STATUS.PASSIVE]: 'var(--status-passive)',
+  [PROJECT_STATUS.SHUTDOWN]: 'var(--status-shutdown)',
 };
 
 export interface ProjectItemProps {
   status: ProjectStatus;
   title: string;
   description: string;
-  year: string;
+  year: number;
+  featured?: boolean;
+  writeupPath?: string;
   tags?: string[];
   githubUrl?: string;
   liveUrl?: string;
