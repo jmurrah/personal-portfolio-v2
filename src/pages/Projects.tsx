@@ -1,4 +1,4 @@
-import ProjectsContent from '@/components/Projects';
+import ProjectsContent from '@/components/Projects/ProjectsContent';
 
 export default function Projects() {
   return (
