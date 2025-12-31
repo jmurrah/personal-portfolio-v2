@@ -1,10 +1,10 @@
 export type FeedPost = {
-  title?: string | null;
-  link?: string | null;
-  pubDate?: string | null;
-  description?: string | null;
-  content?: string | null;
-  guid?: string | null;
-  author?: string | null;
-  thumbnail?: string | null;
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+  content: string;
+  guid: string;
+  author: string;
+  thumbnail: string;
 };

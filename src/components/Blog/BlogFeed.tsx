@@ -2,17 +2,19 @@ import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { getCachedBlogPosts } from './feedService';
 import { getPostPath, getPostSlug } from './postRouting';
+import type { FeedPost } from './types';
 import './BlogFeed.css';
 
-function formatDate(value?: string | null) {
+const formatDate = (value: string) => {
   if (!value) return '';
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString();
-}
+};
+
+const getPostId = (post: FeedPost, slug: string) => post.guid || post.link || slug;
 
 export default function BlogFeed() {
-  const cachedPosts = useMemo(() => getCachedBlogPosts(), []);
-  const posts = cachedPosts ?? [];
+  const posts = useMemo(() => getCachedBlogPosts(), []);
 
   if (!posts.length) {
     return <div>No posts found.</div>;
@@ -36,8 +38,8 @@ export default function BlogFeed() {
       <ul className="flex flex-col">
         {posts.map((post) => {
           const slug = getPostSlug(post);
-          const id = post.guid ?? post.link ?? slug;
-          const publishedOn = formatDate(post.pubDate ?? undefined);
+          const id = getPostId(post, slug);
+          const publishedOn = formatDate(post.pubDate);
 
           return (
             <li key={id}>

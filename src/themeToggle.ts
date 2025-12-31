@@ -23,16 +23,18 @@ export const getStoredMode = (): ModeName => {
 
 export const applyMode = (mode: ModeName) => {
   const body = getBody();
-  if (!body) return;
-  body.classList.toggle('dark-mode', mode === 'dark');
-  if (typeof document !== 'undefined') {
-    document.documentElement.classList.toggle('dark-mode', mode === 'dark');
-  }
+  if (!body || typeof document === 'undefined') return;
+
+  const isDark = mode === 'dark';
+  body.classList.toggle('dark-mode', isDark);
+  document.documentElement.classList.toggle('dark-mode', isDark);
+
   try {
     localStorage.setItem(MODE_KEY, mode);
   } catch {
-    return;
+    /* ignore write failures */
   }
+
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new CustomEvent(MODE_CHANGED_EVENT, { detail: { mode } }));
   }

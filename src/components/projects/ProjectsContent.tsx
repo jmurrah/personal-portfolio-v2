@@ -5,7 +5,7 @@ import {
   type ProjectStatus,
 } from '@/components/ProjectItem/projectStatus';
 
-const projectList: ProjectItemProps[] = [
+const PROJECTS: ProjectItemProps[] = [
   {
     status: 'active',
     title: 'Portfolio v2',
@@ -34,20 +34,25 @@ const projectList: ProjectItemProps[] = [
   },
 ];
 
-const statusOrder: ProjectStatus[] = ['active', 'passive', 'shutdown'];
+const STATUS_ORDER: ProjectStatus[] = ['active', 'passive', 'shutdown'];
 
-const statusCounts = projectList.reduce(
-  (acc, project) => {
+const initializeStatusCounts = (): Record<ProjectStatus, number> =>
+  STATUS_ORDER.reduce(
+    (acc, status) => {
+      acc[status] = 0;
+      return acc;
+    },
+    {} as Record<ProjectStatus, number>,
+  );
+
+const buildStatusCounts = (projects: ProjectItemProps[]) =>
+  projects.reduce((acc, project) => {
     acc[project.status] += 1;
     return acc;
-  },
-  statusOrder.reduce(
-    (acc, status) => ({ ...acc, [status]: 0 }),
-    {} as Record<ProjectStatus, number>,
-  ),
-);
+  }, initializeStatusCounts());
 
-const totalProjects = projectList.length;
+const STATUS_COUNTS = buildStatusCounts(PROJECTS);
+const TOTAL_PROJECTS = PROJECTS.length;
 
 export default function ProjectsContent() {
   return (
@@ -57,16 +62,16 @@ export default function ProjectsContent() {
           A running list of things I&apos;ve built, shipped, or safely retired.
         </p>
         <p>
-          <span className="font-bold">Total Projects:</span> {totalProjects}
+          <span className="font-bold">Total Projects:</span> {TOTAL_PROJECTS}
         </p>
         <ul className="flex flex-col gap-1 mt-2">
-          {statusOrder.map((status) => {
+          {STATUS_ORDER.map((status) => {
             const meta = PROJECT_STATUS_META[status];
 
             return (
               <li key={status}>
                 <span className="text-sm">{meta.icon}</span>
-                <span className="font-bold"> {meta.label}:</span> {statusCounts[status]}
+                <span className="font-bold"> {meta.label}:</span> {STATUS_COUNTS[status]}
                 <span> - {meta.summary}</span>
               </li>
             );
@@ -75,7 +80,7 @@ export default function ProjectsContent() {
       </section>
 
       <div className="flex flex-col gap-7 mt-12">
-        {projectList.map((project) => (
+        {PROJECTS.map((project) => (
           <ProjectItem key={`${project.title}-${project.year}`} {...project} />
         ))}
       </div>

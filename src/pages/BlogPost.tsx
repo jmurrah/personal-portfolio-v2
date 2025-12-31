@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostSlug } from '@/components/Blog/postRouting';
@@ -8,11 +8,10 @@ import type { FeedPost } from '@/components/Blog/types';
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const cachedPosts = useMemo(() => getCachedBlogPosts(), []);
-  const [posts] = useState<FeedPost[]>(cachedPosts ?? []);
+  const posts = useMemo(() => getCachedBlogPosts(), []);
 
   const normalizedSlug = (slug ?? '').toLowerCase();
-  const post = useMemo(
+  const post = useMemo<FeedPost | undefined>(
     () => posts.find((item) => getPostSlug(item) === normalizedSlug),
     [posts, normalizedSlug],
   );

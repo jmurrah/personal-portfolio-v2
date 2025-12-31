@@ -4,6 +4,19 @@ import SvgIcon from '@/components/SvgIcon';
 
 const TIMEZONE = 'America/New_York';
 
+type SocialLink = {
+  label: string;
+  href: string;
+  icon: string;
+};
+
+const SOCIAL_LINKS: SocialLink[] = [
+  { label: 'Email', href: 'mailto:jacob@murrah.dev', icon: ICONS.mail },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jacobmurrah/', icon: ICONS.linkedIn },
+  { label: 'GitHub', href: 'https://github.com/jmurrah', icon: ICONS.gitHub },
+  { label: 'Resume', href: '/JacobMurrahResume.pdf', icon: ICONS.resume },
+];
+
 const formatTime = (date: Date) =>
   new Intl.DateTimeFormat('en-US', {
     hour: '2-digit',
@@ -22,42 +35,17 @@ const getTimeZoneName = () => {
   return part?.value ?? 'ET';
 };
 
+const TIME_ZONE_NAME = getTimeZoneName();
+
 export default function Footer() {
   const [time, setTime] = useState(() => formatTime(new Date()));
-  const [timeZoneName, setTimeZoneName] = useState(() => getTimeZoneName());
   const year = new Date().getFullYear();
-  const socialLinks = [
-    {
-      label: 'Email',
-      href: 'mailto:jacob@murrah.dev',
-      icon: ICONS.mail,
-    },
-    {
-      label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/jacobmurrah/',
-      icon: ICONS.linkedIn,
-    },
-    {
-      label: 'GitHub',
-      href: 'https://github.com/jmurrah',
-      icon: ICONS.gitHub,
-    },
-    {
-      label: 'Resume',
-      href: '/JacobMurrahResume.pdf',
-      icon: ICONS.resume,
-    },
-  ];
 
   useEffect(() => {
     const interval = window.setInterval(() => {
       setTime(formatTime(new Date()));
     }, 1000);
     return () => window.clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setTimeZoneName(getTimeZoneName());
   }, []);
 
   return (
@@ -71,11 +59,11 @@ export default function Footer() {
           >
             <SvgIcon src={ICONS.clock} alt="Clock" size="3xsmall" color="var(--text-muted)" />
             <span className="italic text-[var(--text-muted)]">{time}</span>
-            <span className="text-[color:var(--text-muted)]">{timeZoneName}</span>
+            <span className="text-[color:var(--text-muted)]">{TIME_ZONE_NAME}</span>
           </div>
           <span className="hidden h-4 w-px bg-[color:var(--border)] sm:inline-block" />
           <div className="flex items-center gap-3">
-            {socialLinks.map((link) => (
+            {SOCIAL_LINKS.map((link) => (
               <SvgIcon
                 key={link.label}
                 href={link.href}

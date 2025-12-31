@@ -10,7 +10,6 @@ import {
 } from '@/themeToggle';
 import { applyFont, getStoredFont, FONT_STACKS, type FontChoice } from '@/fontToggle';
 import './OptionSelector.css';
-import './PrimaryColorSelector.css';
 
 type CSSVars = CSSProperties & Record<string, string>;
 

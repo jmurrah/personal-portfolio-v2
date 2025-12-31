@@ -6,15 +6,26 @@ import { applyInitialTheme } from './themeToggle';
 import { applyInitialFont } from './fontToggle';
 import App from './App';
 
-document.documentElement.classList.add('app-loading');
-document.body.classList.add('scrollbar');
-applyInitialFont();
-applyInitialTheme();
+const bootstrap = () => {
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.add('app-loading');
+  document.body.classList.add('scrollbar');
+  applyInitialFont();
+  applyInitialTheme();
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+  const rootElement = document.getElementById('root');
+  if (!rootElement) {
+    console.error('Root element #root not found.');
+    return;
+  }
 
-document.documentElement.classList.remove('app-loading');
+  createRoot(rootElement).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+
+  document.documentElement.classList.remove('app-loading');
+};
+
+bootstrap();

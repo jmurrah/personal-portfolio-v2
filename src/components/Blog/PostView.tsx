@@ -6,26 +6,26 @@ interface PostViewProps {
   onBack: () => void;
 }
 
-function formatDate(value?: string | null) {
+const formatDate = (value: string) => {
   if (!value) return '';
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString();
-}
+};
 
-function stripHtml(html?: string | null) {
+const stripHtml = (html: string) => {
   if (!html) return '';
   const div = document.createElement('div');
   div.innerHTML = html;
   return div.textContent || div.innerText || '';
-}
+};
 
-function getFootnoteNumberFromHref(href?: string | null) {
+const getFootnoteNumberFromHref = (href: string | null | undefined) => {
   if (!href) return null;
   const match = href.match(/#footnote(?:-anchor)?-(\d+)/);
   return match?.[1] ?? null;
-}
+};
 
-function normalizeFootnotes(doc: Document) {
+const normalizeFootnotes = (doc: Document) => {
   doc.querySelectorAll('a.footnote-anchor').forEach((link) => {
     const number = getFootnoteNumberFromHref(link.getAttribute('href')) ?? link.textContent?.trim();
     if (!number) return;
@@ -51,9 +51,9 @@ function normalizeFootnotes(doc: Document) {
     link.removeAttribute('target');
     link.removeAttribute('rel');
   });
-}
+};
 
-function cleanContent(html?: string | null) {
+const cleanContent = (html: string) => {
   if (!html) return '';
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
@@ -81,14 +81,13 @@ function cleanContent(html?: string | null) {
     link.setAttribute('rel', Array.from(relTokens).join(' '));
   });
   return doc.body.innerHTML;
-}
+};
 
 export default function PostView({ post, onBack }: PostViewProps) {
   const publishedOn = formatDate(post.pubDate);
-  const rawContent = post.content ?? post.description ?? '';
+  const rawContent = post.content || post.description || '';
   const content = cleanContent(rawContent);
-  const subtitle = stripHtml(post.description ?? '').trim();
-  const author = post.author;
+  const subtitle = stripHtml(post.description).trim();
 
   return (
     <article className="post-view">
@@ -132,7 +131,7 @@ export default function PostView({ post, onBack }: PostViewProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {author}
+              {post.author}
             </a>
             {publishedOn && <div className="post-date">{publishedOn}</div>}
           </div>

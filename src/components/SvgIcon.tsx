@@ -1,8 +1,8 @@
-import React from 'react';
+import type { CSSProperties, HTMLAttributes } from 'react';
 
 type SvgIconSize = '3xsmall' | '2xsmall' | 'xsmall' | 'small' | 'medium' | 'large';
 
-interface SvgIconProps extends React.HTMLAttributes<HTMLSpanElement> {
+interface SvgIconProps extends HTMLAttributes<HTMLSpanElement> {
   href?: string;
   src: string;
   alt: string;
@@ -34,7 +34,7 @@ export default function SvgIcon({
           '--icon-mask-image': `url("${src}")`,
           color,
           ...style,
-        } as React.CSSProperties
+        } as CSSProperties
       }
       {...rest}
     />

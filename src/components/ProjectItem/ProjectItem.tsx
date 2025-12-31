@@ -13,6 +13,7 @@ export default function ProjectItem({
   liveUrl,
 }: ProjectItemProps) {
   const statusMeta = PROJECT_STATUS_META[status];
+  const hasTags = tags.length > 0;
 
   return (
     <div className="flex flex-col border-t-2 border-[var(--border)]">
@@ -27,7 +28,7 @@ export default function ProjectItem({
           </span>
           <span className="font-bold">{title}</span>
         </div>
-        {githubUrl && (
+        {githubUrl ? (
           <SvgIcon
             href={githubUrl}
             src={ICONS.gitHub}
@@ -37,8 +38,8 @@ export default function ProjectItem({
             hoverColor="var(--primary)"
             className="project-links"
           />
-        )}
-        {liveUrl && (
+        ) : null}
+        {liveUrl ? (
           <SvgIcon
             href={liveUrl}
             src={ICONS.gitHub}
@@ -48,14 +49,14 @@ export default function ProjectItem({
             hoverColor="var(--primary)"
             className="project-links"
           />
-        )}
+        ) : null}
         <span className="ml-auto font-bold">{year}</span>
       </div>
       <div className="flex flex-col">
         <p className="">{description}</p>
-        {tags.length > 0 && (
+        {hasTags ? (
           <TagList tags={tags} className="mt-1 text-sm text-[var(--text-muted)]" tagClassName="" />
-        )}
+        ) : null}
       </div>
     </div>
   );
