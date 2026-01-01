@@ -149,6 +149,12 @@ a {
   transform: scaleX(1);
 }
 
+/* Allow parent group hover/focus to trigger underline (e.g., nav Resume link with padding) */
+.group:hover .arrow-link::after,
+.group:focus-visible .arrow-link::after {
+  transform: scaleX(1);
+}
+
 .arrow-link-target {
   position: relative;
   text-decoration: none;
