@@ -3,7 +3,8 @@ name: Update Substack cache
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 9 * * 1'
+    # Runs at 09:00 UTC every day
+    - cron: '0 9 * * *'
 
 permissions:
   contents: write
@@ -11,15 +12,6 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-
-    services:
-      crawler-buddy:
-        image: rozbujnik/crawler-buddy:latest
-        ports:
-          - 3028:3000
-        options: >-
-          --shm-size=1g
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,21 +20,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
-      - name: Wait for Crawler Buddy
-        run: |
-          echo "Waiting for Crawler Buddy service to be ready..."
-          timeout 60s bash -c 'until curl --silent --output /dev/null --fail http://localhost:3028/pingj; do sleep 2; done'
-          echo "Crawler Buddy is ready!"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Update Substack cache
-        env:
-          CRAWLER_BUDDY_BASE_URL: http://localhost:3028
-          CRAWLER_BUDDY_CRAWLER: SeleniumUndetected
-          CRAWLER_BUDDY_TIMEOUT_S: 60
         run: npm run update:substack
 
       - name: Detect changes
@@ -59,6 +42,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/constants/prerenderedPosts.json package-lock.json package.json scripts/update-substack-cache.ts
+          git add src/constants/prerenderedPosts.json package-lock.json package.json
           git commit -m "chore: update Substack cache"
           git push
