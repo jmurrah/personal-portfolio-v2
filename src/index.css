@@ -5,7 +5,7 @@
     url('/fonts/Geist/Geist-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 @font-face {
@@ -15,7 +15,7 @@
     url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-Variable.ttf') format('truetype');
   font-weight: 200 800;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 @font-face {
@@ -25,7 +25,7 @@
     url('/fonts/GeneralSans/Fonts/WEB/fonts/GeneralSans-VariableItalic.ttf') format('truetype');
   font-weight: 200 800;
   font-style: italic;
-  font-display: optional;
+  font-display: swap;
 }
 
 @import 'tailwindcss';
