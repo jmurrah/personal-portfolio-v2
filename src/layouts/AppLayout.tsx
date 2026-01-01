@@ -87,7 +87,7 @@ export default function AppLayout() {
             <button
               type="button"
               onClick={toggleSidebar}
-              className="nav-link hover:text-[var(--primary)] rounded min-[576px]:hidden"
+              className="nav-link hover:text-[var(--primary)] rounded min-[680px]:hidden"
               aria-label="Open navigation menu"
               aria-expanded={isSidebarOpen}
               aria-controls="sidebar-nav"
@@ -95,7 +95,7 @@ export default function AppLayout() {
               <SvgIcon src={ICONS.menu} alt="" size="medium" style={{ width: 24, height: 24 }} />
               <span className="sr-only">Menu</span>
             </button>
-            <nav className="hidden items-center space-x-4 min-[576px]:flex">
+            <nav className="hidden items-center space-x-4 min-[680px]:flex">
               {mainNavItems.map((item) =>
                 item.external ? (
                   item.title === 'resume' ? (
