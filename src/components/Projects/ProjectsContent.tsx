@@ -60,13 +60,16 @@ export default function ProjectsContent() {
             return (
               <li key={status} className="flex items-center gap-2">
                 <div
-                  className="ml-0.5 self-stretch my-1 shrink-0"
+                  className="self-stretch my-1 shrink-0"
                   style={{ backgroundColor: statusColor, width: '5px' }}
                   aria-hidden
                 ></div>
-                <span className="font-semibold"> {meta.label}:</span>
+                <span className="font-semibold whitespace-nowrap"> {meta.label}:</span>
                 <span>{STATUS_COUNTS[status]}</span>
-                <span>- {meta.summary}</span>
+                <span aria-hidden className="text-[color:var(--text-muted)]">
+                  &mdash;
+                </span>
+                <span>{meta.summary}</span>
               </li>
             );
           })}

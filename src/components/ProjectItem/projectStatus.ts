@@ -13,8 +13,8 @@ export type ProjectStatus = (typeof PROJECT_STATUS)[keyof typeof PROJECT_STATUS]
 
 export const PROJECT_STATUS_META: Record<ProjectStatus, StatusMeta> = {
   [PROJECT_STATUS.ACTIVE]: { label: 'Active', summary: 'Currently developing' },
-  [PROJECT_STATUS.PASSIVE]: { label: 'Passive', summary: 'Maintaining but not developing' },
-  [PROJECT_STATUS.SHUTDOWN]: { label: 'Shut Down', summary: 'No longer maintained' },
+  [PROJECT_STATUS.PASSIVE]: { label: 'Passive', summary: 'Maintenance only' },
+  [PROJECT_STATUS.SHUTDOWN]: { label: 'Shut Down', summary: 'No longer supported' },
 };
 
 export const PROJECT_STATUS_COLOR_VARS: Record<ProjectStatus, string> = {

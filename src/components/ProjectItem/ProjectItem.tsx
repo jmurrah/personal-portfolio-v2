@@ -1,6 +1,7 @@
 import SvgIcon from '@/components/SvgIcon';
 import { ICONS } from '@/assets';
 import TagList from '@/components/TagList';
+import './ProjectItem.css';
 import { PROJECT_STATUS_COLOR_VARS, type ProjectItemProps } from './projectStatus';
 
 type ProjectItemSize = 'base' | 'large';
@@ -23,14 +24,13 @@ export default function ProjectItem({
   const titleClass = size === 'large' ? 'text-lg' : 'text-base';
   const descriptionClass =
     size === 'large' ? 'text-[var(--text-muted)]' : 'text-sm text-[var(--text-muted)]';
-  const linksTextClass =
-    size === 'large' ? 'text-[var(--text-muted)]' : 'text-sm text-[var(--text-muted)]';
+  const linksTextClass = size === 'large' ? 'text-[var(--text)]' : 'text-sm text-[var(--text)]';
 
   return (
     <div className="flex items-center gap-2">
       {showStatusBar ? (
         <div
-          className="ml-0.5 self-stretch mt-2.5 shrink-0"
+          className="status-bar self-stretch shrink-0"
           style={{ backgroundColor: statusColor, width: '5px' }}
           aria-hidden
         ></div>
@@ -41,7 +41,7 @@ export default function ProjectItem({
             <span className={titleClass}>{title}</span>
           </div>
           {hasLinks ? (
-            <div className={`flex items-center gap-3 ${linksTextClass}`}>
+            <div className={`text-[var(--text)] flex items-center gap-3 ${linksTextClass}`}>
               {githubUrl ? (
                 <a
                   className="arrow-link group flex items-center gap-0.5"

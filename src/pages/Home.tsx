@@ -54,7 +54,7 @@ const EXPERIENCES: ExperienceItem[] = [
     role: 'Undergraduate Research Assistant',
     dates: 'Aug. 2025 - Dec. 2025',
     summary: 'Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.',
-    tags: ['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel', 'CAD'],
+    tags: ['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel'],
   },
   {
     company: 'AT&T',
@@ -297,7 +297,7 @@ function FeaturedProjectsSection() {
   return (
     <div className="w-full">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg mb-1 font-semibold">Featured Projects</h2>
+        <h2 className="text-lg mb-2 font-semibold">Featured Projects</h2>
         <Link to="/projects" className="group gap-0.5 flex items-center underline-fill">
           <div className="flex justify-center items-center">
             <p>all projects</p>
@@ -334,7 +334,7 @@ function RecentPostsSection({ posts }: { posts: FeedPost[] }) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold">Recent Posts</h2>
         <Link to="/blog" className="group gap-0.5 flex items-center underline-fill">
           <div className="flex justify-center items-center">

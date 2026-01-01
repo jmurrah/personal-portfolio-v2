@@ -22,7 +22,7 @@ export default function AppLayout() {
     { title: 'Home', href: '/' },
     { title: 'Projects', href: '/projects' },
     { title: 'Blog', href: '/blog' },
-    { title: 'Resume', href: '/JacobMurrahResume.pdf', external: true },
+    { title: 'resume', href: '/JacobMurrahResume.pdf', external: true },
   ];
 
   const toggleSidebar = () => setIsSidebarOpen((current) => !current);
@@ -98,16 +98,38 @@ export default function AppLayout() {
             <nav className="hidden items-center space-x-4 min-[576px]:flex">
               {mainNavItems.map((item) =>
                 item.external ? (
-                  <a
-                    key={item.title}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="nav-link hover:text-[var(--primary)] rounded px-3 py-2 text-sm font-medium"
-                    onClick={closeSidebar}
-                  >
-                    {item.title}
-                  </a>
+                  item.title === 'resume' ? (
+                    <a
+                      key={item.title}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-1 rounded px-3 py-2 text-sm font-medium"
+                      onClick={closeSidebar}
+                    >
+                      <span className="arrow-link inline-flex items-center gap-0.5 text-[color:inherit] lowercase">
+                        <span>{item.title}</span>
+                        <SvgIcon
+                          src={ICONS.arrowUpRight}
+                          alt="External link"
+                          size="xsmall"
+                          color="currentColor"
+                          className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
+                        />
+                      </span>
+                    </a>
+                  ) : (
+                    <a
+                      key={item.title}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-link hover:text-[var(--primary)] rounded px-3 py-2 text-sm font-medium"
+                      onClick={closeSidebar}
+                    >
+                      {item.title}
+                    </a>
+                  )
                 ) : (
                   <Link
                     key={item.title}
@@ -182,15 +204,36 @@ export default function AppLayout() {
               return (
                 <li key={item.title}>
                   {item.external ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
-                      onClick={closeSidebar}
-                    >
-                      {item.title}
-                    </a>
+                    item.title === 'resume' ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
+                        onClick={closeSidebar}
+                      >
+                        <span className="arrow-link inline-flex items-center gap-1 text-[color:inherit] lowercase">
+                          <span>{item.title}</span>
+                          <SvgIcon
+                            src={ICONS.arrowUpRight}
+                            alt="External link"
+                            size="xsmall"
+                            color="currentColor"
+                            className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
+                          />
+                        </span>
+                      </a>
+                    ) : (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
+                        onClick={closeSidebar}
+                      >
+                        {item.title}
+                      </a>
+                    )
                   ) : (
                     <Link
                       to={item.href}
