@@ -39,6 +39,12 @@ const requiredKeys: (keyof CacheItem)[] = [
   'categories',
 ];
 
+const FEED_HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  Accept: 'application/rss+xml, application/xml, text/xml; q=0.1',
+};
+
 function readFileSafe(filePath: string): string {
   return fs.readFileSync(filePath, 'utf8');
 }
@@ -232,7 +238,7 @@ function sortItems(items: CacheItem[]) {
 }
 
 async function fetchFeedText(): Promise<string> {
-  const res = await fetch(FEED_URL, { redirect: 'follow' });
+  const res = await fetch(FEED_URL, { redirect: 'follow', headers: FEED_HEADERS });
   if (!res.ok) {
     throw new Error(`Failed to fetch RSS feed: ${res.status} ${res.statusText}`);
   }
