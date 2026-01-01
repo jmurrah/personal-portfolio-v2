@@ -1,15 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-// --- Configuration ---
-// We use rss2json as a bridge to bypass Cloudflare IP blocks on GitHub Actions.
-// It converts the RSS feed to JSON and handles the networking for us.
 const RSS_BRIDGE_URL =
   'https://api.rss2json.com/v1/api.json?rss_url=https://jacobmurrah.substack.com/feed';
 const CACHE_PATH = path.join(process.cwd(), 'src', 'constants', 'prerenderedPosts.json');
 const OUTPUT_SPACES = 2;
 
-// --- Types ---
 type Enclosure = { link: string; type: string };
 
 export type CacheItem = {
@@ -27,7 +23,6 @@ export type CacheItem = {
 
 type CacheFile = { items: CacheItem[] };
 
-// Types for the rss2json response
 type BridgeItem = {
   title: string;
   pubDate: string;
@@ -47,13 +42,10 @@ type BridgeResponse = {
   items: BridgeItem[];
 };
 
-// --- Helper Functions ---
-
 function readFileSafe(filePath: string): string {
   try {
     return fs.readFileSync(filePath, 'utf8');
   } catch {
-    // If file doesn't exist, return empty JSON structure
     return JSON.stringify({ items: [] });
   }
 }
@@ -61,7 +53,6 @@ function readFileSafe(filePath: string): string {
 function formatDateUTC(value: string | number | Date): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
-    // Fallback to now if date is invalid
     console.warn(`Invalid date encountered: ${value}. Using current time.`);
     return formatDateUTC(new Date());
   }
@@ -80,8 +71,6 @@ function formatDateUTC(value: string | number | Date): string {
     pad(date.getUTCSeconds()),
   ].join('');
 }
-
-// --- Main Logic ---
 
 async function fetchFeedViaBridge(): Promise<BridgeItem[]> {
   console.log(`Fetching feed via RSS Bridge: ${RSS_BRIDGE_URL}...`);
@@ -102,17 +91,14 @@ async function fetchFeedViaBridge(): Promise<BridgeItem[]> {
 }
 
 function mapBridgeItemToCache(item: BridgeItem): CacheItem {
-  // rss2json normalizes fields, but we ensure they match our schema
   return {
     title: (item.title || '').trim(),
-    // rss2json returns "YYYY-MM-DD HH:mm:ss" usually, or standard RSS format
     pubDate: formatDateUTC(item.pubDate),
     link: (item.link || '').trim(),
     guid: (item.guid || item.link || '').trim(),
     author: (item.author || 'Jacob Murrah').trim(),
     thumbnail: (item.thumbnail || '').trim(),
     description: (item.description || '').trim(),
-    // rss2json puts the full HTML content in 'content'
     content: (item.content || item.description || '').trim(),
     enclosure: item.enclosure || { link: '', type: '' },
     categories: Array.isArray(item.categories) ? item.categories : [],
