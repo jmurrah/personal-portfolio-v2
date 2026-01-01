@@ -17,7 +17,7 @@ export const PROJECTS: ProjectItemProps[] = [
     description: 'Web extension enabling spaced repetition of LeetCode problems.',
     year: 2025,
     featured: true,
-    tags: ['Go', 'TypeScript', 'Tailwind CSS', 'Supabase', 'AWS', 'OAuth2'],
+    tags: ['Go', 'TypeScript', 'Supabase', 'AWS', 'OAuth2'],
     githubUrl: 'https://github.com/leetcode-repetition',
     liveUrl: 'https://leetcode-repetition.murrah.dev/',
   },
