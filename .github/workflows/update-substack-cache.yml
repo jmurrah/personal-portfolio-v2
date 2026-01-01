@@ -1,5 +1,3 @@
-# Updates the prerendered Substack cache on a schedule or manual dispatch.
-# Requires repository Actions permissions to allow the default GITHUB_TOKEN to write contents.
 name: Update Substack cache
 
 on:
@@ -13,19 +11,38 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+
+    services:
+      crawler-buddy:
+        image: rozbujnik/crawler-buddy:latest
+        ports:
+          - 3028:3000
+        options: >-
+          --shm-size=1g
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      - name: Wait for Crawler Buddy
+        run: |
+          echo "Waiting for Crawler Buddy service to be ready..."
+          timeout 60s bash -c 'until curl --silent --output /dev/null --fail http://localhost:3028/pingj; do sleep 2; done'
+          echo "Crawler Buddy is ready!"
+
       - name: Install dependencies
         run: npm ci
 
       - name: Update Substack cache
+        env:
+          CRAWLER_BUDDY_BASE_URL: http://localhost:3028
+          CRAWLER_BUDDY_CRAWLER: SeleniumUndetected
+          CRAWLER_BUDDY_TIMEOUT_S: 60
         run: npm run update:substack
 
       - name: Detect changes

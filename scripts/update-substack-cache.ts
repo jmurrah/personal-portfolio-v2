@@ -2,6 +2,21 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
 
+const FEED_URL = 'https://jacobmurrah.substack.com/feed';
+const CACHE_PATH = path.join(process.cwd(), 'src', 'constants', 'prerenderedPosts.json');
+const OUTPUT_SPACES = 2;
+const PUBDATE_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+
+const CRAWLER_BUDDY_BASE_URL = (process.env.CRAWLER_BUDDY_BASE_URL ?? '').trim();
+const CRAWLER_BUDDY_CRAWLER = (process.env.CRAWLER_BUDDY_CRAWLER ?? 'SeleniumUndetected').trim();
+const CRAWLER_BUDDY_TIMEOUT_S = Number(process.env.CRAWLER_BUDDY_TIMEOUT_S ?? 45);
+
+const FEED_HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  Accept: 'application/rss+xml, application/xml, text/xml; q=0.1',
+};
+
 type Enclosure = { link: string; type: string };
 
 export type CacheItem = {
@@ -21,10 +36,7 @@ type CacheFile = { items: CacheItem[] };
 
 type RssItem = Record<string, unknown>;
 
-const FEED_URL = 'https://jacobmurrah.substack.com/feed';
-const CACHE_PATH = path.join(process.cwd(), 'src', 'constants', 'prerenderedPosts.json');
-const OUTPUT_SPACES = 2;
-const PUBDATE_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+type CrawlerBuddySegment = { name?: string; data?: unknown };
 
 const requiredKeys: (keyof CacheItem)[] = [
   'title',
@@ -38,12 +50,6 @@ const requiredKeys: (keyof CacheItem)[] = [
   'enclosure',
   'categories',
 ];
-
-const FEED_HEADERS = {
-  'User-Agent':
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-  Accept: 'application/rss+xml, application/xml, text/xml; q=0.1',
-};
 
 function readFileSafe(filePath: string): string {
   return fs.readFileSync(filePath, 'utf8');
@@ -89,6 +95,69 @@ function formatDateUTC(value: string | number | Date): string {
     ':',
     pad(date.getUTCSeconds()),
   ].join('');
+}
+
+function mustHaveCrawlerBuddy(): string {
+  if (!CRAWLER_BUDDY_BASE_URL) {
+    throw new Error(
+      'Crawler-Buddy not configured. Set CRAWLER_BUDDY_BASE_URL (e.g. http://localhost:3028).',
+    );
+  }
+  return CRAWLER_BUDDY_BASE_URL.replace(/\/+$/, '');
+}
+
+function buildCrawlerBuddyUrl(endpoint: string, targetUrl: string): string {
+  const base = mustHaveCrawlerBuddy();
+  const u = new URL(endpoint.startsWith('/') ? endpoint : `/${endpoint}`, base);
+
+  u.searchParams.set('url', targetUrl);
+  u.searchParams.set('crawler_name', CRAWLER_BUDDY_CRAWLER);
+  u.searchParams.set('crawler', CRAWLER_BUDDY_CRAWLER);
+  u.searchParams.set(
+    'timeout_s',
+    String(Number.isFinite(CRAWLER_BUDDY_TIMEOUT_S) ? CRAWLER_BUDDY_TIMEOUT_S : 45),
+  );
+  u.searchParams.set('accept_types', 'application/rss+xml,application/xml,text/xml');
+  u.searchParams.set('ssl_verify', 'true');
+  u.searchParams.set('bytes_limit', String(5_000_000));
+  u.searchParams.set('User-Agent', FEED_HEADERS['User-Agent']);
+
+  return u.toString();
+}
+
+function extractStreamsText(getjJson: unknown): string {
+  if (!Array.isArray(getjJson)) return '';
+  const segments = getjJson as CrawlerBuddySegment[];
+  const streams = segments.find((s) => s?.name === 'Streams')?.data as
+    | Record<string, unknown>
+    | undefined;
+  const text = streams?.Text;
+  return typeof text === 'string' ? text : '';
+}
+
+async function fetchFeedViaCrawlerBuddy(feedUrl: string): Promise<string> {
+  const contentsrUrl = buildCrawlerBuddyUrl('/contentsr', feedUrl);
+  const r1 = await fetch(contentsrUrl, { redirect: 'follow' });
+
+  if (r1.ok) {
+    return await r1.text();
+  }
+
+  const getjUrl = buildCrawlerBuddyUrl('/getj', feedUrl);
+  const r2 = await fetch(getjUrl, { redirect: 'follow' });
+
+  if (!r2.ok) {
+    throw new Error(
+      `Crawler-Buddy failed: /contentsr -> ${r1.status} ${r1.statusText}, /getj -> ${r2.status} ${r2.statusText}`,
+    );
+  }
+
+  const json = (await r2.json()) as unknown;
+  const xml = extractStreamsText(json).trim();
+  if (!xml) {
+    throw new Error('Crawler-Buddy /getj returned no Streams.Text content (empty feed).');
+  }
+  return xml;
 }
 
 function parseRss(xmlText: string): RssItem[] {
@@ -238,11 +307,8 @@ function sortItems(items: CacheItem[]) {
 }
 
 async function fetchFeedText(): Promise<string> {
-  const res = await fetch(FEED_URL, { redirect: 'follow', headers: FEED_HEADERS });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch RSS feed: ${res.status} ${res.statusText}`);
-  }
-  return res.text();
+  console.log(`Fetching feed via Crawler-Buddy at ${CRAWLER_BUDDY_BASE_URL}...`);
+  return fetchFeedViaCrawlerBuddy(FEED_URL);
 }
 
 function mergeItems(existingItems: CacheItem[], feedItems: CacheItem[]) {
