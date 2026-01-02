@@ -36,7 +36,7 @@ export default function ProjectItem({
         ></div>
       ) : null}
       <div className="flex flex-col w-full">
-        <div className="flex mt-1 gap-2 justify-between">
+        <div className="flex gap-2 justify-between">
           <div className="flex gap-2 items-center justify-center">
             <span className={titleClass}>{title}</span>
           </div>
