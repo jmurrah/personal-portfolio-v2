@@ -1,3 +1,5 @@
+import SvgIcon from '@/components/SvgIcon';
+import { ICONS } from '@/assets';
 import type { FeedPost } from './types';
 import './PostView.css';
 
@@ -93,8 +95,19 @@ export default function PostView({ post, onBack }: PostViewProps) {
     <article className="post-view">
       <div className="post-shell">
         <div className="post-topbar">
-          <button type="button" onClick={onBack} className="post-link-btn underline-fill">
-            ← Back to posts
+          <button
+            type="button"
+            onClick={onBack}
+            className="post-link-btn underline-fill group flex items-center gap-0.5"
+          >
+            <SvgIcon
+              src={ICONS.arrowLeft}
+              alt="Back to posts"
+              size="2xsmall"
+              color="currentColor"
+              className="transition-transform duration-150 group-hover:-translate-x-0.5"
+            />
+            Back to posts
           </button>
           {post.link && (
             <a

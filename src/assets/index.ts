@@ -9,6 +9,7 @@ import MoonIcon from '@/assets/icons/MoonIcon.svg';
 import SunIcon from '@/assets/icons/SunIcon.svg';
 import ArrowUpRightIcon from '@/assets/icons/ArrowUpRightIcon.svg';
 import ArrowRightIcon from '@/assets/icons/ArrowRightIcon.svg';
+import ArrowLeftIcon from '@/assets/icons/ArrowLeftIcon.svg';
 import PaintIcon from '@/assets/icons/PaintIcon.svg';
 import ClockIcon from '@/assets/icons/ClockIcon.svg';
 import ResumeIcon from '@/assets/icons/ResumeIcon.svg';
@@ -23,6 +24,7 @@ export const ICONS = {
   mail: MailIcon,
   arrowUpRight: ArrowUpRightIcon,
   arrowRight: ArrowRightIcon,
+  arrowLeft: ArrowLeftIcon,
   mapPin: MapPinIcon,
   menu: MenuIcon,
   moon: MoonIcon,
