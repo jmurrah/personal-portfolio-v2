@@ -28,6 +28,9 @@ jobs:
       - name: Update Substack cache
         run: npm run update:substack
 
+      - name: Build site
+        run: npm run build
+
       - name: Detect changes
         id: diff
         run: |

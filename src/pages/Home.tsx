@@ -402,7 +402,7 @@ function ThemeContactSection() {
         </h2>
         <div className="w-full flex flex-col gap-3">
           <div className="flex flex-col gap-2">
-            <p className="text-[var(--text-muted)]">Always open to talk about anything!</p>
+            <p>Always open to talk about anything!</p>
             <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-150 hover:scale-[1.03]">
               <a
                 href="https://cal.com/jmurrah/30min?overlayCalendar=true"
