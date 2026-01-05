@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import SvgIcon from '@/components/SvgIcon';
 import { ICONS } from '@/assets';
 import type { FeedPost } from './types';
@@ -90,6 +91,43 @@ export default function PostView({ post, onBack }: PostViewProps) {
   const rawContent = post.content || post.description || '';
   const content = cleanContent(rawContent);
   const subtitle = stripHtml(post.description).trim();
+  const contentRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) return undefined;
+
+    const scrollToHash = (hash: string) => {
+      const targetId = decodeURIComponent(hash.replace(/^#/, ''));
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    const handleClick = (event: Event) => {
+      const anchor = (event.target as HTMLElement)?.closest<HTMLAnchorElement>(
+        'a.footnote-anchor, a.footnote-number',
+      );
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+
+      event.preventDefault();
+      window.history.pushState(null, '', href);
+      scrollToHash(href);
+    };
+
+    container.addEventListener('click', handleClick);
+    if (window.location.hash) {
+      scrollToHash(window.location.hash);
+    }
+
+    return () => {
+      container.removeEventListener('click', handleClick);
+    };
+  }, [content]);
 
   return (
     <article className="post-view">
@@ -153,6 +191,7 @@ export default function PostView({ post, onBack }: PostViewProps) {
         <hr className="post-divider" />
 
         <section
+          ref={contentRef}
           className="post-content"
           dangerouslySetInnerHTML={{ __html: content }}
           aria-label="Post content"

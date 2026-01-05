@@ -17,10 +17,18 @@ export default function TerminalBreadcrumb() {
     window.scrollTo({ top: 0, behavior });
   };
 
+  const clearUrlHash = () => {
+    if (typeof window === 'undefined') return;
+    const { pathname: currentPath, search: currentSearch, hash: currentHash } = window.location;
+    if (!currentHash) return;
+    window.history.replaceState(null, '', `${currentPath}${currentSearch}`);
+  };
+
   const handleHomeClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
     if (pathname === '/') {
       event.preventDefault();
       scrollToTop('smooth');
+      clearUrlHash();
     } else {
       scrollToTop('auto');
       navigate('/');
@@ -52,6 +60,7 @@ export default function TerminalBreadcrumb() {
                   if (isLast && pathname === href) {
                     event.preventDefault();
                     scrollToTop('smooth');
+                    clearUrlHash();
                   } else {
                     scrollToTop('auto');
                   }
