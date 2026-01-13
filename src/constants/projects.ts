@@ -2,6 +2,15 @@ import { PROJECT_STATUS, type ProjectItemProps } from '@/components/ProjectItem/
 
 export const PROJECTS: ProjectItemProps[] = [
   {
+    status: PROJECT_STATUS.PASSIVE,
+    title: 'Analemma',
+    description: 'Automatically create sunset timelapses from your ring camera footage.',
+    year: 2026,
+    featured: false,
+    tags: ['TypeScript', 'NextJS', 'Cloudflare', 'OAuth2'],
+    githubUrl: 'https://github.com/jmurrah/analemma.git',
+  },
+  {
     status: PROJECT_STATUS.ACTIVE,
     title: 'Personal Portfolio v2',
     description: 'Second iteration of my personal portfolio website.',
