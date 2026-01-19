@@ -441,7 +441,7 @@ function ThemeContactSection() {
                       className="arrow-link__icon transition-transform duration-150 group-hover:translate-x-0.5"
                     />
                   </span>
-                  <p className="text-[var(--text-muted)] transition-colors group-hover:text-[var(--text)] group-focus-visible:text-[var(--text)]">
+                  <p className="text-[var(--text-muted)] group-hover:text-[var(--text)] group-focus-visible:text-[var(--text)]">
                     {link.display}
                   </p>
                 </a>
