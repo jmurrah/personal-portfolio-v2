@@ -15,6 +15,9 @@ import ClockIcon from '@/assets/icons/ClockIcon.svg';
 import ResumeIcon from '@/assets/icons/ResumeIcon.svg';
 
 import GraduationHeadshotPhoto from '@/assets/photos/GraduationHeadshot.webp';
+import AdtranLogo from '@/assets/logos/adtran.png';
+import AttLogo from '@/assets/logos/att.png';
+import AuburnLogo from '@/assets/logos/auburn.png';
 
 export const ICONS = {
   calendar: CalendarIcon,
@@ -36,4 +39,10 @@ export const ICONS = {
 
 export const PHOTOS = {
   graduationHeadshot: GraduationHeadshotPhoto,
+} as const;
+
+export const LOGOS = {
+  adtran: AdtranLogo,
+  att: AttLogo,
+  auburn: AuburnLogo,
 } as const;

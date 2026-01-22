@@ -1,10 +1,8 @@
-import { useMemo, type CSSProperties } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SvgIcon from '@/components/SvgIcon';
-import { PHOTOS, ICONS } from '@/assets';
+import { PHOTOS, ICONS, LOGOS } from '@/assets';
 import ThemeFontToggle from '@/components/ThemeFontToggle';
-import TagList from '@/components/TagList';
-import { useAccentColors } from '@/hooks/useAccentColors';
 import { getCachedBlogPosts } from '@/components/Blog/feedService';
 import { getPostPath, getPostSlug } from '@/components/Blog/postRouting';
 import type { FeedPost } from '@/components/Blog/types';
@@ -12,9 +10,16 @@ import ProjectItem from '@/components/ProjectItem/ProjectItem';
 import { PROJECTS } from '@/constants/projects';
 
 type HeroLink = { label: string; href: string };
-type EducationItem = { school: string; degree: string; graduation: string };
+type EducationItem = {
+  school: string;
+  schoolLink: string;
+  degree: string;
+  graduation: string;
+};
 type ExperienceItem = {
   company: string;
+  companyLogo: string;
+  companyLink: string;
   location: string;
   role: string;
   dates: string;
@@ -33,15 +38,23 @@ const HERO_LINKS: HeroLink[] = [
 const EDUCATION: EducationItem[] = [
   {
     school: 'Georgia Institute of Technology',
+    schoolLink: 'https://www.gatech.edu/',
     degree: 'M.S. in Computer Science',
     graduation: 'Dec. 2028',
   },
-  { school: 'Auburn University', degree: 'B.E. in Software Engineering', graduation: 'Dec. 2025' },
+  {
+    school: 'Auburn University',
+    schoolLink: 'https://www.auburn.edu/',
+    degree: 'B.E. in Software Engineering',
+    graduation: 'Dec. 2025',
+  },
 ];
 
 const EXPERIENCES: ExperienceItem[] = [
   {
     company: 'AT&T',
+    companyLogo: LOGOS.att,
+    companyLink: 'https://www.att.com/',
     location: 'Atlanta, GA',
     role: 'Software Engineer I',
     dates: 'Jan. 2026 - Present',
@@ -50,14 +63,18 @@ const EXPERIENCES: ExperienceItem[] = [
   },
   {
     company: 'Auburn University',
+    companyLogo: LOGOS.auburn,
+    companyLink: 'https://www.auburn.edu/',
     location: 'Auburn, AL',
-    role: 'Undergraduate Research Assistant',
+    role: 'UG Research Assistant',
     dates: 'Aug. 2025 - Dec. 2025',
     summary: 'Worked with Dr. Rongxuan (Raphael) Wang in the AMICS lab.',
     tags: ['TypeScript', 'NextJS', 'Python', 'Docker', 'Supabase', 'Vercel'],
   },
   {
     company: 'AT&T',
+    companyLogo: LOGOS.att,
+    companyLink: 'https://www.att.com/',
     location: 'Atlanta, GA',
     role: 'Software Engineer Intern',
     dates: 'Jun. 2025 - Aug. 2025',
@@ -66,6 +83,8 @@ const EXPERIENCES: ExperienceItem[] = [
   },
   {
     company: 'Adtran',
+    companyLogo: LOGOS.adtran,
+    companyLink: 'https://www.adtran.com/',
     location: 'Huntsville, AL',
     role: 'Software Engineer Co-op',
     dates: 'May 2023 - Dec. 2024',
@@ -162,52 +181,10 @@ function HeroSection() {
   );
 }
 
-function AboutSection({ accentColor }: { accentColor: string }) {
-  const accentStyle = { '--accent-underline-color': accentColor } as CSSProperties;
-  return (
-    <div>
-      <h2 className="text-xl mb-1 font-semibold">About</h2>
-      <div className="flex flex-col gap-2">
-        <p className="text-[var(--text-muted)]">
-          I specialize in{' '}
-          <span className="accent-underline" style={accentStyle}>
-            full-stack development
-          </span>{' '}
-          and build applications that prioritize{' '}
-          <span className="accent-underline" style={accentStyle}>
-            simplicity
-          </span>{' '}
-          and{' '}
-          <span className="accent-underline" style={accentStyle}>
-            efficiency
-          </span>
-          . My experience in{' '}
-          <span className="accent-underline" style={accentStyle}>
-            machine learning
-          </span>{' '}
-          and{' '}
-          <span className="accent-underline" style={accentStyle}>
-            system design
-          </span>{' '}
-          enables me to create{' '}
-          <span className="accent-underline" style={accentStyle}>
-            intelligent
-          </span>{' '}
-          and{' '}
-          <span className="accent-underline" style={accentStyle}>
-            scalable
-          </span>{' '}
-          systems.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 function CurrentSection() {
   return (
     <div className="w-fit flex-shrink-0">
-      <h2 className="text-xl mb-1 font-semibold">Currently</h2>
+      <h2 className="text-xl mb-2 font-semibold">Currently</h2>
       <div className="flex flex-col gap-1">
         <h3>
           Software Engineer I @{' '}
@@ -241,15 +218,25 @@ function EducationSection() {
   return (
     <div className="flex flex-col flex-1 min-w-[280px]">
       <h2 className="text-xl mb-1 font-semibold">Education</h2>
-      <div className="flex flex-col gap-1 w-full">
+      <div className="flex flex-col w-full">
         {EDUCATION.map((item) => (
-          <div key={item.school}>
-            <h3>{item.school}</h3>
-            <div className="flex justify-between items-center gap-x-2">
-              <p className="text-sm text-[var(--text-muted)]">{item.degree}</p>
-              <p className="text-sm text-[var(--text-muted)]">{item.graduation}</p>
+          <a
+            key={item.school}
+            className="experience-link group flex items-start gap-2 py-0.5"
+            href={item.schoolLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${item.school} website`}
+          >
+            <span className="experience-link__leftline" aria-hidden="true" />
+            <div className="w-full">
+              <h3>{item.school}</h3>
+              <div className="flex justify-between items-center gap-x-2">
+                <p className="text-sm text-[var(--text-muted)]">{item.degree}</p>
+                <p className="text-sm text-[var(--text-muted)]">{item.graduation}</p>
+              </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
@@ -260,31 +247,35 @@ function ExperienceSection() {
   return (
     <div className="w-full">
       <h2 className="text-xl mb-2 font-semibold">Experience</h2>
-      <div className="flex flex-col gap-5 w-full">
+      <div className="flex flex-col gap-1 w-full">
         {EXPERIENCES.map((item) => (
-          <div
+          <a
             key={`${item.company}-${item.role}-${item.dates}`}
-            className="flex items-start gap-2"
+            className="experience-link group flex items-center gap-2 py-1"
+            href={item.companyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${item.company} website`}
           >
+            <span className="experience-link__leftline" aria-hidden="true" />
+            <img
+              src={item.companyLogo}
+              alt={`${item.company} logo`}
+              className="h-8 w-8 shrink-0 object-contain"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="w-full">
               <div className="flex justify-between items-center">
                 <h3>{item.company}</h3>
-                <p>{item.location}</p>
+                <p className="text-sm">{item.location}</p>
               </div>
-              <div className="flex flex-col">
-                <div>
-                  <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4">
-                    <p>{item.role}</p>
-                    <p className="shrink-0">{item.dates}</p>
-                  </div>
-                  <ul className="bullet-list text-sm">
-                    <li>{item.summary}</li>
-                  </ul>
-                  <TagList tags={item.tags} className="mt-1.5 text-xs" tagClassName="" />
-                </div>
+              <div className="flex justify-between items-start text-[var(--text-muted)] text-sm gap-x-4 mt-[-2px]">
+                <p>{item.role}</p>
+                <p className="shrink-0 b-1 border-pink-500">{item.dates}</p>
               </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
@@ -403,7 +394,7 @@ function ThemeContactSection() {
         <div className="w-full flex flex-col gap-3">
           <div className="flex flex-col gap-2">
             <p>Always open to talk about anything!</p>
-            <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-150 hover:scale-[1.03]">
+            <button className="w-full rounded-lg text-center bg-[var(--primary)] transition-transform duration-150 hover:scale-[1.02]">
               <a
                 href="https://cal.com/jmurrah/30min?overlayCalendar=true"
                 target="_blank"
@@ -455,18 +446,14 @@ function ThemeContactSection() {
 }
 
 export default function Home() {
-  const { getPrimaryMutedColor } = useAccentColors();
   const recentPosts = useMemo(() => {
     const posts = getCachedBlogPosts() ?? [];
     return posts.slice(0, 3);
   }, []);
 
-  const accentColor = getPrimaryMutedColor();
-
   return (
     <div className="flex flex-wrap gap-14 mt-10">
       <HeroSection />
-      <AboutSection accentColor={accentColor} />
       <div className="flex flex-wrap w-full justify-between gap-14">
         <CurrentSection />
         <EducationSection />

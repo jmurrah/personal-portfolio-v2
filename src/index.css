@@ -141,7 +141,7 @@ a {
   background: var(--primary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 250ms ease-in-out;
+  transition: transform 150ms ease-in-out;
 }
 
 .arrow-link:hover::after,
@@ -170,7 +170,7 @@ a {
   background: var(--primary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 250ms ease-in-out;
+  transition: transform 150ms ease-in-out;
 }
 
 .arrow-link-target:hover::after,
@@ -220,6 +220,49 @@ a {
   cursor: pointer;
 }
 
+.nav-link-active {
+  color: var(--primary) !important;
+  text-decoration-line: underline;
+  text-decoration-color: var(--primary);
+  text-decoration-thickness: 0.12rem;
+  text-underline-offset: 0.35rem;
+  text-decoration-skip-ink: auto;
+}
+
+.experience-link {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.experience-link__leftline {
+  position: absolute;
+  left: -0.75rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--primary);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 150ms ease-out;
+}
+
+.experience-link:hover .experience-link__leftline,
+.experience-link:focus-visible .experience-link__leftline {
+  transform: scaleY(1);
+}
+
+.experience-link:hover {
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--primary) 18%, transparent),
+    color-mix(in srgb, var(--primary) 1%, transparent)
+  );
+  box-shadow:
+    -0.35rem 0 0 color-mix(in srgb, var(--primary) 18%, transparent),
+    0.35rem 0 0 color-mix(in srgb, var(--primary) 1%, transparent);
+}
+
 .custom-margin {
   margin-top: 8vh;
 }
@@ -263,7 +306,7 @@ strong {
   --underline-size: clamp(2px, calc(2ch - 25px), 3px);
   background-size: 100% var(--underline-size);
   transition-property: background-size, color;
-  transition-duration: 250ms, 0ms;
+  transition-duration: 150ms, 0ms;
   transition-timing-function: ease, ease-in-out;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -276,7 +319,7 @@ strong {
 a:hover .underline-fill,
 a:focus-visible .underline-fill {
   color: var(--surface);
-  transition-duration: 250ms, 250ms;
+  transition-duration: 150ms, 150ms;
   background-size: 100% 100%;
 }
 

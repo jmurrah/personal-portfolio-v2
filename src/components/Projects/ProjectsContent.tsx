@@ -47,7 +47,7 @@ const SORTED_YEARS = Object.keys(PROJECTS_BY_YEAR)
 
 export default function ProjectsContent() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <section>
         <p className="text-lg">
           <span className="font-semibold">Total Projects:</span> {TOTAL_PROJECTS}
@@ -78,7 +78,7 @@ export default function ProjectsContent() {
 
       {FEATURED_PROJECTS.length > 0 ? (
         <section className="flex flex-col">
-          <h2 className="mb-2 text-xl font-semibold border-b-2 border-[color:var(--border)]">
+          <h2 className="mb-2 text-xl font-semibold border-b-2 border-[color:var(--border)] border-dotted">
             Featured
           </h2>
           <div className="flex flex-col gap-3">
@@ -89,10 +89,10 @@ export default function ProjectsContent() {
         </section>
       ) : null}
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-12">
         {SORTED_YEARS.map((year) => (
           <section key={year} className="flex flex-col">
-            <h3 className="mb-2 text-xl font-semibold border-b-2 border-[color:var(--border)]">
+            <h3 className="mb-2 text-xl font-semibold border-b-2 border-[color:var(--border)] border-dotted">
               {year}
             </h3>
             <div className="flex flex-col gap-3">

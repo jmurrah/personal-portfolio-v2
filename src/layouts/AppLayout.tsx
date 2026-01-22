@@ -32,6 +32,11 @@ export default function AppLayout() {
     targets.forEach((target) => target?.scrollTo({ top: 0, behavior }));
     window.scrollTo({ top: 0, behavior });
   };
+  const isNavItemActive = (href: string, external?: boolean) => {
+    if (external) return false;
+    if (href === '/') return pathname === '/';
+    return pathname.startsWith(href);
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -134,7 +139,9 @@ export default function AppLayout() {
                   <Link
                     key={item.title}
                     to={item.href}
-                    className="nav-link hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium"
+                    className={`nav-link hover:text-[color:var(--primary)] rounded px-3 py-2 text-sm font-medium ${
+                      isNavItemActive(item.href, item.external) ? 'nav-link-active' : ''
+                    }`.trim()}
                     onClick={(event) => {
                       if (pathname === item.href) {
                         event.preventDefault();
@@ -200,7 +207,7 @@ export default function AppLayout() {
         <nav className="p-4 border-b border-[color:var(--border)]">
           <ul className="space-y-2" role="list">
             {mainNavItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = isNavItemActive(item.href, item.external);
               return (
                 <li key={item.title}>
                   {item.external ? (
@@ -237,7 +244,9 @@ export default function AppLayout() {
                   ) : (
                     <Link
                       to={item.href}
-                      className="nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none"
+                      className={`nav-link hover:text-[color:var(--primary)] hover:bg-[color:var(--surface)] focus:bg-[color:var(--surface)] block rounded p-2 focus:outline-none ${
+                        isActive ? 'nav-link-active' : ''
+                      }`.trim()}
                       aria-current={isActive ? 'page' : undefined}
                       onClick={(event) => {
                         if (pathname === item.href) {

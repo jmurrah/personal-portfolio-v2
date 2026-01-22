@@ -28,12 +28,12 @@
 
 .primary-color-btn.selected {
   opacity: 1;
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 .primary-color-btn:hover,
 .primary-color-btn:focus-visible {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 .primary-color-ring {
