@@ -218,7 +218,7 @@ function EducationSection() {
   return (
     <div className="flex flex-col flex-1 min-w-[280px]">
       <h2 className="text-xl mb-1 font-semibold">Education</h2>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col gap-0.5 w-full">
         {EDUCATION.map((item) => (
           <a
             key={item.school}
@@ -247,11 +247,11 @@ function ExperienceSection() {
   return (
     <div className="w-full">
       <h2 className="text-xl mb-2 font-semibold">Experience</h2>
-      <div className="flex flex-col gap-1 w-full">
+      <div className="flex flex-col gap-1.5 w-full">
         {EXPERIENCES.map((item) => (
           <a
             key={`${item.company}-${item.role}-${item.dates}`}
-            className="experience-link group flex items-center gap-2 py-1"
+            className="experience-link group flex items-center gap-2 py-0.5"
             href={item.companyLink}
             target="_blank"
             rel="noopener noreferrer"

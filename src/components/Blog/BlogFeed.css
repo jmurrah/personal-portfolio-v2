@@ -5,5 +5,5 @@
 .blog-card:hover,
 .blog-card:focus-within {
   background: color-mix(in srgb, var(--surface) 90%, var(--primary) 10%);
-  border-color: color-mix(in srgb, var(--border) 50%, var(--primary) 50%);
+  border-color: color-mix(in srgb, var(--border) 70%, var(--primary) 30%);
 }
