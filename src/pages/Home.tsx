@@ -290,7 +290,7 @@ function FeaturedProjectsSection() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg mb-2 font-semibold">Featured Projects</h2>
         <Link to="/projects" className="group gap-0.5 flex items-center underline-fill">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center font-semibold">
             <p>all projects</p>
             <SvgIcon
               src={ICONS.arrowRight}
@@ -328,7 +328,7 @@ function RecentPostsSection({ posts }: { posts: FeedPost[] }) {
       <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold">Recent Posts</h2>
         <Link to="/blog" className="group gap-0.5 flex items-center underline-fill">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center font-semibold">
             <p>all posts</p>
             <SvgIcon
               src={ICONS.arrowRight}

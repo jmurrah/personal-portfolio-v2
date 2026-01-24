@@ -145,7 +145,7 @@ export default function PostView({ post, onBack }: PostViewProps) {
               color="currentColor"
               className="transition-transform duration-150 group-hover:-translate-x-0.5"
             />
-            Back to posts
+            back to posts
           </button>
           {post.link && (
             <a
