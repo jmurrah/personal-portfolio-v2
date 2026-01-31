@@ -7,7 +7,7 @@ export const PROJECTS: ProjectItemProps[] = [
     description: 'Automatically create sunset timelapses from your ring camera footage.',
     year: 2026,
     featured: false,
-    tags: ['TypeScript', 'NextJS', 'Cloudflare', 'OAuth2'],
+    tags: ['TypeScript', 'NextJS', 'Vercel', 'Cloudflare', 'OAuth2'],
     githubUrl: 'https://github.com/jmurrah/analemma.git',
   },
   {
