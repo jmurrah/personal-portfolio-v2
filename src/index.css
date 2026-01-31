@@ -130,7 +130,6 @@ a {
   position: relative;
   text-decoration: none;
 }
-
 .arrow-link::after {
   content: '';
   position: absolute;

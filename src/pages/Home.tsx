@@ -123,7 +123,7 @@ function HeroSection() {
         fetchPriority="high"
       />
       <div className="flex flex-col gap-y-1.5 items-center sm:items-start w-full sm:w-auto">
-        <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
+        <h1 className="text-3xl font-semibold text-[var(--primary)]">Jacob Murrah</h1>
         <div className="flex gap-x-4 flex-wrap justify-center sm:justify-start">
           <div className="flex gap-1 items-center">
             <SvgIcon
