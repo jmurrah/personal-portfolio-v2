@@ -112,19 +112,17 @@ const getPostId = (post: FeedPost, slug: string): string => post.guid ?? post.li
 
 function HeroSection() {
   return (
-    <div className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start mb-6 text-center sm:text-left">
+    <div className="w-full flex flex-col gap-4 justify-center items-center mb-8 text-center">
       <img
-        className="w-auto h-24 rounded-lg"
+        className="w-auto h-20 rounded-lg"
         src={PHOTOS.graduationHeadshot}
         alt="Portrait of Jacob Murrah"
-        width={96}
-        height={96}
         decoding="async"
         fetchPriority="high"
       />
-      <div className="flex flex-col gap-y-1.5 items-center sm:items-start w-full sm:w-auto">
-        <h1 className="text-3xl font-semibold text-[var(--primary)]">Jacob Murrah</h1>
-        <div className="flex gap-x-4 flex-wrap justify-center sm:justify-start">
+      <div className="flex flex-col gap-y-1.5 items-center w-full">
+        <h1 className="text-3xl text-[var(--primary)]">Jacob Murrah</h1>
+        <div className="flex gap-x-4 flex-wrap justify-center">
           <div className="flex gap-1 items-center">
             <SvgIcon
               src={ICONS.mapPin}
