@@ -1,3 +1,3 @@
 # personal-portfolio-v2
 
-https://murrah.dev/
+https://v2.murrah.dev/

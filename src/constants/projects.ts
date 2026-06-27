@@ -18,7 +18,7 @@ export const PROJECTS: ProjectItemProps[] = [
     featured: false,
     tags: ['TypeScript', 'React', 'Vite', 'Tailwind CSS'],
     githubUrl: 'https://github.com/jmurrah/personal-portfolio-v2',
-    liveUrl: 'https://murrah.dev',
+    liveUrl: 'https://v2.murrah.dev',
   },
   {
     status: PROJECT_STATUS.ACTIVE,
